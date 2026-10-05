@@ -1,7 +1,7 @@
 // Requester gate state, derived from `GET /api/models/{repo}/auth-check` (docs/system.md
 // "Requester gate state comes from auth-check"): the API has no "my request status" endpoint, so
 // the gate box is chosen from the content-route answer (api.md §3.1). This is the ONLY place that
-// maps auth-check answers to screens A1–A5 (docs/hf-gated/ui.md).
+// maps auth-check answers to screens A1–A6 (docs/hf-gated/ui.md).
 
 import type { BackendError } from "./httpError";
 
@@ -10,15 +10,21 @@ export type GateState =
   | { kind: "access" }
   /** 401 GatedRepo: anonymous visitor (A1, ACC-3, REQ-1). */
   | { kind: "anonymous"; message: string }
-  /** 403 GatedRepo "…not in the authorized list…": logged in, no request (A2), or reset [Q-5]. */
+  /** 403 GatedRepo "…not in the authorized list…": logged in, no request (A2). */
   | { kind: "no-request"; message: string }
   /** 403 GatedRepo "…awaiting a review from the repo authors.": pending (A3). */
   | { kind: "pending"; message: string }
-  /** Anything else, e.g. rejected (A5) whose API message is unrecorded [Q-8]: shown verbatim, never guessed. */
+  /** 403 GatedRepo "…has been rejected by the repo's authors.": rejected (A5) [OBS 2026-10-05, Q-8]. */
+  | { kind: "rejected"; message: string }
+  /** 403 GatedRepo "…has been reset by the repo's authors. Visit … to submit a new request.": reset (A6) [OBS 2026-10-05]. */
+  | { kind: "reset"; message: string }
+  /** Anything else: shown verbatim, never guessed. */
   | { kind: "unmapped"; status: number; code: string | null; message: string };
 
 const NOT_IN_AUTHORIZED_LIST = "you are not in the authorized list";
 const AWAITING_REVIEW = "is awaiting a review from the repo authors";
+const REJECTED = "has been rejected by the repo's authors";
+const RESET = "has been reset by the repo's authors";
 
 export function deriveGateState(authCheck: BackendError): GateState {
   const { status, code, message } = authCheck;
@@ -27,6 +33,8 @@ export function deriveGateState(authCheck: BackendError): GateState {
     if (status === 401) return { kind: "anonymous", message };
     if (status === 403 && message.includes(NOT_IN_AUTHORIZED_LIST)) return { kind: "no-request", message };
     if (status === 403 && message.includes(AWAITING_REVIEW)) return { kind: "pending", message };
+    if (status === 403 && message.includes(REJECTED)) return { kind: "rejected", message };
+    if (status === 403 && message.includes(RESET)) return { kind: "reset", message };
   }
   return { kind: "unmapped", status, code, message };
 }

@@ -6,6 +6,8 @@ const ID = "Orosius/deltanet-mla-latent";
 const ANON = `Access to model ${ID} is restricted. You must have access to it and be authenticated to access it. Please log in.`;
 const NO_REQUEST = `Access to model ${ID} is restricted and you are not in the authorized list. Visit https://huggingface.co/${ID} to ask for access.`;
 const PENDING = `Your request to access model ${ID} is awaiting a review from the repo authors.`;
+const REJECTED = `Your request to access model ${ID} has been rejected by the repo's authors.`;
+const RESET = `Your request to access model ${ID} has been reset by the repo's authors. Visit https://huggingface.co/${ID} to submit a new request.`;
 
 describe("deriveGateState (docs/system.md: requester gate state comes from auth-check)", () => {
   it.each([
@@ -13,6 +15,8 @@ describe("deriveGateState (docs/system.md: requester gate state comes from auth-
     ["401 GatedRepo → anonymous (A1)", { status: 401, code: "GatedRepo", message: ANON }, "anonymous"],
     ["403 GatedRepo not in list → no request (A2)", { status: 403, code: "GatedRepo", message: NO_REQUEST }, "no-request"],
     ["403 GatedRepo awaiting review → pending (A3)", { status: 403, code: "GatedRepo", message: PENDING }, "pending"],
+    ["403 GatedRepo rejected → rejected (A5)", { status: 403, code: "GatedRepo", message: REJECTED }, "rejected"],
+    ["403 GatedRepo reset → reset (A6)", { status: 403, code: "GatedRepo", message: RESET }, "reset"],
   ])("%s", (_name, input, kind) => {
     expect(deriveGateState(input).kind).toBe(kind);
   });
@@ -25,8 +29,7 @@ describe("deriveGateState (docs/system.md: requester gate state comes from auth-
   });
 
   it.each([
-    // Rejected (A5) is not recorded through the API [Q-8]: must stay unmapped, never guessed.
-    ["unknown GatedRepo message", { status: 403, code: "GatedRepo", message: "Your request to access this repo has been rejected by the repo's authors." }],
+    ["unknown GatedRepo message", { status: 403, code: "GatedRepo", message: "Access to this repo is suspended." }],
     ["known message without GatedRepo code", { status: 403, code: null, message: PENDING }],
     ["unknown repo, anonymous", { status: 401, code: null, message: "Invalid username or password." }],
     ["bridge refusal", { status: 403, code: "BridgeRepoNotAllowed", message: "Repo not allowed" }],

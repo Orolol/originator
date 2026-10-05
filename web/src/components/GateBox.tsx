@@ -41,13 +41,21 @@ function GateBody({ repoId, config, state }: { repoId: string; config: GateConfi
       );
     case "no-request":
       return <GateForm repoId={repoId} config={config} />;
+    case "reset":
+      // A6 [DOC]: after a reset the user is prompted to agree and submit a new request.
+      // Provisional (Q-11): whether the page also shows a reset notice (or the resetReason) is unrecorded.
+      return <GateForm repoId={repoId} config={config} />;
+    case "rejected":
+      // A5 [DOC]: the page text from the docs. The rejectionReason is not exposed by the API (REQ-4,
+      // Q-19), so it cannot be shown in bridge mode.
+      return <p role="status">Your request to access this repo has been rejected by the repo&apos;s authors.</p>;
     case "pending":
       // Provisional (Q-11): the page wording for A3 is unrecorded; we show the backend's auth-check
       // message verbatim ("Your request to access model {id} is awaiting a review from the repo authors.").
       return <p role="status">{state.message}</p>;
     case "unmapped":
-      // docs/system.md: unknown auth-check answers (rejected [Q-8], reset [Q-5]…) are shown verbatim
-      // and flagged, never mapped to a guessed screen.
+      // docs/system.md: unknown auth-check answers are shown verbatim and flagged, never mapped to a
+      // guessed screen.
       return (
         <div role="status">
           <p>{state.message}</p>

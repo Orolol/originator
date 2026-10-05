@@ -90,6 +90,24 @@ describe("A2 logged in, no request: gate form from extra_gated_fields (gate-form
   });
 });
 
+describe("A5 rejected and A6 reset (OBS 2026-10-05)", () => {
+  it("rejected shows the documented page text and no form (the reason is not exposed by the API)", () => {
+    const msg = `Your request to access model ${REPO} has been rejected by the repo's authors.`;
+    const { container } = renderGate(STARCODER_CARD, { kind: "rejected", message: msg });
+    expect(screen.getByRole("status").textContent).toBe(
+      "Your request to access this repo has been rejected by the repo's authors.",
+    );
+    expect(container.querySelector("form")).toBeNull();
+  });
+
+  it("reset shows the consent form again", () => {
+    const msg = `Your request to access model ${REPO} has been reset by the repo's authors.`;
+    const { container } = renderGate(STARCODER_CARD, { kind: "reset", message: msg });
+    expect(container.querySelector(`form[action="/${REPO}/ask-access"]`)).not.toBeNull();
+    expect(screen.getByText(CONSENT)).toBeTruthy();
+  });
+});
+
 describe("A3 pending and unmapped states", () => {
   it("pending shows the backend message, no form", () => {
     const msg = `Your request to access model ${REPO} is awaiting a review from the repo authors.`;
