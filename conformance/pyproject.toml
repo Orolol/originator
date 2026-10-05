@@ -1,0 +1,28 @@
+[project]
+name = "conformance"
+version = "0.1.0"
+description = "Black-box conformance suite: replays real-Hub recordings and rule scenarios against an HF-compatible backend (clone or bridge)"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx",
+    "huggingface_hub>=1.26",
+    "pytest",
+    "pyyaml",
+]
+
+[project.scripts]
+conformance-report = "conformance.report:main"
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Live tests go through the bridge to huggingface.co (GET/HEAD only); opt in with `-m live`.
+addopts = "-m 'not live'"
+markers = [
+    "live: read-only replays through the bridge (BACKEND_URL=http://127.0.0.1:8100); never writes",
+    "offline: pure harness tests (normalisation, recording parsing); no backend needed",
+    "provisional: checks a provisional choice from open-questions.md / system.md, not observed HF behaviour",
+]

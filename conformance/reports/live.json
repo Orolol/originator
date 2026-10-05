@@ -1,0 +1,471 @@
+{
+ "generated": "2026-10-05T15:00:38Z",
+ "backend": "http://127.0.0.1:8100",
+ "mode": "live",
+ "scenarios": [
+  {
+   "name": "live:owner-reads",
+   "recording": "2026-10-05-owner-reads.json",
+   "mode": "live",
+   "covers": [
+    "REP-1",
+    "ACC-1",
+    "CFG-3",
+    "REQ-6",
+    "Q-14"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 2,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 6,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "owner-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-report",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/user-access-report",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-auth-check",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-get-settings",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-resolve",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "live:clone-seed-reads",
+   "recording": "2026-10-05-clone-seed-reads.json",
+   "mode": "live",
+   "covers": [
+    "ACC-4",
+    "ACC-5",
+    "api.md §3.3 check order",
+    "system.md Personas (401 wording)",
+    "system.md seed fidelity"
+   ],
+   "stand_ins": true,
+   "error": null,
+   "ok": false,
+   "counts": {
+    "pass": 14,
+    "fail": 1,
+    "diverged": 0,
+    "skipped": 4,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "model-info-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "model-info-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "model-info-expand",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent?expand[]=gated&expand[]=cardData",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-main",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-subdir",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-requester",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-bad-token",
+     "persona": "bad",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "fail",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": [
+      {
+       "field": "header:content-type",
+       "expected": "application/json; charset=utf-8",
+       "actual": "application/json",
+       "detail": "",
+       "divergence": null
+      }
+     ]
+    },
+    {
+     "id": "owner-readme",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-gitattributes",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-head-gitattributes",
+     "persona": "owner",
+     "method": "HEAD",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-head-lfs",
+     "persona": "owner",
+     "method": "HEAD",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin",
+     "request_body": null,
+     "expected_status": 302,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-config",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/checkpoint_tokens_20M_loss_4.9842/config.json",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "anon-readme",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "anon-head-readme",
+     "persona": "anonymous",
+     "method": "HEAD",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "anon-ask-access-get",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-unknown-repo-list",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/does-not-exist-xyz/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-not-gated-list",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/openai-community/gpt2/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  }
+ ],
+ "divergences": [
+  {
+   "id": "D-1",
+   "scenario": "clone-seed-reads",
+   "step": "owner-head-lfs",
+   "field": [
+    "header:location",
+    "header:link"
+   ],
+   "rule": "out-of-scope.md \"Real file serving (LFS/Xet, 302 to CDN)\"",
+   "reason": "Out of scope. HF redirects an LFS/Xet file to its CDN (signed URL) and advertises Xet endpoints in Link; the clone serves stub bytes for authorised files and redirects to its own resolve-cache. The authorisation decision (302 for the owner, X-Repo-Commit, X-Linked-Size/-Etag) is still compared and matches.",
+   "evidence": "docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json owner-head-lfs"
+  },
+  {
+   "id": "D-2",
+   "scenario": "anonymous-probes",
+   "step": [
+    "raw-readme",
+    "blob-config"
+   ],
+   "field": "*",
+   "rule": "ACC-5 (/raw/ and /blob/ clause) vs docs/system.md \"Backend surface\"",
+   "reason": "Outside the backend surface. docs/system.md lists the only routes both backends serve and has no /raw/ or /blob/ route, so the clone answers 404 there; behaviour.md ACC-5 nevertheless records that HF gates them (anonymous 401 GatedRepo). KB inconsistency to resolve: either add the routes to the surface (and the clone) or scope ACC-5's /raw/ and /blob/ sentence out explicitly.",
+   "evidence": "docs/system.md \"Backend surface\"; docs/hf-gated/behaviour.md ACC-5; anonymous-probes raw-readme, blob-config"
+  }
+ ],
+ "normalisations": [
+  {
+   "name": "e-mail addresses",
+   "rule": "Recordings are redacted (`<email>`, or `<HF_REQUESTER_LOGIN>` whose value is an e-mail). Every e-mail address in the backend's response becomes `<email>` before comparing; presence and position are still checked."
+  },
+  {
+   "name": "timestamps",
+   "rule": "Times the backend generates come from its virtual clock, not the Hub's wall clock. Each recorded ISO timestamp is matched to the backend's: timestamps present in the initial seed must come back verbatim; the others must keep the recorded equalities (same recorded value -> same backend value, different -> different) and the recorded order, and use HF's format `YYYY-MM-DDTHH:MM:SS.mmmZ`."
+  },
+  {
+   "name": "ETag of generated responses",
+   "rule": "JSON, HTML and error bodies carry a weak ETag that hashes the serialised body; it is ignored. File ETags (responses with Content-Disposition or X-Repo-Commit) are compared, after stripping a `W/` prefix: HF weakens the ETag when it gzips the response, which the bridge's HTTP client asks for and probe.py does not."
+  },
+  {
+   "name": "Content-Length",
+   "rule": "Ignored (the bridge drops it; body bytes are compared instead)."
+  },
+  {
+   "name": "URL origins",
+   "rule": "In `Location`, in `Link` targets and in the `Redirecting to <url>` text of a 3xx body, the origins https://huggingface.co, the bridge (http://127.0.0.1:8100) and the backend under test become `<origin>`. Absolute vs relative is kept. Origins inside messages (for example `Visit https://huggingface.co/{id} to ask for access.`) are NOT normalised."
+  },
+  {
+   "name": "cut recordings",
+   "rule": "Where a recording only kept a prefix (probe excerpts of 160 characters, bridge-log strings cut at 2000 characters and marked `…`), the backend's value must start with it. A cut JSON excerpt is compared against the backend's JSON re-serialised compactly (`separators=(',', ':')`, as HF serialises), so whitespace is not compared but key order is."
+  },
+  {
+   "name": "headers not captured",
+   "rule": "A header is checked for presence/absence only if the recording could have captured it: those probe.py kept from its first version (X-Error-Code, X-Error-Message, Content-Type, Location, Link, WWW-Authenticate; git 7e14ba3) always; the others (Content-Disposition, ETag, X-Repo-Commit, X-Linked-*) only in recordings where they appear at least once, because probe.py's list grew during the day (07aa65a, 42cc2c8) and the bridge forwards a fixed subset."
+  }
+ ],
+ "pytest": null
+}

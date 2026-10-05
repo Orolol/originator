@@ -1,0 +1,5856 @@
+{
+ "generated": "2026-10-05T15:05:23Z",
+ "backend": "http://127.0.0.1:8200",
+ "mode": "seeded",
+ "scenarios": [
+  {
+   "name": "owner-walkthrough",
+   "recording": "2026-10-05-owner-walkthrough.json",
+   "mode": "seeded",
+   "covers": [
+    "REV-1",
+    "REV-2",
+    "REV-3",
+    "REV-5",
+    "REV-7",
+    "REV-8",
+    "REV-9",
+    "REV-10",
+    "REV-12",
+    "REQ-2",
+    "REQ-4",
+    "REQ-6",
+    "TS-1",
+    "TS-2",
+    "CFG-3",
+    "CFG-6",
+    "ACC-7",
+    "REP-1",
+    "§2 states",
+    "Q-2",
+    "Q-4",
+    "Q-6",
+    "Q-7",
+    "Q-9",
+    "Q-21"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 98,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "s0-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s0-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s0-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s0-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s0-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s0-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-accept",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-accept-again",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s1-report",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/user-access-report",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-cancel",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s2-cancel-again",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-reject",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected",
+      "rejectionReason": "Rejected by the originator bridge walkthrough (test)."
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-reject-again",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3-req-ask-again",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3b-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3b-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3b-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3b-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3b-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s3b-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s4-accept-from-rejected",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s4-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s4-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s4-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s4-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-reset",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset",
+      "resetReason": "Reset by the originator bridge walkthrough (test)."
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5-req-ask-after-reset",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5b-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5b-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5b-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5b-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5b-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s5b-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-grant-while-pending",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/grant",
+     "request_body": {
+      "user": "TestingBOrig"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s6-grant-again",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/grant",
+     "request_body": {
+      "user": "TestingBOrig"
+     },
+     "expected_status": 400,
+     "actual_status": 400,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s7-handle-unknown-user",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "this-user-does-not-exist-xyz-123",
+      "status": "accepted"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s7-handle-bad-status",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "bogus"
+     },
+     "expected_status": 400,
+     "actual_status": 400,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s7-reject-reason-too-long",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected",
+      "rejectionReason": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     },
+     "expected_status": 400,
+     "actual_status": 400,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s7-handle-no-user",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "status": "pending"
+     },
+     "expected_status": 400,
+     "actual_status": 400,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s7-list-limit-5",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted?limit=5",
+     "request_body": null,
+     "expected_status": 400,
+     "actual_status": 400,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s7-list-q",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted?q=testingb",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s7-req-handle",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s8-batch",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/batch",
+     "request_body": {
+      "status": "pending",
+      "requests": [
+       {
+        "user": "TestingBOrig"
+       },
+       {
+        "user": "this-user-does-not-exist-xyz-123"
+       }
+      ]
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s8-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s8-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s8-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s8-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s8-batch-same-status",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/batch",
+     "request_body": {
+      "status": "pending",
+      "requests": [
+       {
+        "user": "TestingBOrig"
+       }
+      ]
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-to-auto",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": "auto"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s9-to-manual",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": "manual"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-to-false",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": false
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-list-pending-not-gated",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-anon-resolve",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 307,
+     "actual_status": 307,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-to-manual",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": "manual"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s10-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "s11-report",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/user-access-report",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "owner-walkthrough-completion",
+   "recording": "2026-10-05-owner-walkthrough-completion.json",
+   "mode": "seeded",
+   "covers": [
+    "REV-1",
+    "REV-3",
+    "REV-5",
+    "REQ-4",
+    "REQ-6",
+    "TS-1",
+    "TS-2",
+    "§2 states",
+    "§5.1 table",
+    "Q-2",
+    "Q-4",
+    "Q-5",
+    "Q-8"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 44,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "m0-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m0-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m0-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m0-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m0-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m0-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m1-accept",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m1-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m1-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m1-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m1-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m1-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m1-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m2-accept-again",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m3-cancel-by-userid",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "userId": "6ac3a4b8792f9017b6cb67ec",
+      "status": "pending"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m3-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m3-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m3-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m3-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m3-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m3-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m4-cancel-again",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m5-reject",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected",
+      "rejectionReason": "Rejected by the originator bridge walkthrough (test)."
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m5-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m5-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m5-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m5-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m5-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m5-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m6-reject-again",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected"
+     },
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m7-req-ask-after-reject",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m7-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m7-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m7-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m7-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m7-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m7-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m8-reset-from-rejected",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset",
+      "resetReason": "Reset by the originator bridge walkthrough (test)."
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m8-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m8-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m8-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m8-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m8-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "m8-req-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "requester-ask-access",
+   "recording": "2026-10-05-requester-ask-access.json",
+   "mode": "seeded",
+   "covers": [
+    "REQ-2",
+    "§2 states",
+    "REV-12",
+    "Q-1",
+    "Q-2",
+    "Q-8"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 10,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 1,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "pre-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "pre-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "pre-head",
+     "persona": "requester",
+     "method": "HEAD",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "pre-owner-list",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "pre-page",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "HTML model page: rendered by web/, not part of the backend surface (docs/system.md, 'Backend surface')",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "ask-access-json",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "post-json-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "post-json-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "ask-access-form",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "post-form-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "post-form-resolve",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "owner-reads",
+   "recording": "2026-10-05-owner-reads.json",
+   "mode": "seeded",
+   "covers": [
+    "REP-1",
+    "ACC-1",
+    "CFG-3",
+    "REQ-6",
+    "Q-14"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 8,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "owner-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-report",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/user-access-report",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-auth-check",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-get-settings",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-resolve",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "clone-seed-reads",
+   "recording": "2026-10-05-clone-seed-reads.json",
+   "mode": "seeded",
+   "covers": [
+    "ACC-4",
+    "ACC-5",
+    "api.md §3.3 check order",
+    "system.md Personas (401 wording)",
+    "system.md seed fidelity"
+   ],
+   "stand_ins": true,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 18,
+    "fail": 0,
+    "diverged": 1,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "model-info-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "model-info-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "model-info-expand",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent?expand[]=gated&expand[]=cardData",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-main",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-subdir",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-requester",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "whoami-bad-token",
+     "persona": "bad",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-readme",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-gitattributes",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-head-gitattributes",
+     "persona": "owner",
+     "method": "HEAD",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-head-lfs",
+     "persona": "owner",
+     "method": "HEAD",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin",
+     "request_body": null,
+     "expected_status": 302,
+     "actual_status": 302,
+     "outcome": "diverged",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": [
+      {
+       "field": "header:link",
+       "expected": "<<origin>/api/models/Orosius/deltanet-mla-latent/xet-read-token/6f1dade6f974de81ce21aa14b87add2e0217b05e>; rel=\"xet-auth\", <https://cas-server.xethub.hf.co/v1/reconstructions/0c6167a268354949eabb7862cdefe9b5759bdb481e9c523a24b36daf5e474f3e>; rel=\"xet-reconstruction-info\"",
+       "actual": null,
+       "detail": "missing",
+       "divergence": "D-1"
+      },
+      {
+       "field": "header:location",
+       "expected": "https://us.aws.cdn.hf.co/xet-bridge-us/69414ed409f9267fc5b494e2/0c6167a268354949eabb7862cdefe9b5759bdb481e9c523a24b36daf5e474f3e?<signed-query-redacted>",
+       "actual": "<origin>/api/resolve-cache/models/Orosius/deltanet-mla-latent/6f1dade6f974de81ce21aa14b87add2e0217b05e/checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin",
+       "detail": "",
+       "divergence": "D-1"
+      }
+     ]
+    },
+    {
+     "id": "owner-config",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/checkpoint_tokens_20M_loss_4.9842/config.json",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "anon-readme",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "anon-head-readme",
+     "persona": "anonymous",
+     "method": "HEAD",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "anon-ask-access-get",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "HF answers a GET on the POST-only web route with its HTML 404 page; HTML pages are not part of the backend surface (docs/system.md), so only the status and error headers are comparable",
+     "restricted_to": [
+      "status",
+      "header:x-error-code",
+      "header:x-error-message"
+     ],
+     "diffs": []
+    },
+    {
+     "id": "owner-unknown-repo-list",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/does-not-exist-xyz/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-not-gated-list",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/openai-community/gpt2/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "ui-walkthrough",
+   "recording": "2026-10-05-ui-walkthrough.json",
+   "mode": "seeded",
+   "covers": [
+    "§4 reset -> re-request",
+    "§5.1 table",
+    "REV-1",
+    "REQ-6",
+    "TS-1",
+    "TS-2",
+    "CFG-3",
+    "CFG-6",
+    "CFG-7",
+    "ACC-1",
+    "Q-7"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 62,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "191",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "192",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "193",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "194",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/Orosius/deltanet-mla-latent/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "195",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "196",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "197",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "198",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "199",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "200",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "201",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "202",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "203",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "204",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "205",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "206",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "207",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "208",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "209",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "210",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "211",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "212",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "213",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "214",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "215",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "216",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "217",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "218",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "219",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "220",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "221",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "222",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "223",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "224",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "225",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "226",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "227",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "228",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "229",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "230",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "231",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "232",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "233",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "234",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "235",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "236",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "237",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "238",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "239",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "240",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "241",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "242",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "243",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": "auto"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "244",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": "manual"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "245",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gatedNotificationsMode": "real-time"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "246",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gatedNotificationsMode": "bulk"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "247",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": false
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "248",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": "auto"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "249",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/Orosius/deltanet-mla-latent/settings",
+     "request_body": {
+      "gated": "manual"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "250",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "251",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/whoami-v2",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "252",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "anonymous-probes",
+   "recording": "2026-10-05-anonymous-probes.json",
+   "mode": "seeded",
+   "covers": [
+    "ACC-3",
+    "ACC-4",
+    "ACC-5",
+    "ACC-6",
+    "CFG-5",
+    "REP-2",
+    "api.md §3.1-3.3"
+   ],
+   "stand_ins": true,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 34,
+    "fail": 0,
+    "diverged": 2,
+    "skipped": 8,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "meta-manual",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/meta-llama/Llama-3.2-1B?expand[]=gated",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "meta-auto",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/bigcode/starcoder?expand[]=gated",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "meta-not-gated",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/mistralai/Mistral-7B-v0.1?expand[]=gated",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "info-revision",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/meta-llama/Llama-3.2-1B/revision/main",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "/api/models/{id}/revision/{rev} is not part of the backend surface (docs/system.md)",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/meta-llama/Llama-3.2-1B/tree/main",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "stand-in repo: the real Llama-3.2-1B file list (oids, sizes) is not reproducible",
+     "restricted_to": [
+      "status",
+      "header:content-type"
+     ],
+     "diffs": []
+    },
+    {
+     "id": "page",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "HTML model page (web/), not part of the backend surface (docs/system.md)",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "page-tree",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/tree/main",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "HTML files page (web/), not part of the backend surface (docs/system.md)",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "discussions-page",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/discussions",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "HTML discussions page, not part of the backend surface (docs/system.md)",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "discussions-api",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/meta-llama/Llama-3.2-1B/discussions",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "/api/models/{id}/discussions is not part of the backend surface (docs/system.md); ACC-4 only notes it stays public",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "resolve-config-manual",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/config.json",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "resolve-config-auto",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/bigcode/starcoder/resolve/main/config.json",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "head-config-auto",
+     "persona": "anonymous",
+     "method": "HEAD",
+     "path": "/bigcode/starcoder/resolve/main/config.json",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "resolve-gitattributes",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "resolve-subdir",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/original/params.json",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "resolve-use-policy",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/USE_POLICY.md",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "allow-readme",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "allow-readme-auto",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/bigcode/starcoder/resolve/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "allow-license-txt",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/LICENSE.txt",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "allow-license-missing",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/LICENSE",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "allow-license-md-missing",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/LICENSE.md",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-readme-lower",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/readme.md",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-readme-upper-ext",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/README.MD",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-readme-txt",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/README.txt",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-readme-noext",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/README",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-license-rst",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/LICENSE.rst",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-license-lower",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/license.txt",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-licence",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/LICENCE",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-copying",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/COPYING",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-subdir-readme",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/original/README.md",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "deny-subdir-license",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/original/LICENSE.txt",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "raw-readme",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 404,
+     "outcome": "diverged",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": [
+      {
+       "field": "status",
+       "expected": 401,
+       "actual": 404,
+       "detail": "",
+       "divergence": "D-2"
+      },
+      {
+       "field": "header:content-type",
+       "expected": "text/plain; charset=utf-8",
+       "actual": "text/html; charset=utf-8",
+       "detail": "",
+       "divergence": "D-2"
+      },
+      {
+       "field": "header:www-authenticate",
+       "expected": "Bearer realm=\"Authentication required\", charset=\"UTF-8\"",
+       "actual": null,
+       "detail": "missing",
+       "divergence": "D-2"
+      },
+      {
+       "field": "header:x-error-code",
+       "expected": "GatedRepo",
+       "actual": null,
+       "detail": "missing",
+       "divergence": "D-2"
+      },
+      {
+       "field": "header:x-error-message",
+       "expected": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+       "actual": "Sorry, we can't find the page you are looking for.",
+       "detail": "",
+       "divergence": "D-2"
+      },
+      {
+       "field": "body",
+       "expected": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+       "actual": "Sorry, we can&#x27;t find the page you are looking for.",
+       "detail": "",
+       "divergence": "D-2"
+      }
+     ]
+    },
+    {
+     "id": "blob-config",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/blob/main/config.json",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 404,
+     "outcome": "diverged",
+     "reason": "/blob/ is an HTML page on HF; only the gate decision (ACC-5) is backend behaviour",
+     "restricted_to": [
+      "status",
+      "header:x-error-code",
+      "header:x-error-message",
+      "header:www-authenticate"
+     ],
+     "diffs": [
+      {
+       "field": "status",
+       "expected": 401,
+       "actual": 404,
+       "detail": "",
+       "divergence": "D-2"
+      },
+      {
+       "field": "header:x-error-code",
+       "expected": "GatedRepo",
+       "actual": null,
+       "detail": "missing",
+       "divergence": "D-2"
+      },
+      {
+       "field": "header:x-error-message",
+       "expected": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+       "actual": "Sorry, we can't find the page you are looking for.",
+       "detail": "",
+       "divergence": "D-2"
+      }
+     ]
+    },
+    {
+     "id": "gate-before-entry",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/main/does-not-exist.bin",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "gate-before-revision",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/resolve/nonexistent-branch/config.json",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "missing-repo-resolve",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/someone-xyz123/definitely-not-a-repo/resolve/main/config.json",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "auth-check-gated",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/meta-llama/Llama-3.2-1B/auth-check",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "auth-check-public",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/openai-community/gpt2/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "auth-check-missing",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/someone-xyz123/definitely-not-a-repo/auth-check",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/meta-llama/Llama-3.2-1B/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "owner-list-not-gated-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/openai-community/gpt2/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "report-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B/user-access-report",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "gate-props-auto",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/bigcode/starcoder",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "HTML page props (gate box), checked by the web UI tests, not by the backend",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "gate-props-manual-custom",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/meta-llama/Llama-3.2-1B",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "HTML page props (gate box), checked by the web UI tests, not by the backend",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "gate-props-heading",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/google/gemma-2-2b",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "HTML page props (gate box) of google/gemma-2-2b; the Gemma special case is out of scope",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  }
+ ],
+ "divergences": [
+  {
+   "id": "D-1",
+   "scenario": "clone-seed-reads",
+   "step": "owner-head-lfs",
+   "field": [
+    "header:location",
+    "header:link"
+   ],
+   "rule": "out-of-scope.md \"Real file serving (LFS/Xet, 302 to CDN)\"",
+   "reason": "Out of scope. HF redirects an LFS/Xet file to its CDN (signed URL) and advertises Xet endpoints in Link; the clone serves stub bytes for authorised files and redirects to its own resolve-cache. The authorisation decision (302 for the owner, X-Repo-Commit, X-Linked-Size/-Etag) is still compared and matches.",
+   "evidence": "docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json owner-head-lfs"
+  },
+  {
+   "id": "D-2",
+   "scenario": "anonymous-probes",
+   "step": [
+    "raw-readme",
+    "blob-config"
+   ],
+   "field": "*",
+   "rule": "ACC-5 (/raw/ and /blob/ clause) vs docs/system.md \"Backend surface\"",
+   "reason": "Outside the backend surface. docs/system.md lists the only routes both backends serve and has no /raw/ or /blob/ route, so the clone answers 404 there; behaviour.md ACC-5 nevertheless records that HF gates them (anonymous 401 GatedRepo). KB inconsistency to resolve: either add the routes to the surface (and the clone) or scope ACC-5's /raw/ and /blob/ sentence out explicitly.",
+   "evidence": "docs/system.md \"Backend surface\"; docs/hf-gated/behaviour.md ACC-5; anonymous-probes raw-readme, blob-config"
+  },
+  {
+   "id": "D-3",
+   "scenario": "live:clone-seed-reads",
+   "step": "whoami-bad-token",
+   "field": "header:content-type",
+   "rule": "docs/system.md \"Personas\" (invalid bearer -> HF's 401)",
+   "reason": "Bridge artefact, live mode only. The bridge never forwards an unknown bearer token: it answers the 401 itself (system.md: \"Any other bearer value -> 401 ... exactly what HF answers\"), but with `application/json` where HF sends `application/json; charset=utf-8` (recorded). The status, message, body and WWW-Authenticate match. To fix in the bridge, not in the clone.",
+   "evidence": "docs/system.md \"Personas\"; observations/2026-10-05-clone-seed-reads.json whoami-bad-token"
+  },
+  {
+   "id": "D-4",
+   "scenario": "rules:test_rules_requests",
+   "step": "test_REV_7_grant_on_non_gated_repo_is_400",
+   "field": "*",
+   "rule": "REV-7 vs open-questions.md \"Provisional choices in the clone\" (Q-9)",
+   "reason": "Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records \"No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)\" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded.",
+   "evidence": "docs/hf-gated/behaviour.md REV-7, CFG-6; docs/hf-gated/open-questions.md Q-9 provisional row"
+  }
+ ],
+ "normalisations": [
+  {
+   "name": "e-mail addresses",
+   "rule": "Recordings are redacted (`<email>`, or `<HF_REQUESTER_LOGIN>` whose value is an e-mail). Every e-mail address in the backend's response becomes `<email>` before comparing; presence and position are still checked."
+  },
+  {
+   "name": "timestamps",
+   "rule": "Times the backend generates come from its virtual clock, not the Hub's wall clock. Each recorded ISO timestamp is matched to the backend's: timestamps present in the initial seed must come back verbatim; the others must keep the recorded equalities (same recorded value -> same backend value, different -> different) and the recorded order, and use HF's format `YYYY-MM-DDTHH:MM:SS.mmmZ`."
+  },
+  {
+   "name": "ETag of generated responses",
+   "rule": "JSON, HTML and error bodies carry a weak ETag that hashes the serialised body; it is ignored. File ETags (responses with Content-Disposition or X-Repo-Commit) are compared, after stripping a `W/` prefix: HF weakens the ETag when it gzips the response, which the bridge's HTTP client asks for and probe.py does not."
+  },
+  {
+   "name": "Content-Length",
+   "rule": "Ignored (the bridge drops it; body bytes are compared instead)."
+  },
+  {
+   "name": "URL origins",
+   "rule": "In `Location`, in `Link` targets and in the `Redirecting to <url>` text of a 3xx body, the origins https://huggingface.co, the bridge (http://127.0.0.1:8100) and the backend under test become `<origin>`. Absolute vs relative is kept. Origins inside messages (for example `Visit https://huggingface.co/{id} to ask for access.`) are NOT normalised."
+  },
+  {
+   "name": "cut recordings",
+   "rule": "Where a recording only kept a prefix (probe excerpts of 160 characters, bridge-log strings cut at 2000 characters and marked `…`), the backend's value must start with it. A cut JSON excerpt is compared against the backend's JSON re-serialised compactly (`separators=(',', ':')`, as HF serialises), so whitespace is not compared but key order is."
+  },
+  {
+   "name": "headers not captured",
+   "rule": "A header is checked for presence/absence only if the recording could have captured it: those probe.py kept from its first version (X-Error-Code, X-Error-Message, Content-Type, Location, Link, WWW-Authenticate; git 7e14ba3) always; the others (Content-Disposition, ETag, X-Repo-Commit, X-Linked-*) only in recordings where they appear at least once, because probe.py's list grew during the day (07aa65a, 42cc2c8) and the bridge forwards a fixed subset."
+  }
+ ],
+ "pytest": {
+  "exit_code": 0,
+  "tail": "........................................................................ [ 26%]\n........................................................................ [ 52%]\n........................................................................ [ 79%]\n.............................x..........................                 [100%]\n271 passed, 2 deselected, 1 xfailed in 7.27s\n",
+  "tests": [
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-owner-walkthrough.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-owner-walkthrough-completion.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-requester-ask-access.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-owner-reads.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-clone-seed-reads.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-ui-walkthrough.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-anonymous-probes.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_formats_and_counts",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_body_kinds",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_captured_headers_follow_each_recording",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_status_and_error_headers_are_exact",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_message_origin_is_not_normalised",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_content_type_charset_counts",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_location_origin_normalised_but_not_its_form",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_json_key_order_values_and_emails",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_timestamps_keep_relations",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_etag_rules",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_json_prefix_ignores_whitespace_not_order",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_bridge_log_cut_strings_and_text",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[owner-walkthrough]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[owner-walkthrough-completion]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[requester-ask-access]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[owner-reads]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[clone-seed-reads]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[ui-walkthrough]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[anonymous-probes]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_sandbox_repo_matches_recording",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_pinned_timestamps_cover_seeded_requests",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_divergences_file_is_valid_and_globs_match",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_client_endpoint_is_pinned_to_backend",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_access_request_api_flow",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_access_request_api_same_status_errors",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_auth_check_raises_gated_repo_error_for_requester",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_list_parses_self_service_request_with_fields",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_list_many_requests",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_update_repo_settings_round_trips_through_model_info[manual]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_update_repo_settings_round_trips_through_model_info[False]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_update_repo_settings_round_trips_through_model_info[auto]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_hf_client",
+    "name": "test_hf_hub_download_follows_the_gate",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q10_lists_ordered_by_timestamp_then_insertion",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_check_order_validation_first[body0-\\u2716 Invalid option: expected one of \"accepted\"|\"rejected\"|\"pending\"|\"reset\"\\n  \\u2192 at status]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_check_order_validation_first[body1-\\u2716 Invalid option: expected one of \"accepted\"|\"rejected\"|\"pending\"|\"reset\"\\n  \\u2192 at status]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_check_order_validation_first[body2-\\u2716 Either userId or user must be provided, but not both]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_check_order_validation_first[body3-\\u2716 Too big: expected string to have <=200 characters\\n  \\u2192 at resetReason]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q20_no_mail_for_reviews_and_grants",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q20_ignored_resubmit_sends_nothing",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q1_anonymous_ask_access_is_401",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q2_resubmit_while_accepted_is_a_no_op",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q2_resubmit_while_pending_keeps_timestamp_and_fields",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q2_ask_access_on_non_gated_repo_is_a_no_op",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q2_resubmit_after_reset_replaces_fields",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q3_self_cancel_deletes_the_request[pending]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q3_self_cancel_deletes_the_request[accepted]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q3_self_cancel_deletes_the_request[rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q3_self_cancel_deletes_the_request[reset]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q5_reset_transitions_allowed[pending-reset]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q5_reset_transitions_allowed[reset-accepted]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q5_reset_transitions_allowed[reset-rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q5_reset_transitions_allowed[reset-pending]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q5_reset_to_reset_is_404",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q6_grant_accepts_rejected_and_reset_users[rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q6_grant_accepts_rejected_and_reset_users[reset]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q6_self_grant_is_400",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q9_no_not_gated_400_on_grant_and_handle",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q9_reason_with_other_status_is_ignored",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q10_after_before_filter_timestamp_exclusive[?after=2026-10-05T10:00:00.000Z-expected0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q10_after_before_filter_timestamp_exclusive[?before=2026-10-05T12:00:00.000Z-expected1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q10_after_before_filter_timestamp_exclusive[?after=2026-10-05T10:00:00.000Z&before=2026-10-05T12:00:00.000Z-expected2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q10_next_link_uses_after_last_timestamp",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q10_auto_accept_reviewedAt_equals_timestamp",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q13_fields_right_after_user",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q15_only_card_labels_and_json_text",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q16_no_field_is_required",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q14_report_reviewedAt_last_and_no_email_when_granted",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q21_q_is_substring_on_username_fullname_shared_email[BOri-expected0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q21_q_is_substring_on_username_fullname_shared_email[ridg-expected1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q21_q_is_substring_on_username_fullname_shared_email[example.org-expected2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q21_unshared_email_is_not_searched",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q24_owner_may_ask_access_on_own_repo",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q25_quicksearch_users_prefix[Test-expected0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q25_quicksearch_users_prefix[Bri-expected1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q25_quicksearch_users_prefix[conf-user-expected2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q25_quicksearch_users_prefix[Orig-expected3]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q25_quicksearch_other_type_is_400",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_unknown_repo_logged_in_is_404[GET-/Orosius/does-not-exist-xyz/resolve/main/config.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_unknown_repo_logged_in_is_404[GET-/api/models/Orosius/does-not-exist-xyz/auth-check]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_unknown_repo_logged_in_is_404[POST-/Orosius/does-not-exist-xyz/ask-access]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_private_repo_looks_missing_to_non_owners",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_revisions_and_tree_paths",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_lfs_redirects_to_resolve_cache_which_applies_the_gate",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_no_etag_on_307_and_unknown_expand_skipped",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_settings_echo_only_gated_private_visibility",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_health",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_reset_restores_default_sandbox_seed",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_builtin_sandbox_seed_reproduces_recorded_reads",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_builtin_demo_repos_and_carol",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_state_round_trip_and_put_clears_log_and_outbox",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_clock_set_advance_and_reads_do_not_tick",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_state_changes_tick_before_stamping",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_failed_writes_do_not_tick",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_log_entries_follow_bridge_schema",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_determinism_same_seed_same_sequence",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[anonymous-GET-/api/models/{repo}/user-access-request/pending-None]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[anonymous-POST-/api/models/{repo}/user-access-request/handle-body1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[anonymous-POST-/api/models/{repo}/user-access-request/grant-body2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[anonymous-POST-/api/models/{repo}/user-access-request/batch-body3]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[anonymous-PUT-/api/models/{repo}/settings-body4]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[bad-GET-/api/models/{repo}/user-access-request/pending-None]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[bad-POST-/api/models/{repo}/user-access-request/handle-body1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[bad-POST-/api/models/{repo}/user-access-request/grant-body2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[bad-POST-/api/models/{repo}/user-access-request/batch-body3]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_authentication_is_401[bad-PUT-/api/models/{repo}/settings-body4]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_permission_is_403[GET-/api/models/{repo}/user-access-request/pending-None]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_permission_is_403[POST-/api/models/{repo}/user-access-request/handle-body1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_permission_is_403[POST-/api/models/{repo}/user-access-request/grant-body2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_permission_is_403[POST-/api/models/{repo}/user-access-request/batch-body3]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_permission_is_403[PUT-/api/models/{repo}/settings-body4]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_permission_before_validation",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_unknown_repo_first[owner-404-Repository not found-RepoNotFound]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_unknown_repo_first[anonymous-401-Invalid username or password.-None]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_check_order_unknown_repo_first[requester-404-Repository not found-RepoNotFound]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_REV_12_validation_messages[body0-Invalid option: expected one of \"accepted\"|\"rejected\"|\"pending\"|\"reset\"-status]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_REV_12_validation_messages[body1-Too big: expected string to have <=200 characters-rejectionReason]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_REV_12_validation_messages[body2-Either userId or user must be provided, but not both-None]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_REV_12_unknown_user_and_missing_request",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_2_CFG_3_settings_echo_gated_and_model_info_follows[auto]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_2_CFG_3_settings_echo_gated_and_model_info_follows[manual]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_2_CFG_3_settings_echo_gated_and_model_info_follows[False]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_2_invalid_gated_value_is_400[True]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_2_invalid_gated_value_is_400[public]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_3_empty_settings_payload_is_accepted",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_3_no_get_settings",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_7_notification_mode_not_echoed[body0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_7_notification_mode_not_echoed[body1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_CFG_3_notification_settings_not_in_model_info",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_errors",
+    "name": "test_whoami_personas",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-anonymous-README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-anonymous-LICENSE]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-anonymous-LICENSE.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-anonymous-LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-requester-README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-requester-LICENSE]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-requester-LICENSE.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[GET-requester-LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-anonymous-README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-anonymous-LICENSE]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-anonymous-LICENSE.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-anonymous-LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-requester-README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-requester-LICENSE]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-requester-LICENSE.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_served_without_access[HEAD-requester-LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-.gitattributes]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-config.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-readme.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-README.MD]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-README.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-README]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-LICENSE.rst]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-license.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-LICENCE]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-COPYING]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-sub/README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[GET-sub/LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-.gitattributes]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-config.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-readme.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-README.MD]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-README.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-README]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-LICENSE.rst]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-license.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-LICENCE]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-COPYING]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-sub/README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_anonymous_is_401[HEAD-sub/LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[.gitattributes]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[config.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[readme.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[README.MD]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[README.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[README]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[LICENSE.rst]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[license.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[LICENCE]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[COPYING]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[sub/README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_not_allowlisted_requester_without_request_is_403[sub/LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_applies_in_auto_mode_too[README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_allowlist_applies_in_auto_mode_too[config.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_gate_checked_before_existence[main-does-not-exist.bin-anonymous-401-gate_anonymous]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_gate_checked_before_existence[main-does-not-exist.bin-requester-403-gate_no_request]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_gate_checked_before_existence[nonexistent-branch-config.json-anonymous-401-gate_anonymous]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_gate_checked_before_existence[nonexistent-branch-config.json-requester-403-gate_no_request]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_gate_checked_before_existence[main-sub/missing/LICENSE.txt-anonymous-401-gate_anonymous]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_gate_checked_before_existence[main-sub/missing/LICENSE.txt-requester-403-gate_no_request]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_allowlisted_missing_file_is_404_entry_not_found[LICENSE-anonymous]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_allowlisted_missing_file_is_404_entry_not_found[LICENSE-requester]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_allowlisted_missing_file_is_404_entry_not_found[LICENSE.md-anonymous]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_6_allowlisted_missing_file_is_404_entry_not_found[LICENSE.md-requester]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_1_owner_bypasses_gate[Orosius/conf-manual]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_1_owner_bypasses_gate[Orosius/conf-auto]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_states_same_answer_on_auth_check_resolve_get_and_head[no request]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_states_same_answer_on_auth_check_resolve_get_and_head[pending]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_states_same_answer_on_auth_check_resolve_get_and_head[rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_states_same_answer_on_auth_check_resolve_get_and_head[reset]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_states_same_answer_on_auth_check_resolve_get_and_head[accepted]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_3_anonymous_auth_check_on_gated_repo",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_4_metadata_and_tree_stay_public",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_7_CFG_5_not_gated_auth_check_is_ok[anonymous]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_7_CFG_5_not_gated_auth_check_is_ok[requester]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_7_not_gated_anonymous_resolve_redirects_to_resolve_cache",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_8_revoked_user_loses_access",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_pagination_with_link_next",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_default_limit_is_one_page_without_link",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_query_validation[?limit=5-expected0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_query_validation[?limit=9-expected1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_query_validation[?limit=1001-None]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_query_validation[?q=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-None]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_limit_bounds_accepted",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[testingb-expected0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[TESTINGB-expected1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[TestingBOrig-expected2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[Bridge-expected3]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[DemoC-expected4]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[zzz-no-match-expected5]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_11_reset_list_exists_server_side",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_outbox",
+    "name": "test_new_request_in_manual_mode_notifies_owner",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_outbox",
+    "name": "test_new_request_goes_to_notification_email_when_set",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_outbox",
+    "name": "test_no_new_request_mail_in_auto_mode",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_outbox",
+    "name": "test_reset_mails_the_user_with_reason",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_outbox",
+    "name": "test_reset_through_batch_mails_each_user",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_outbox",
+    "name": "test_resubmit_after_reset_is_a_new_request",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_outbox",
+    "name": "test_outbox_delete_clears",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_report",
+    "name": "test_REP_1_headers_and_every_status",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_report",
+    "name": "test_REP_1_entry_contents",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_report",
+    "name": "test_REP_2_report_needs_authentication",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_auto_mode_ask_access_is_accepted_immediately",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_manual_mode_ask_access_is_pending_with_303",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_form_fields_are_stored_with_labels_as_keys[json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_form_fields_are_stored_with_labels_as_keys[form]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_4_cancel_in_auto_mode_goes_back_to_pending",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_6_REQ_5_grant_without_request",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_7_grant_when_user_already_has_access",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_7_grant_unknown_user_is_404",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_7_grant_on_non_gated_repo_is_400",
+    "outcome": "xfailed",
+    "message": "D-4 (REV-7 vs open-questions.md \"Provisional choices in the clone\" (Q-9)): Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records \"No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)\" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded."
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_allowed_transitions[accepted-rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_allowed_transitions[rejected-pending]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_allowed_transitions[accepted-reset]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_allowed_transitions[rejected-reset]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_allowed_transitions[rejected-accepted]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_allowed_transitions[pending-rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_1_same_status_is_404[accepted]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_1_same_status_is_404[rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_1_same_status_is_404[pending]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REQ_4_reasons_never_listed_nor_told_to_requester",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_validation_is_400_without_code[body0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_validation_is_400_without_code[body1]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_handle_validation_is_400_without_code[body2]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_9_batch_outcomes_in_input_order",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_9_batch_back_to_pending_removes_reviewedAt",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_9_batch_size_limits[0]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_9_batch_size_limits[101]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_reset_then_resubmit_creates_a_new_pending_request",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_rejected_resubmit_is_silently_ignored",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[owner-walkthrough]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[owner-walkthrough-completion]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[requester-ask-access]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[owner-reads]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[clone-seed-reads]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[ui-walkthrough]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[anonymous-probes]",
+    "outcome": "passed",
+    "message": ""
+   }
+  ]
+ }
+}

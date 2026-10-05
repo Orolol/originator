@@ -1,0 +1,76 @@
+# Replay scenarios: one per recording under docs/hf-gated/observations/.
+#
+#   recording     file name (probe format or bridge-log format)
+#   covers        rule / question IDs the recording exercises (for the report)
+#   stand_ins     true when some repos are local stand-ins for real repos (contents are stubs)
+#   skip          step id -> reason. Only for steps OUTSIDE the backend surface (docs/system.md),
+#                 never to hide a mismatch.
+#   compare_only  step id -> {fields: [globs], reason}. Restricts the comparison to what the
+#                 backend can legitimately reproduce (stand-in repos, HTML pages HF renders).
+# Initial states live in src/conformance/seeds.py (scenario_seed), derived from each recording.
+
+scenarios:
+  owner-walkthrough:
+    recording: 2026-10-05-owner-walkthrough.json
+    covers: [REV-1, REV-2, REV-3, REV-5, REV-7, REV-8, REV-9, REV-10, REV-12, REQ-2, REQ-4, REQ-6,
+             TS-1, TS-2, CFG-3, CFG-6, ACC-7, REP-1, "§2 states", Q-2, Q-4, Q-6, Q-7, Q-9, Q-21]
+
+  owner-walkthrough-completion:
+    recording: 2026-10-05-owner-walkthrough-completion.json
+    covers: [REV-1, REV-3, REV-5, REQ-4, REQ-6, TS-1, TS-2, "§2 states", "§5.1 table", Q-2, Q-4, Q-5, Q-8]
+
+  requester-ask-access:
+    recording: 2026-10-05-requester-ask-access.json
+    covers: [REQ-2, "§2 states", REV-12, Q-1, Q-2, Q-8]
+    skip:
+      pre-page: "HTML model page: rendered by web/, not part of the backend surface (docs/system.md, 'Backend surface')"
+
+  owner-reads:
+    recording: 2026-10-05-owner-reads.json
+    covers: [REP-1, ACC-1, CFG-3, REQ-6, Q-14]
+
+  clone-seed-reads:
+    recording: 2026-10-05-clone-seed-reads.json
+    covers: [ACC-4, ACC-5, "api.md §3.3 check order", "system.md Personas (401 wording)", "system.md seed fidelity"]
+    stand_ins: true  # openai-community/gpt2
+    compare_only:
+      anon-ask-access-get:
+        fields: [status, "header:x-error-code", "header:x-error-message"]
+        reason: "HF answers a GET on the POST-only web route with its HTML 404 page; HTML pages are not part of the backend surface (docs/system.md), so only the status and error headers are comparable"
+
+  ui-walkthrough:
+    recording: 2026-10-05-ui-walkthrough.json
+    covers: ["§4 reset -> re-request", "§5.1 table", REV-1, REQ-6, TS-1, TS-2, CFG-3, CFG-6, CFG-7, ACC-1, Q-7]
+
+  anonymous-probes:
+    recording: 2026-10-05-anonymous-probes.json
+    covers: [ACC-3, ACC-4, ACC-5, ACC-6, CFG-5, REP-2, "api.md §3.1-3.3"]
+    stand_ins: true  # meta-llama/Llama-3.2-1B, bigcode/starcoder, mistralai/Mistral-7B-v0.1, openai-community/gpt2
+    skip:
+      page: "HTML model page (web/), not part of the backend surface (docs/system.md)"
+      page-tree: "HTML files page (web/), not part of the backend surface (docs/system.md)"
+      discussions-page: "HTML discussions page, not part of the backend surface (docs/system.md)"
+      discussions-api: "/api/models/{id}/discussions is not part of the backend surface (docs/system.md); ACC-4 only notes it stays public"
+      info-revision: "/api/models/{id}/revision/{rev} is not part of the backend surface (docs/system.md)"
+      gate-props-auto: "HTML page props (gate box), checked by the web UI tests, not by the backend"
+      gate-props-manual-custom: "HTML page props (gate box), checked by the web UI tests, not by the backend"
+      gate-props-heading: "HTML page props (gate box) of google/gemma-2-2b; the Gemma special case is out of scope"
+    compare_only:
+      tree:
+        fields: [status, "header:content-type"]
+        reason: "stand-in repo: the real Llama-3.2-1B file list (oids, sizes) is not reproducible"
+      blob-config:
+        fields: [status, "header:x-error-code", "header:x-error-message", "header:www-authenticate"]
+        reason: "/blob/ is an HTML page on HF; only the gate decision (ACC-5) is backend behaviour"
+
+# Live mode (-m live): read-only steps replayed against the bridge (BACKEND_URL=http://127.0.0.1:8100),
+# no seeding. Steps whose answer depends on the live request state (lists, report, gate messages) are
+# left out: that state has moved since the recording. Repos other than the sandbox are refused by
+# the bridge's repo allowlist, so they are left out too.
+live:
+  # owner-get-settings is left out: the bridge only routes PUT …/settings (BridgeRouteNotAllowed).
+  owner-reads: [owner-auth-check, owner-resolve]
+  clone-seed-reads: [model-info-anon, model-info-owner, model-info-expand, tree-main, tree-subdir,
+                     whoami-owner, whoami-requester, whoami-anon, whoami-bad-token, owner-readme,
+                     owner-gitattributes, owner-head-gitattributes, owner-config, anon-readme,
+                     anon-head-readme]
