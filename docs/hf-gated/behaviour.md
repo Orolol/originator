@@ -24,7 +24,10 @@ HTTP details are in [api.md](api.md), screens in [ui.md](ui.md), the gate form i
 - **CFG-2** `gated` is set with `PUT /api/models/{id}/settings`. The server schema accepts only
   `false`, `"auto"`, `"manual"`, and `true` is not valid. [SPEC] The Python client raises `ValueError`
   for anything else before sending. [CLIENT]
-- **CFG-3** The settings response echoes the updated settings object. [SPEC]
+- **CFG-3** The settings response echoes **only the fields sent**. `PUT {}` → `200 {}`, so an
+  empty payload is accepted server-side, whereas the Python client refuses it. There is no
+  `GET …/settings` (404), and model info does not expose the notification settings, so they are
+  write-only through the API. [OBS 2026-10-05] (The spec only says "the updated repo settings". [SPEC])
 - **CFG-4** `gated` and `private` are independent; a repo can be both private and gated. [CLIENT tests]
 - **CFG-5** `extra_gated_*` metadata has no effect while `gated == false`. A live repo
   (`mistralai/Mistral-7B-v0.1`) has `extra_gated_description` with `gated: false`. [OBS]

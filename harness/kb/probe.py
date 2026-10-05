@@ -99,6 +99,7 @@ def run_case(opener, case, env, allow_writes):
             data = json.dumps(case["body"]).encode()
             headers["Content-Type"] = "application/json"
     request = urllib.request.Request(case["url"], data=data, method=method, headers=headers)
+    sent_at = dt.datetime.now(dt.timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
     try:
         response = opener.open(request, timeout=30)
         status, response_headers, body = response.status, response.headers, response.read()
@@ -113,6 +114,7 @@ def run_case(opener, case, env, allow_writes):
         "request_body": case.get("body"),
         "request_encoding": case.get("body_encoding", "json") if "body" in case else None,
         "note": case.get("note"),
+        "sent_at": sent_at,  # lets server-side timestamps be matched to the request that set them
         "status": status,
         "headers": {k: response_headers[k] for k in KEPT_HEADERS if response_headers.get(k) is not None},
         "body_excerpt": None if text.lstrip().lower().startswith("<!doctype") else text[:160],

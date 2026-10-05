@@ -74,6 +74,12 @@ required fields [Q-1] [Q-16].
 
 `additionalProperties: false`: no `rejectionReason` and no `resetReason` in list items. [SPEC]
 
+Observed pending entry (owner token, 2026-10-05, repo with no extra fields) [OBS]:
+`{"user": {"_id", "avatarUrl": "/avatars/<hash>.svg", "isPro", "fullname", "user", "type": "user",
+"verifiedOrgNames": [], "email"}, "timestamp": "2026-10-05T13:31:55.250Z", "status": "pending"}`.
+It has **no** `fields`, `reviewedAt` or `grantedBy` keys. The keys appear in that order, and
+`avatarUrl` is a relative path. A single page has no `Link` header.
+
 How the Python client maps it (it drops `grantedBy`, `reviewedAt` and `_id`): `username=user.user`,
 `fullname=user.fullname`, `email=user.get("email")`, `status`, `timestamp`, `fields`. [CLIENT]
 
