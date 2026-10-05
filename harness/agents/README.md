@@ -8,6 +8,7 @@ Prompts actually given to subagents, checked in verbatim so the run can be audit
 | [runs/2026-10-05-ui-builder.md](runs/2026-10-05-ui-builder.md) | Build the Next.js UI (gate box, settings section, review modal) | Opus | Several screens and states, many provisional decisions to flag |
 | [runs/2026-10-05-clone-builder.md](runs/2026-10-05-clone-builder.md) | Build the in-memory clone (state machine, wire protocol, seeds, control endpoints) | Opus | Core business logic; fidelity-critical |
 | [runs/2026-10-05-conformance-verifier.md](runs/2026-10-05-conformance-verifier.md) | Build the **blind** conformance suite (fixture replay, rule tests, official client driver) | Opus | Verification quality is the grading criterion; must judge normalisations |
+| [runs/2026-10-05-clone-ui-walkthrough.md](runs/2026-10-05-clone-ui-walkthrough.md) | Script the live UI walkthrough in Playwright, run it on web + clone, diff the clone log against the live log | Sonnet | Bounded; the recorded live log is the reference |
 
 Each pair ran **in parallel** against a contract written first ([docs/system.md](../../docs/system.md)):
 bridge + UI, then clone + verifier. The verifier may not read the clone's code (only its README and
