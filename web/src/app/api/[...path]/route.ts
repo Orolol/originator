@@ -1,4 +1,4 @@
-// `/api/*` on the web origin → `${BACKEND_URL}/api/*` with the persona's token (docs/system.md).
+// `/api/*` on the web origin → the chosen backend's `/api/*` with the persona's token (docs/system.md).
 // Path and query verbatim; status, body and the allow-listed headers passed back.
 import type { NextRequest } from "next/server";
 import { forward } from "@/lib/proxy";

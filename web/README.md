@@ -2,17 +2,23 @@
 
 Next.js (App Router) replica of Hugging Face's gated-model screens: the requester gate box on
 `/{ns}/{repo}` and the owner's "Gated user access" section plus "Manage access requests" modal on
-`/{ns}/{repo}/settings`. It talks to `BACKEND_URL` (bridge or clone) only; the contract is
+`/{ns}/{repo}/settings`. It talks to one backend at a time, the clone or the bridge, chosen in the header; the contract is
 [../docs/system.md](../docs/system.md), the screens [../docs/hf-gated/ui.md](../docs/hf-gated/ui.md).
 
 ## Run
 
-The backend first (from the repo root): `uv run --project bridge bridge` (port 8100).
+Start the backends first, from the repo root: the clone with `uv run --project clone clone` (port
+8200) and/or the bridge with `uv run --project bridge bridge` (port 8100).
 
 ```bash
 npm install
-npm run dev          # http://localhost:3000 ; BACKEND_URL defaults to http://127.0.0.1:8100
+npm run dev          # http://localhost:3000
 ```
+
+The header has a backend switch, `Backend: clone | bridge`, which sets the `backend` cookie through
+`/-/backend?to=clone|bridge&next=…`. **clone** is the default: local, in-memory, resettable. **bridge**
+is the live huggingface.co, so writes reach the real Hub. Use `CLONE_URL` / `BRIDGE_URL` to move them;
+`BACKEND_URL` pins one URL and disables the switch.
 
 Pick a persona with `/-/persona?as=anonymous|owner|requester&next=/Orosius/deltanet-mla-latent`
 (or the links in the header).

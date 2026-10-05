@@ -1,7 +1,8 @@
 // Web-route → backend proxy (docs/system.md "Web app conventions": the browser fires HF-shaped
-// requests at the web origin, the web server forwards them to BACKEND_URL with the persona token).
+// requests at the web origin, the web server forwards them to the chosen backend with the persona token).
 import type { NextRequest } from "next/server";
-import { BACKEND_URL } from "./config";
+import { BACKEND_COOKIE, parseBackend } from "./backends";
+import { backendUrlFor } from "./config";
 import { authHeaders, parsePersona, PERSONA_COOKIE, type PersonaId } from "./personas";
 
 /** Response headers passed back to the browser (docs/system.md "Backend surface"). Never Set-Cookie. */
@@ -22,13 +23,18 @@ export function personaFromRequest(req: NextRequest): PersonaId {
   return parsePersona(req.cookies.get(PERSONA_COOKIE)?.value);
 }
 
+/** Base URL of the backend this browser chose (cookie), unless BACKEND_URL pins one. */
+export function backendUrlFromRequest(req: NextRequest): string {
+  return backendUrlFor(parseBackend(req.cookies.get(BACKEND_COOKIE)?.value));
+}
+
 /**
  * Absolute backend URLs in `Location` / `Link` (the bridge already rewrote huggingface.co to its
  * own URL) are mapped to the web origin, so redirects and pagination stay on the web app.
  * Web-side normalisation, the analogue of the bridge's rule; other hosts (CDN) are untouched.
  */
-export function rewriteBackendUrls(value: string, webOrigin: string): string {
-  return value.split(BACKEND_URL).join(webOrigin);
+export function rewriteBackendUrls(value: string, backendUrl: string, webOrigin: string): string {
+  return value.split(backendUrl).join(webOrigin);
 }
 
 interface ForwardOptions {
@@ -50,7 +56,7 @@ export async function callBackend(req: NextRequest, path: string, opts: ForwardO
     const ct = req.headers.get("content-type");
     if (ct) headers["Content-Type"] = ct;
   }
-  return fetch(`${BACKEND_URL}${path}${req.nextUrl.search}`, {
+  return fetch(`${backendUrlFromRequest(req)}${path}${req.nextUrl.search}`, {
     method,
     headers,
     body,
@@ -65,7 +71,12 @@ export function relay(upstream: Response, req: NextRequest): Response {
   for (const name of PASSTHROUGH_HEADERS) {
     const value = upstream.headers.get(name);
     if (value === null) continue;
-    headers.set(name, name === "location" || name === "link" ? rewriteBackendUrls(value, req.nextUrl.origin) : value);
+    headers.set(
+      name,
+      name === "location" || name === "link"
+        ? rewriteBackendUrls(value, backendUrlFromRequest(req), req.nextUrl.origin)
+        : value,
+    );
   }
   const noBody = req.method === "HEAD" || [101, 204, 205, 304].includes(upstream.status);
   return new Response(noBody ? null : upstream.body, {
@@ -80,13 +91,13 @@ export async function forward(req: NextRequest): Promise<Response> {
   try {
     return relay(await callBackend(req, req.nextUrl.pathname), req);
   } catch (err) {
-    return backendUnreachable(err);
+    return backendUnreachable(req, err);
   }
 }
 
-export function backendUnreachable(err: unknown): Response {
+export function backendUnreachable(req: NextRequest, err: unknown): Response {
   // Web-app-only failure (no HF equivalent): the backend did not answer at all.
-  return new Response(`Backend unreachable at ${BACKEND_URL}: ${String(err)}`, {
+  return new Response(`Backend unreachable at ${backendUrlFromRequest(req)}: ${String(err)}`, {
     status: 502,
     headers: { "content-type": "text/plain; charset=utf-8" },
   });

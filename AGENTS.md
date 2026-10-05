@@ -53,7 +53,7 @@ exist yet. Update this section when they land.
 | `harness/kb/` | KB tooling: `probe.py` (scripted probes; read-only unless `--allow-writes`), `extract_openapi.py` (vendor-spec extract), `bridge_log_to_md.py` (export a bridge/clone log), `compare_logs.py` (diff two logs: ordered writes, multiset of reads), `probes/*.json` (cases) |
 | `bridge/` | Python (uv, FastAPI, httpx): HF-compatible proxy with personas, route/repo allowlists, exchange log. See `bridge/README.md` |
 | `clone/` | Python (uv, FastAPI): in-memory, deterministic HF-compatible backend (domain state machine, wire protocol, seeds, `/__clone__/*` control endpoints). See `clone/README.md` |
-| `web/` | Next.js 16 (App Router, TypeScript): requester gate box, owner settings section, review modal; proxies HF-shaped requests to `BACKEND_URL` (bridge or clone). See `web/README.md`; `web/AGENTS.md` is Next's own agent note |
+| `web/` | Next.js 16 (App Router, TypeScript): requester gate box, owner settings section, review modal; proxies HF-shaped requests to the backend chosen in its header (clone by default, or bridge; `BACKEND_URL` pins one) (bridge or clone). See `web/README.md`; `web/AGENTS.md` is Next's own agent note |
 | `conformance/` | Blind conformance suite: replays the live recordings against a backend, rule tests by ID, the official `huggingface_hub` client, `divergences.yaml` (every accepted gap with its rule/Q id) |
 | `docs/hf-gated/verification/` | Published verification results (conformance report, clone-vs-live UI walkthrough diff) |
 | `harness/agents/` | Subagent prompts actually used, verbatim, with the shared patterns |
@@ -120,7 +120,8 @@ uv run --project clone clone
 uv run --project clone pytest clone/tests
 ```
 
-Web (port 3000; start the bridge first, `BACKEND_URL` defaults to `http://127.0.0.1:8100`):
+Web (port 3000). Start the clone and/or the bridge first. The header switches between them: the clone
+is the default, and the bridge writes to the real Hub. `BACKEND_URL` pins one and disables the switch:
 
 ```bash
 npm --prefix web run dev
@@ -157,9 +158,8 @@ uv run --project conformance conformance-report --pytest
 
 The second command writes `conformance/reports/latest.{md,json}`. Live mode (bridge running, GET/HEAD
 only): `BACKEND_URL=http://127.0.0.1:8100 uv run --project conformance conformance-report --live`.
-`.claude/launch.json` defines `bridge` (8100), `clone` (8200), `web` (3000 → bridge) and `web-clone` (3001 →
-clone, via `BACKEND_URL`). Only one `next dev` can run in `web/` at a time, so stop `web` before
-starting `web-clone`.
+`.claude/launch.json` defines `bridge` (8100), `clone` (8200) and `web` (3000; the backend is chosen in
+the UI).
 
 KB probes:
 

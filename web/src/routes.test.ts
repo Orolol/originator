@@ -1,12 +1,20 @@
 // @vitest-environment node
 // Web routes → backend (docs/system.md "Web app conventions"): persona token, path/query verbatim,
-// allow-listed headers, ask-access form → JSON and 303 → repo page on the web origin.
-import { describe, expect, it, vi } from "vitest";
+// allow-listed headers, ask-access form → JSON and 303 → repo page on the web origin, backend switch.
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
-import { BACKEND_URL } from "@/lib/config";
+import { BACKEND_URLS } from "@/lib/config";
 import { POST as askAccess } from "@/app/[ns]/[repo]/ask-access/route";
 import { GET as apiGet } from "@/app/api/[...path]/route";
 import { GET as switchPersona } from "@/app/-/persona/route";
+import { GET as switchBackend } from "@/app/-/backend/route";
+
+// No backend cookie → the default backend (the clone), unless BACKEND_URL pins one.
+const BACKEND_URL = BACKEND_URLS.clone;
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
 
 const WEB = "http://localhost:3000";
 const REPO = "Orosius/deltanet-mla-latent";
@@ -111,5 +119,41 @@ describe("GET /-/persona", () => {
     const external = switchPersona(new NextRequest(`${WEB}/-/persona?as=owner&next=//evil.example`));
     expect(external.headers.get("location")).toBe(`${WEB}/`);
     expect(switchPersona(new NextRequest(`${WEB}/-/persona?as=admin`)).status).toBe(400);
+  });
+});
+
+describe("backend switch", () => {
+  it.each([
+    ["clone", BACKEND_URLS.clone],
+    ["bridge", BACKEND_URLS.bridge],
+    ["bogus", BACKEND_URLS.clone], // unknown cookie → default (clone): nothing reaches the real Hub by accident
+  ])("cookie backend=%s routes /api/* to %s and rewrites that backend's URLs", async (backend, url) => {
+    const fetchMock = stubBackend(
+      () => new Response("[]", { headers: { link: `<${url}/api/models/${REPO}/user-access-request/pending?after=x>; rel="next"` } }),
+    );
+    const path = `/api/models/${REPO}/user-access-request/pending`;
+    const res = await apiGet(new NextRequest(`${WEB}${path}`, { headers: { cookie: `backend=${backend}; persona=owner` } }));
+    expect(fetchMock.mock.calls[0][0]).toBe(`${url}${path}`);
+    expect(res.headers.get("link")).toBe(`<${WEB}${path}?after=x>; rel="next"`);
+  });
+
+  it("GET /-/backend sets the cookie and redirects to a same-origin path; unknown backend → 400", () => {
+    const ok = switchBackend(new NextRequest(`${WEB}/-/backend?to=bridge&next=/${REPO}/settings`));
+    expect(ok.status).toBe(303);
+    expect(ok.headers.get("location")).toBe(`${WEB}/${REPO}/settings`);
+    expect(ok.headers.get("set-cookie")).toContain("backend=bridge");
+    expect(switchBackend(new NextRequest(`${WEB}/-/backend?to=bridge&next=//evil.example`)).headers.get("location")).toBe(`${WEB}/`);
+    expect(switchBackend(new NextRequest(`${WEB}/-/backend?to=staging`)).status).toBe(400);
+  });
+
+  it("BACKEND_URL pins every request and refuses the switch (the clone e2e relies on it)", async () => {
+    vi.stubEnv("BACKEND_URL", "http://127.0.0.1:8201/");
+    const fetchMock = stubBackend(() => Response.json([]));
+    const path = `/api/models/${REPO}/user-access-request/pending`;
+    await apiGet(new NextRequest(`${WEB}${path}`, { headers: { cookie: "backend=bridge" } }));
+    expect(fetchMock.mock.calls[0][0]).toBe(`http://127.0.0.1:8201${path}`);
+    const refused = switchBackend(new NextRequest(`${WEB}/-/backend?to=bridge&next=/`));
+    expect(refused.status).toBe(409);
+    expect(refused.headers.get("set-cookie")).toBeNull();
   });
 });

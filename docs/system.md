@@ -1,13 +1,14 @@
 # System: web ⇄ backend (bridge | clone)
 
-One web app, two interchangeable backends. The web app never knows which one it talks to: it only
-knows `BACKEND_URL`. Both backends speak the **Hugging Face wire protocol** for the slice
+One web app, two interchangeable backends. The web app never knows *how* a backend works: it only
+knows each backend's base URL, and the browser picks one with a switch in the header (below). Both
+backends speak the **Hugging Face wire protocol** for the slice
 ([hf-gated/api.md](hf-gated/api.md)), so the same web app, the same scenario scripts and the
 official `huggingface_hub` client (with `HF_ENDPOINT`) drive either one.
 
 ```
-browser ──► web (Next.js, :3000) ──► BACKEND_URL ──┬─► bridge (Python, :8100) ──► https://huggingface.co
-            pages at HF paths                      └─► clone  (Python, :8200, planned; in-memory)
+browser ──► web (Next.js, :3000) ──► chosen backend ──┬─► bridge (Python, :8100) ──► https://huggingface.co
+            pages at HF paths                         └─► clone  (Python, :8200; in-memory)
             /api/* and web routes proxied
 ```
 
@@ -87,13 +88,20 @@ host (a CDN) is left untouched. This is the only normalisation the bridge applie
   app by changing the base URL.
 - **Same requests fired**: the browser calls `/api/…` and the web routes (`/{repo}/ask-access`,
   `/{repo}/user-access-report`, `/{repo}/resolve/…`) on the web origin, and the web server proxies
-  them to `BACKEND_URL` with the persona token.
+  them to the chosen backend with the persona token.
+- **Backend switch**: a `backend` cookie (`clone` | `bridge`), set by
+  `GET /-/backend?to=<backend>&next=<path>` (links in the header), selects the backend per browser.
+  The default is `clone`, so nothing reaches the real Hub unless the bridge is chosen explicitly. The
+  header says which backend answers and flags the bridge as live. URLs come from `CLONE_URL` (default
+  `http://127.0.0.1:8200`) and `BRIDGE_URL` (default `http://127.0.0.1:8100`). **`BACKEND_URL`, when
+  set, pins every request to it and disables the switch** (`/-/backend` → 409). Both e2e configs pin:
+  the read-only one to the bridge, and the clone walkthrough, which writes, to its own clone.
 - **Same accessible structure**: real `<button>`, `<select>`, `<a>`, `role="dialog"`,
   `role="tablist"`/`tab` with HF's exact labels, so `getByRole(…, {name})` selectors work on both
   sites. No styling work.
-- The web proxy rewrites absolute `BACKEND_URL` URLs in `Location` and `Link` to the web origin.
-  This only works if the bridge's `BRIDGE_PUBLIC_URL` equals `BACKEND_URL` exactly (`127.0.0.1` ≠
-  `localhost`). The file list comes from `siblings`, which is recursive, rather than `/tree/main`.
+- The web proxy rewrites the chosen backend's absolute URLs in `Location` and `Link` to the web
+  origin. This only works if each backend's public URL (`BRIDGE_PUBLIC_URL`, `CLONE_PUBLIC_URL`)
+  equals the web app's URL for it exactly (`127.0.0.1` ≠ `localhost`). The file list comes from `siblings`, which is recursive, rather than `/tree/main`.
 - Persona switch: `GET /-/persona?as=<persona>&next=<path>` sets the cookie and redirects.
   (Folders starting with `_` are private in the Next.js App Router, hence `/-/`.)
 - Requester gate state comes from `auth-check`, because the API has no "my request status" endpoint:

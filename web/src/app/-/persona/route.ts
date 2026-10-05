@@ -2,13 +2,9 @@
 // "Web app conventions"). Web-app-only control route, not part of HF's surface.
 import { NextResponse, type NextRequest } from "next/server";
 import { isPersonaId, PERSONA_COOKIE, PERSONA_IDS } from "@/lib/personas";
+import { safeNext } from "@/lib/safeNext";
 
 export const dynamic = "force-dynamic";
-
-/** Only same-origin absolute paths, so the switch cannot become an open redirect. */
-function safeNext(next: string | null): string {
-  return next && next.startsWith("/") && !next.startsWith("//") && !next.startsWith("/\\") ? next : "/";
-}
 
 export function GET(req: NextRequest) {
   const persona = req.nextUrl.searchParams.get("as");

@@ -3,8 +3,7 @@
 // `{<field label>: <value>}` (api.md §1: JSON or form-encoded both work [OBS]; JSON matches the spec).
 // Backend 303 → browser 303 to the repo page on the web origin; anything else is relayed verbatim.
 import type { NextRequest } from "next/server";
-import { BACKEND_URL } from "@/lib/config";
-import { backendUnreachable, callBackend, relay } from "@/lib/proxy";
+import { backendUnreachable, backendUrlFromRequest, callBackend, relay } from "@/lib/proxy";
 
 export const dynamic = "force-dynamic";
 
@@ -36,13 +35,13 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ ns: string
       contentType: "application/json",
     });
   } catch (err) {
-    return backendUnreachable(err);
+    return backendUnreachable(req, err);
   }
   if (upstream.status === 303) {
     // HF answers `303 Location: https://huggingface.co/{repo}` (the bridge rewrites the host). Keep
     // the target path, on the web origin.
     const location = upstream.headers.get("location");
-    const target = location ? new URL(location, BACKEND_URL) : null;
+    const target = location ? new URL(location, backendUrlFromRequest(req)) : null;
     const path = target ? `${target.pathname}${target.search}` : `/${ns}/${repo}`;
     return new Response(null, { status: 303, headers: { location: new URL(path, req.nextUrl.origin).toString() } });
   }

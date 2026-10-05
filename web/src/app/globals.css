@@ -54,3 +54,9 @@ section[data-gate-state] {
 [role="tab"][aria-selected="true"] {
   font-weight: bold;
 }
+
+/* The bridge reaches the real huggingface.co: make that visible next to the backend switch. */
+.backend-live {
+  color: #b42318;
+  font-weight: 600;
+}

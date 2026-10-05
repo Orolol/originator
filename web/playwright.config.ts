@@ -3,6 +3,8 @@ import { defineConfig } from "@playwright/test";
 // Read-only e2e against a live backend (bridge by default, BACKEND_URL otherwise).
 // Start the bridge first: `uv run --project bridge bridge` from the repo root.
 const PORT = Number(process.env.E2E_PORT ?? 3100);
+// Pinned: the app's own default backend is the clone, and its UI switch is disabled when pinned.
+const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:8100";
 
 export default defineConfig({
   testDir: "e2e",
@@ -21,6 +23,7 @@ export default defineConfig({
   },
   webServer: {
     command: `npm run build && npx next start -p ${PORT}`,
+    env: { BACKEND_URL },
     url: `http://localhost:${PORT}/`,
     reuseExistingServer: true,
     timeout: 180_000,
