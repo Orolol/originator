@@ -1,0 +1,18 @@
+# Secrets (HF tokens live only here)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# Node / Next.js
+node_modules/
+.next/
+
+# Local scratch and raw (unredacted) recordings
+scratch/
+harness/recordings/raw/

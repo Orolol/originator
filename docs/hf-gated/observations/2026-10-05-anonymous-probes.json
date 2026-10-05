@@ -1,0 +1,803 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-anonymous.json",
+  "recorded_at": "2026-10-05T13:33:43Z"
+ },
+ "records": [
+  {
+   "id": "meta-manual",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/meta-llama/Llama-3.2-1B?expand[]=gated",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "repo metadata stays public; gated=manual",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"_id\":\"66eaebb25fcdca258b9576cb\",\"id\":\"meta-llama/Llama-3.2-1B\",\"gated\":\"manual\"}"
+  },
+  {
+   "id": "meta-auto",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/bigcode/starcoder?expand[]=gated",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "gated=auto",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"_id\":\"644677e41173e85ac7f10745\",\"id\":\"bigcode/starcoder\",\"gated\":\"auto\"}"
+  },
+  {
+   "id": "meta-not-gated",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/mistralai/Mistral-7B-v0.1?expand[]=gated",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "gated=false although card keeps an extra_gated_description",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"_id\":\"650aedb6238a644cb93a52c3\",\"id\":\"mistralai/Mistral-7B-v0.1\",\"gated\":false}"
+  },
+  {
+   "id": "info-revision",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/meta-llama/Llama-3.2-1B/revision/main",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "full model info is public",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"_id\":\"66eaebb25fcdca258b9576cb\",\"id\":\"meta-llama/Llama-3.2-1B\",\"private\":false,\"pipeline_tag\":\"text-generation\",\"library_name\":\"transformers\",\"tags\":[\"transfo"
+  },
+  {
+   "id": "tree",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/meta-llama/Llama-3.2-1B/tree/main",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "file listing (paths, sizes, oids) is public",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[{\"type\":\"directory\",\"oid\":\"43407f64fdf0c27f09292520c4ebed5326ad6b4f\",\"size\":0,\"path\":\"original\"},{\"type\":\"file\",\"oid\":\"a6344aac8c09253b3b630fb776ae94478aa0275b"
+  },
+  {
+   "id": "page",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "model page renders",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "page-tree",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/tree/main",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "files tab renders",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "discussions-page",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/discussions",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "community tab readable",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "discussions-api",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/meta-llama/Llama-3.2-1B/discussions",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "community API readable",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"discussions\":[{\"num\":379,\"author\":{\"_id\":\"67fd1aa0b80d3058701dfa63\",\"avatarUrl\":\"/avatars/772c70e68c8ab0f11cf69622fb13ff5a.svg\",\"fullname\":\"Chang Lu\",\"name\":\""
+  },
+  {
+   "id": "resolve-config-manual",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "gated file",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "resolve-config-auto",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/bigcode/starcoder/resolve/main/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "same answer in auto mode",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model bigcode/starcoder is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model bigcode/starcoder is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "head-config-auto",
+   "as": "anonymous",
+   "method": "HEAD",
+   "url": "https://huggingface.co/bigcode/starcoder/resolve/main/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "HEAD behaves like GET",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model bigcode/starcoder is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "resolve-gitattributes",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": ".gitattributes is gated",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "resolve-subdir",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/original/params.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "subdirectory file gated",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "resolve-use-policy",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/USE_POLICY.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "other .md files gated",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "allow-readme",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "allowlisted",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "---\nlanguage:\n- en\n- de\n- fr\n- it\n- pt\n- hi\n- es\n- th\nlibrary_name: transformers\npipeline_tag: text-generation\ntags:\n- facebook\n- meta\n- pytorch\n- llama\n- llama"
+  },
+  {
+   "id": "allow-readme-auto",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/bigcode/starcoder/resolve/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "allowlisted in auto mode too",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "---\npipeline_tag: text-generation\ninference: true\nwidget:\n- text: 'def print_hello_world():'\n  example_title: Hello world\n  group: Python\nlicense: bigcode-openr"
+  },
+  {
+   "id": "allow-license-txt",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/LICENSE.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "allowlisted",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "LLAMA 3.2 COMMUNITY LICENSE AGREEMENT\nLlama 3.2 Version Release Date: September 25, 2024\n\n“Agreement” means the terms and conditions for use, reproduction, dist"
+  },
+  {
+   "id": "allow-license-missing",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/LICENSE",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "allowlisted path, file absent -> 404 not 401",
+   "status": 404,
+   "headers": {
+    "x-error-code": "EntryNotFound",
+    "x-error-message": "Entry not found",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Entry not found"
+  },
+  {
+   "id": "allow-license-md-missing",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/LICENSE.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "allowlisted path, file absent",
+   "status": 404,
+   "headers": {
+    "x-error-code": "EntryNotFound",
+    "x-error-message": "Entry not found",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Entry not found"
+  },
+  {
+   "id": "deny-readme-lower",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/readme.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "allowlist is case-sensitive",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-readme-upper-ext",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/README.MD",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "case-sensitive extension",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-readme-txt",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/README.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "only README.md",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-readme-noext",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/README",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "only README.md",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-license-rst",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/LICENSE.rst",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "only none/.md/.txt",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-license-lower",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/license.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "case-sensitive",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-licence",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/LICENCE",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "British spelling not allowlisted",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-copying",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/COPYING",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "not allowlisted",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-subdir-readme",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/original/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "root only",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "deny-subdir-license",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/original/LICENSE.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "root only",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "raw-readme",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/raw/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/raw/ is gated even for README.md",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "blob-config",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/blob/main/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/blob/ page gated",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "gate-before-entry",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/main/does-not-exist.bin",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "gate checked before file existence",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "gate-before-revision",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/resolve/nonexistent-branch/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "gate checked before revision existence",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in."
+  },
+  {
+   "id": "missing-repo-resolve",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/someone-xyz123/definitely-not-a-repo/resolve/main/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "comparison: unknown repo, anonymous",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "Invalid username or password."
+  },
+  {
+   "id": "auth-check-gated",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/meta-llama/Llama-3.2-1B/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "JSON error body",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "{\"error\":\"Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.\"}"
+  },
+  {
+   "id": "auth-check-public",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/openai-community/gpt2/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "comparison: public repo",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "OK"
+  },
+  {
+   "id": "auth-check-missing",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/someone-xyz123/definitely-not-a-repo/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "comparison: unknown repo",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "{\"error\":\"Invalid username or password.\"}"
+  },
+  {
+   "id": "owner-list-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/meta-llama/Llama-3.2-1B/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner endpoint, anonymous",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "{\"error\":\"Invalid username or password.\"}"
+  },
+  {
+   "id": "owner-list-not-gated-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/openai-community/gpt2/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner endpoint on non-gated repo, anonymous: auth checked first",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": "{\"error\":\"Invalid username or password.\"}"
+  },
+  {
+   "id": "report-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B/user-access-report",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "access report, anonymous",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "text/html; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\""
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "gate-props-auto",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/bigcode/starcoder",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "gate component props, default texts",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null,
+   "props": {
+    "additionalFields": {
+     "I accept the above license agreement, and will use the Model complying with the set of use restrictions and sharing requirements": "checkbox"
+    },
+    "additionalMessage": {
+     "contents": "## Model License Agreement\nPlease read the BigCode [OpenRAIL-M license](https://huggingface.co/spaces/bigcode/bigcode-model-license-agreement) agreement before accepting it.\n  ",
+     "html": "<h2>Model License Agreement</h2>\n<p>Please read the BigCode <a href=\"https://huggingface.co/spaces/bigcode/bigcode-model-license-agreement\" rel=\"nofollow\">OpenRAIL-M license</a> agreement before accep…[+16 chars]",
+     "classNames": "hf-sanitized hf-sanitized-vVSXW-lqd4_dlOvnEcMNB"
+    },
+    "gated": "auto",
+    "isLoggedIn": false,
+    "repoId": "bigcode/starcoder",
+    "repoType": "model",
+    "isGoogleGemma": false,
+    "requiresPaidPlan": false
+   },
+   "visible_text": [
+    "You need to agree to share your contact information to access this model",
+    "This repository is publicly accessible, but",
+    "you have to accept the conditions to access its files and content",
+    ".",
+    "Model License Agreement",
+    "Please read the BigCode",
+    "OpenRAIL-M license",
+    "agreement before accepting it.",
+    "Log in",
+    "or",
+    "Sign Up",
+    "to review the conditions and access this model content."
+   ]
+  },
+  {
+   "id": "gate-props-manual-custom",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/meta-llama/Llama-3.2-1B",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "custom description + button, all field types",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null,
+   "props": {
+    "accessButtonString": "Submit",
+    "additionalFields": {
+     "First Name": "text",
+     "Last Name": "text",
+     "Date of birth": "date_picker",
+     "Country": "country",
+     "Affiliation": "text",
+     "Job title": {
+      "type": "select",
+      "options": [
+       "Student",
+       "Research Graduate",
+       "AI researcher",
+       "AI developer/engineer",
+       "Reporter",
+       "Other"
+      ]
+     },
+     "geo": "ip_location",
+     "By clicking Submit below I accept the terms of the license and acknowledge that the information I provide will be collected stored processed and shared in accordance with the Meta Privacy Policy": "checkbox"
+    },
+    "additionalMessage": {
+     "contents": "### LLAMA 3.2 COMMUNITY LICENSE AGREEMENT\n\nLlama 3.2 Version Release Date: September 25, 2024\n\n“Agreement” means the terms and conditions for use, reproduction, distribution  and modification of the L…[+13342 chars]",
+     "html": "<h3>LLAMA 3.2 COMMUNITY LICENSE AGREEMENT</h3>\n<p>Llama 3.2 Version Release Date: September 25, 2024</p>\n<p>“Agreement” means the terms and conditions for use, reproduction, distribution  and modifica…[+14211 chars]",
+     "classNames": "hf-sanitized hf-sanitized-7Jvr1Unnh6hKfRAZjUuyk"
+    },
+    "customDescription": {
+     "contents": "The information you provide will be collected, stored, processed and shared in accordance with the [Meta Privacy Policy](https://www.facebook.com/privacy/policy/).",
+     "html": "<p>The information you provide will be collected, stored, processed and shared in accordance with the <a href=\"https://www.facebook.com/privacy/policy/\" rel=\"nofollow\">Meta Privacy Policy</a>.</p>\n",
+     "classNames": "hf-sanitized hf-sanitized-F00iADv2EESOL-SL9P8TB"
+    },
+    "gated": "manual",
+    "isLoggedIn": false,
+    "repoId": "meta-llama/Llama-3.2-1B",
+    "repoType": "model",
+    "isGoogleGemma": false,
+    "requiresPaidPlan": false
+   },
+   "visible_text": [
+    "You need to agree to share your contact information to access this model",
+    "The information you provide will be collected, stored, processed and shared in accordance with the",
+    "Meta Privacy Policy",
+    ".",
+    "LLAMA 3.2 COMMUNITY LICENSE AGREEMENT",
+    "Llama 3.2 Version Release Date: September 25, 2024"
+   ]
+  },
+  {
+   "id": "gate-props-heading",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/google/gemma-2-2b",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "custom heading + button",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null,
+   "props": {
+    "accessButtonString": "Acknowledge license",
+    "additionalMessage": {
+     "contents": "To access Gemma on Hugging Face, you’re required to review and agree to Google’s usage license. To do this, please ensure you’re logged in to Hugging Face and click below. Requests are processed immed…[+7 chars]",
+     "html": "<p>To access Gemma on Hugging Face, you’re required to review and agree to Google’s usage license. To do this, please ensure you’re logged in to Hugging Face and click below. Requests are processed im…[+15 chars]",
+     "classNames": "hf-sanitized hf-sanitized-dlY0fv1NfWtSnvxJ1XVYK"
+    },
+    "customHeading": "Access Gemma on Hugging Face",
+    "gated": "manual",
+    "isLoggedIn": false,
+    "repoId": "google/gemma-2-2b",
+    "repoType": "model",
+    "isGoogleGemma": true,
+    "requiresPaidPlan": false
+   },
+   "visible_text": [
+    "Access Gemma on Hugging Face",
+    "This repository is publicly accessible, but",
+    "you have to accept the conditions to access its files and content",
+    ".",
+    "To access Gemma on Hugging Face, you’re required to review and agree to Google’s usage license. To do this, please ensure you’re logged in to Hugging Face and click below. Requests are processed immed…[+7 chars]",
+    "Log in",
+    "or",
+    "Sign Up",
+    "to review the conditions and access this model content."
+   ]
+  }
+ ]
+}

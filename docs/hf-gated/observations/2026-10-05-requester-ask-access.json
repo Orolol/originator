@@ -1,0 +1,187 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-requester-ask-access.json",
+  "recorded_at": "2026-10-05T13:32:01Z"
+ },
+ "records": [
+  {
+   "id": "pre-auth-check",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "baseline: logged in, no request",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model Orosius/deltanet-mla-latent is restricted and you are not in the authorized list. Visit https://huggingface.co/Orosius/deltanet-mla-latent to ask for access.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Access to model Orosius/deltanet-mla-latent is restricted and you are not in the authorized list. Visit https://huggingface.co/Orosius/deltanet-mla-la"
+  },
+  {
+   "id": "pre-resolve",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "baseline file access",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model Orosius/deltanet-mla-latent is restricted and you are not in the authorized list. Visit https://huggingface.co/Orosius/deltanet-mla-latent to ask for access.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Access to model Orosius/deltanet-mla-latent is restricted and you are not in the authorized list. Visit https://huggingface.co/Orosius/deltanet-mla-latent to as"
+  },
+  {
+   "id": "pre-head",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "HEAD",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "baseline HEAD",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model Orosius/deltanet-mla-latent is restricted and you are not in the authorized list. Visit https://huggingface.co/Orosius/deltanet-mla-latent to ask for access.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "pre-owner-list",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner endpoint with a non-owner write token",
+   "status": 403,
+   "headers": {
+    "x-error-message": "You have read access but not the required permissions for this operation",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"You have read access but not the required permissions for this operation\"}"
+  },
+  {
+   "id": "pre-page",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "does the website honour Bearer tokens?",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8"
+   },
+   "body_excerpt": null,
+   "props": {
+    "gated": "manual",
+    "isLoggedIn": false,
+    "repoId": "Orosius/deltanet-mla-latent",
+    "repoType": "model",
+    "isGoogleGemma": false,
+    "requiresPaidPlan": false
+   }
+  },
+  {
+   "id": "ask-access-json",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "POST",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/ask-access",
+   "request_body": {},
+   "request_encoding": "json",
+   "note": "Q-1: request access with a token, JSON body (repo has no extra fields)",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "https://huggingface.co/Orosius/deltanet-mla-latent"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/Orosius/deltanet-mla-latent"
+  },
+  {
+   "id": "post-json-auth-check",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after JSON attempt",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.\"}"
+  },
+  {
+   "id": "post-json-resolve",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after JSON attempt",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors."
+  },
+  {
+   "id": "ask-access-form",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "POST",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/ask-access",
+   "request_body": {},
+   "request_encoding": "form",
+   "note": "Q-1/Q-2: same with form encoding (re-submit if the first one worked)",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "https://huggingface.co/Orosius/deltanet-mla-latent"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/Orosius/deltanet-mla-latent"
+  },
+  {
+   "id": "post-form-auth-check",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after form attempt",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.\"}"
+  },
+  {
+   "id": "post-form-resolve",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after form attempt",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors."
+  }
+ ]
+}

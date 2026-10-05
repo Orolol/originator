@@ -1,0 +1,973 @@
+{
+ "_meta": {
+  "source": "https://huggingface.co/.well-known/openapi.json",
+  "fetched_at": "2026-10-05T13:09:23Z",
+  "spec_title": "Hub API Endpoints",
+  "spec_version": "0.0.1",
+  "include": "user-access-request|ask-access|user-access-report|/settings$",
+  "exclude": "^/api/(datasets|spaces|buckets|containers|organizations)/|^/datasets/|resource-groups|settings/tokens"
+ },
+ "paths": {
+  "/api/models/{namespace}/{repo}/settings": {
+   "put": {
+    "description": "Update the settings of a repo",
+    "summary": "Update repo settings",
+    "tags": [
+     "models"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "private": {
+          "type": "boolean"
+         },
+         "visibility": {
+          "description": "Repository visibility. `protected` is only supported for Spaces.",
+          "type": "string",
+          "enum": [
+           "private",
+           "public",
+           "protected"
+          ]
+         },
+         "discussionsDisabled": {
+          "type": "boolean"
+         },
+         "discussionsSorting": {
+          "type": "string",
+          "enum": [
+           "recently-created",
+           "trending",
+           "reactions"
+          ]
+         },
+         "gated": {
+          "anyOf": [
+           {
+            "type": "boolean",
+            "const": false
+           },
+           {
+            "type": "string",
+            "enum": [
+             "auto",
+             "manual"
+            ]
+           }
+          ]
+         },
+         "orgMembersGated": {
+          "description": "If true, members of the owning org (except admins) must also go through the gated access-request flow.",
+          "type": "boolean"
+         },
+         "gatedNotificationsEmail": {
+          "type": "string",
+          "format": "email",
+          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+         },
+         "gatedNotificationsMode": {
+          "type": "string",
+          "enum": [
+           "bulk",
+           "real-time"
+          ]
+         }
+        }
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "private": {
+           "type": "boolean"
+          },
+          "visibility": {
+           "description": "Repository visibility. `protected` is only supported for Spaces.",
+           "type": "string",
+           "enum": [
+            "private",
+            "public",
+            "protected"
+           ]
+          },
+          "discussionsDisabled": {
+           "type": "boolean"
+          },
+          "discussionsSorting": {
+           "type": "string",
+           "enum": [
+            "recently-created",
+            "trending",
+            "reactions"
+           ]
+          },
+          "gated": {
+           "anyOf": [
+            {
+             "type": "boolean",
+             "const": false
+            },
+            {
+             "type": "string",
+             "enum": [
+              "auto",
+              "manual"
+             ]
+            }
+           ]
+          },
+          "orgMembersGated": {
+           "description": "If true, members of the owning org (except admins) must also go through the gated access-request flow.",
+           "type": "boolean"
+          },
+          "gatedNotificationsEmail": {
+           "type": "string",
+           "format": "email",
+           "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+          },
+          "gatedNotificationsMode": {
+           "type": "string",
+           "enum": [
+            "bulk",
+            "real-time"
+           ]
+          }
+         },
+         "additionalProperties": false
+        }
+       }
+      },
+      "description": "The updated repo settings."
+     }
+    },
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/{namespace}/{repo}/ask-access": {
+   "post": {
+    "description": "Request access to a gated repository. The fields requested by repository card metadata (https://huggingface.co/docs/hub/en/models-gated#customize-requested-information)",
+    "summary": "Request access",
+    "tags": [
+     "models"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "propertyNames": {
+         "type": "string"
+        },
+        "additionalProperties": {}
+       }
+      }
+     }
+    },
+    "responses": {
+     "303": {
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      },
+      "description": "Redirection to the repo"
+     }
+    },
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/{namespace}/{repo}/user-access-report": {
+   "get": {
+    "description": "Export a report of all access requests for a gated repository",
+    "summary": "Export access report",
+    "tags": [
+     "models"
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "The report of all access requests for a gated repository",
+      "headers": {
+       "Content-Disposition": {
+        "schema": {
+         "type": "string"
+        },
+        "description": "The filename of the report"
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/models/{namespace}/{repo}/user-access-request/cancel": {
+   "post": {
+    "description": "Cancel the current user's access request to a gated repository",
+    "summary": "Cancel access request",
+    "tags": [
+     "models"
+    ],
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/models/{namespace}/{repo}/user-access-request/{status}": {
+   "get": {
+    "description": "List access requests for a gated repository",
+    "summary": "List access requests",
+    "tags": [
+     "models"
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "properties": {
+           "user": {
+            "type": "object",
+            "properties": {
+             "_id": {
+              "type": "string",
+              "minLength": 24,
+              "maxLength": 24,
+              "pattern": "^[0-9a-f]{24}$",
+              "description": "A hex string of 24 characters representing an ObjectId."
+             },
+             "orgs": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "id": {
+                 "type": "string"
+                },
+                "name": {
+                 "type": "string"
+                },
+                "fullname": {
+                 "type": "string"
+                },
+                "avatarUrl": {
+                 "type": "string"
+                }
+               },
+               "required": [
+                "id",
+                "name",
+                "fullname",
+                "avatarUrl"
+               ],
+               "additionalProperties": false
+              }
+             },
+             "avatarUrl": {
+              "type": "string"
+             },
+             "fullname": {
+              "type": "string"
+             },
+             "isPro": {
+              "type": "boolean"
+             },
+             "user": {
+              "type": "string"
+             },
+             "numModels": {
+              "type": "number"
+             },
+             "numDatasets": {
+              "type": "number"
+             },
+             "numSpaces": {
+              "type": "number"
+             },
+             "numBuckets": {
+              "type": "number"
+             },
+             "numKernels": {
+              "type": "number"
+             },
+             "numDiscussions": {
+              "type": "number"
+             },
+             "numPapers": {
+              "type": "number"
+             },
+             "numUpvotes": {
+              "type": "number"
+             },
+             "numLikes": {
+              "type": "number"
+             },
+             "numFollowers": {
+              "type": "number"
+             },
+             "numFollowing": {
+              "type": "number"
+             },
+             "numFollowingOrgs": {
+              "type": "number"
+             },
+             "details": {
+              "type": "string"
+             },
+             "isFollowing": {
+              "type": "boolean"
+             },
+             "reasonToFollow": {
+              "type": "string"
+             },
+             "primaryOrgAvatarUrl": {
+              "type": "string"
+             },
+             "serviceAccount": {
+              "description": "Set when the user is a service account",
+              "type": "object",
+              "properties": {
+               "id": {
+                "type": "string",
+                "minLength": 24,
+                "maxLength": 24,
+                "pattern": "^[0-9a-f]{24}$",
+                "description": "A hex string of 24 characters representing an ObjectId."
+               },
+               "org": {
+                "type": "string"
+               },
+               "orgAvatarUrl": {
+                "type": "string"
+               },
+               "description": {
+                "type": "string"
+               }
+              },
+              "required": [
+               "id",
+               "org",
+               "orgAvatarUrl"
+              ],
+              "additionalProperties": false
+             },
+             "type": {
+              "type": "string",
+              "const": "user"
+             },
+             "email": {
+              "type": "string"
+             },
+             "verifiedOrgNames": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             }
+            },
+            "required": [
+             "_id",
+             "avatarUrl",
+             "fullname",
+             "isPro",
+             "user",
+             "type",
+             "verifiedOrgNames"
+            ],
+            "additionalProperties": false
+           },
+           "grantedBy": {
+            "anyOf": [
+             {
+              "type": "object",
+              "properties": {
+               "_id": {
+                "type": "string",
+                "minLength": 24,
+                "maxLength": 24,
+                "pattern": "^[0-9a-f]{24}$",
+                "description": "A hex string of 24 characters representing an ObjectId."
+               },
+               "orgs": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "id": {
+                   "type": "string"
+                  },
+                  "name": {
+                   "type": "string"
+                  },
+                  "fullname": {
+                   "type": "string"
+                  },
+                  "avatarUrl": {
+                   "type": "string"
+                  }
+                 },
+                 "required": [
+                  "id",
+                  "name",
+                  "fullname",
+                  "avatarUrl"
+                 ],
+                 "additionalProperties": false
+                }
+               },
+               "avatarUrl": {
+                "type": "string"
+               },
+               "fullname": {
+                "type": "string"
+               },
+               "isPro": {
+                "type": "boolean"
+               },
+               "user": {
+                "type": "string"
+               },
+               "numModels": {
+                "type": "number"
+               },
+               "numDatasets": {
+                "type": "number"
+               },
+               "numSpaces": {
+                "type": "number"
+               },
+               "numBuckets": {
+                "type": "number"
+               },
+               "numKernels": {
+                "type": "number"
+               },
+               "numDiscussions": {
+                "type": "number"
+               },
+               "numPapers": {
+                "type": "number"
+               },
+               "numUpvotes": {
+                "type": "number"
+               },
+               "numLikes": {
+                "type": "number"
+               },
+               "numFollowers": {
+                "type": "number"
+               },
+               "numFollowing": {
+                "type": "number"
+               },
+               "numFollowingOrgs": {
+                "type": "number"
+               },
+               "details": {
+                "type": "string"
+               },
+               "isFollowing": {
+                "type": "boolean"
+               },
+               "reasonToFollow": {
+                "type": "string"
+               },
+               "primaryOrgAvatarUrl": {
+                "type": "string"
+               },
+               "serviceAccount": {
+                "description": "Set when the user is a service account",
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string",
+                  "minLength": 24,
+                  "maxLength": 24,
+                  "pattern": "^[0-9a-f]{24}$",
+                  "description": "A hex string of 24 characters representing an ObjectId."
+                 },
+                 "org": {
+                  "type": "string"
+                 },
+                 "orgAvatarUrl": {
+                  "type": "string"
+                 },
+                 "description": {
+                  "type": "string"
+                 }
+                },
+                "required": [
+                 "id",
+                 "org",
+                 "orgAvatarUrl"
+                ],
+                "additionalProperties": false
+               },
+               "type": {
+                "type": "string",
+                "const": "user"
+               },
+               "email": {
+                "type": "string"
+               }
+              },
+              "required": [
+               "_id",
+               "avatarUrl",
+               "fullname",
+               "isPro",
+               "user",
+               "type"
+              ],
+              "additionalProperties": false
+             },
+             {
+              "type": "object",
+              "properties": {},
+              "additionalProperties": false
+             }
+            ]
+           },
+           "status": {
+            "type": "string",
+            "enum": [
+             "accepted",
+             "rejected",
+             "pending",
+             "reset"
+            ]
+           },
+           "fields": {
+            "type": "object",
+            "propertyNames": {
+             "type": "string"
+            },
+            "additionalProperties": {
+             "type": "string"
+            }
+           },
+           "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+           },
+           "reviewedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+           }
+          },
+          "required": [
+           "status",
+           "timestamp"
+          ],
+          "additionalProperties": false
+         }
+        }
+       }
+      },
+      "description": "List of access requests for the gated repository",
+      "headers": {
+       "Link": {
+        "schema": {
+         "type": "string"
+        },
+        "description": "Link header for pagination, can contain a `rel=\"next\"` link"
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "status",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "enum": [
+        "pending",
+        "accepted",
+        "rejected",
+        "reset"
+       ]
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "schema": {
+       "default": 1000,
+       "type": "integer",
+       "minimum": 10,
+       "maximum": 1000
+      },
+      "required": false
+     },
+     {
+      "name": "after",
+      "in": "query",
+      "schema": {
+       "type": "string",
+       "format": "date-time",
+       "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+      },
+      "required": false
+     },
+     {
+      "name": "before",
+      "in": "query",
+      "schema": {
+       "type": "string",
+       "format": "date-time",
+       "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+      },
+      "required": false
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "schema": {
+       "description": "Search requests by requester username, fullname, email, email domain or verified organization",
+       "type": "string",
+       "maxLength": 250
+      },
+      "required": false
+     }
+    ]
+   }
+  },
+  "/api/models/{namespace}/{repo}/user-access-request/handle": {
+   "post": {
+    "description": "Handle a user's access request to a gated repository",
+    "summary": "Handle access request",
+    "tags": [
+     "models"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "userId": {
+          "description": "Either userId or user must be provided",
+          "type": "string",
+          "minLength": 24,
+          "maxLength": 24,
+          "pattern": "^[0-9a-fA-F]{24}$"
+         },
+         "user": {
+          "description": "Either userId or user must be provided",
+          "type": "string"
+         },
+         "status": {
+          "type": "string",
+          "enum": [
+           "accepted",
+           "rejected",
+           "pending",
+           "reset"
+          ]
+         },
+         "rejectionReason": {
+          "type": "string",
+          "maxLength": 200
+         },
+         "resetReason": {
+          "type": "string",
+          "maxLength": 200
+         }
+        },
+        "required": [
+         "status"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/models/{namespace}/{repo}/user-access-request/batch": {
+   "post": {
+    "description": "Accept, reject, reset or set back to pending up to 100 access requests for a single gated repository in one call. The same `status` (and optional `rejectionReason` or `resetReason`) is applied to every request in the list.",
+    "summary": "Batch access requests",
+    "tags": [
+     "models"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "status": {
+          "type": "string",
+          "enum": [
+           "accepted",
+           "rejected",
+           "pending",
+           "reset"
+          ]
+         },
+         "rejectionReason": {
+          "type": "string",
+          "maxLength": 200
+         },
+         "resetReason": {
+          "type": "string",
+          "maxLength": 200
+         },
+         "requests": {
+          "minItems": 1,
+          "maxItems": 100,
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "userId": {
+             "description": "Either userId or user must be provided",
+             "type": "string",
+             "minLength": 24,
+             "maxLength": 24,
+             "pattern": "^[0-9a-fA-F]{24}$"
+            },
+            "user": {
+             "description": "Either userId or user must be provided",
+             "type": "string"
+            }
+           }
+          }
+         }
+        },
+        "required": [
+         "status",
+         "requests"
+        ]
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "properties": {
+           "userId": {
+            "type": "string"
+           },
+           "user": {
+            "type": "string"
+           },
+           "ok": {
+            "type": "boolean"
+           },
+           "error": {
+            "type": "string",
+            "enum": [
+             "user_not_found",
+             "request_not_found"
+            ]
+           }
+          },
+          "required": [
+           "ok"
+          ],
+          "additionalProperties": false
+         }
+        }
+       }
+      },
+      "description": "Per-request outcomes, in the same order as the input requests array."
+     }
+    },
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  },
+  "/api/models/{namespace}/{repo}/user-access-request/grant": {
+   "post": {
+    "description": "Grant access to a user for a gated repository",
+    "summary": "Grant access",
+    "tags": [
+     "models"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "userId": {
+          "type": "string",
+          "minLength": 24,
+          "maxLength": 24,
+          "pattern": "^[0-9a-fA-F]{24}$"
+         },
+         "user": {
+          "type": "string"
+         }
+        },
+        "description": "The user to grant access to either by userId or user"
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "name": "namespace",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "repo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ]
+   }
+  }
+ }
+}
