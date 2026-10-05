@@ -42,11 +42,12 @@ def run_script(client: TestClient) -> list:
 def test_same_sequence_same_bytes():
     """Same seed + same requests ⇒ byte-identical responses, log and outbox, across a reset and
     across processes (two app instances)."""
-    a = TestClient(create_app(Store()), follow_redirects=False)
+    # The script starts from the recorded state (TestingBOrig pending), i.e. the `sandbox` seed.
+    a = TestClient(create_app(Store(builtin_seed("sandbox"))), follow_redirects=False)
     first = (run_script(a), a.get("/__clone__/log?limit=1000").json(), a.get("/__clone__/outbox").json())
-    assert a.post("/__clone__/reset").json()["now"] == "2026-10-05T14:30:00.000Z"
+    assert a.post("/__clone__/reset", json={"seed": "sandbox"}).json()["now"] == "2026-10-05T14:30:00.000Z"
     second = (run_script(a), a.get("/__clone__/log?limit=1000").json(), a.get("/__clone__/outbox").json())
-    b = TestClient(create_app(Store()), follow_redirects=False)
+    b = TestClient(create_app(Store(builtin_seed("sandbox"))), follow_redirects=False)
     third = (run_script(b), b.get("/__clone__/log?limit=1000").json(), b.get("/__clone__/outbox").json())
     assert first == second == third
     # batch reset e-mails both users; the re-request after reset and Carol's form request notify the owner
@@ -67,7 +68,7 @@ def test_state_round_trip(client):
     assert [e["method"] for e in client.get("/__clone__/log").json()] == ["GET"] * 2
 
 
-def test_reset_restores_the_default_seed(client):
+def test_reset_restores_a_named_seed(client):
     pristine = client.get("/__clone__/state").json()
     run_script(client)
     assert client.get("/__clone__/state").json() != pristine
@@ -75,7 +76,21 @@ def test_reset_restores_the_default_seed(client):
     assert client.get("/__clone__/state").json() == pristine
     assert client.get("/__clone__/log").json() == [] and client.get("/__clone__/outbox").json() == []
     unknown = client.post("/__clone__/reset", json={"seed": "nope"})
-    assert unknown.status_code == 404 and unknown.json()["seeds"] == ["sandbox"]
+    assert unknown.status_code == 404 and unknown.json()["seeds"] == ["clean", "sandbox"]
+
+
+def test_default_seed_is_clean():
+    """A restart or a bare reset gives the `clean` seed: the sandbox's repos and users, no request."""
+    client = TestClient(create_app(Store()), follow_redirects=False)
+    state = client.get("/__clone__/state").json()
+    assert (state["seed"], state["requests"]) == ("clean", [])
+    sandbox = builtin_seed("sandbox")
+    assert (state["repos"], state["users"]) == (sandbox["repos"], sandbox["users"])
+    client.post(f"{LIST}/grant", json={"user": "TestingBOrig"}, headers=auth("owner"))
+    assert client.post("/__clone__/reset").json()["seed"] == "clean"
+    assert client.get("/__clone__/state").json()["requests"] == []
+    for status in ("pending", "accepted", "rejected", "reset"):
+        assert client.get(f"{LIST}/{status}", headers=auth("owner")).json() == []
 
 
 def test_invalid_state_is_rejected_and_keeps_the_old_one(client):
@@ -114,3 +129,4 @@ def test_builtin_seed_matches_the_fixtures():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     assert json.loads(json.dumps(module.build_seed())) == builtin_seed("sandbox")
+    assert json.loads(json.dumps(module.build_clean_seed())) == builtin_seed("clean")

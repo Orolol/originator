@@ -32,7 +32,7 @@ def load_observation(name: str):
 
 
 def sandbox_with(requests: list[dict], **changes) -> dict:
-    """The default seed with its requests replaced (and top-level fields overridden)."""
+    """The `sandbox` seed with its requests replaced (and top-level fields overridden)."""
     seed = builtin_seed("sandbox")
     seed["requests"] = requests
     return seed | changes
@@ -45,7 +45,9 @@ def request_entry(status: str, timestamp: str, **extra) -> dict:
 
 @pytest.fixture
 def store() -> Store:
-    return Store()
+    # The recorded state (TestingBOrig pending): most HTTP tests are written against it. The default
+    # seed is `clean` (no request); test_control.py covers it.
+    return Store(builtin_seed("sandbox"))
 
 
 @pytest.fixture

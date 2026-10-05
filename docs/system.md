@@ -145,7 +145,7 @@ default seed.
 | Method | Path | Effect |
 |---|---|---|
 | GET | `/__clone__/health` | `{"ok": true, "seed": <name>, "now": <clock>}` |
-| POST | `/__clone__/reset` | body optional `{"seed": "<built-in seed name>"}` (default `sandbox`); clears log and outbox |
+| POST | `/__clone__/reset` | body optional `{"seed": "<built-in seed name>"}` (default `clean`: no access request); clears log and outbox |
 | GET | `/__clone__/state` | full state, in the seed format below (round-trips with PUT) |
 | PUT | `/__clone__/state` | replace the whole state with a seed document; clears log and outbox |
 | GET / POST | `/__clone__/clock` | read; or set `{"now": iso}` / `{"advance_ms": n}` |
@@ -206,9 +206,12 @@ corrected by the clone builder):
 - `files[path].xetHash`: the xet hash, masked by ACC-9 for callers without access.
 
 Built-in seeds:
-- **`sandbox`** (the default): the real sandbox repo as recorded in
+- **`clean`** (the default; what a restart, a bare `POST /__clone__/reset`, or the web app's "Reset
+  clone" button gives): the same repos and users as `sandbox`, and **no access request at all**.
+- **`sandbox`**: the real sandbox repo as recorded in
   `hf-gated/observations/2026-10-05-clone-seed-reads.json` (model info, tree, small file contents),
-  the two users above, and `TestingBOrig` pending.
+  the two users above, and `TestingBOrig` pending (the recorded state). Load it with
+  `POST /__clone__/reset {"seed": "sandbox"}`.
 - Clone-only demo repos for gate-form coverage, all owned by `Orosius`:
   - `Orosius/gated-auto-demo`: auto, one checkbox field;
   - `Orosius/gated-form-demo`: manual, every field type, custom heading/description/button;

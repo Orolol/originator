@@ -57,11 +57,12 @@ async function assertIsClone(request: APIRequestContext) {
 
 /**
  * The walkthrough's initial state: TestingBOrig's request on the sandbox repo in status `reset`,
- * the repo gated "manual" (default notifications), then an empty log. `reset` first so a reused
+ * the repo gated "manual" (default notifications), then an empty log. Reset to the `sandbox` seed
+ * first (it holds TestingBOrig's recorded request; the default `clean` seed has none) so a reused
  * clone starts from the seed's clock and ids too.
  */
 async function putInitialState(request: APIRequestContext) {
-  const reset = await request.post(`${BACKEND}/__clone__/reset`);
+  const reset = await request.post(`${BACKEND}/__clone__/reset`, { data: { seed: "sandbox" } });
   expect(reset.ok(), "POST /__clone__/reset").toBe(true);
   const state = await cloneJson(request, "get", "/__clone__/state");
   const repo = state.repos.find((r: { id: string }) => r.id === REPO);

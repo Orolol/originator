@@ -39,26 +39,35 @@ def test_health(be):
     assert health["now"] == NOW
 
 
-def test_reset_restores_default_sandbox_seed(be):
+def test_reset_restores_default_clean_seed(be):
+    # system.md: the default seed `clean` = the sandbox's repos and users with NO access request
     assert be.reset().status_code < 300
     baseline = be.state()
-    # system.md: built-in `sandbox` seed = recorded sandbox repo, TestingBOrig pending
-    pending = be.list_requests(SANDBOX, "pending").json()
-    assert [item["user"]["user"] for item in pending] == [REQUESTER], pending
-    E.assert_ok(be.handle(SANDBOX, {"user": REQUESTER, "status": "accepted"}))
+    for status in ("pending", "accepted", "rejected", "reset"):
+        assert be.list_requests(SANDBOX, status).json() == [], status
+    be.ask(SANDBOX, persona="requester")
     be.ask(SANDBOX, persona="carol")
     assert be.reset().status_code < 300
     assert be.state() == baseline
     assert be.log() == [] and be.outbox() == []
+
+
+def test_reset_to_named_sandbox_seed(be):
+    # system.md: built-in `sandbox` seed = recorded sandbox repo, TestingBOrig pending
+    assert be.reset("sandbox").status_code < 300
+    baseline = be.state()
+    pending = be.list_requests(SANDBOX, "pending").json()
+    assert [item["user"]["user"] for item in pending] == [REQUESTER], pending
+    E.assert_ok(be.handle(SANDBOX, {"user": REQUESTER, "status": "accepted"}))
     assert be.reset("sandbox").status_code < 300
     assert be.state() == baseline
 
 
 @pytest.mark.parametrize("recording", ["clone-seed-reads", "tree-masking"])
 def test_builtin_sandbox_seed_reproduces_recorded_reads(be, recording):
-    # The default seed must serve what anonymous callers were recorded getting (model info, tree with ACC-9
+    # The `sandbox` seed must serve what anonymous callers were recorded getting (model info, tree with ACC-9
     # masking, files, gate answers), with the same accepted divergences as the replay of that recording.
-    assert be.reset().status_code < 300
+    assert be.reset("sandbox").status_code < 300
     steps = load_recording(f"2026-10-05-{recording}.json").steps
     ctx = Context(TimestampTracker(set()), be.base_url, RECORDED_ORIGINS)
     divergences = load_divergences()

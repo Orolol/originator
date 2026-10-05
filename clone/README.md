@@ -25,8 +25,8 @@ The tests are offline (about 2 s).
 uv run --project clone python clone/scripts/derive_seed.py
 ```
 
-This regenerates `src/clone/seeds/sandbox.json` from the recorded fixtures; a test checks the
-committed seed is up to date.
+This regenerates `src/clone/seeds/sandbox.json` and `clean.json` from the recorded fixtures; a test
+checks that the committed seeds are up to date.
 
 ## State and determinism
 
@@ -36,10 +36,16 @@ committed seed is up to date.
   ordering is stable. Same seed + same requests ⇒ byte-identical responses, log and outbox.
 - Control endpoints, under `/__clone__/`: `health`, `reset`, `state` (GET/PUT, seed format),
   `clock`, `outbox`, and `log` (same schema as the bridge's log).
-- Built-in seed `sandbox`:
+- Built-in seeds:
+  - **`clean`** (the default, after a restart or a bare reset, and from the web app's "Reset
+    clone"): everything below, **without any access request**;
+  - **`sandbox`**: the recorded state, the same data plus `TestingBOrig`'s pending request. Load it
+    with `POST /__clone__/reset {"seed": "sandbox"}`.
+
+  Both contain:
   - the real `Orosius/deltanet-mla-latent` as recorded on 2026-10-05, with JSON ETags and file oids
     reproduced byte for byte;
-  - users `Orosius` (`persona-owner`) and `TestingBOrig` (`persona-requester`, pending);
+  - users `Orosius` (`persona-owner`) and `TestingBOrig` (`persona-requester`);
   - clone-only demos: `Orosius/gated-auto-demo`, `Orosius/gated-form-demo`, `Orosius/not-gated-demo`
     and the user `DemoCarol` (`persona-carol`).
 

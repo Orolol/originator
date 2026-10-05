@@ -2,7 +2,7 @@
 
     uv run --project clone python clone/scripts/derive_seed.py
 
-Writes `clone/src/clone/seeds/sandbox.json` (committed; the clone only reads it).
+Writes `clone/src/clone/seeds/sandbox.json` and `clean.json` (committed; the clone only reads them).
 
 Sources (ground truth, `docs/hf-gated/observations/`):
 - `2026-10-05-clone-seed-reads.json`: model info (incl. the 1018 siblings), top-level and one
@@ -28,7 +28,9 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
 OBS = ROOT / "docs" / "hf-gated" / "observations"
-OUT = ROOT / "clone" / "src" / "clone" / "seeds" / "sandbox.json"
+SEEDS = ROOT / "clone" / "src" / "clone" / "seeds"
+OUT = SEEDS / "sandbox.json"
+OUT_CLEAN = SEEDS / "clean.json"
 
 REPO = "Orosius/deltanet-mla-latent"
 # Keys of the model-info body that the seed format keeps at repo level (docs/system.md seed format).
@@ -209,10 +211,17 @@ def build_seed() -> dict:
     }
 
 
+def build_clean_seed() -> dict:
+    """The default seed: the same repos and users as `sandbox`, and no access request at all, so a
+    reset (or a restart) gives a clean state where nobody has asked for access yet."""
+    return {**build_seed(), "seed": "clean", "requests": []}
+
+
 def main() -> None:
     seed = build_seed()
     OUT.write_text(json.dumps(seed, indent=1, ensure_ascii=False) + "\n")
-    print(f"wrote {OUT.relative_to(ROOT)} ({len(seed['repos'][0]['files'])} files in {REPO})")
+    OUT_CLEAN.write_text(json.dumps(build_clean_seed(), indent=1, ensure_ascii=False) + "\n")
+    print(f"wrote {OUT.relative_to(ROOT)} ({len(seed['repos'][0]['files'])} files in {REPO}) and {OUT_CLEAN.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

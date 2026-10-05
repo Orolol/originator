@@ -20,7 +20,8 @@ from typing import Any
 from .domain import AccessRequest, Email
 from .files import RepoFiles
 
-DEFAULT_SEED = "sandbox"
+# `clean`: no access request (what a reset or a restart gives); `sandbox` mirrors the recorded state.
+DEFAULT_SEED = "clean"
 SEED_STATUSES = ("pending", "accepted", "rejected", "reset")
 LOG_MAX_ENTRIES = 1000  # same cap as the bridge's exchange log
 
