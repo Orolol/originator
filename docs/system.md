@@ -87,6 +87,9 @@ host (a CDN) is left untouched. This is the only normalisation the bridge applie
 - **Same accessible structure**: real `<button>`, `<select>`, `<a>`, `role="dialog"`,
   `role="tablist"`/`tab` with HF's exact labels, so `getByRole(…, {name})` selectors work on both
   sites. No styling work.
+- The web proxy rewrites absolute `BACKEND_URL` URLs in `Location` and `Link` to the web origin.
+  This only works if the bridge's `BRIDGE_PUBLIC_URL` equals `BACKEND_URL` exactly (`127.0.0.1` ≠
+  `localhost`). The file list comes from `siblings`, which is recursive, rather than `/tree/main`.
 - Persona switch: `GET /-/persona?as=<persona>&next=<path>` sets the cookie and redirects.
   (Folders starting with `_` are private in the Next.js App Router, hence `/-/`.)
 - Requester gate state comes from `auth-check`, because the API has no "my request status" endpoint:

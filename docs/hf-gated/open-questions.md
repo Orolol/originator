@@ -137,3 +137,44 @@ change? This affects the bridge-vs-clone diff tolerance. Status: open.
 ### Q-24 (P2): self and deleted users
 Can a repo owner `ask-access` on their own repo, or appear in the lists? In the list schema `user` is
 not required: what does an entry for a deleted account look like? Status: open.
+
+### Q-25 (P1): user search for "Add access"
+`GET /api/quicksearch?q=<username>&type=user` returns `users: []` for token callers (owner token,
+queries `Orosius`, `TestingBOrig`, `julien-c`); models are returned, and `type=users` is a validation
+error. [OBS 2026-10-05, UI builder via bridge] Which endpoint does HF's "Add access" search use,
+and does it need a browser session? Until then, "Add access" cannot find anyone in bridge mode, though
+`grant` itself works by username through the API. Status: open.
+
+---
+
+## Provisional choices in the web UI (2026-10-05)
+
+Recorded from the UI builder's report (`harness/agents/runs/2026-10-05-ui-builder.md`). Each one is
+marked `Provisional (Q-n)` in `web/src`. Resolve them by recording the real UI, then update the code
+and strike the line.
+
+| # | Q | Choice |
+|---|---|---|
+| 1 | Q-11 | Pending (A3): show the backend's auth-check message verbatim (`role=status`) instead of the form. |
+| 2 | Q-11 | Accepted (A4) and owner both get 200 from auth-check: no gate box, no banner. |
+| 3 | Q-11 | Default submit label is the same in auto and manual mode. |
+| 4 | Q-11 | The gate form's `Cancel` does nothing. |
+| 5 | Q-16 | No client-side validation (no `required`); selects and the country dropdown start with an empty option. |
+| 6 | Q-15 | Native browser values: checkbox `"on"` only when checked; date `YYYY-MM-DD`; country = alpha-2 code; select = option `value`. |
+| 7 | Q-15 | `ip_location` renders no input; an unknown field type renders as a text input. |
+| 8 | (none) | `Log in` / `Sign Up` link to the persona switch (`/-/persona?as=requester`), since there is no login page. |
+| 9 | Q-12 | Each settings control saves immediately (one PUT); no confirmation on Disable; a failed PUT keeps the old value and shows the error. |
+| 10 | Q-12 | Notification fields start at `Once a day` (`bulk`) and an empty email (they are unreadable, CFG-3), then show the last PUT echo. Real-time label "Real-time". Email saved on Enter or blur, `type=text`, no validation. |
+| 11 | Q-12 | Non-owner on settings: a 401/403 from the pending list is shown verbatim instead of the section. |
+| 12 | Q-12 | The "Settings" link on the model page is shown when the whoami name or one of its orgs equals the namespace. |
+| 13 | Q-12 | "Add access" dialog: a search box labelled "Username"; clicking a result grants immediately, closes the dialog and refreshes the lists. |
+| 14 | Q-13 | `Review access requests (N)`: N = pending count; no number while unknown. |
+| 15 | Q-13 | Tabs pending / accepted / rejected only (no reset tab); all three lists are fetched when the modal opens. |
+| 16 | Q-13 | Rejected-tab actions: `Accept`, `Cancel`. |
+| 17 | Q-13 | `Reject` sends `{user, status:"rejected"}` without a reason input. |
+| 18 | Q-13 | Form answers shown as a label → value list under the row. |
+| 19 | Q-13 | The × close button is labelled "Close"; no Escape or backdrop close; no avatars; the username links to `/{user}` (404 in our app). |
+| 20 | Q-23 / Q-13 | After a handle or grant, all lists are refetched after 1000 ms; no optimistic update; buttons are not disabled in flight. |
+| 21 | Q-9 / Q-12 | Errors render as `<p role="alert">{status} {code}: {message}</p>`. |
+| 22 | (none) | Unmapped gate states: the message is shown verbatim, plus `[unmapped gate state: auth-check HTTP {status} {code}]`. |
+| 23 | (none) | Settings control order follows the doc screenshots: `New requests` select, `Review access requests (N)`, `Download user access report`, `Add access` on one row; notifications on the next row. The Disable/Enable button sits under the text, not at the top right. |

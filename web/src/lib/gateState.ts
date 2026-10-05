@@ -1,0 +1,32 @@
+// Requester gate state, derived from `GET /api/models/{repo}/auth-check` (docs/system.md
+// "Requester gate state comes from auth-check"): the API has no "my request status" endpoint, so
+// the gate box is chosen from the content-route answer (api.md §3.1). This is the ONLY place that
+// maps auth-check answers to screens A1–A5 (docs/hf-gated/ui.md).
+
+import type { BackendError } from "./httpError";
+
+export type GateState =
+  /** 200: the caller can read files. Owner bypass (ACC-1) and an accepted request (A4) look the same. */
+  | { kind: "access" }
+  /** 401 GatedRepo: anonymous visitor (A1, ACC-3, REQ-1). */
+  | { kind: "anonymous"; message: string }
+  /** 403 GatedRepo "…not in the authorized list…": logged in, no request (A2), or reset [Q-5]. */
+  | { kind: "no-request"; message: string }
+  /** 403 GatedRepo "…awaiting a review from the repo authors.": pending (A3). */
+  | { kind: "pending"; message: string }
+  /** Anything else, e.g. rejected (A5) whose API message is unrecorded [Q-8]: shown verbatim, never guessed. */
+  | { kind: "unmapped"; status: number; code: string | null; message: string };
+
+const NOT_IN_AUTHORIZED_LIST = "you are not in the authorized list";
+const AWAITING_REVIEW = "is awaiting a review from the repo authors";
+
+export function deriveGateState(authCheck: BackendError): GateState {
+  const { status, code, message } = authCheck;
+  if (status === 200) return { kind: "access" };
+  if (code === "GatedRepo") {
+    if (status === 401) return { kind: "anonymous", message };
+    if (status === 403 && message.includes(NOT_IN_AUTHORIZED_LIST)) return { kind: "no-request", message };
+    if (status === 403 && message.includes(AWAITING_REVIEW)) return { kind: "pending", message };
+  }
+  return { kind: "unmapped", status, code, message };
+}

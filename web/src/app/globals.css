@@ -1,0 +1,56 @@
+/* Structure only (AGENTS.md rule 7: behaviour, not pixels). */
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+  line-height: 1.4;
+}
+
+.persona-bar {
+  border-bottom: 1px solid #8884;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.persona-bar nav {
+  display: inline;
+}
+
+section[data-gate-state] {
+  border: 1px solid #8888;
+  padding: 0 16px 16px;
+  margin: 16px 0;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: #0006;
+}
+
+.dialog {
+  position: relative;
+  max-width: 720px;
+  max-height: 80vh;
+  overflow: auto;
+  margin: 10vh auto 0;
+  padding: 16px;
+  background: Canvas;
+  color: CanvasText;
+  border: 1px solid #8888;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+[role="tab"][aria-selected="true"] {
+  font-weight: bold;
+}

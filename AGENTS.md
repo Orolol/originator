@@ -53,7 +53,7 @@ exist yet. Update this section when they land.
 | `harness/kb/` | KB tooling: `probe.py` (scripted probes; read-only unless `--allow-writes`), `extract_openapi.py` (vendor-spec extract), `probes/*.json` (cases) |
 | `bridge/` | Python (uv, FastAPI, httpx): HF-compatible proxy with personas, route/repo allowlists, exchange log. See `bridge/README.md` |
 | `clone/` (planned) | Python (uv, FastAPI proposed): in-memory HF-compatible backend for the slice |
-| `web/` (planned) | Next.js (App Router, TypeScript): requester gate box and owner settings/review screens; talks to `BACKEND_URL` (bridge or clone) |
+| `web/` | Next.js 16 (App Router, TypeScript): requester gate box, owner settings section, review modal; proxies HF-shaped requests to `BACKEND_URL` (bridge or clone). See `web/README.md`; `web/AGENTS.md` is Next's own agent note |
 | `conformance/` (planned) | Scenario scripts run against both backends: API level (pytest + `huggingface_hub`) and UI level (Playwright) |
 | `harness/agents/` | Subagent prompts actually used, verbatim, with the shared patterns |
 | `harness/` (planned additions) | recorders, diff tooling |
@@ -105,6 +105,23 @@ uv run --project bridge pytest bridge/tests -m live
 
 The last one is GET/HEAD only, against the real Hub.
 
+Web (port 3000; start the bridge first, `BACKEND_URL` defaults to `http://127.0.0.1:8100`):
+
+```bash
+npm --prefix web run dev
+```
+
+```bash
+npm --prefix web test
+```
+
+```bash
+npm --prefix web run test:e2e
+```
+
+The e2e suite is read-only against the live bridge: a guard aborts any non-GET/HEAD request.
+Both servers are also defined in `.claude/launch.json` (`bridge`, `web`).
+
 KB probes:
 
 ```bash
@@ -128,7 +145,7 @@ python3 harness/kb/extract_openapi.py --spec-url https://huggingface.co/.well-kn
 | Endpoints, payloads, error headers, client gotchas | [docs/hf-gated/api.md](docs/hf-gated/api.md) |
 | Screens, states, side-effect matrix, recording checklist | [docs/hf-gated/ui.md](docs/hf-gated/ui.md) |
 | Gate form metadata, seed-worthy live examples | [docs/hf-gated/gate-form.md](docs/hf-gated/gate-form.md) |
-| Unknowns and their priority (Q-1…Q-24) | [docs/hf-gated/open-questions.md](docs/hf-gated/open-questions.md) |
+| Unknowns and their priority (Q-1…Q-25, plus provisional UI choices) | [docs/hf-gated/open-questions.md](docs/hf-gated/open-questions.md) |
 | What `huggingface_hub` covers and its tests as evidence | [docs/hf-gated/client-library.md](docs/hf-gated/client-library.md) |
 | Deliberately excluded features | [docs/hf-gated/out-of-scope.md](docs/hf-gated/out-of-scope.md) |
 | Evidence tags and their ranking | [docs/README.md](docs/README.md) |
