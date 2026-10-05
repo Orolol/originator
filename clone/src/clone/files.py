@@ -124,8 +124,8 @@ class RepoFiles:
 
         Order [OBS tree-main]: directories first, then files, each sorted by path.
         Provisional: a recursive listing applies the same rule to every depth, unpaginated.
-        Provisional: the LFS sha256 and xet hash are masked with 64 `*` on gated repos (recorded
-        anonymously on the gated sandbox; never recorded unmasked).
+        ACC-9 [OBS tree-masking]: with `mask_lfs` (callers without access) the LFS sha256 and the
+        xet hash become 64 `*`; the git oid and sizes are never masked.
         """
         if path and path not in self.dirs:
             return None

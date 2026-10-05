@@ -183,11 +183,16 @@ behaviour.md §7 are emitted. Whether HF also e-mails on accept/reject is unknow
 
 `emailShared: false` marks an entry created by **grant**, which the lists show without `email` (REQ-5).
 
-Fields the clone added while implementing (part of the format, documented after the fact):
+Fields the clone added while implementing (part of the format, documented after the fact and
+corrected by the clone builder):
 - `users[].whoami`: extra `whoami-v2` fields served verbatim (`emailVerified`, `canPay`, `auth`, …).
-- `repos[].dirs`: recorded tree entries for directories (`oid`), since directories carry no file.
-- `files[path].lfs`: an object `{"oid": <sha256>, "size", "pointerSize"}` (not a boolean) for LFS files.
+- `repos[].dirs`: a **map** `{"<dir path>": {"oid": "…"}}` of recorded directory oids.
+- `files[path]`: every key is optional (`text`, `oid`, `size`, `lfs`, `xetHash`). Missing values are
+  synthesised from deterministic stub bytes: `oid` is the git blob sha1 of the bytes (or of the LFS
+  pointer); above 8 MiB, a hash of a description is used instead.
+- `files[path].lfs`: `true`, or an object with any subset of `{"oid": <sha256>, "size", "pointerSize"}`.
 - `files[path].xetHash`: the xet hash, masked by ACC-9 for callers without access.
+
 Built-in seeds:
 - **`sandbox`** (the default): the real sandbox repo as recorded in
   `hf-gated/observations/2026-10-05-clone-seed-reads.json` (model info, tree, small file contents),

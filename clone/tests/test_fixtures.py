@@ -117,16 +117,19 @@ def test_ui_walkthrough_replay():
 # --- 3. direct reads of the sandbox (probe.py against huggingface.co) --------------------------------
 
 SEED_READS = "2026-10-05-clone-seed-reads.json"
+# Both recorded against the sandbox in the default seed's state (TestingBOrig pending).
+DIRECT_READS = (SEED_READS, "2026-10-05-tree-masking.json")
 NOT_SEEDED = {"owner-not-gated-list"}  # openai-community/gpt2 is not in the seed
 REDIRECT_TARGET_DIFFERS = {"owner-head-lfs"}  # checked separately below
 REDACTED_BODY = {"whoami-owner", "whoami-requester"}  # e-mails redacted: ETag/length cannot match
 
 
-@pytest.mark.parametrize("record", [pytest.param(r, id=r["id"]) for r in load_observation(SEED_READS)["records"]
+@pytest.mark.parametrize("record", [pytest.param(r, id=r["id"]) for name in DIRECT_READS
+                                    for r in load_observation(name)["records"]
                                     if r["id"] not in NOT_SEEDED | REDIRECT_TARGET_DIFFERS])
-def test_seed_reads_byte_for_byte(store, record):
-    """Model info, tree, whoami, file contents and their headers, as recorded. ETag and
-    Content-Length equal means the same bytes."""
+def test_direct_reads_byte_for_byte(store, record):
+    """Model info, tree (ACC-9 masking per caller), whoami, resolve and raw (ACC-10) contents and
+    their headers, as recorded. ETag and Content-Length equal means the same bytes."""
     replayer = Replayer(store, "https://huggingface.co")
     url = urlsplit(record["url"])
     resp = replayer.send(method=record["method"], path=url.path, query=url.query, persona=AS[record["as"]])

@@ -177,6 +177,15 @@ change? This affects the bridge-vs-clone diff tolerance. Status: open.
 Can a repo owner `ask-access` on their own repo, or appear in the lists? In the list schema `user` is
 not required: what does an entry for a deleted account look like? Status: open.
 
+### Q-27 (P2): `/raw/` and `/blob/` details
+ACC-10 records the gate on `/raw/` (anonymous 401, pending 403, owner 200 text), and an anonymous
+`/blob/` 401 is HTML with `X-Error-Code: GatedRepo` and **no** `WWW-Authenticate` [OBS]. Unrecorded:
+- `/raw/` on an LFS file (pointer or content?);
+- `/raw/` on a non-gated repo (200 or a 307 like resolve?);
+- the `/blob/` page content with access, and its 404s;
+- HEAD on `raw`/`blob`.
+Status: open.
+
 ### Q-25 (P1): user search for "Add access"
 `GET /api/quicksearch?q=<username>&type=user` returns `users: []` for token callers (owner token,
 queries `Orosius`, `TestingBOrig`, `julien-c`); models are returned, and `type=users` is a validation
@@ -240,4 +249,5 @@ tests, and this table.
 | Q-21 | `q` = case-insensitive substring on username, fullname and the shared email. |
 | Q-24 | An owner may `ask-access` on their own repo like anyone. |
 | Q-25 | quicksearch → `{"users": [{_id, avatarUrl, fullname, user}]}`, username or fullname prefix, seed order. `type` other than `user` → 400. |
-| (none) | A logged-in caller on an unknown repo → 404 RepoNotFound on resolve, auth-check and ask-access. A private repo looks missing to non-owners. `RevisionNotFound` "Revision not found" (revisions: `main`, head sha). Unknown tree path → 404 EntryNotFound. LFS → 302 to the clone's `/api/resolve-cache/…` with `X-Linked-Size`/`X-Linked-Etag`, and no xet `Link`. `resolve-cache` applies the gate. No ETag on a 307. Unknown `expand[]` names are skipped. The settings echo returns only `gated`/`private`/`visibility`. |
+| Q-27 | `/raw/` on an LFS file serves the git blob, i.e. the pointer (ETag = git oid). `/raw/` on a non-gated repo → 200 directly, without the 307. The `/blob/` page with access shows the escaped content (the pointer for LFS, only the size above 1 MiB); blob 404s are HTML; a blob 401 for an unknown repo keeps `WWW-Authenticate`. raw and blob answer GET only. |
+| (none) | ACC-9 masking implemented per the recording; "access" = the auth-check decision (the allowlist does not count). A logged-in caller on an unknown repo → 404 RepoNotFound on resolve, auth-check and ask-access. A private repo looks missing to non-owners. `RevisionNotFound` "Revision not found" (revisions: `main`, head sha). Unknown tree path → 404 EntryNotFound. LFS → 302 to the clone's `/api/resolve-cache/…` with `X-Linked-Size`/`X-Linked-Etag`, and no xet `Link`. `resolve-cache` applies the gate. No ETag on a 307. Unknown `expand[]` names are skipped. The settings echo returns only `gated`/`private`/`visibility`. |

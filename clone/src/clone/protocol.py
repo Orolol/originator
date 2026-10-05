@@ -26,7 +26,7 @@ from starlette.responses import Response, StreamingResponse
 
 from . import domain
 from .domain import AccessRequest, AlreadyHasAccess, Change, RequestNotFound
-from .files import content_chunks
+from .files import content_chunks, lfs_pointer
 from .store import Store, format_iso, parse_iso
 from .zod import MISSING, Checker, Issue, ValidationFailed, check_user_ref, header_safe, refine_user_ref
 
@@ -85,11 +85,12 @@ def json_ok(obj: Any, headers: dict[str, str] | None = None) -> Response:
     return respond(200, dumps(obj), JSON_TYPE, headers)
 
 
-def error(status: int, message: str, fmt: Fmt, code: str | None = None) -> Response:
+def error(status: int, message: str, fmt: Fmt, code: str | None = None, *,
+          www_authenticate: bool = True) -> Response:
     headers = {"X-Error-Message": header_safe(message)}
     if code:
         headers["X-Error-Code"] = code
-    if status == 401:
+    if status == 401 and www_authenticate:
         headers["WWW-Authenticate"] = WWW_AUTHENTICATE
     if fmt is Fmt.API:
         return respond(status, dumps({"error": message}), JSON_TYPE, headers)
@@ -303,21 +304,27 @@ def check_revision(repo: dict, rev: str, fmt: Fmt) -> None:
 
 
 def tree(ctx: Ctx, ns: str, name: str, rev: str, path: str | None) -> Response:
-    """ACC-4: the tree listing is public."""
+    """ACC-4: the tree listing is public. ACC-9 [OBS tree-masking]: the LFS sha256 and xet hash
+    are masked for callers without access (the ACC-1 decision, no allowlist)."""
     repo = visible_repo(ctx, f"{ns}/{name}", Fmt.API)
     check_revision(repo, rev, Fmt.API)
     recursive = (ctx.param("recursive") or "").lower() in ("true", "1")
     entries = ctx.store.files[repo["id"]].tree((path or "").strip("/"), recursive=recursive,
-                                               mask_lfs=repo["gated"] is not False)
+                                               mask_lfs=denial(ctx, repo) is not None)
     if entries is None:
         raise HttpError(error(404, ENTRY_NOT_FOUND, Fmt.API, "EntryNotFound"))  # Provisional
     return json_ok(entries)
 
 
-def gate(ctx: Ctx, repo: dict, fmt: Fmt, path: str | None = None) -> None:
+def denial(ctx: Ctx, repo: dict, path: str | None = None) -> domain.Denied | None:
+    """The caller's access decision; `path` only for the ACC-5 allowlist (resolve)."""
     req = ctx.store.get_request(repo["id"], ctx.username) if ctx.caller else None
-    denied = domain.check_access(repo_id=repo["id"], gated=repo["gated"], owner=repo["author"],
-                                 caller=ctx.username, request_status=req.status if req else None, path=path)
+    return domain.check_access(repo_id=repo["id"], gated=repo["gated"], owner=repo["author"],
+                               caller=ctx.username, request_status=req.status if req else None, path=path)
+
+
+def gate(ctx: Ctx, repo: dict, fmt: Fmt, path: str | None = None) -> None:
+    denied = denial(ctx, repo, path)
     if denied:
         raise HttpError(error(denied.status, denied.message, fmt, "GatedRepo"))
 
@@ -331,22 +338,34 @@ def auth_check(ctx: Ctx, ns: str, name: str) -> Response:
 # --- file routes ------------------------------------------------------------------------------------
 
 
-def file_response(ctx: Ctx, repo: dict, path: str, *, lfs_object: bool) -> Response:
+def file_response(ctx: Ctx, repo: dict, path: str, *, lfs_object: bool = False,
+                  git_blob: bool = False) -> Response:
+    """A file's bytes with the recorded resolve headers [OBS owner-readme, raw-readme-owner].
+    `git_blob` (raw): an LFS file is served as its git blob, the LFS pointer (Provisional, no Q yet)."""
     meta = ctx.store.files[repo["id"]].files[path]
+    if git_blob and meta.is_lfs:
+        pointer = lfs_pointer(meta.lfs_oid, meta.size)
+        return Response(content=pointer, headers=_file_headers(repo, path, meta.oid, len(pointer)))
+    headers = _file_headers(repo, path, meta.lfs_oid if lfs_object else meta.oid, meta.size)
+    if meta.size > STREAM_ABOVE:
+        return StreamingResponse(content_chunks(repo["id"], meta), headers=headers)
+    return Response(content=b"".join(content_chunks(repo["id"], meta)), headers=headers)
+
+
+def _file_headers(repo: dict, path: str, etag: str, size: int) -> dict[str, str]:
     basename = path.rsplit("/", 1)[-1]
     # Provisional: non-ASCII characters of the plain `filename` (never recorded) become `?`.
     ascii_name = basename.encode("ascii", "replace").decode()
     headers = {
         "Content-Type": TEXT_TYPE,  # [OBS] every recorded file, JSON included, is text/plain
         "Content-Disposition": f"inline; filename*=UTF-8''{quote(basename)}; filename=\"{ascii_name}\";",
-        # Provisional: the LFS object served by the clone-local target is tagged with its sha256.
-        "ETag": f'"{meta.lfs_oid if lfs_object else meta.oid}"',
+        # The git oid [OBS]. Provisional: the LFS object behind the clone-local redirect is tagged
+        # with its sha256 instead.
+        "ETag": f'"{etag}"',
         "X-Repo-Commit": repo["sha"],
-        "Content-Length": str(meta.size),
+        "Content-Length": str(size),
     }
-    if meta.size > STREAM_ABOVE:
-        return StreamingResponse(content_chunks(repo["id"], meta), headers=headers)
-    return Response(content=b"".join(content_chunks(repo["id"], meta)), headers=headers)
+    return headers
 
 
 def resolve(ctx: Ctx, ns: str, name: str, rev: str, path: str) -> Response:
@@ -381,6 +400,46 @@ def resolve_cache(ctx: Ctx, ns: str, name: str, sha: str, path: str) -> Response
     if meta is None:
         raise HttpError(error(404, ENTRY_NOT_FOUND, Fmt.PLAIN, "EntryNotFound"))
     return file_response(ctx, repo, path, lfs_object=meta.is_lfs)
+
+
+def raw(ctx: Ctx, ns: str, name: str, rev: str, path: str) -> Response:
+    """ACC-10 [OBS raw-readme-*, anonymous-probes raw-readme]: the resolve gate and messages
+    without the ACC-5 allowlist, then the file with resolve's headers. Provisional (no Q yet): no
+    307 on a non-gated repo (the file is served directly, as observed with access)."""
+    repo = visible_repo(ctx, f"{ns}/{name}", Fmt.PLAIN)
+    gate(ctx, repo, Fmt.PLAIN)  # path not passed: no allowlist
+    check_revision(repo, rev, Fmt.PLAIN)
+    if path not in ctx.store.files[repo["id"]].files:
+        raise HttpError(error(404, ENTRY_NOT_FOUND, Fmt.PLAIN, "EntryNotFound"))
+    return file_response(ctx, repo, path, git_blob=True)
+
+
+BLOB_INLINE_MAX = 1 << 20
+
+
+def blob(ctx: Ctx, ns: str, name: str, rev: str, path: str) -> Response:
+    """The file page (HTML), gated like raw (ACC-10). [OBS anonymous-probes blob-config]: the
+    anonymous 401 is HTML with X-Error-Code GatedRepo and no WWW-Authenticate.
+    Provisional (no Q yet): with access, a minimal page with the git blob content (the LFS pointer
+    for LFS files), or only the size above 1 MiB; 404s are HTML like the other web routes."""
+    repo = visible_repo(ctx, f"{ns}/{name}", Fmt.HTML)
+    denied = denial(ctx, repo)
+    if denied:
+        raise HttpError(error(denied.status, denied.message, Fmt.HTML, "GatedRepo", www_authenticate=False))
+    check_revision(repo, rev, Fmt.HTML)
+    meta = ctx.store.files[repo["id"]].files.get(path)
+    if meta is None:
+        raise HttpError(error(404, ENTRY_NOT_FOUND, Fmt.HTML, "EntryNotFound"))
+    if meta.is_lfs:
+        shown = lfs_pointer(meta.lfs_oid, meta.size).decode()
+    elif meta.size <= BLOB_INLINE_MAX:
+        shown = b"".join(content_chunks(repo["id"], meta)).decode("utf-8", errors="replace")
+    else:
+        shown = f"{meta.size} bytes"
+    page = (f'<!doctype html>\n<html><head><meta charset="utf-8"><title>{html.escape(path)} · '
+            f'{html.escape(repo["id"])} at {html.escape(rev)}</title></head>\n'
+            f"<body><h1>{html.escape(path)}</h1>\n<pre>{html.escape(shown)}</pre></body></html>\n")
+    return respond(200, page.encode(), HTML_TYPE)
 
 
 # --- owner side --------------------------------------------------------------------------------------
@@ -672,6 +731,8 @@ ROUTES: list[tuple[frozenset[str], re.Pattern[str], Fmt, Handler]] = [
         ("POST", rf"/{_WEB_REPO}/ask-access", Fmt.HTML, ask_access),
         ("GET", rf"/{_WEB_REPO}/user-access-report", Fmt.HTML, report),
         ("GET HEAD", rf"/{_WEB_REPO}/resolve/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.PLAIN, resolve),
+        ("GET", rf"/{_WEB_REPO}/raw/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.PLAIN, raw),
+        ("GET", rf"/{_WEB_REPO}/blob/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.HTML, blob),
         ("GET HEAD", rf"/api/resolve-cache/models/{_REPO}/(?P<sha>[^/]+)/(?P<path>.+)", Fmt.PLAIN, resolve_cache),
     ]
 ]

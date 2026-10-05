@@ -60,6 +60,11 @@ ERRORS = [
     (None, "GET", f"/{REPO}/resolve/main/LICENSE.md", None, 404, "EntryNotFound", "Entry not found", TEXT),
     (None, "GET", f"/{REPO}/resolve/v9/README.md", None, 404, "RevisionNotFound", "Revision not found", TEXT),
     (None, "GET", f"/api/models/{REPO}/auth-check", None, 401, "GatedRepo", GATE_ANON, API),
+    # ACC-10 [OBS tree-masking raw-*]: raw has resolve's gate and messages, but no allowlist
+    (None, "GET", f"/{REPO}/raw/main/README.md", None, 401, "GatedRepo", GATE_ANON, TEXT),
+    ("requester", "GET", f"/{REPO}/raw/main/README.md", None, 403, "GatedRepo", PENDING, TEXT),
+    (None, "GET", f"/{REPO}/raw/no-such-branch/x.bin", None, 401, "GatedRepo", GATE_ANON, TEXT),
+    ("owner", "GET", f"/{REPO}/raw/main/LICENSE", None, 404, "EntryNotFound", "Entry not found", TEXT),
     # Provisional (Q-1): anonymous ask-access is an authentication error
     (None, "POST", f"/{REPO}/ask-access", {}, 401, None, BAD_CREDS, HTML),
     # Outside the surface: HF's 404 page [OBS owner-get-settings]
@@ -228,3 +233,41 @@ def test_CFG_6_not_gated_repo_redirects_to_resolve_cache(client):
     cached = client.get(resp.headers["location"])
     assert cached.status_code == 200 and cached.text == "---\r\nlicense: mit\r\n---\r\n"
     assert cached.headers["x-repo-commit"] == "6f1dade6f974de81ce21aa14b87add2e0217b05e"
+
+
+@pytest.mark.parametrize(("setup", "persona", "repo", "masked"), [
+    (None, None, REPO, True),  # ACC-9 [OBS tree-subdir-anon]
+    (None, "requester", REPO, True),  # [OBS tree-subdir-requester]: pending, no access
+    (None, "owner", REPO, False),  # [OBS tree-subdir-owner]: ACC-1
+    ("accept", "requester", REPO, False),  # accepted request = access
+    (None, None, "Orosius/not-gated-demo", False),  # ACC-7: everyone has access
+])
+def test_ACC_9_tree_masks_lfs_hashes_without_access(client, setup, persona, repo, masked):
+    if setup == "accept":
+        client.post(f"{LIST}/handle", json={"user": "TestingBOrig", "status": "accepted"}, headers=auth("owner"))
+    (lfs,) = [e for e in client.get(f"/api/models/{repo}/tree/main", params={"recursive": "true"},
+                                    headers=auth(persona)).json() if "lfs" in e][:1]
+    assert (lfs["lfs"]["oid"] == "*" * 64, lfs["xetHash"] == "*" * 64) == (masked, masked)
+    assert len(lfs["oid"]) == 40 and lfs["oid"] != "*" * 40  # the git oid is never masked
+
+
+def test_ACC_10_raw_serves_the_git_blob(client):
+    """[OBS raw-readme-owner] README as text with resolve's headers. Provisional (no Q yet): an LFS
+    file is served as its pointer, whose git oid is the recorded one."""
+    lfs = client.get(f"/{REPO}/raw/main/checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin", headers=auth("owner"))
+    assert lfs.status_code == 200 and lfs.text.startswith("version https://git-lfs.github.com/spec/v1\n")
+    assert (lfs.headers["etag"], lfs.headers["content-length"]) == ('"05cfb29bfc3d15db751bd707b6cf23a8ea47b933"', "135")
+
+
+def test_ACC_10_blob_page_is_gated_like_raw(client):
+    path = f"/{REPO}/blob/main/checkpoint_tokens_20M_loss_4.9842/config.json"
+    anon = client.get(path)
+    # [OBS anonymous-probes blob-config]: HTML, GatedRepo, and no WWW-Authenticate on this route
+    assert (anon.status_code, anon.headers["x-error-code"], anon.headers["content-type"]) == (401, "GatedRepo", HTML)
+    assert "www-authenticate" not in anon.headers and anon.headers["x-error-message"] == GATE_ANON
+    pending = client.get(path, headers=auth("requester"))
+    assert (pending.status_code, pending.headers["x-error-message"]) == (403, PENDING)
+    assert client.get(f"/{REPO}/blob/main/README.md").status_code == 401  # no allowlist
+    page = client.get(path, headers=auth("owner"))  # Provisional (no Q yet): minimal page
+    assert page.status_code == 200 and page.headers["content-type"] == HTML
+    assert "&quot;model_type&quot;: &quot;swa_mla&quot;" in page.text
