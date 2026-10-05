@@ -52,7 +52,7 @@ exist yet. Update this section when they land.
 | `docs/hf-gated/` | Target KB: spec, wire protocol, UI, open questions, sources, observations |
 | `harness/kb/` | KB tooling: `probe.py` (scripted probes; read-only unless `--allow-writes`), `extract_openapi.py` (vendor-spec extract), `probes/*.json` (cases) |
 | `bridge/` | Python (uv, FastAPI, httpx): HF-compatible proxy with personas, route/repo allowlists, exchange log. See `bridge/README.md` |
-| `clone/` (planned) | Python (uv, FastAPI proposed): in-memory HF-compatible backend for the slice |
+| `clone/` | Python (uv, FastAPI): in-memory, deterministic HF-compatible backend (domain state machine, wire protocol, seeds, `/__clone__/*` control endpoints). See `clone/README.md` |
 | `web/` | Next.js 16 (App Router, TypeScript): requester gate box, owner settings section, review modal; proxies HF-shaped requests to `BACKEND_URL` (bridge or clone). See `web/README.md`; `web/AGENTS.md` is Next's own agent note |
 | `conformance/` (planned) | Scenario scripts run against both backends: API level (pytest + `huggingface_hub`) and UI level (Playwright) |
 | `harness/agents/` | Subagent prompts actually used, verbatim, with the shared patterns |
@@ -108,6 +108,16 @@ uv run --project bridge pytest bridge/tests -m live
 
 The last one is GET/HEAD only, against the real Hub.
 
+Clone (port 8200; in-memory, reset with `POST /__clone__/reset`):
+
+```bash
+uv run --project clone clone
+```
+
+```bash
+uv run --project clone pytest clone/tests
+```
+
 Web (port 3000; start the bridge first, `BACKEND_URL` defaults to `http://127.0.0.1:8100`):
 
 ```bash
@@ -123,7 +133,9 @@ npm --prefix web run test:e2e
 ```
 
 The e2e suite is read-only against the live bridge: a guard aborts any non-GET/HEAD request.
-Both servers are also defined in `.claude/launch.json` (`bridge`, `web`).
+`.claude/launch.json` defines `bridge` (8100), `clone` (8200), `web` (3000 → bridge) and `web-clone` (3001 →
+clone, via `BACKEND_URL`). Only one `next dev` can run in `web/` at a time, so stop `web` before
+starting `web-clone`.
 
 KB probes:
 
@@ -177,5 +189,5 @@ clone's code**, and the implementer never adds behaviour that has no rule.
 ## Language and git
 
 - Code, docs and commits in **English**. The user may chat in French or English.
-- No git repository yet (2026-10-05). Once it is initialised, commit at each natural step, per the
-  global rules, and stage by path.
+- Git repository on `main`. Commit at each natural step, per the global rules, and stage by path.
+  Subagents do not commit; the orchestrator reviews and commits.

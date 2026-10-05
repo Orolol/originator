@@ -4,15 +4,54 @@
     {
       "name": "bridge",
       "runtimeExecutable": "uv",
-      "runtimeArgs": ["run", "--project", "bridge", "bridge"],
+      "runtimeArgs": [
+        "run",
+        "--project",
+        "bridge",
+        "bridge"
+      ],
       "port": 8100,
       "url": "http://127.0.0.1:8100"
     },
     {
+      "name": "clone",
+      "runtimeExecutable": "uv",
+      "runtimeArgs": [
+        "run",
+        "--project",
+        "clone",
+        "clone"
+      ],
+      "port": 8200,
+      "url": "http://127.0.0.1:8200"
+    },
+    {
       "name": "web",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["--prefix", "web", "run", "dev"],
+      "runtimeArgs": [
+        "--prefix",
+        "web",
+        "run",
+        "dev"
+      ],
       "port": 3000
+    },
+    {
+      "name": "web-clone",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "web",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3001"
+      ],
+      "port": 3001,
+      "env": {
+        "BACKEND_URL": "http://127.0.0.1:8200"
+      }
     }
   ]
 }

@@ -1,0 +1,27 @@
+[project]
+name = "clone"
+version = "0.1.0"
+description = "Deterministic in-memory clone of the Hugging Face gated-models backend (access-request slice)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+]
+
+[project.scripts]
+clone = "clone.main:run"
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "httpx",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Starlette 1.x nudges TestClient users towards httpx2; httpx is what the dev group pins.
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient` is deprecated:UserWarning"]

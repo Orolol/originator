@@ -1,0 +1,1966 @@
+{
+ "seed": "sandbox",
+ "now": "2026-10-05T14:30:00.000Z",
+ "tick_ms": 1000,
+ "users": [
+  {
+   "user": "Orosius",
+   "_id": "63ea055c74f940d171e52701",
+   "fullname": "Gaetan Martin",
+   "email": "orosius@example.com",
+   "avatarUrl": "/avatars/321442c65614e6e52fb158f334e9bb1e.svg",
+   "isPro": true,
+   "token": "persona-owner",
+   "orgs": [],
+   "whoami": {
+    "emailVerified": true,
+    "canPay": false,
+    "billingMode": "prepaid",
+    "periodEnd": 1793491200,
+    "auth": {
+     "type": "access_token",
+     "accessToken": {
+      "displayName": "orig",
+      "role": "write",
+      "createdAt": "2026-10-05T13:37:38.968Z"
+     }
+    }
+   }
+  },
+  {
+   "user": "TestingBOrig",
+   "_id": "6ac3a4b8792f9017b6cb67ec",
+   "fullname": "Bridge",
+   "email": "testingborig@example.com",
+   "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+   "isPro": false,
+   "token": "persona-requester",
+   "orgs": [],
+   "whoami": {
+    "emailVerified": true,
+    "canPay": false,
+    "billingMode": "prepaid",
+    "periodEnd": 1793491200,
+    "auth": {
+     "type": "access_token",
+     "accessToken": {
+      "displayName": "orig",
+      "role": "write",
+      "createdAt": "2026-10-05T13:28:04.823Z"
+     }
+    }
+   }
+  },
+  {
+   "user": "DemoCarol",
+   "_id": "c6b12968e29b4c68d1684f14",
+   "fullname": "Carol Demo",
+   "email": "carol@example.com",
+   "avatarUrl": "/avatars/4ac08549e99284e2b184424d767bb6f7.svg",
+   "isPro": false,
+   "token": "persona-carol",
+   "orgs": [],
+   "whoami": {
+    "emailVerified": true,
+    "canPay": false,
+    "billingMode": "prepaid",
+    "auth": {
+     "type": "access_token",
+     "accessToken": {
+      "displayName": "clone",
+      "role": "write",
+      "createdAt": "2026-10-05T12:00:00.000Z"
+     }
+    }
+   }
+  }
+ ],
+ "repos": [
+  {
+   "_id": "69414ed409f9267fc5b494e2",
+   "id": "Orosius/deltanet-mla-latent",
+   "author": "Orosius",
+   "private": false,
+   "gated": "manual",
+   "sha": "6f1dade6f974de81ce21aa14b87add2e0217b05e",
+   "createdAt": "2025-12-16T12:21:40.000Z",
+   "lastModified": "2026-01-01T02:52:44.000Z",
+   "cardData": {
+    "license": "mit"
+   },
+   "orgMembersGated": false,
+   "gatedNotificationsMode": "bulk",
+   "gatedNotificationsEmail": null,
+   "info": {
+    "tags": [
+     "license:mit",
+     "region:us"
+    ],
+    "downloads": 0,
+    "likes": 0,
+    "modelId": "Orosius/deltanet-mla-latent",
+    "disabled": false,
+    "model-index": null,
+    "config": {},
+    "spaces": [],
+    "usedStorage": 432788782400
+   },
+   "dirs": {
+    "checkpoint_tokens_10027M_loss_2.9292": {
+     "oid": "45f7f8654f96b4ae8411aae127de9d8a4b4f90f9"
+    },
+    "checkpoint_tokens_1019M_loss_3.6922": {
+     "oid": "10f0cfa2e950eb8a73642664440b1036f190dd0b"
+    },
+    "checkpoint_tokens_102M_loss_4.2905": {
+     "oid": "0f34b68d18d2439b8109960124f66d5ccf174f2b"
+    },
+    "checkpoint_tokens_10518M_loss_2.9286": {
+     "oid": "16e4c276fcbe111f680b394f9bb5e6164ef40587"
+    },
+    "checkpoint_tokens_1069M_loss_3.6115": {
+     "oid": "bb574d0ef8c801e2148c603f7b1bad95252dfac7"
+    },
+    "checkpoint_tokens_11010M_loss_2.9187": {
+     "oid": "63f35a2bd81b5664cd888b4e293c5fb86e26fae7"
+    },
+    "checkpoint_tokens_1118M_loss_3.6538": {
+     "oid": "860039ca0399eca0c7212240ad9ffec69dbcd61d"
+    },
+    "checkpoint_tokens_1167M_loss_3.6483": {
+     "oid": "94c78b76af79710b240aa91dc55bd35932c34d50"
+    },
+    "checkpoint_tokens_1216M_loss_3.6254": {
+     "oid": "4bb09b4a143535d2b37618db386077b0debc87a9"
+    },
+    "checkpoint_tokens_122M_loss_4.3007": {
+     "oid": "b3e724e02b9ae834ad49b0b3beb3ed933e8e9a3c"
+    },
+    "checkpoint_tokens_1265M_loss_3.6617": {
+     "oid": "b2432055acb1cc771ca78bd844c7444bce9f0dda"
+    },
+    "checkpoint_tokens_1314M_loss_3.5883": {
+     "oid": "0d2f13346de3e84b6e1593b8f20b75f1fbb68232"
+    },
+    "checkpoint_tokens_1364M_loss_3.6119": {
+     "oid": "0f89d2877e887eb6737c4d26b33150d630af9a5b"
+    },
+    "checkpoint_tokens_1413M_loss_3.5998": {
+     "oid": "f22bcdc948f37d484ffed44044f0a9d63d050392"
+    },
+    "checkpoint_tokens_143M_loss_4.1989": {
+     "oid": "ee4475b770d74759abbb4a1a7178e30faa6b46ad"
+    },
+    "checkpoint_tokens_1462M_loss_3.6212": {
+     "oid": "0e79db3e02c936cbefc6673111178386da57ac36"
+    },
+    "checkpoint_tokens_1511M_loss_3.6316": {
+     "oid": "8b524099d85a5bdf491e1c761b1354c9099fb21f"
+    },
+    "checkpoint_tokens_1560M_loss_3.6365": {
+     "oid": "24071e129d58123027641db60d9f8e1b455b99ef"
+    },
+    "checkpoint_tokens_1609M_loss_3.6160": {
+     "oid": "00188c987d4394f4ef4ab83fb07215fa5dde5b84"
+    },
+    "checkpoint_tokens_163M_loss_4.2653": {
+     "oid": "011e9f2cb9e32f9f384ba56b4659e94c67a0feeb"
+    },
+    "checkpoint_tokens_1658M_loss_3.6081": {
+     "oid": "1ac15bee8a6cbea1819c91571445acf1f02dacfa"
+    },
+    "checkpoint_tokens_1708M_loss_3.5762": {
+     "oid": "d90f81d69ba2e535798f86d7d57e573ed4e7a963"
+    },
+    "checkpoint_tokens_1757M_loss_3.6284": {
+     "oid": "c939a3e44b4c3eed696df326cc43b1a90c3eb1f4"
+    },
+    "checkpoint_tokens_1806M_loss_3.6014": {
+     "oid": "71c97610c21cbee15bb14f8b8a50f9c69e9f7508"
+    },
+    "checkpoint_tokens_184M_loss_4.1756": {
+     "oid": "f0089b34c39c5afce278d7ff94384a4a0c461d5e"
+    },
+    "checkpoint_tokens_1855M_loss_3.6193": {
+     "oid": "0b1ca6de59f75d6593fd0b4b774f993432b4ea40"
+    },
+    "checkpoint_tokens_1904M_loss_3.6449": {
+     "oid": "307e6b62ed6ffa7560b18f3b45fdf4e21207d858"
+    },
+    "checkpoint_tokens_1953M_loss_3.6111": {
+     "oid": "fb57914a33619c0c5823f3d933e6057b935948f9"
+    },
+    "checkpoint_tokens_2003M_loss_3.6075": {
+     "oid": "974cd2057611f08381dc7fe5ac78f29ed62de152"
+    },
+    "checkpoint_tokens_2052M_loss_3.6406": {
+     "oid": "7a242f42eb1c868fdb42054c3753ac8f28239bb5"
+    },
+    "checkpoint_tokens_20M_loss_4.9842": {
+     "oid": "9d05ec2bdcdc25ba71f0a0ac32b511c2f3824a3b"
+    },
+    "checkpoint_tokens_2101M_loss_3.6084": {
+     "oid": "fd17c2f97f7f0fb7caacb795438c0827275320f9"
+    },
+    "checkpoint_tokens_2150M_loss_3.6013": {
+     "oid": "128641914536fb77f2cb751a58fd835ee3edaa0a"
+    },
+    "checkpoint_tokens_2199M_loss_3.5938": {
+     "oid": "c45cc579c0b843a394dd468c9de9b3f7ef0cfe9b"
+    },
+    "checkpoint_tokens_2248M_loss_3.5888": {
+     "oid": "39fb4f171447299c99540bcfa698187436dd15bb"
+    },
+    "checkpoint_tokens_2297M_loss_3.6098": {
+     "oid": "a77eb632ab5646dda52b6284ee6b8dba7bc99fa5"
+    },
+    "checkpoint_tokens_233M_loss_3.8377": {
+     "oid": "92697cf75408ec10a1e53a4067efaa50adefab34"
+    },
+    "checkpoint_tokens_2347M_loss_3.6001": {
+     "oid": "d6a548e5ac129d661526abf39a76d3b8a29d62e6"
+    },
+    "checkpoint_tokens_2396M_loss_3.6141": {
+     "oid": "431ef7de71ab19a945eeaa183088e9c738087a51"
+    },
+    "checkpoint_tokens_2445M_loss_3.5776": {
+     "oid": "be6957255c5e941078dc9d51fb3b62f84cf5039b"
+    },
+    "checkpoint_tokens_2494M_loss_3.6004": {
+     "oid": "6bf6741711c645bcb9848b24791f058c591ba7da"
+    },
+    "checkpoint_tokens_2543M_loss_3.5908": {
+     "oid": "489501f7a75b741a0e642d377e71768e09dd6bda"
+    },
+    "checkpoint_tokens_2592M_loss_3.6296": {
+     "oid": "16a305f46d4e1ccaa7e0c306544c64102b76dac1"
+    },
+    "checkpoint_tokens_2641M_loss_3.5638": {
+     "oid": "5389b7cc40199ddedae5bd07506f07d596bf41c8"
+    },
+    "checkpoint_tokens_2691M_loss_3.5838": {
+     "oid": "e2c4fb5723fa0b40d9a0254d9dd63b9df44c76d0"
+    },
+    "checkpoint_tokens_2740M_loss_3.5674": {
+     "oid": "6ea8451710e7f861e46147a1c1e1daeb25dfa56a"
+    },
+    "checkpoint_tokens_2789M_loss_3.5760": {
+     "oid": "b0479d4e3561d83b6a4f8741dc4d277a482b5455"
+    },
+    "checkpoint_tokens_282M_loss_3.8109": {
+     "oid": "1e75eb5d6190e6cae4b8b8d5f9b9d1133fe9640e"
+    },
+    "checkpoint_tokens_2838M_loss_3.5695": {
+     "oid": "6b8c43b4e5341f37f28c32bfa2b0fdf8143a578c"
+    },
+    "checkpoint_tokens_2887M_loss_3.5703": {
+     "oid": "7656a45b01385f3737c6d6ee5a82d5a34c039e8c"
+    },
+    "checkpoint_tokens_2936M_loss_3.5876": {
+     "oid": "7c51f6c0b3c9750c1fc6408fda15d916741f33eb"
+    },
+    "checkpoint_tokens_2986M_loss_3.5780": {
+     "oid": "386d54a964ce6ccca698c6f6fccbfca67f6353bd"
+    },
+    "checkpoint_tokens_3035M_loss_3.5614": {
+     "oid": "cafdf0970c347ff1f5ce87f371cae21b83087d5c"
+    },
+    "checkpoint_tokens_3084M_loss_3.5470": {
+     "oid": "30b784948b2319c5be3cfd076edfa7ab6de65139"
+    },
+    "checkpoint_tokens_3133M_loss_3.5362": {
+     "oid": "ae8f8fc68ad55161d3a031df3a653ccfee027e98"
+    },
+    "checkpoint_tokens_3182M_loss_3.6057": {
+     "oid": "80c9950bbd3c382fa6858b5c30ca3788c3a84947"
+    },
+    "checkpoint_tokens_3231M_loss_3.5824": {
+     "oid": "13c1285855c9ee7dcd26bb90b6bb262d847d8502"
+    },
+    "checkpoint_tokens_3280M_loss_3.5678": {
+     "oid": "e7da8c74f401ac907cb87ffbd471e4c7bc4a1843"
+    },
+    "checkpoint_tokens_331M_loss_3.7805": {
+     "oid": "00bdc1c836b375fdeb9350bd0a012e29728ed70e"
+    },
+    "checkpoint_tokens_3330M_loss_3.5832": {
+     "oid": "b7b345bf0cf74a740a45b935f8fca6372f4d14a1"
+    },
+    "checkpoint_tokens_3379M_loss_3.5660": {
+     "oid": "163cb160529c61c6e8e0950ed9e2292161c236b5"
+    },
+    "checkpoint_tokens_3428M_loss_3.5394": {
+     "oid": "75637332148f76742f6aec719c73a77ea9921245"
+    },
+    "checkpoint_tokens_3477M_loss_3.5441": {
+     "oid": "a176682588201abc325a0c21b9a019244804eddd"
+    },
+    "checkpoint_tokens_3526M_loss_3.5480": {
+     "oid": "09f1b48bd0150b84c73383637e7ee7143c488044"
+    },
+    "checkpoint_tokens_3575M_loss_3.5803": {
+     "oid": "7dbeb439ceb4b5565f58d8617c2d054bbbd206fa"
+    },
+    "checkpoint_tokens_3625M_loss_3.5871": {
+     "oid": "27fe691fc8df05bcf70a9126907e0376863d211a"
+    },
+    "checkpoint_tokens_3674M_loss_3.5779": {
+     "oid": "bd25084f11a4b558fbe9a89f750c5fe21db62f9c"
+    },
+    "checkpoint_tokens_3723M_loss_3.5464": {
+     "oid": "153280ff2082348d8d195784780c0c157580fa26"
+    },
+    "checkpoint_tokens_3772M_loss_3.5499": {
+     "oid": "4523718ff70345876ace48daf7ed4ac8c472f763"
+    },
+    "checkpoint_tokens_380M_loss_3.7597": {
+     "oid": "38804b53348e1fee20afd92d680e6c9c7f216b1a"
+    },
+    "checkpoint_tokens_3821M_loss_3.5530": {
+     "oid": "8f3e56364e96a55877c18ae6be9714cf4eaa3fcf"
+    },
+    "checkpoint_tokens_3870M_loss_3.5379": {
+     "oid": "cae3372ae95d72ede4f5d5cbc60164bc05f4ecf2"
+    },
+    "checkpoint_tokens_3919M_loss_3.4935": {
+     "oid": "7d5616331a6ce84dbc392e80f7ab66d838edffa6"
+    },
+    "checkpoint_tokens_3969M_loss_3.4745": {
+     "oid": "cff01c840f7eb692aaec26e4ecea939464565f1e"
+    },
+    "checkpoint_tokens_4018M_loss_3.4428": {
+     "oid": "6e969eab059f664bf9203182817ca3281ee50c38"
+    },
+    "checkpoint_tokens_4067M_loss_3.4626": {
+     "oid": "28e6581020171bab294f01d3adb5027e8d6b7c3e"
+    },
+    "checkpoint_tokens_4087M_loss_3.5708": {
+     "oid": "3f17b4ca4e7e1ec5438c34bbcff3a5bcb9ced8df"
+    },
+    "checkpoint_tokens_40M_loss_4.5478": {
+     "oid": "f2d8be78f266c6b467ff1d39f29aa58b1b2f666b"
+    },
+    "checkpoint_tokens_4108M_loss_3.5057": {
+     "oid": "0a0720c1c9faaebf8ec41709931c03abaa7800c3"
+    },
+    "checkpoint_tokens_4128M_loss_3.5531": {
+     "oid": "778ffc8f808d8d942baa397f3e9d794180d5e617"
+    },
+    "checkpoint_tokens_4149M_loss_3.5446": {
+     "oid": "5f5cba15b4b103a2ad0fa5dbefc9b7ef3bf4b420"
+    },
+    "checkpoint_tokens_4169M_loss_3.5174": {
+     "oid": "d2a00d5eabf809f5ee46b43477a5f20a27e63ef6"
+    },
+    "checkpoint_tokens_4190M_loss_3.5064": {
+     "oid": "9754638fb3ac40d26f6245bd5e8117b4e6ac8df4"
+    },
+    "checkpoint_tokens_4210M_loss_3.3806": {
+     "oid": "a2d4c5a3d0c7ab97c6cd7d32fc91717e6685b36a"
+    },
+    "checkpoint_tokens_4231M_loss_3.4681": {
+     "oid": "f561551a0362e8c816ee134f6c73caa3589e390d"
+    },
+    "checkpoint_tokens_4251M_loss_3.3592": {
+     "oid": "fdb09d696764711d749bd02d7c1e83d0c9b1e0cd"
+    },
+    "checkpoint_tokens_4272M_loss_3.3058": {
+     "oid": "2d0019801d117332c5918fc6d41f7655c585e74d"
+    },
+    "checkpoint_tokens_4292M_loss_3.2755": {
+     "oid": "9dfa34be5735d31460a929dc764550143df13064"
+    },
+    "checkpoint_tokens_430M_loss_3.6832": {
+     "oid": "0c4639d40f21e4737d0f0e603d953acc9214fa54"
+    },
+    "checkpoint_tokens_4313M_loss_3.2810": {
+     "oid": "62718c25a4e9fa1dcad6b8f4b791a1c6ddc3699e"
+    },
+    "checkpoint_tokens_4333M_loss_3.3132": {
+     "oid": "3e5f027dfdab1ac6483c8ed88c52fa82b3206baa"
+    },
+    "checkpoint_tokens_4354M_loss_3.3388": {
+     "oid": "554397cf3e48470b5d124199ec40919790ea36ca"
+    },
+    "checkpoint_tokens_4374M_loss_3.2473": {
+     "oid": "559e86f02056cb72725e7fa94488364f54e0e894"
+    },
+    "checkpoint_tokens_4395M_loss_3.3088": {
+     "oid": "f04b5786e77dc39bd7a4284ed00f441aeb17c7bd"
+    },
+    "checkpoint_tokens_4415M_loss_3.2789": {
+     "oid": "08a25d74e52ec8c04b1506bc2efe2c320bc3cd1d"
+    },
+    "checkpoint_tokens_4436M_loss_3.2685": {
+     "oid": "bb47f909cc8bf182cb3366135ef146f0500eb893"
+    },
+    "checkpoint_tokens_4456M_loss_3.2821": {
+     "oid": "1dd45a6d5dc1d19797338f506aa41ff42625c5a3"
+    },
+    "checkpoint_tokens_4477M_loss_3.2912": {
+     "oid": "32a9f514f0c832bd5eecda2ad1e2066c70658938"
+    },
+    "checkpoint_tokens_4497M_loss_3.2971": {
+     "oid": "7ec9b61733c0aadd34ab4d1007b30561bd2bf251"
+    },
+    "checkpoint_tokens_4518M_loss_3.2767": {
+     "oid": "836f8bae2b88d1c72e2a4ab3753219a2ed743eb4"
+    },
+    "checkpoint_tokens_4538M_loss_3.3004": {
+     "oid": "10bb746a1ea7d1723edca5e5cc8546f5b8c3dd82"
+    },
+    "checkpoint_tokens_4558M_loss_3.3142": {
+     "oid": "b4cee0135c42f0a4dd913e8b2273326a6ef4ec97"
+    },
+    "checkpoint_tokens_4579M_loss_3.2839": {
+     "oid": "70440b0067214f54bb7a0771d9e8b89a1040cc42"
+    },
+    "checkpoint_tokens_4599M_loss_3.3518": {
+     "oid": "4429afd022e526bb43892322e8fac89e3a9348c4"
+    },
+    "checkpoint_tokens_4620M_loss_3.3334": {
+     "oid": "f69e196fb19b65d6a25f8bc6086144c24ad6a366"
+    },
+    "checkpoint_tokens_479M_loss_3.7144": {
+     "oid": "49612aa48ae51b9e648e5cdb5d48bad6759b4df5"
+    },
+    "checkpoint_tokens_5112M_loss_3.0744": {
+     "oid": "ca9286012d524718dc89d5ffe794ff0272a14745"
+    },
+    "checkpoint_tokens_528M_loss_3.7355": {
+     "oid": "d3086354ebeacb7cd3a1f133e95035ebf28b3766"
+    },
+    "checkpoint_tokens_5603M_loss_3.0146": {
+     "oid": "047bb02880fbde2866a625b521e9d3a2f66c8e79"
+    },
+    "checkpoint_tokens_577M_loss_3.6916": {
+     "oid": "665b178ec636a22699cd8d65a9b1f855a701ec18"
+    },
+    "checkpoint_tokens_6095M_loss_3.0022": {
+     "oid": "80b70240c2e4b37f92b1e0d23117c4ee453c634f"
+    },
+    "checkpoint_tokens_626M_loss_3.6956": {
+     "oid": "e91ace48c3220275ec44db25ae00fe37009d2b1b"
+    },
+    "checkpoint_tokens_6586M_loss_2.9385": {
+     "oid": "a9a431a88764d24c22d54abd9536e7e372b1c6ab"
+    },
+    "checkpoint_tokens_675M_loss_3.7039": {
+     "oid": "aa3d824805c659bbaa049100cfa9abfc420f3268"
+    },
+    "checkpoint_tokens_7078M_loss_2.9463": {
+     "oid": "19ddc748fcdfe270f33294e657515eb9ae5f29f3"
+    },
+    "checkpoint_tokens_725M_loss_3.6668": {
+     "oid": "42853e1875726d1a74a17a6f58300fd66269a810"
+    },
+    "checkpoint_tokens_7569M_loss_2.9393": {
+     "oid": "6a1545d2a3912871c43274888080ddadcd7bcbf1"
+    },
+    "checkpoint_tokens_774M_loss_3.6704": {
+     "oid": "956ae81c740d3246dbeb90b507813eab1e36558d"
+    },
+    "checkpoint_tokens_8061M_loss_2.9906": {
+     "oid": "cfda72440a8c7ff00b3f3af0458bf6105fc13742"
+    },
+    "checkpoint_tokens_81M_loss_4.4011": {
+     "oid": "0d8d44d4d20911e046e2ba6d74d6ee3db5443473"
+    },
+    "checkpoint_tokens_823M_loss_3.6534": {
+     "oid": "7fd2b20c6cb6300b2a5e36b6f0100ac66ce7d58d"
+    },
+    "checkpoint_tokens_8552M_loss_2.9483": {
+     "oid": "63dd04155acfb685df01bcabe193147eb614c798"
+    },
+    "checkpoint_tokens_872M_loss_3.6710": {
+     "oid": "d993e030519ec6c296ca8e20dbd37cca4c784e6e"
+    },
+    "checkpoint_tokens_9044M_loss_2.9273": {
+     "oid": "ed7c3c46619697c752dfbd3805d1d098b2524a8d"
+    },
+    "checkpoint_tokens_921M_loss_3.6412": {
+     "oid": "3f4dae88164e6eced0704ef43c12545e1dce153c"
+    },
+    "checkpoint_tokens_9535M_loss_2.9385": {
+     "oid": "ba9c795ae11827a61c2582fc05491dda8cd31773"
+    },
+    "checkpoint_tokens_970M_loss_3.6390": {
+     "oid": "2c75061f45800d5497ee01a69a90ea1a4845f53c"
+    }
+   },
+   "files": {
+    ".gitattributes": {
+     "oid": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+     "size": 1519,
+     "text": "*.7z filter=lfs diff=lfs merge=lfs -text\n*.arrow filter=lfs diff=lfs merge=lfs -text\n*.bin filter=lfs diff=lfs merge=lfs -text\n*.bz2 filter=lfs diff=lfs merge=lfs -text\n*.ckpt filter=lfs diff=lfs merge=lfs -text\n*.ftz filter=lfs diff=lfs merge=lfs -text\n*.gz filter=lfs diff=lfs merge=lfs -text\n*.h5 filter=lfs diff=lfs merge=lfs -text\n*.joblib filter=lfs diff=lfs merge=lfs -text\n*.lfs.* filter=lfs diff=lfs merge=lfs -text\n*.mlmodel filter=lfs diff=lfs merge=lfs -text\n*.model filter=lfs diff=lfs merge=lfs -text\n*.msgpack filter=lfs diff=lfs merge=lfs -text\n*.npy filter=lfs diff=lfs merge=lfs -text\n*.npz filter=lfs diff=lfs merge=lfs -text\n*.onnx filter=lfs diff=lfs merge=lfs -text\n*.ot filter=lfs diff=lfs merge=lfs -text\n*.parquet filter=lfs diff=lfs merge=lfs -text\n*.pb filter=lfs diff=lfs merge=lfs -text\n*.pickle filter=lfs diff=lfs merge=lfs -text\n*.pkl filter=lfs diff=lfs merge=lfs -text\n*.pt filter=lfs diff=lfs merge=lfs -text\n*.pth filter=lfs diff=lfs merge=lfs -text\n*.rar filter=lfs diff=lfs merge=lfs -text\n*.safetensors filter=lfs diff=lfs merge=lfs -text\nsaved_model/**/* filter=lfs diff=lfs merge=lfs -text\n*.tar.* filter=lfs diff=lfs merge=lfs -text\n*.tar filter=lfs diff=lfs merge=lfs -text\n*.tflite filter=lfs diff=lfs merge=lfs -text\n*.tgz filter=lfs diff=lfs merge=lfs -text\n*.wasm filter=lfs diff=lfs merge=lfs -text\n*.xz filter=lfs diff=lfs merge=lfs -text\n*.zip filter=lfs diff=lfs merge=lfs -text\n*.zst filter=lfs diff=lfs merge=lfs -text\n*tfevents* filter=lfs diff=lfs merge=lfs -text\n"
+    },
+    "README.md": {
+     "oid": "7be5fc7f47d5db027d120b8024982df93db95b74",
+     "size": 24,
+     "text": "---\r\nlicense: mit\r\n---\r\n"
+    },
+    "checkpoint_tokens_10027M_loss_2.9292/README.md": {},
+    "checkpoint_tokens_10027M_loss_2.9292/config.json": {},
+    "checkpoint_tokens_10027M_loss_2.9292/merges.txt": {},
+    "checkpoint_tokens_10027M_loss_2.9292/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_10027M_loss_2.9292/special_tokens_map.json": {},
+    "checkpoint_tokens_10027M_loss_2.9292/tokenizer.json": {},
+    "checkpoint_tokens_10027M_loss_2.9292/tokenizer_config.json": {},
+    "checkpoint_tokens_10027M_loss_2.9292/vocab.json": {},
+    "checkpoint_tokens_1019M_loss_3.6922/README.md": {},
+    "checkpoint_tokens_1019M_loss_3.6922/config.json": {},
+    "checkpoint_tokens_1019M_loss_3.6922/merges.txt": {},
+    "checkpoint_tokens_1019M_loss_3.6922/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1019M_loss_3.6922/special_tokens_map.json": {},
+    "checkpoint_tokens_1019M_loss_3.6922/tokenizer.json": {},
+    "checkpoint_tokens_1019M_loss_3.6922/tokenizer_config.json": {},
+    "checkpoint_tokens_1019M_loss_3.6922/vocab.json": {},
+    "checkpoint_tokens_102M_loss_4.2905/README.md": {},
+    "checkpoint_tokens_102M_loss_4.2905/config.json": {},
+    "checkpoint_tokens_102M_loss_4.2905/merges.txt": {},
+    "checkpoint_tokens_102M_loss_4.2905/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_102M_loss_4.2905/special_tokens_map.json": {},
+    "checkpoint_tokens_102M_loss_4.2905/tokenizer.json": {},
+    "checkpoint_tokens_102M_loss_4.2905/tokenizer_config.json": {},
+    "checkpoint_tokens_102M_loss_4.2905/vocab.json": {},
+    "checkpoint_tokens_10518M_loss_2.9286/README.md": {},
+    "checkpoint_tokens_10518M_loss_2.9286/config.json": {},
+    "checkpoint_tokens_10518M_loss_2.9286/merges.txt": {},
+    "checkpoint_tokens_10518M_loss_2.9286/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_10518M_loss_2.9286/special_tokens_map.json": {},
+    "checkpoint_tokens_10518M_loss_2.9286/tokenizer.json": {},
+    "checkpoint_tokens_10518M_loss_2.9286/tokenizer_config.json": {},
+    "checkpoint_tokens_10518M_loss_2.9286/vocab.json": {},
+    "checkpoint_tokens_1069M_loss_3.6115/README.md": {},
+    "checkpoint_tokens_1069M_loss_3.6115/config.json": {},
+    "checkpoint_tokens_1069M_loss_3.6115/merges.txt": {},
+    "checkpoint_tokens_1069M_loss_3.6115/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1069M_loss_3.6115/special_tokens_map.json": {},
+    "checkpoint_tokens_1069M_loss_3.6115/tokenizer.json": {},
+    "checkpoint_tokens_1069M_loss_3.6115/tokenizer_config.json": {},
+    "checkpoint_tokens_1069M_loss_3.6115/vocab.json": {},
+    "checkpoint_tokens_11010M_loss_2.9187/README.md": {},
+    "checkpoint_tokens_11010M_loss_2.9187/config.json": {},
+    "checkpoint_tokens_11010M_loss_2.9187/merges.txt": {},
+    "checkpoint_tokens_11010M_loss_2.9187/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_11010M_loss_2.9187/special_tokens_map.json": {},
+    "checkpoint_tokens_11010M_loss_2.9187/tokenizer.json": {},
+    "checkpoint_tokens_11010M_loss_2.9187/tokenizer_config.json": {},
+    "checkpoint_tokens_11010M_loss_2.9187/vocab.json": {},
+    "checkpoint_tokens_1118M_loss_3.6538/README.md": {},
+    "checkpoint_tokens_1118M_loss_3.6538/config.json": {},
+    "checkpoint_tokens_1118M_loss_3.6538/merges.txt": {},
+    "checkpoint_tokens_1118M_loss_3.6538/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1118M_loss_3.6538/special_tokens_map.json": {},
+    "checkpoint_tokens_1118M_loss_3.6538/tokenizer.json": {},
+    "checkpoint_tokens_1118M_loss_3.6538/tokenizer_config.json": {},
+    "checkpoint_tokens_1118M_loss_3.6538/vocab.json": {},
+    "checkpoint_tokens_1167M_loss_3.6483/README.md": {},
+    "checkpoint_tokens_1167M_loss_3.6483/config.json": {},
+    "checkpoint_tokens_1167M_loss_3.6483/merges.txt": {},
+    "checkpoint_tokens_1167M_loss_3.6483/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1167M_loss_3.6483/special_tokens_map.json": {},
+    "checkpoint_tokens_1167M_loss_3.6483/tokenizer.json": {},
+    "checkpoint_tokens_1167M_loss_3.6483/tokenizer_config.json": {},
+    "checkpoint_tokens_1167M_loss_3.6483/vocab.json": {},
+    "checkpoint_tokens_1216M_loss_3.6254/README.md": {},
+    "checkpoint_tokens_1216M_loss_3.6254/config.json": {},
+    "checkpoint_tokens_1216M_loss_3.6254/merges.txt": {},
+    "checkpoint_tokens_1216M_loss_3.6254/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1216M_loss_3.6254/special_tokens_map.json": {},
+    "checkpoint_tokens_1216M_loss_3.6254/tokenizer.json": {},
+    "checkpoint_tokens_1216M_loss_3.6254/tokenizer_config.json": {},
+    "checkpoint_tokens_1216M_loss_3.6254/vocab.json": {},
+    "checkpoint_tokens_122M_loss_4.3007/README.md": {},
+    "checkpoint_tokens_122M_loss_4.3007/config.json": {},
+    "checkpoint_tokens_122M_loss_4.3007/merges.txt": {},
+    "checkpoint_tokens_122M_loss_4.3007/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_122M_loss_4.3007/special_tokens_map.json": {},
+    "checkpoint_tokens_122M_loss_4.3007/tokenizer.json": {},
+    "checkpoint_tokens_122M_loss_4.3007/tokenizer_config.json": {},
+    "checkpoint_tokens_122M_loss_4.3007/vocab.json": {},
+    "checkpoint_tokens_1265M_loss_3.6617/README.md": {},
+    "checkpoint_tokens_1265M_loss_3.6617/config.json": {},
+    "checkpoint_tokens_1265M_loss_3.6617/merges.txt": {},
+    "checkpoint_tokens_1265M_loss_3.6617/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1265M_loss_3.6617/special_tokens_map.json": {},
+    "checkpoint_tokens_1265M_loss_3.6617/tokenizer.json": {},
+    "checkpoint_tokens_1265M_loss_3.6617/tokenizer_config.json": {},
+    "checkpoint_tokens_1265M_loss_3.6617/vocab.json": {},
+    "checkpoint_tokens_1314M_loss_3.5883/README.md": {},
+    "checkpoint_tokens_1314M_loss_3.5883/config.json": {},
+    "checkpoint_tokens_1314M_loss_3.5883/merges.txt": {},
+    "checkpoint_tokens_1314M_loss_3.5883/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1314M_loss_3.5883/special_tokens_map.json": {},
+    "checkpoint_tokens_1314M_loss_3.5883/tokenizer.json": {},
+    "checkpoint_tokens_1314M_loss_3.5883/tokenizer_config.json": {},
+    "checkpoint_tokens_1314M_loss_3.5883/vocab.json": {},
+    "checkpoint_tokens_1364M_loss_3.6119/README.md": {},
+    "checkpoint_tokens_1364M_loss_3.6119/config.json": {},
+    "checkpoint_tokens_1364M_loss_3.6119/merges.txt": {},
+    "checkpoint_tokens_1364M_loss_3.6119/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1364M_loss_3.6119/special_tokens_map.json": {},
+    "checkpoint_tokens_1364M_loss_3.6119/tokenizer.json": {},
+    "checkpoint_tokens_1364M_loss_3.6119/tokenizer_config.json": {},
+    "checkpoint_tokens_1364M_loss_3.6119/vocab.json": {},
+    "checkpoint_tokens_1413M_loss_3.5998/README.md": {},
+    "checkpoint_tokens_1413M_loss_3.5998/config.json": {},
+    "checkpoint_tokens_1413M_loss_3.5998/merges.txt": {},
+    "checkpoint_tokens_1413M_loss_3.5998/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1413M_loss_3.5998/special_tokens_map.json": {},
+    "checkpoint_tokens_1413M_loss_3.5998/tokenizer.json": {},
+    "checkpoint_tokens_1413M_loss_3.5998/tokenizer_config.json": {},
+    "checkpoint_tokens_1413M_loss_3.5998/vocab.json": {},
+    "checkpoint_tokens_143M_loss_4.1989/README.md": {},
+    "checkpoint_tokens_143M_loss_4.1989/config.json": {},
+    "checkpoint_tokens_143M_loss_4.1989/merges.txt": {},
+    "checkpoint_tokens_143M_loss_4.1989/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_143M_loss_4.1989/special_tokens_map.json": {},
+    "checkpoint_tokens_143M_loss_4.1989/tokenizer.json": {},
+    "checkpoint_tokens_143M_loss_4.1989/tokenizer_config.json": {},
+    "checkpoint_tokens_143M_loss_4.1989/vocab.json": {},
+    "checkpoint_tokens_1462M_loss_3.6212/README.md": {},
+    "checkpoint_tokens_1462M_loss_3.6212/config.json": {},
+    "checkpoint_tokens_1462M_loss_3.6212/merges.txt": {},
+    "checkpoint_tokens_1462M_loss_3.6212/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1462M_loss_3.6212/special_tokens_map.json": {},
+    "checkpoint_tokens_1462M_loss_3.6212/tokenizer.json": {},
+    "checkpoint_tokens_1462M_loss_3.6212/tokenizer_config.json": {},
+    "checkpoint_tokens_1462M_loss_3.6212/vocab.json": {},
+    "checkpoint_tokens_1511M_loss_3.6316/README.md": {},
+    "checkpoint_tokens_1511M_loss_3.6316/config.json": {},
+    "checkpoint_tokens_1511M_loss_3.6316/merges.txt": {},
+    "checkpoint_tokens_1511M_loss_3.6316/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1511M_loss_3.6316/special_tokens_map.json": {},
+    "checkpoint_tokens_1511M_loss_3.6316/tokenizer.json": {},
+    "checkpoint_tokens_1511M_loss_3.6316/tokenizer_config.json": {},
+    "checkpoint_tokens_1511M_loss_3.6316/vocab.json": {},
+    "checkpoint_tokens_1560M_loss_3.6365/README.md": {},
+    "checkpoint_tokens_1560M_loss_3.6365/config.json": {},
+    "checkpoint_tokens_1560M_loss_3.6365/merges.txt": {},
+    "checkpoint_tokens_1560M_loss_3.6365/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1560M_loss_3.6365/special_tokens_map.json": {},
+    "checkpoint_tokens_1560M_loss_3.6365/tokenizer.json": {},
+    "checkpoint_tokens_1560M_loss_3.6365/tokenizer_config.json": {},
+    "checkpoint_tokens_1560M_loss_3.6365/vocab.json": {},
+    "checkpoint_tokens_1609M_loss_3.6160/README.md": {},
+    "checkpoint_tokens_1609M_loss_3.6160/config.json": {},
+    "checkpoint_tokens_1609M_loss_3.6160/merges.txt": {},
+    "checkpoint_tokens_1609M_loss_3.6160/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1609M_loss_3.6160/special_tokens_map.json": {},
+    "checkpoint_tokens_1609M_loss_3.6160/tokenizer.json": {},
+    "checkpoint_tokens_1609M_loss_3.6160/tokenizer_config.json": {},
+    "checkpoint_tokens_1609M_loss_3.6160/vocab.json": {},
+    "checkpoint_tokens_163M_loss_4.2653/README.md": {},
+    "checkpoint_tokens_163M_loss_4.2653/config.json": {},
+    "checkpoint_tokens_163M_loss_4.2653/merges.txt": {},
+    "checkpoint_tokens_163M_loss_4.2653/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_163M_loss_4.2653/special_tokens_map.json": {},
+    "checkpoint_tokens_163M_loss_4.2653/tokenizer.json": {},
+    "checkpoint_tokens_163M_loss_4.2653/tokenizer_config.json": {},
+    "checkpoint_tokens_163M_loss_4.2653/vocab.json": {},
+    "checkpoint_tokens_1658M_loss_3.6081/README.md": {},
+    "checkpoint_tokens_1658M_loss_3.6081/config.json": {},
+    "checkpoint_tokens_1658M_loss_3.6081/merges.txt": {},
+    "checkpoint_tokens_1658M_loss_3.6081/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1658M_loss_3.6081/special_tokens_map.json": {},
+    "checkpoint_tokens_1658M_loss_3.6081/tokenizer.json": {},
+    "checkpoint_tokens_1658M_loss_3.6081/tokenizer_config.json": {},
+    "checkpoint_tokens_1658M_loss_3.6081/vocab.json": {},
+    "checkpoint_tokens_1708M_loss_3.5762/README.md": {},
+    "checkpoint_tokens_1708M_loss_3.5762/config.json": {},
+    "checkpoint_tokens_1708M_loss_3.5762/merges.txt": {},
+    "checkpoint_tokens_1708M_loss_3.5762/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1708M_loss_3.5762/special_tokens_map.json": {},
+    "checkpoint_tokens_1708M_loss_3.5762/tokenizer.json": {},
+    "checkpoint_tokens_1708M_loss_3.5762/tokenizer_config.json": {},
+    "checkpoint_tokens_1708M_loss_3.5762/vocab.json": {},
+    "checkpoint_tokens_1757M_loss_3.6284/README.md": {},
+    "checkpoint_tokens_1757M_loss_3.6284/config.json": {},
+    "checkpoint_tokens_1757M_loss_3.6284/merges.txt": {},
+    "checkpoint_tokens_1757M_loss_3.6284/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1757M_loss_3.6284/special_tokens_map.json": {},
+    "checkpoint_tokens_1757M_loss_3.6284/tokenizer.json": {},
+    "checkpoint_tokens_1757M_loss_3.6284/tokenizer_config.json": {},
+    "checkpoint_tokens_1757M_loss_3.6284/vocab.json": {},
+    "checkpoint_tokens_1806M_loss_3.6014/README.md": {},
+    "checkpoint_tokens_1806M_loss_3.6014/config.json": {},
+    "checkpoint_tokens_1806M_loss_3.6014/merges.txt": {},
+    "checkpoint_tokens_1806M_loss_3.6014/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1806M_loss_3.6014/special_tokens_map.json": {},
+    "checkpoint_tokens_1806M_loss_3.6014/tokenizer.json": {},
+    "checkpoint_tokens_1806M_loss_3.6014/tokenizer_config.json": {},
+    "checkpoint_tokens_1806M_loss_3.6014/vocab.json": {},
+    "checkpoint_tokens_184M_loss_4.1756/README.md": {},
+    "checkpoint_tokens_184M_loss_4.1756/config.json": {},
+    "checkpoint_tokens_184M_loss_4.1756/merges.txt": {},
+    "checkpoint_tokens_184M_loss_4.1756/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_184M_loss_4.1756/special_tokens_map.json": {},
+    "checkpoint_tokens_184M_loss_4.1756/tokenizer.json": {},
+    "checkpoint_tokens_184M_loss_4.1756/tokenizer_config.json": {},
+    "checkpoint_tokens_184M_loss_4.1756/vocab.json": {},
+    "checkpoint_tokens_1855M_loss_3.6193/README.md": {},
+    "checkpoint_tokens_1855M_loss_3.6193/config.json": {},
+    "checkpoint_tokens_1855M_loss_3.6193/merges.txt": {},
+    "checkpoint_tokens_1855M_loss_3.6193/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1855M_loss_3.6193/special_tokens_map.json": {},
+    "checkpoint_tokens_1855M_loss_3.6193/tokenizer.json": {},
+    "checkpoint_tokens_1855M_loss_3.6193/tokenizer_config.json": {},
+    "checkpoint_tokens_1855M_loss_3.6193/vocab.json": {},
+    "checkpoint_tokens_1904M_loss_3.6449/README.md": {},
+    "checkpoint_tokens_1904M_loss_3.6449/config.json": {},
+    "checkpoint_tokens_1904M_loss_3.6449/merges.txt": {},
+    "checkpoint_tokens_1904M_loss_3.6449/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1904M_loss_3.6449/special_tokens_map.json": {},
+    "checkpoint_tokens_1904M_loss_3.6449/tokenizer.json": {},
+    "checkpoint_tokens_1904M_loss_3.6449/tokenizer_config.json": {},
+    "checkpoint_tokens_1904M_loss_3.6449/vocab.json": {},
+    "checkpoint_tokens_1953M_loss_3.6111/README.md": {},
+    "checkpoint_tokens_1953M_loss_3.6111/config.json": {},
+    "checkpoint_tokens_1953M_loss_3.6111/merges.txt": {},
+    "checkpoint_tokens_1953M_loss_3.6111/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_1953M_loss_3.6111/special_tokens_map.json": {},
+    "checkpoint_tokens_1953M_loss_3.6111/tokenizer.json": {},
+    "checkpoint_tokens_1953M_loss_3.6111/tokenizer_config.json": {},
+    "checkpoint_tokens_1953M_loss_3.6111/vocab.json": {},
+    "checkpoint_tokens_2003M_loss_3.6075/README.md": {},
+    "checkpoint_tokens_2003M_loss_3.6075/config.json": {},
+    "checkpoint_tokens_2003M_loss_3.6075/merges.txt": {},
+    "checkpoint_tokens_2003M_loss_3.6075/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2003M_loss_3.6075/special_tokens_map.json": {},
+    "checkpoint_tokens_2003M_loss_3.6075/tokenizer.json": {},
+    "checkpoint_tokens_2003M_loss_3.6075/tokenizer_config.json": {},
+    "checkpoint_tokens_2003M_loss_3.6075/vocab.json": {},
+    "checkpoint_tokens_2052M_loss_3.6406/README.md": {},
+    "checkpoint_tokens_2052M_loss_3.6406/config.json": {},
+    "checkpoint_tokens_2052M_loss_3.6406/merges.txt": {},
+    "checkpoint_tokens_2052M_loss_3.6406/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2052M_loss_3.6406/special_tokens_map.json": {},
+    "checkpoint_tokens_2052M_loss_3.6406/tokenizer.json": {},
+    "checkpoint_tokens_2052M_loss_3.6406/tokenizer_config.json": {},
+    "checkpoint_tokens_2052M_loss_3.6406/vocab.json": {},
+    "checkpoint_tokens_20M_loss_4.9842/README.md": {
+     "oid": "0a7ba649036761f60fc6500b85716c498875e5a2",
+     "size": 1541
+    },
+    "checkpoint_tokens_20M_loss_4.9842/config.json": {
+     "oid": "61ec78e813565cb8cdc4760c3de24819a0884001",
+     "size": 1576,
+     "text": "{\n  \"model_type\": \"swa_mla\",\n  \"total_tokens\": 20500480,\n  \"val_loss\": 4.984230031967163,\n  \"training_config\": {\n    \"size\": \"moe-1b\",\n    \"batch_size\": 10,\n    \"block_size\": 2048,\n    \"dropout\": 0.0,\n    \"swa_layers_per_cycle\": 2,\n    \"mla_layers_per_cycle\": 1,\n    \"mla_q_lora_rank\": 256,\n    \"mla_kv_lora_rank\": 256,\n    \"mla_qk_nope_head_dim\": 128,\n    \"mla_qk_rope_head_dim\": 64,\n    \"mla_v_head_dim\": 128,\n    \"use_flash_attention\": true,\n    \"use_gated_deltanet\": true,\n    \"deltanet_latent_dim\": 256,\n    \"deltanet_share_qk\": true,\n    \"use_moe\": true,\n    \"use_latent_moe\": true,\n    \"n_experts\": 32,\n    \"n_shared_experts\": 1,\n    \"n_activated\": 3,\n    \"expert_dim\": null,\n    \"router_z_loss_coef\": 0.001,\n    \"latent_ratio\": 4,\n    \"latent_dim\": null,\n    \"latent_n_experts\": null,\n    \"latent_n_activated\": null,\n    \"latent_preserve_expert_dim\": true,\n    \"max_iters\": 100000,\n    \"learning_rate\": 0.0001,\n    \"min_lr\": 1e-05,\n    \"weight_decay\": 0.1,\n    \"beta1\": 0.9,\n    \"beta2\": 0.95,\n    \"warmup_iters\": 400,\n    \"grad_clip\": 1.0,\n    \"gradient_accumulation_steps\": 1,\n    \"gradient_checkpointing\": true,\n    \"optimizer_type\": \"muon\",\n    \"tokenizer_name\": \"openai-community/gpt2\",\n    \"num_workers\": 8,\n    \"output_dir\": \"outputs/deltanet_mla_latent\",\n    \"log_interval\": 10,\n    \"eval_interval\": 1000,\n    \"save_interval\": 1000,\n    \"wandb_project\": \"swamla\",\n    \"wandb_run_name\": null,\n    \"hf_repo_id\": \"Orosius/deltanet-mla-latent\",\n    \"resume_from_hf\": false,\n    \"compile\": true,\n    \"compile_mode\": \"max-autotune\",\n    \"use_tensorboard\": true\n  }\n}"
+    },
+    "checkpoint_tokens_20M_loss_4.9842/merges.txt": {
+     "oid": "226b0752cac7789c48f0cb3ec53eda48b7be36cc",
+     "size": 456318
+    },
+    "checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin": {
+     "oid": "05cfb29bfc3d15db751bd707b6cf23a8ea47b933",
+     "size": 3381162243,
+     "lfs": {
+      "size": 3381162243,
+      "pointerSize": 135,
+      "oid": "010167c241decb1ebc90d041ecfb0ddd4d9dd6931a7c96a7b84262919a9cdd8d"
+     },
+     "xetHash": "0c6167a268354949eabb7862cdefe9b5759bdb481e9c523a24b36daf5e474f3e"
+    },
+    "checkpoint_tokens_20M_loss_4.9842/special_tokens_map.json": {
+     "oid": "7433646544cc332d7eb43c85199b5ce98e2cc0ed",
+     "size": 131
+    },
+    "checkpoint_tokens_20M_loss_4.9842/tokenizer.json": {
+     "oid": "d469fce8cf3cdfde529baad7b2528afa4205aabf",
+     "size": 3557680
+    },
+    "checkpoint_tokens_20M_loss_4.9842/tokenizer_config.json": {
+     "oid": "1eb0c395616e29ebddd0b13f6ace394ce5223e84",
+     "size": 507
+    },
+    "checkpoint_tokens_20M_loss_4.9842/vocab.json": {
+     "oid": "84ef7fb594b5c0979e48bdeddb60a0adef33df0b",
+     "size": 798156
+    },
+    "checkpoint_tokens_2101M_loss_3.6084/README.md": {},
+    "checkpoint_tokens_2101M_loss_3.6084/config.json": {},
+    "checkpoint_tokens_2101M_loss_3.6084/merges.txt": {},
+    "checkpoint_tokens_2101M_loss_3.6084/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2101M_loss_3.6084/special_tokens_map.json": {},
+    "checkpoint_tokens_2101M_loss_3.6084/tokenizer.json": {},
+    "checkpoint_tokens_2101M_loss_3.6084/tokenizer_config.json": {},
+    "checkpoint_tokens_2101M_loss_3.6084/vocab.json": {},
+    "checkpoint_tokens_2150M_loss_3.6013/README.md": {},
+    "checkpoint_tokens_2150M_loss_3.6013/config.json": {},
+    "checkpoint_tokens_2150M_loss_3.6013/merges.txt": {},
+    "checkpoint_tokens_2150M_loss_3.6013/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2150M_loss_3.6013/special_tokens_map.json": {},
+    "checkpoint_tokens_2150M_loss_3.6013/tokenizer.json": {},
+    "checkpoint_tokens_2150M_loss_3.6013/tokenizer_config.json": {},
+    "checkpoint_tokens_2150M_loss_3.6013/vocab.json": {},
+    "checkpoint_tokens_2199M_loss_3.5938/README.md": {},
+    "checkpoint_tokens_2199M_loss_3.5938/config.json": {},
+    "checkpoint_tokens_2199M_loss_3.5938/merges.txt": {},
+    "checkpoint_tokens_2199M_loss_3.5938/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2199M_loss_3.5938/special_tokens_map.json": {},
+    "checkpoint_tokens_2199M_loss_3.5938/tokenizer.json": {},
+    "checkpoint_tokens_2199M_loss_3.5938/tokenizer_config.json": {},
+    "checkpoint_tokens_2199M_loss_3.5938/vocab.json": {},
+    "checkpoint_tokens_2248M_loss_3.5888/README.md": {},
+    "checkpoint_tokens_2248M_loss_3.5888/config.json": {},
+    "checkpoint_tokens_2248M_loss_3.5888/merges.txt": {},
+    "checkpoint_tokens_2248M_loss_3.5888/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2248M_loss_3.5888/special_tokens_map.json": {},
+    "checkpoint_tokens_2248M_loss_3.5888/tokenizer.json": {},
+    "checkpoint_tokens_2248M_loss_3.5888/tokenizer_config.json": {},
+    "checkpoint_tokens_2248M_loss_3.5888/vocab.json": {},
+    "checkpoint_tokens_2297M_loss_3.6098/README.md": {},
+    "checkpoint_tokens_2297M_loss_3.6098/config.json": {},
+    "checkpoint_tokens_2297M_loss_3.6098/merges.txt": {},
+    "checkpoint_tokens_2297M_loss_3.6098/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2297M_loss_3.6098/special_tokens_map.json": {},
+    "checkpoint_tokens_2297M_loss_3.6098/tokenizer.json": {},
+    "checkpoint_tokens_2297M_loss_3.6098/tokenizer_config.json": {},
+    "checkpoint_tokens_2297M_loss_3.6098/vocab.json": {},
+    "checkpoint_tokens_233M_loss_3.8377/README.md": {},
+    "checkpoint_tokens_233M_loss_3.8377/config.json": {},
+    "checkpoint_tokens_233M_loss_3.8377/merges.txt": {},
+    "checkpoint_tokens_233M_loss_3.8377/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_233M_loss_3.8377/special_tokens_map.json": {},
+    "checkpoint_tokens_233M_loss_3.8377/tokenizer.json": {},
+    "checkpoint_tokens_233M_loss_3.8377/tokenizer_config.json": {},
+    "checkpoint_tokens_233M_loss_3.8377/vocab.json": {},
+    "checkpoint_tokens_2347M_loss_3.6001/README.md": {},
+    "checkpoint_tokens_2347M_loss_3.6001/config.json": {},
+    "checkpoint_tokens_2347M_loss_3.6001/merges.txt": {},
+    "checkpoint_tokens_2347M_loss_3.6001/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2347M_loss_3.6001/special_tokens_map.json": {},
+    "checkpoint_tokens_2347M_loss_3.6001/tokenizer.json": {},
+    "checkpoint_tokens_2347M_loss_3.6001/tokenizer_config.json": {},
+    "checkpoint_tokens_2347M_loss_3.6001/vocab.json": {},
+    "checkpoint_tokens_2396M_loss_3.6141/README.md": {},
+    "checkpoint_tokens_2396M_loss_3.6141/config.json": {},
+    "checkpoint_tokens_2396M_loss_3.6141/merges.txt": {},
+    "checkpoint_tokens_2396M_loss_3.6141/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2396M_loss_3.6141/special_tokens_map.json": {},
+    "checkpoint_tokens_2396M_loss_3.6141/tokenizer.json": {},
+    "checkpoint_tokens_2396M_loss_3.6141/tokenizer_config.json": {},
+    "checkpoint_tokens_2396M_loss_3.6141/vocab.json": {},
+    "checkpoint_tokens_2445M_loss_3.5776/README.md": {},
+    "checkpoint_tokens_2445M_loss_3.5776/config.json": {},
+    "checkpoint_tokens_2445M_loss_3.5776/merges.txt": {},
+    "checkpoint_tokens_2445M_loss_3.5776/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2445M_loss_3.5776/special_tokens_map.json": {},
+    "checkpoint_tokens_2445M_loss_3.5776/tokenizer.json": {},
+    "checkpoint_tokens_2445M_loss_3.5776/tokenizer_config.json": {},
+    "checkpoint_tokens_2445M_loss_3.5776/vocab.json": {},
+    "checkpoint_tokens_2494M_loss_3.6004/README.md": {},
+    "checkpoint_tokens_2494M_loss_3.6004/config.json": {},
+    "checkpoint_tokens_2494M_loss_3.6004/merges.txt": {},
+    "checkpoint_tokens_2494M_loss_3.6004/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2494M_loss_3.6004/special_tokens_map.json": {},
+    "checkpoint_tokens_2494M_loss_3.6004/tokenizer.json": {},
+    "checkpoint_tokens_2494M_loss_3.6004/tokenizer_config.json": {},
+    "checkpoint_tokens_2494M_loss_3.6004/vocab.json": {},
+    "checkpoint_tokens_2543M_loss_3.5908/README.md": {},
+    "checkpoint_tokens_2543M_loss_3.5908/config.json": {},
+    "checkpoint_tokens_2543M_loss_3.5908/merges.txt": {},
+    "checkpoint_tokens_2543M_loss_3.5908/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2543M_loss_3.5908/special_tokens_map.json": {},
+    "checkpoint_tokens_2543M_loss_3.5908/tokenizer.json": {},
+    "checkpoint_tokens_2543M_loss_3.5908/tokenizer_config.json": {},
+    "checkpoint_tokens_2543M_loss_3.5908/vocab.json": {},
+    "checkpoint_tokens_2592M_loss_3.6296/README.md": {},
+    "checkpoint_tokens_2592M_loss_3.6296/config.json": {},
+    "checkpoint_tokens_2592M_loss_3.6296/merges.txt": {},
+    "checkpoint_tokens_2592M_loss_3.6296/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2592M_loss_3.6296/special_tokens_map.json": {},
+    "checkpoint_tokens_2592M_loss_3.6296/tokenizer.json": {},
+    "checkpoint_tokens_2592M_loss_3.6296/tokenizer_config.json": {},
+    "checkpoint_tokens_2592M_loss_3.6296/vocab.json": {},
+    "checkpoint_tokens_2641M_loss_3.5638/README.md": {},
+    "checkpoint_tokens_2641M_loss_3.5638/config.json": {},
+    "checkpoint_tokens_2641M_loss_3.5638/merges.txt": {},
+    "checkpoint_tokens_2641M_loss_3.5638/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2641M_loss_3.5638/special_tokens_map.json": {},
+    "checkpoint_tokens_2641M_loss_3.5638/tokenizer.json": {},
+    "checkpoint_tokens_2641M_loss_3.5638/tokenizer_config.json": {},
+    "checkpoint_tokens_2641M_loss_3.5638/vocab.json": {},
+    "checkpoint_tokens_2691M_loss_3.5838/README.md": {},
+    "checkpoint_tokens_2691M_loss_3.5838/config.json": {},
+    "checkpoint_tokens_2691M_loss_3.5838/merges.txt": {},
+    "checkpoint_tokens_2691M_loss_3.5838/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2691M_loss_3.5838/special_tokens_map.json": {},
+    "checkpoint_tokens_2691M_loss_3.5838/tokenizer.json": {},
+    "checkpoint_tokens_2691M_loss_3.5838/tokenizer_config.json": {},
+    "checkpoint_tokens_2691M_loss_3.5838/vocab.json": {},
+    "checkpoint_tokens_2740M_loss_3.5674/README.md": {},
+    "checkpoint_tokens_2740M_loss_3.5674/config.json": {},
+    "checkpoint_tokens_2740M_loss_3.5674/merges.txt": {},
+    "checkpoint_tokens_2740M_loss_3.5674/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2740M_loss_3.5674/special_tokens_map.json": {},
+    "checkpoint_tokens_2740M_loss_3.5674/tokenizer.json": {},
+    "checkpoint_tokens_2740M_loss_3.5674/tokenizer_config.json": {},
+    "checkpoint_tokens_2740M_loss_3.5674/vocab.json": {},
+    "checkpoint_tokens_2789M_loss_3.5760/README.md": {},
+    "checkpoint_tokens_2789M_loss_3.5760/config.json": {},
+    "checkpoint_tokens_2789M_loss_3.5760/merges.txt": {},
+    "checkpoint_tokens_2789M_loss_3.5760/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2789M_loss_3.5760/special_tokens_map.json": {},
+    "checkpoint_tokens_2789M_loss_3.5760/tokenizer.json": {},
+    "checkpoint_tokens_2789M_loss_3.5760/tokenizer_config.json": {},
+    "checkpoint_tokens_2789M_loss_3.5760/vocab.json": {},
+    "checkpoint_tokens_282M_loss_3.8109/README.md": {},
+    "checkpoint_tokens_282M_loss_3.8109/config.json": {},
+    "checkpoint_tokens_282M_loss_3.8109/merges.txt": {},
+    "checkpoint_tokens_282M_loss_3.8109/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_282M_loss_3.8109/special_tokens_map.json": {},
+    "checkpoint_tokens_282M_loss_3.8109/tokenizer.json": {},
+    "checkpoint_tokens_282M_loss_3.8109/tokenizer_config.json": {},
+    "checkpoint_tokens_282M_loss_3.8109/vocab.json": {},
+    "checkpoint_tokens_2838M_loss_3.5695/README.md": {},
+    "checkpoint_tokens_2838M_loss_3.5695/config.json": {},
+    "checkpoint_tokens_2838M_loss_3.5695/merges.txt": {},
+    "checkpoint_tokens_2838M_loss_3.5695/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2838M_loss_3.5695/special_tokens_map.json": {},
+    "checkpoint_tokens_2838M_loss_3.5695/tokenizer.json": {},
+    "checkpoint_tokens_2838M_loss_3.5695/tokenizer_config.json": {},
+    "checkpoint_tokens_2838M_loss_3.5695/vocab.json": {},
+    "checkpoint_tokens_2887M_loss_3.5703/README.md": {},
+    "checkpoint_tokens_2887M_loss_3.5703/config.json": {},
+    "checkpoint_tokens_2887M_loss_3.5703/merges.txt": {},
+    "checkpoint_tokens_2887M_loss_3.5703/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2887M_loss_3.5703/special_tokens_map.json": {},
+    "checkpoint_tokens_2887M_loss_3.5703/tokenizer.json": {},
+    "checkpoint_tokens_2887M_loss_3.5703/tokenizer_config.json": {},
+    "checkpoint_tokens_2887M_loss_3.5703/vocab.json": {},
+    "checkpoint_tokens_2936M_loss_3.5876/README.md": {},
+    "checkpoint_tokens_2936M_loss_3.5876/config.json": {},
+    "checkpoint_tokens_2936M_loss_3.5876/merges.txt": {},
+    "checkpoint_tokens_2936M_loss_3.5876/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2936M_loss_3.5876/special_tokens_map.json": {},
+    "checkpoint_tokens_2936M_loss_3.5876/tokenizer.json": {},
+    "checkpoint_tokens_2936M_loss_3.5876/tokenizer_config.json": {},
+    "checkpoint_tokens_2936M_loss_3.5876/vocab.json": {},
+    "checkpoint_tokens_2986M_loss_3.5780/README.md": {},
+    "checkpoint_tokens_2986M_loss_3.5780/config.json": {},
+    "checkpoint_tokens_2986M_loss_3.5780/merges.txt": {},
+    "checkpoint_tokens_2986M_loss_3.5780/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_2986M_loss_3.5780/special_tokens_map.json": {},
+    "checkpoint_tokens_2986M_loss_3.5780/tokenizer.json": {},
+    "checkpoint_tokens_2986M_loss_3.5780/tokenizer_config.json": {},
+    "checkpoint_tokens_2986M_loss_3.5780/vocab.json": {},
+    "checkpoint_tokens_3035M_loss_3.5614/README.md": {},
+    "checkpoint_tokens_3035M_loss_3.5614/config.json": {},
+    "checkpoint_tokens_3035M_loss_3.5614/merges.txt": {},
+    "checkpoint_tokens_3035M_loss_3.5614/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3035M_loss_3.5614/special_tokens_map.json": {},
+    "checkpoint_tokens_3035M_loss_3.5614/tokenizer.json": {},
+    "checkpoint_tokens_3035M_loss_3.5614/tokenizer_config.json": {},
+    "checkpoint_tokens_3035M_loss_3.5614/vocab.json": {},
+    "checkpoint_tokens_3084M_loss_3.5470/README.md": {},
+    "checkpoint_tokens_3084M_loss_3.5470/config.json": {},
+    "checkpoint_tokens_3084M_loss_3.5470/merges.txt": {},
+    "checkpoint_tokens_3084M_loss_3.5470/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3084M_loss_3.5470/special_tokens_map.json": {},
+    "checkpoint_tokens_3084M_loss_3.5470/tokenizer.json": {},
+    "checkpoint_tokens_3084M_loss_3.5470/tokenizer_config.json": {},
+    "checkpoint_tokens_3084M_loss_3.5470/vocab.json": {},
+    "checkpoint_tokens_3133M_loss_3.5362/README.md": {},
+    "checkpoint_tokens_3133M_loss_3.5362/config.json": {},
+    "checkpoint_tokens_3133M_loss_3.5362/merges.txt": {},
+    "checkpoint_tokens_3133M_loss_3.5362/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3133M_loss_3.5362/special_tokens_map.json": {},
+    "checkpoint_tokens_3133M_loss_3.5362/tokenizer.json": {},
+    "checkpoint_tokens_3133M_loss_3.5362/tokenizer_config.json": {},
+    "checkpoint_tokens_3133M_loss_3.5362/vocab.json": {},
+    "checkpoint_tokens_3182M_loss_3.6057/README.md": {},
+    "checkpoint_tokens_3182M_loss_3.6057/config.json": {},
+    "checkpoint_tokens_3182M_loss_3.6057/merges.txt": {},
+    "checkpoint_tokens_3182M_loss_3.6057/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3182M_loss_3.6057/special_tokens_map.json": {},
+    "checkpoint_tokens_3182M_loss_3.6057/tokenizer.json": {},
+    "checkpoint_tokens_3182M_loss_3.6057/tokenizer_config.json": {},
+    "checkpoint_tokens_3182M_loss_3.6057/vocab.json": {},
+    "checkpoint_tokens_3231M_loss_3.5824/README.md": {},
+    "checkpoint_tokens_3231M_loss_3.5824/config.json": {},
+    "checkpoint_tokens_3231M_loss_3.5824/merges.txt": {},
+    "checkpoint_tokens_3231M_loss_3.5824/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3231M_loss_3.5824/special_tokens_map.json": {},
+    "checkpoint_tokens_3231M_loss_3.5824/tokenizer.json": {},
+    "checkpoint_tokens_3231M_loss_3.5824/tokenizer_config.json": {},
+    "checkpoint_tokens_3231M_loss_3.5824/vocab.json": {},
+    "checkpoint_tokens_3280M_loss_3.5678/README.md": {},
+    "checkpoint_tokens_3280M_loss_3.5678/config.json": {},
+    "checkpoint_tokens_3280M_loss_3.5678/merges.txt": {},
+    "checkpoint_tokens_3280M_loss_3.5678/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3280M_loss_3.5678/special_tokens_map.json": {},
+    "checkpoint_tokens_3280M_loss_3.5678/tokenizer.json": {},
+    "checkpoint_tokens_3280M_loss_3.5678/tokenizer_config.json": {},
+    "checkpoint_tokens_3280M_loss_3.5678/vocab.json": {},
+    "checkpoint_tokens_331M_loss_3.7805/README.md": {},
+    "checkpoint_tokens_331M_loss_3.7805/config.json": {},
+    "checkpoint_tokens_331M_loss_3.7805/merges.txt": {},
+    "checkpoint_tokens_331M_loss_3.7805/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_331M_loss_3.7805/special_tokens_map.json": {},
+    "checkpoint_tokens_331M_loss_3.7805/tokenizer.json": {},
+    "checkpoint_tokens_331M_loss_3.7805/tokenizer_config.json": {},
+    "checkpoint_tokens_331M_loss_3.7805/vocab.json": {},
+    "checkpoint_tokens_3330M_loss_3.5832/README.md": {},
+    "checkpoint_tokens_3330M_loss_3.5832/config.json": {},
+    "checkpoint_tokens_3330M_loss_3.5832/merges.txt": {},
+    "checkpoint_tokens_3330M_loss_3.5832/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3330M_loss_3.5832/special_tokens_map.json": {},
+    "checkpoint_tokens_3330M_loss_3.5832/tokenizer.json": {},
+    "checkpoint_tokens_3330M_loss_3.5832/tokenizer_config.json": {},
+    "checkpoint_tokens_3330M_loss_3.5832/vocab.json": {},
+    "checkpoint_tokens_3379M_loss_3.5660/README.md": {},
+    "checkpoint_tokens_3379M_loss_3.5660/config.json": {},
+    "checkpoint_tokens_3379M_loss_3.5660/merges.txt": {},
+    "checkpoint_tokens_3379M_loss_3.5660/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3379M_loss_3.5660/special_tokens_map.json": {},
+    "checkpoint_tokens_3379M_loss_3.5660/tokenizer.json": {},
+    "checkpoint_tokens_3379M_loss_3.5660/tokenizer_config.json": {},
+    "checkpoint_tokens_3379M_loss_3.5660/vocab.json": {},
+    "checkpoint_tokens_3428M_loss_3.5394/README.md": {},
+    "checkpoint_tokens_3428M_loss_3.5394/config.json": {},
+    "checkpoint_tokens_3428M_loss_3.5394/merges.txt": {},
+    "checkpoint_tokens_3428M_loss_3.5394/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3428M_loss_3.5394/special_tokens_map.json": {},
+    "checkpoint_tokens_3428M_loss_3.5394/tokenizer.json": {},
+    "checkpoint_tokens_3428M_loss_3.5394/tokenizer_config.json": {},
+    "checkpoint_tokens_3428M_loss_3.5394/vocab.json": {},
+    "checkpoint_tokens_3477M_loss_3.5441/README.md": {},
+    "checkpoint_tokens_3477M_loss_3.5441/config.json": {},
+    "checkpoint_tokens_3477M_loss_3.5441/merges.txt": {},
+    "checkpoint_tokens_3477M_loss_3.5441/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3477M_loss_3.5441/special_tokens_map.json": {},
+    "checkpoint_tokens_3477M_loss_3.5441/tokenizer.json": {},
+    "checkpoint_tokens_3477M_loss_3.5441/tokenizer_config.json": {},
+    "checkpoint_tokens_3477M_loss_3.5441/vocab.json": {},
+    "checkpoint_tokens_3526M_loss_3.5480/README.md": {},
+    "checkpoint_tokens_3526M_loss_3.5480/config.json": {},
+    "checkpoint_tokens_3526M_loss_3.5480/merges.txt": {},
+    "checkpoint_tokens_3526M_loss_3.5480/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3526M_loss_3.5480/special_tokens_map.json": {},
+    "checkpoint_tokens_3526M_loss_3.5480/tokenizer.json": {},
+    "checkpoint_tokens_3526M_loss_3.5480/tokenizer_config.json": {},
+    "checkpoint_tokens_3526M_loss_3.5480/vocab.json": {},
+    "checkpoint_tokens_3575M_loss_3.5803/README.md": {},
+    "checkpoint_tokens_3575M_loss_3.5803/config.json": {},
+    "checkpoint_tokens_3575M_loss_3.5803/merges.txt": {},
+    "checkpoint_tokens_3575M_loss_3.5803/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3575M_loss_3.5803/special_tokens_map.json": {},
+    "checkpoint_tokens_3575M_loss_3.5803/tokenizer.json": {},
+    "checkpoint_tokens_3575M_loss_3.5803/tokenizer_config.json": {},
+    "checkpoint_tokens_3575M_loss_3.5803/vocab.json": {},
+    "checkpoint_tokens_3625M_loss_3.5871/README.md": {},
+    "checkpoint_tokens_3625M_loss_3.5871/config.json": {},
+    "checkpoint_tokens_3625M_loss_3.5871/merges.txt": {},
+    "checkpoint_tokens_3625M_loss_3.5871/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3625M_loss_3.5871/special_tokens_map.json": {},
+    "checkpoint_tokens_3625M_loss_3.5871/tokenizer.json": {},
+    "checkpoint_tokens_3625M_loss_3.5871/tokenizer_config.json": {},
+    "checkpoint_tokens_3625M_loss_3.5871/vocab.json": {},
+    "checkpoint_tokens_3674M_loss_3.5779/README.md": {},
+    "checkpoint_tokens_3674M_loss_3.5779/config.json": {},
+    "checkpoint_tokens_3674M_loss_3.5779/merges.txt": {},
+    "checkpoint_tokens_3674M_loss_3.5779/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3674M_loss_3.5779/special_tokens_map.json": {},
+    "checkpoint_tokens_3674M_loss_3.5779/tokenizer.json": {},
+    "checkpoint_tokens_3674M_loss_3.5779/tokenizer_config.json": {},
+    "checkpoint_tokens_3674M_loss_3.5779/vocab.json": {},
+    "checkpoint_tokens_3723M_loss_3.5464/README.md": {},
+    "checkpoint_tokens_3723M_loss_3.5464/config.json": {},
+    "checkpoint_tokens_3723M_loss_3.5464/merges.txt": {},
+    "checkpoint_tokens_3723M_loss_3.5464/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3723M_loss_3.5464/special_tokens_map.json": {},
+    "checkpoint_tokens_3723M_loss_3.5464/tokenizer.json": {},
+    "checkpoint_tokens_3723M_loss_3.5464/tokenizer_config.json": {},
+    "checkpoint_tokens_3723M_loss_3.5464/vocab.json": {},
+    "checkpoint_tokens_3772M_loss_3.5499/README.md": {},
+    "checkpoint_tokens_3772M_loss_3.5499/config.json": {},
+    "checkpoint_tokens_3772M_loss_3.5499/merges.txt": {},
+    "checkpoint_tokens_3772M_loss_3.5499/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3772M_loss_3.5499/special_tokens_map.json": {},
+    "checkpoint_tokens_3772M_loss_3.5499/tokenizer.json": {},
+    "checkpoint_tokens_3772M_loss_3.5499/tokenizer_config.json": {},
+    "checkpoint_tokens_3772M_loss_3.5499/vocab.json": {},
+    "checkpoint_tokens_380M_loss_3.7597/README.md": {},
+    "checkpoint_tokens_380M_loss_3.7597/config.json": {},
+    "checkpoint_tokens_380M_loss_3.7597/merges.txt": {},
+    "checkpoint_tokens_380M_loss_3.7597/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_380M_loss_3.7597/special_tokens_map.json": {},
+    "checkpoint_tokens_380M_loss_3.7597/tokenizer.json": {},
+    "checkpoint_tokens_380M_loss_3.7597/tokenizer_config.json": {},
+    "checkpoint_tokens_380M_loss_3.7597/vocab.json": {},
+    "checkpoint_tokens_3821M_loss_3.5530/README.md": {},
+    "checkpoint_tokens_3821M_loss_3.5530/config.json": {},
+    "checkpoint_tokens_3821M_loss_3.5530/merges.txt": {},
+    "checkpoint_tokens_3821M_loss_3.5530/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3821M_loss_3.5530/special_tokens_map.json": {},
+    "checkpoint_tokens_3821M_loss_3.5530/tokenizer.json": {},
+    "checkpoint_tokens_3821M_loss_3.5530/tokenizer_config.json": {},
+    "checkpoint_tokens_3821M_loss_3.5530/vocab.json": {},
+    "checkpoint_tokens_3870M_loss_3.5379/README.md": {},
+    "checkpoint_tokens_3870M_loss_3.5379/config.json": {},
+    "checkpoint_tokens_3870M_loss_3.5379/merges.txt": {},
+    "checkpoint_tokens_3870M_loss_3.5379/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3870M_loss_3.5379/special_tokens_map.json": {},
+    "checkpoint_tokens_3870M_loss_3.5379/tokenizer.json": {},
+    "checkpoint_tokens_3870M_loss_3.5379/tokenizer_config.json": {},
+    "checkpoint_tokens_3870M_loss_3.5379/vocab.json": {},
+    "checkpoint_tokens_3919M_loss_3.4935/README.md": {},
+    "checkpoint_tokens_3919M_loss_3.4935/config.json": {},
+    "checkpoint_tokens_3919M_loss_3.4935/merges.txt": {},
+    "checkpoint_tokens_3919M_loss_3.4935/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3919M_loss_3.4935/special_tokens_map.json": {},
+    "checkpoint_tokens_3919M_loss_3.4935/tokenizer.json": {},
+    "checkpoint_tokens_3919M_loss_3.4935/tokenizer_config.json": {},
+    "checkpoint_tokens_3919M_loss_3.4935/vocab.json": {},
+    "checkpoint_tokens_3969M_loss_3.4745/README.md": {},
+    "checkpoint_tokens_3969M_loss_3.4745/config.json": {},
+    "checkpoint_tokens_3969M_loss_3.4745/merges.txt": {},
+    "checkpoint_tokens_3969M_loss_3.4745/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_3969M_loss_3.4745/special_tokens_map.json": {},
+    "checkpoint_tokens_3969M_loss_3.4745/tokenizer.json": {},
+    "checkpoint_tokens_3969M_loss_3.4745/tokenizer_config.json": {},
+    "checkpoint_tokens_3969M_loss_3.4745/vocab.json": {},
+    "checkpoint_tokens_4018M_loss_3.4428/README.md": {},
+    "checkpoint_tokens_4018M_loss_3.4428/config.json": {},
+    "checkpoint_tokens_4018M_loss_3.4428/merges.txt": {},
+    "checkpoint_tokens_4018M_loss_3.4428/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4018M_loss_3.4428/special_tokens_map.json": {},
+    "checkpoint_tokens_4018M_loss_3.4428/tokenizer.json": {},
+    "checkpoint_tokens_4018M_loss_3.4428/tokenizer_config.json": {},
+    "checkpoint_tokens_4018M_loss_3.4428/vocab.json": {},
+    "checkpoint_tokens_4067M_loss_3.4626/README.md": {},
+    "checkpoint_tokens_4067M_loss_3.4626/config.json": {},
+    "checkpoint_tokens_4067M_loss_3.4626/merges.txt": {},
+    "checkpoint_tokens_4067M_loss_3.4626/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4067M_loss_3.4626/special_tokens_map.json": {},
+    "checkpoint_tokens_4067M_loss_3.4626/tokenizer.json": {},
+    "checkpoint_tokens_4067M_loss_3.4626/tokenizer_config.json": {},
+    "checkpoint_tokens_4067M_loss_3.4626/vocab.json": {},
+    "checkpoint_tokens_4087M_loss_3.5708/README.md": {},
+    "checkpoint_tokens_4087M_loss_3.5708/config.json": {},
+    "checkpoint_tokens_4087M_loss_3.5708/merges.txt": {},
+    "checkpoint_tokens_4087M_loss_3.5708/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4087M_loss_3.5708/special_tokens_map.json": {},
+    "checkpoint_tokens_4087M_loss_3.5708/tokenizer.json": {},
+    "checkpoint_tokens_4087M_loss_3.5708/tokenizer_config.json": {},
+    "checkpoint_tokens_4087M_loss_3.5708/vocab.json": {},
+    "checkpoint_tokens_40M_loss_4.5478/README.md": {},
+    "checkpoint_tokens_40M_loss_4.5478/config.json": {},
+    "checkpoint_tokens_40M_loss_4.5478/merges.txt": {},
+    "checkpoint_tokens_40M_loss_4.5478/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_40M_loss_4.5478/special_tokens_map.json": {},
+    "checkpoint_tokens_40M_loss_4.5478/tokenizer.json": {},
+    "checkpoint_tokens_40M_loss_4.5478/tokenizer_config.json": {},
+    "checkpoint_tokens_40M_loss_4.5478/vocab.json": {},
+    "checkpoint_tokens_4108M_loss_3.5057/README.md": {},
+    "checkpoint_tokens_4108M_loss_3.5057/config.json": {},
+    "checkpoint_tokens_4108M_loss_3.5057/merges.txt": {},
+    "checkpoint_tokens_4108M_loss_3.5057/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4108M_loss_3.5057/special_tokens_map.json": {},
+    "checkpoint_tokens_4108M_loss_3.5057/tokenizer.json": {},
+    "checkpoint_tokens_4108M_loss_3.5057/tokenizer_config.json": {},
+    "checkpoint_tokens_4108M_loss_3.5057/vocab.json": {},
+    "checkpoint_tokens_4128M_loss_3.5531/README.md": {},
+    "checkpoint_tokens_4128M_loss_3.5531/config.json": {},
+    "checkpoint_tokens_4128M_loss_3.5531/merges.txt": {},
+    "checkpoint_tokens_4128M_loss_3.5531/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4128M_loss_3.5531/special_tokens_map.json": {},
+    "checkpoint_tokens_4128M_loss_3.5531/tokenizer.json": {},
+    "checkpoint_tokens_4128M_loss_3.5531/tokenizer_config.json": {},
+    "checkpoint_tokens_4128M_loss_3.5531/vocab.json": {},
+    "checkpoint_tokens_4149M_loss_3.5446/README.md": {},
+    "checkpoint_tokens_4149M_loss_3.5446/config.json": {},
+    "checkpoint_tokens_4149M_loss_3.5446/merges.txt": {},
+    "checkpoint_tokens_4149M_loss_3.5446/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4149M_loss_3.5446/special_tokens_map.json": {},
+    "checkpoint_tokens_4149M_loss_3.5446/tokenizer.json": {},
+    "checkpoint_tokens_4149M_loss_3.5446/tokenizer_config.json": {},
+    "checkpoint_tokens_4149M_loss_3.5446/vocab.json": {},
+    "checkpoint_tokens_4169M_loss_3.5174/README.md": {},
+    "checkpoint_tokens_4169M_loss_3.5174/config.json": {},
+    "checkpoint_tokens_4169M_loss_3.5174/merges.txt": {},
+    "checkpoint_tokens_4169M_loss_3.5174/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4169M_loss_3.5174/special_tokens_map.json": {},
+    "checkpoint_tokens_4169M_loss_3.5174/tokenizer.json": {},
+    "checkpoint_tokens_4169M_loss_3.5174/tokenizer_config.json": {},
+    "checkpoint_tokens_4169M_loss_3.5174/vocab.json": {},
+    "checkpoint_tokens_4190M_loss_3.5064/README.md": {},
+    "checkpoint_tokens_4190M_loss_3.5064/config.json": {},
+    "checkpoint_tokens_4190M_loss_3.5064/merges.txt": {},
+    "checkpoint_tokens_4190M_loss_3.5064/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4190M_loss_3.5064/special_tokens_map.json": {},
+    "checkpoint_tokens_4190M_loss_3.5064/tokenizer.json": {},
+    "checkpoint_tokens_4190M_loss_3.5064/tokenizer_config.json": {},
+    "checkpoint_tokens_4190M_loss_3.5064/vocab.json": {},
+    "checkpoint_tokens_4210M_loss_3.3806/README.md": {},
+    "checkpoint_tokens_4210M_loss_3.3806/config.json": {},
+    "checkpoint_tokens_4210M_loss_3.3806/merges.txt": {},
+    "checkpoint_tokens_4210M_loss_3.3806/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4210M_loss_3.3806/special_tokens_map.json": {},
+    "checkpoint_tokens_4210M_loss_3.3806/tokenizer.json": {},
+    "checkpoint_tokens_4210M_loss_3.3806/tokenizer_config.json": {},
+    "checkpoint_tokens_4210M_loss_3.3806/vocab.json": {},
+    "checkpoint_tokens_4231M_loss_3.4681/README.md": {},
+    "checkpoint_tokens_4231M_loss_3.4681/config.json": {},
+    "checkpoint_tokens_4231M_loss_3.4681/merges.txt": {},
+    "checkpoint_tokens_4231M_loss_3.4681/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4231M_loss_3.4681/special_tokens_map.json": {},
+    "checkpoint_tokens_4231M_loss_3.4681/tokenizer.json": {},
+    "checkpoint_tokens_4231M_loss_3.4681/tokenizer_config.json": {},
+    "checkpoint_tokens_4231M_loss_3.4681/vocab.json": {},
+    "checkpoint_tokens_4251M_loss_3.3592/README.md": {},
+    "checkpoint_tokens_4251M_loss_3.3592/config.json": {},
+    "checkpoint_tokens_4251M_loss_3.3592/merges.txt": {},
+    "checkpoint_tokens_4251M_loss_3.3592/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4251M_loss_3.3592/special_tokens_map.json": {},
+    "checkpoint_tokens_4251M_loss_3.3592/tokenizer.json": {},
+    "checkpoint_tokens_4251M_loss_3.3592/tokenizer_config.json": {},
+    "checkpoint_tokens_4251M_loss_3.3592/vocab.json": {},
+    "checkpoint_tokens_4272M_loss_3.3058/README.md": {},
+    "checkpoint_tokens_4272M_loss_3.3058/config.json": {},
+    "checkpoint_tokens_4272M_loss_3.3058/merges.txt": {},
+    "checkpoint_tokens_4272M_loss_3.3058/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4272M_loss_3.3058/special_tokens_map.json": {},
+    "checkpoint_tokens_4272M_loss_3.3058/tokenizer.json": {},
+    "checkpoint_tokens_4272M_loss_3.3058/tokenizer_config.json": {},
+    "checkpoint_tokens_4272M_loss_3.3058/vocab.json": {},
+    "checkpoint_tokens_4292M_loss_3.2755/README.md": {},
+    "checkpoint_tokens_4292M_loss_3.2755/config.json": {},
+    "checkpoint_tokens_4292M_loss_3.2755/merges.txt": {},
+    "checkpoint_tokens_4292M_loss_3.2755/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4292M_loss_3.2755/special_tokens_map.json": {},
+    "checkpoint_tokens_4292M_loss_3.2755/tokenizer.json": {},
+    "checkpoint_tokens_4292M_loss_3.2755/tokenizer_config.json": {},
+    "checkpoint_tokens_4292M_loss_3.2755/vocab.json": {},
+    "checkpoint_tokens_430M_loss_3.6832/README.md": {},
+    "checkpoint_tokens_430M_loss_3.6832/config.json": {},
+    "checkpoint_tokens_430M_loss_3.6832/merges.txt": {},
+    "checkpoint_tokens_430M_loss_3.6832/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_430M_loss_3.6832/special_tokens_map.json": {},
+    "checkpoint_tokens_430M_loss_3.6832/tokenizer.json": {},
+    "checkpoint_tokens_430M_loss_3.6832/tokenizer_config.json": {},
+    "checkpoint_tokens_430M_loss_3.6832/vocab.json": {},
+    "checkpoint_tokens_4313M_loss_3.2810/README.md": {},
+    "checkpoint_tokens_4313M_loss_3.2810/config.json": {},
+    "checkpoint_tokens_4313M_loss_3.2810/merges.txt": {},
+    "checkpoint_tokens_4313M_loss_3.2810/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4313M_loss_3.2810/special_tokens_map.json": {},
+    "checkpoint_tokens_4313M_loss_3.2810/tokenizer.json": {},
+    "checkpoint_tokens_4313M_loss_3.2810/tokenizer_config.json": {},
+    "checkpoint_tokens_4313M_loss_3.2810/vocab.json": {},
+    "checkpoint_tokens_4333M_loss_3.3132/README.md": {},
+    "checkpoint_tokens_4333M_loss_3.3132/config.json": {},
+    "checkpoint_tokens_4333M_loss_3.3132/merges.txt": {},
+    "checkpoint_tokens_4333M_loss_3.3132/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4333M_loss_3.3132/special_tokens_map.json": {},
+    "checkpoint_tokens_4333M_loss_3.3132/tokenizer.json": {},
+    "checkpoint_tokens_4333M_loss_3.3132/tokenizer_config.json": {},
+    "checkpoint_tokens_4333M_loss_3.3132/vocab.json": {},
+    "checkpoint_tokens_4354M_loss_3.3388/README.md": {},
+    "checkpoint_tokens_4354M_loss_3.3388/config.json": {},
+    "checkpoint_tokens_4354M_loss_3.3388/merges.txt": {},
+    "checkpoint_tokens_4354M_loss_3.3388/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4354M_loss_3.3388/special_tokens_map.json": {},
+    "checkpoint_tokens_4354M_loss_3.3388/tokenizer.json": {},
+    "checkpoint_tokens_4354M_loss_3.3388/tokenizer_config.json": {},
+    "checkpoint_tokens_4354M_loss_3.3388/vocab.json": {},
+    "checkpoint_tokens_4374M_loss_3.2473/README.md": {},
+    "checkpoint_tokens_4374M_loss_3.2473/config.json": {},
+    "checkpoint_tokens_4374M_loss_3.2473/merges.txt": {},
+    "checkpoint_tokens_4374M_loss_3.2473/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4374M_loss_3.2473/special_tokens_map.json": {},
+    "checkpoint_tokens_4374M_loss_3.2473/tokenizer.json": {},
+    "checkpoint_tokens_4374M_loss_3.2473/tokenizer_config.json": {},
+    "checkpoint_tokens_4374M_loss_3.2473/vocab.json": {},
+    "checkpoint_tokens_4395M_loss_3.3088/README.md": {},
+    "checkpoint_tokens_4395M_loss_3.3088/config.json": {},
+    "checkpoint_tokens_4395M_loss_3.3088/merges.txt": {},
+    "checkpoint_tokens_4395M_loss_3.3088/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4395M_loss_3.3088/special_tokens_map.json": {},
+    "checkpoint_tokens_4395M_loss_3.3088/tokenizer.json": {},
+    "checkpoint_tokens_4395M_loss_3.3088/tokenizer_config.json": {},
+    "checkpoint_tokens_4395M_loss_3.3088/vocab.json": {},
+    "checkpoint_tokens_4415M_loss_3.2789/README.md": {},
+    "checkpoint_tokens_4415M_loss_3.2789/config.json": {},
+    "checkpoint_tokens_4415M_loss_3.2789/merges.txt": {},
+    "checkpoint_tokens_4415M_loss_3.2789/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4415M_loss_3.2789/special_tokens_map.json": {},
+    "checkpoint_tokens_4415M_loss_3.2789/tokenizer.json": {},
+    "checkpoint_tokens_4415M_loss_3.2789/tokenizer_config.json": {},
+    "checkpoint_tokens_4415M_loss_3.2789/vocab.json": {},
+    "checkpoint_tokens_4436M_loss_3.2685/README.md": {},
+    "checkpoint_tokens_4436M_loss_3.2685/config.json": {},
+    "checkpoint_tokens_4436M_loss_3.2685/merges.txt": {},
+    "checkpoint_tokens_4436M_loss_3.2685/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4436M_loss_3.2685/special_tokens_map.json": {},
+    "checkpoint_tokens_4436M_loss_3.2685/tokenizer.json": {},
+    "checkpoint_tokens_4436M_loss_3.2685/tokenizer_config.json": {},
+    "checkpoint_tokens_4436M_loss_3.2685/vocab.json": {},
+    "checkpoint_tokens_4456M_loss_3.2821/README.md": {},
+    "checkpoint_tokens_4456M_loss_3.2821/config.json": {},
+    "checkpoint_tokens_4456M_loss_3.2821/merges.txt": {},
+    "checkpoint_tokens_4456M_loss_3.2821/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4456M_loss_3.2821/special_tokens_map.json": {},
+    "checkpoint_tokens_4456M_loss_3.2821/tokenizer.json": {},
+    "checkpoint_tokens_4456M_loss_3.2821/tokenizer_config.json": {},
+    "checkpoint_tokens_4456M_loss_3.2821/vocab.json": {},
+    "checkpoint_tokens_4477M_loss_3.2912/README.md": {},
+    "checkpoint_tokens_4477M_loss_3.2912/config.json": {},
+    "checkpoint_tokens_4477M_loss_3.2912/merges.txt": {},
+    "checkpoint_tokens_4477M_loss_3.2912/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4477M_loss_3.2912/special_tokens_map.json": {},
+    "checkpoint_tokens_4477M_loss_3.2912/tokenizer.json": {},
+    "checkpoint_tokens_4477M_loss_3.2912/tokenizer_config.json": {},
+    "checkpoint_tokens_4477M_loss_3.2912/vocab.json": {},
+    "checkpoint_tokens_4497M_loss_3.2971/README.md": {},
+    "checkpoint_tokens_4497M_loss_3.2971/config.json": {},
+    "checkpoint_tokens_4497M_loss_3.2971/merges.txt": {},
+    "checkpoint_tokens_4497M_loss_3.2971/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4497M_loss_3.2971/special_tokens_map.json": {},
+    "checkpoint_tokens_4497M_loss_3.2971/tokenizer.json": {},
+    "checkpoint_tokens_4497M_loss_3.2971/tokenizer_config.json": {},
+    "checkpoint_tokens_4497M_loss_3.2971/vocab.json": {},
+    "checkpoint_tokens_4518M_loss_3.2767/README.md": {},
+    "checkpoint_tokens_4518M_loss_3.2767/config.json": {},
+    "checkpoint_tokens_4518M_loss_3.2767/merges.txt": {},
+    "checkpoint_tokens_4518M_loss_3.2767/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4518M_loss_3.2767/special_tokens_map.json": {},
+    "checkpoint_tokens_4518M_loss_3.2767/tokenizer.json": {},
+    "checkpoint_tokens_4518M_loss_3.2767/tokenizer_config.json": {},
+    "checkpoint_tokens_4518M_loss_3.2767/vocab.json": {},
+    "checkpoint_tokens_4538M_loss_3.3004/README.md": {},
+    "checkpoint_tokens_4538M_loss_3.3004/config.json": {},
+    "checkpoint_tokens_4538M_loss_3.3004/merges.txt": {},
+    "checkpoint_tokens_4538M_loss_3.3004/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4538M_loss_3.3004/special_tokens_map.json": {},
+    "checkpoint_tokens_4538M_loss_3.3004/tokenizer.json": {},
+    "checkpoint_tokens_4538M_loss_3.3004/tokenizer_config.json": {},
+    "checkpoint_tokens_4538M_loss_3.3004/vocab.json": {},
+    "checkpoint_tokens_4558M_loss_3.3142/README.md": {},
+    "checkpoint_tokens_4558M_loss_3.3142/config.json": {},
+    "checkpoint_tokens_4558M_loss_3.3142/merges.txt": {},
+    "checkpoint_tokens_4558M_loss_3.3142/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4558M_loss_3.3142/special_tokens_map.json": {},
+    "checkpoint_tokens_4558M_loss_3.3142/tokenizer.json": {},
+    "checkpoint_tokens_4558M_loss_3.3142/tokenizer_config.json": {},
+    "checkpoint_tokens_4558M_loss_3.3142/vocab.json": {},
+    "checkpoint_tokens_4579M_loss_3.2839/README.md": {},
+    "checkpoint_tokens_4579M_loss_3.2839/config.json": {},
+    "checkpoint_tokens_4579M_loss_3.2839/merges.txt": {},
+    "checkpoint_tokens_4579M_loss_3.2839/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4579M_loss_3.2839/special_tokens_map.json": {},
+    "checkpoint_tokens_4579M_loss_3.2839/tokenizer.json": {},
+    "checkpoint_tokens_4579M_loss_3.2839/tokenizer_config.json": {},
+    "checkpoint_tokens_4579M_loss_3.2839/vocab.json": {},
+    "checkpoint_tokens_4599M_loss_3.3518/README.md": {},
+    "checkpoint_tokens_4599M_loss_3.3518/config.json": {},
+    "checkpoint_tokens_4599M_loss_3.3518/merges.txt": {},
+    "checkpoint_tokens_4599M_loss_3.3518/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4599M_loss_3.3518/special_tokens_map.json": {},
+    "checkpoint_tokens_4599M_loss_3.3518/tokenizer.json": {},
+    "checkpoint_tokens_4599M_loss_3.3518/tokenizer_config.json": {},
+    "checkpoint_tokens_4599M_loss_3.3518/vocab.json": {},
+    "checkpoint_tokens_4620M_loss_3.3334/README.md": {},
+    "checkpoint_tokens_4620M_loss_3.3334/config.json": {},
+    "checkpoint_tokens_4620M_loss_3.3334/merges.txt": {},
+    "checkpoint_tokens_4620M_loss_3.3334/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_4620M_loss_3.3334/special_tokens_map.json": {},
+    "checkpoint_tokens_4620M_loss_3.3334/tokenizer.json": {},
+    "checkpoint_tokens_4620M_loss_3.3334/tokenizer_config.json": {},
+    "checkpoint_tokens_4620M_loss_3.3334/vocab.json": {},
+    "checkpoint_tokens_479M_loss_3.7144/README.md": {},
+    "checkpoint_tokens_479M_loss_3.7144/config.json": {},
+    "checkpoint_tokens_479M_loss_3.7144/merges.txt": {},
+    "checkpoint_tokens_479M_loss_3.7144/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_479M_loss_3.7144/special_tokens_map.json": {},
+    "checkpoint_tokens_479M_loss_3.7144/tokenizer.json": {},
+    "checkpoint_tokens_479M_loss_3.7144/tokenizer_config.json": {},
+    "checkpoint_tokens_479M_loss_3.7144/vocab.json": {},
+    "checkpoint_tokens_5112M_loss_3.0744/README.md": {},
+    "checkpoint_tokens_5112M_loss_3.0744/config.json": {},
+    "checkpoint_tokens_5112M_loss_3.0744/merges.txt": {},
+    "checkpoint_tokens_5112M_loss_3.0744/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_5112M_loss_3.0744/special_tokens_map.json": {},
+    "checkpoint_tokens_5112M_loss_3.0744/tokenizer.json": {},
+    "checkpoint_tokens_5112M_loss_3.0744/tokenizer_config.json": {},
+    "checkpoint_tokens_5112M_loss_3.0744/vocab.json": {},
+    "checkpoint_tokens_528M_loss_3.7355/README.md": {},
+    "checkpoint_tokens_528M_loss_3.7355/config.json": {},
+    "checkpoint_tokens_528M_loss_3.7355/merges.txt": {},
+    "checkpoint_tokens_528M_loss_3.7355/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_528M_loss_3.7355/special_tokens_map.json": {},
+    "checkpoint_tokens_528M_loss_3.7355/tokenizer.json": {},
+    "checkpoint_tokens_528M_loss_3.7355/tokenizer_config.json": {},
+    "checkpoint_tokens_528M_loss_3.7355/vocab.json": {},
+    "checkpoint_tokens_5603M_loss_3.0146/README.md": {},
+    "checkpoint_tokens_5603M_loss_3.0146/config.json": {},
+    "checkpoint_tokens_5603M_loss_3.0146/merges.txt": {},
+    "checkpoint_tokens_5603M_loss_3.0146/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_5603M_loss_3.0146/special_tokens_map.json": {},
+    "checkpoint_tokens_5603M_loss_3.0146/tokenizer.json": {},
+    "checkpoint_tokens_5603M_loss_3.0146/tokenizer_config.json": {},
+    "checkpoint_tokens_5603M_loss_3.0146/vocab.json": {},
+    "checkpoint_tokens_577M_loss_3.6916/README.md": {},
+    "checkpoint_tokens_577M_loss_3.6916/config.json": {},
+    "checkpoint_tokens_577M_loss_3.6916/merges.txt": {},
+    "checkpoint_tokens_577M_loss_3.6916/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_577M_loss_3.6916/special_tokens_map.json": {},
+    "checkpoint_tokens_577M_loss_3.6916/tokenizer.json": {},
+    "checkpoint_tokens_577M_loss_3.6916/tokenizer_config.json": {},
+    "checkpoint_tokens_577M_loss_3.6916/vocab.json": {},
+    "checkpoint_tokens_6095M_loss_3.0022/README.md": {},
+    "checkpoint_tokens_6095M_loss_3.0022/config.json": {},
+    "checkpoint_tokens_6095M_loss_3.0022/merges.txt": {},
+    "checkpoint_tokens_6095M_loss_3.0022/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_6095M_loss_3.0022/special_tokens_map.json": {},
+    "checkpoint_tokens_6095M_loss_3.0022/tokenizer.json": {},
+    "checkpoint_tokens_6095M_loss_3.0022/tokenizer_config.json": {},
+    "checkpoint_tokens_6095M_loss_3.0022/vocab.json": {},
+    "checkpoint_tokens_626M_loss_3.6956/README.md": {},
+    "checkpoint_tokens_626M_loss_3.6956/config.json": {},
+    "checkpoint_tokens_626M_loss_3.6956/merges.txt": {},
+    "checkpoint_tokens_626M_loss_3.6956/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_626M_loss_3.6956/special_tokens_map.json": {},
+    "checkpoint_tokens_626M_loss_3.6956/tokenizer.json": {},
+    "checkpoint_tokens_626M_loss_3.6956/tokenizer_config.json": {},
+    "checkpoint_tokens_626M_loss_3.6956/vocab.json": {},
+    "checkpoint_tokens_6586M_loss_2.9385/README.md": {},
+    "checkpoint_tokens_6586M_loss_2.9385/config.json": {},
+    "checkpoint_tokens_6586M_loss_2.9385/merges.txt": {},
+    "checkpoint_tokens_6586M_loss_2.9385/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_6586M_loss_2.9385/special_tokens_map.json": {},
+    "checkpoint_tokens_6586M_loss_2.9385/tokenizer.json": {},
+    "checkpoint_tokens_6586M_loss_2.9385/tokenizer_config.json": {},
+    "checkpoint_tokens_6586M_loss_2.9385/vocab.json": {},
+    "checkpoint_tokens_675M_loss_3.7039/README.md": {},
+    "checkpoint_tokens_675M_loss_3.7039/config.json": {},
+    "checkpoint_tokens_675M_loss_3.7039/merges.txt": {},
+    "checkpoint_tokens_675M_loss_3.7039/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_675M_loss_3.7039/special_tokens_map.json": {},
+    "checkpoint_tokens_675M_loss_3.7039/tokenizer.json": {},
+    "checkpoint_tokens_675M_loss_3.7039/tokenizer_config.json": {},
+    "checkpoint_tokens_675M_loss_3.7039/vocab.json": {},
+    "checkpoint_tokens_7078M_loss_2.9463/README.md": {},
+    "checkpoint_tokens_7078M_loss_2.9463/config.json": {},
+    "checkpoint_tokens_7078M_loss_2.9463/merges.txt": {},
+    "checkpoint_tokens_7078M_loss_2.9463/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_7078M_loss_2.9463/special_tokens_map.json": {},
+    "checkpoint_tokens_7078M_loss_2.9463/tokenizer.json": {},
+    "checkpoint_tokens_7078M_loss_2.9463/tokenizer_config.json": {},
+    "checkpoint_tokens_7078M_loss_2.9463/vocab.json": {},
+    "checkpoint_tokens_725M_loss_3.6668/README.md": {},
+    "checkpoint_tokens_725M_loss_3.6668/config.json": {},
+    "checkpoint_tokens_725M_loss_3.6668/merges.txt": {},
+    "checkpoint_tokens_725M_loss_3.6668/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_725M_loss_3.6668/special_tokens_map.json": {},
+    "checkpoint_tokens_725M_loss_3.6668/tokenizer.json": {},
+    "checkpoint_tokens_725M_loss_3.6668/tokenizer_config.json": {},
+    "checkpoint_tokens_725M_loss_3.6668/vocab.json": {},
+    "checkpoint_tokens_7569M_loss_2.9393/README.md": {},
+    "checkpoint_tokens_7569M_loss_2.9393/config.json": {},
+    "checkpoint_tokens_7569M_loss_2.9393/merges.txt": {},
+    "checkpoint_tokens_7569M_loss_2.9393/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_7569M_loss_2.9393/special_tokens_map.json": {},
+    "checkpoint_tokens_7569M_loss_2.9393/tokenizer.json": {},
+    "checkpoint_tokens_7569M_loss_2.9393/tokenizer_config.json": {},
+    "checkpoint_tokens_7569M_loss_2.9393/vocab.json": {},
+    "checkpoint_tokens_774M_loss_3.6704/README.md": {},
+    "checkpoint_tokens_774M_loss_3.6704/config.json": {},
+    "checkpoint_tokens_774M_loss_3.6704/merges.txt": {},
+    "checkpoint_tokens_774M_loss_3.6704/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_774M_loss_3.6704/special_tokens_map.json": {},
+    "checkpoint_tokens_774M_loss_3.6704/tokenizer.json": {},
+    "checkpoint_tokens_774M_loss_3.6704/tokenizer_config.json": {},
+    "checkpoint_tokens_774M_loss_3.6704/vocab.json": {},
+    "checkpoint_tokens_8061M_loss_2.9906/README.md": {},
+    "checkpoint_tokens_8061M_loss_2.9906/config.json": {},
+    "checkpoint_tokens_8061M_loss_2.9906/merges.txt": {},
+    "checkpoint_tokens_8061M_loss_2.9906/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_8061M_loss_2.9906/special_tokens_map.json": {},
+    "checkpoint_tokens_8061M_loss_2.9906/tokenizer.json": {},
+    "checkpoint_tokens_8061M_loss_2.9906/tokenizer_config.json": {},
+    "checkpoint_tokens_8061M_loss_2.9906/vocab.json": {},
+    "checkpoint_tokens_81M_loss_4.4011/README.md": {},
+    "checkpoint_tokens_81M_loss_4.4011/config.json": {},
+    "checkpoint_tokens_81M_loss_4.4011/merges.txt": {},
+    "checkpoint_tokens_81M_loss_4.4011/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_81M_loss_4.4011/special_tokens_map.json": {},
+    "checkpoint_tokens_81M_loss_4.4011/tokenizer.json": {},
+    "checkpoint_tokens_81M_loss_4.4011/tokenizer_config.json": {},
+    "checkpoint_tokens_81M_loss_4.4011/vocab.json": {},
+    "checkpoint_tokens_823M_loss_3.6534/README.md": {},
+    "checkpoint_tokens_823M_loss_3.6534/config.json": {},
+    "checkpoint_tokens_823M_loss_3.6534/merges.txt": {},
+    "checkpoint_tokens_823M_loss_3.6534/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_823M_loss_3.6534/special_tokens_map.json": {},
+    "checkpoint_tokens_823M_loss_3.6534/tokenizer.json": {},
+    "checkpoint_tokens_823M_loss_3.6534/tokenizer_config.json": {},
+    "checkpoint_tokens_823M_loss_3.6534/vocab.json": {},
+    "checkpoint_tokens_8552M_loss_2.9483/README.md": {},
+    "checkpoint_tokens_8552M_loss_2.9483/config.json": {},
+    "checkpoint_tokens_8552M_loss_2.9483/merges.txt": {},
+    "checkpoint_tokens_8552M_loss_2.9483/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_8552M_loss_2.9483/special_tokens_map.json": {},
+    "checkpoint_tokens_8552M_loss_2.9483/tokenizer.json": {},
+    "checkpoint_tokens_8552M_loss_2.9483/tokenizer_config.json": {},
+    "checkpoint_tokens_8552M_loss_2.9483/vocab.json": {},
+    "checkpoint_tokens_872M_loss_3.6710/README.md": {},
+    "checkpoint_tokens_872M_loss_3.6710/config.json": {},
+    "checkpoint_tokens_872M_loss_3.6710/merges.txt": {},
+    "checkpoint_tokens_872M_loss_3.6710/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_872M_loss_3.6710/special_tokens_map.json": {},
+    "checkpoint_tokens_872M_loss_3.6710/tokenizer.json": {},
+    "checkpoint_tokens_872M_loss_3.6710/tokenizer_config.json": {},
+    "checkpoint_tokens_872M_loss_3.6710/vocab.json": {},
+    "checkpoint_tokens_9044M_loss_2.9273/README.md": {},
+    "checkpoint_tokens_9044M_loss_2.9273/config.json": {},
+    "checkpoint_tokens_9044M_loss_2.9273/merges.txt": {},
+    "checkpoint_tokens_9044M_loss_2.9273/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_9044M_loss_2.9273/special_tokens_map.json": {},
+    "checkpoint_tokens_9044M_loss_2.9273/tokenizer.json": {},
+    "checkpoint_tokens_9044M_loss_2.9273/tokenizer_config.json": {},
+    "checkpoint_tokens_9044M_loss_2.9273/vocab.json": {},
+    "checkpoint_tokens_921M_loss_3.6412/README.md": {},
+    "checkpoint_tokens_921M_loss_3.6412/config.json": {},
+    "checkpoint_tokens_921M_loss_3.6412/merges.txt": {},
+    "checkpoint_tokens_921M_loss_3.6412/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_921M_loss_3.6412/special_tokens_map.json": {},
+    "checkpoint_tokens_921M_loss_3.6412/tokenizer.json": {},
+    "checkpoint_tokens_921M_loss_3.6412/tokenizer_config.json": {},
+    "checkpoint_tokens_921M_loss_3.6412/vocab.json": {},
+    "checkpoint_tokens_9535M_loss_2.9385/README.md": {},
+    "checkpoint_tokens_9535M_loss_2.9385/config.json": {},
+    "checkpoint_tokens_9535M_loss_2.9385/merges.txt": {},
+    "checkpoint_tokens_9535M_loss_2.9385/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_9535M_loss_2.9385/special_tokens_map.json": {},
+    "checkpoint_tokens_9535M_loss_2.9385/tokenizer.json": {},
+    "checkpoint_tokens_9535M_loss_2.9385/tokenizer_config.json": {},
+    "checkpoint_tokens_9535M_loss_2.9385/vocab.json": {},
+    "checkpoint_tokens_970M_loss_3.6390/README.md": {},
+    "checkpoint_tokens_970M_loss_3.6390/config.json": {},
+    "checkpoint_tokens_970M_loss_3.6390/merges.txt": {},
+    "checkpoint_tokens_970M_loss_3.6390/pytorch_model.bin": {
+     "lfs": true
+    },
+    "checkpoint_tokens_970M_loss_3.6390/special_tokens_map.json": {},
+    "checkpoint_tokens_970M_loss_3.6390/tokenizer.json": {},
+    "checkpoint_tokens_970M_loss_3.6390/tokenizer_config.json": {},
+    "checkpoint_tokens_970M_loss_3.6390/vocab.json": {}
+   }
+  },
+  {
+   "id": "Orosius/gated-auto-demo",
+   "_id": "7a10810526830d49dfd992a6",
+   "author": "Orosius",
+   "private": false,
+   "gated": "auto",
+   "orgMembersGated": false,
+   "gatedNotificationsMode": "bulk",
+   "gatedNotificationsEmail": null,
+   "sha": "51271db066ceaf8513bd455b651e0447a33a629d",
+   "createdAt": "2026-10-05T12:00:00.000Z",
+   "lastModified": "2026-10-05T12:00:00.000Z",
+   "cardData": {
+    "license": "mit",
+    "extra_gated_prompt": "## Demo license agreement\nPlease read the demo license before accepting it.",
+    "extra_gated_fields": {
+     "I accept the above license agreement": "checkbox"
+    }
+   },
+   "info": {
+    "tags": [
+     "license:mit",
+     "region:us"
+    ],
+    "downloads": 0,
+    "likes": 0,
+    "modelId": "Orosius/gated-auto-demo",
+    "disabled": false,
+    "model-index": null,
+    "config": {},
+    "spaces": []
+   },
+   "files": {
+    "README.md": {
+     "text": "---\nlicense: \"mit\"\nextra_gated_prompt: \"## Demo license agreement\\nPlease read the demo license before accepting it.\"\nextra_gated_fields: {\"I accept the above license agreement\": \"checkbox\"}\n---\n"
+    },
+    "config.json": {
+     "text": "{\n  \"model_type\": \"demo\"\n}\n"
+    },
+    "model.safetensors": {
+     "lfs": true
+    }
+   }
+  },
+  {
+   "id": "Orosius/gated-form-demo",
+   "_id": "cfe52fde8d94913f188cde3c",
+   "author": "Orosius",
+   "private": false,
+   "gated": "manual",
+   "orgMembersGated": false,
+   "gatedNotificationsMode": "bulk",
+   "gatedNotificationsEmail": null,
+   "sha": "41fbde7e1b7688a01eced9ad2b11d347263abbb0",
+   "createdAt": "2026-10-05T12:00:00.000Z",
+   "lastModified": "2026-10-05T12:00:00.000Z",
+   "cardData": {
+    "license": "other",
+    "extra_gated_heading": "Request access to the form demo",
+    "extra_gated_description": "The information you provide is only used to review your request.",
+    "extra_gated_button_content": "Send request",
+    "extra_gated_prompt": "### Demo community license\n\nYou may use this model for evaluation only.",
+    "extra_gated_fields": {
+     "First Name": "text",
+     "Last Name": "text",
+     "Date of birth": "date_picker",
+     "Country": "country",
+     "Affiliation": "text",
+     "Job title": {
+      "type": "select",
+      "options": [
+       "Student",
+       "Researcher",
+       {
+        "label": "Engineer",
+        "value": "engineer"
+       },
+       "Other"
+      ]
+     },
+     "geo": "ip_location",
+     "I accept the terms of the license": "checkbox"
+    }
+   },
+   "info": {
+    "tags": [
+     "license:other",
+     "region:us"
+    ],
+    "downloads": 0,
+    "likes": 0,
+    "modelId": "Orosius/gated-form-demo",
+    "disabled": false,
+    "model-index": null,
+    "config": {},
+    "spaces": []
+   },
+   "files": {
+    "README.md": {
+     "text": "---\nlicense: \"other\"\nextra_gated_heading: \"Request access to the form demo\"\nextra_gated_description: \"The information you provide is only used to review your request.\"\nextra_gated_button_content: \"Send request\"\nextra_gated_prompt: \"### Demo community license\\n\\nYou may use this model for evaluation only.\"\nextra_gated_fields: {\"First Name\": \"text\", \"Last Name\": \"text\", \"Date of birth\": \"date_picker\", \"Country\": \"country\", \"Affiliation\": \"text\", \"Job title\": {\"type\": \"select\", \"options\": [\"Student\", \"Researcher\", {\"label\": \"Engineer\", \"value\": \"engineer\"}, \"Other\"]}, \"geo\": \"ip_location\", \"I accept the terms of the license\": \"checkbox\"}\n---\n"
+    },
+    "config.json": {
+     "text": "{\n  \"model_type\": \"demo\"\n}\n"
+    },
+    "model.safetensors": {
+     "lfs": true
+    }
+   }
+  },
+  {
+   "id": "Orosius/not-gated-demo",
+   "_id": "01e1ef550e13ef2eacd25e13",
+   "author": "Orosius",
+   "private": false,
+   "gated": false,
+   "orgMembersGated": false,
+   "gatedNotificationsMode": "bulk",
+   "gatedNotificationsEmail": null,
+   "sha": "c7eeec0d4904be36c213c961869e95389cc1f998",
+   "createdAt": "2026-10-05T12:00:00.000Z",
+   "lastModified": "2026-10-05T12:00:00.000Z",
+   "cardData": {
+    "license": "apache-2.0",
+    "extra_gated_description": "Stale description left from when this repo was gated (CFG-5: ignored)."
+   },
+   "info": {
+    "tags": [
+     "license:apache-2.0",
+     "region:us"
+    ],
+    "downloads": 0,
+    "likes": 0,
+    "modelId": "Orosius/not-gated-demo",
+    "disabled": false,
+    "model-index": null,
+    "config": {},
+    "spaces": []
+   },
+   "files": {
+    "README.md": {
+     "text": "---\nlicense: \"apache-2.0\"\nextra_gated_description: \"Stale description left from when this repo was gated (CFG-5: ignored).\"\n---\n"
+    },
+    "config.json": {
+     "text": "{\n  \"model_type\": \"demo\"\n}\n"
+    },
+    "model.safetensors": {
+     "lfs": true
+    }
+   }
+  }
+ ],
+ "requests": [
+  {
+   "repo": "Orosius/deltanet-mla-latent",
+   "user": "TestingBOrig",
+   "status": "pending",
+   "timestamp": "2026-10-05T14:20:42.886Z",
+   "reviewedAt": null,
+   "grantedBy": null,
+   "fields": null,
+   "emailShared": true
+  }
+ ]
+}
