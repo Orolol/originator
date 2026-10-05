@@ -31,8 +31,20 @@ HTTP details are in [api.md](api.md), screens in [ui.md](ui.md), the gate form i
 - **CFG-4** `gated` and `private` are independent; a repo can be both private and gated. [CLIENT tests]
 - **CFG-5** `extra_gated_*` metadata has no effect while `gated == false`. A live repo
   (`mistralai/Mistral-7B-v0.1`) has `extra_gated_description` with `gated: false`. [OBS]
-- **CFG-6** Effects of changing the mode while requests exist (manual→auto with pending
-  requests, gated→false→gated) are **unknown**. [Q-7]
+- **CFG-6** Changing the mode keeps every request where it is [OBS 2026-10-05, W s9–s10, UI walkthrough]:
+  - **manual → auto** does **not** auto-accept pending requests. The requester still gets
+    "awaiting a review" in auto mode.
+  - **gated → false**: the requester and anonymous users can download (`auth-check` 200; anonymous
+    `resolve` → `307` to `/api/resolve-cache/models/{id}/{sha}/{path}?…`). The owner list endpoint still
+    answers `200` with the stored requests, which contradicts the client docstring "400 if the repo
+    is not gated", at least when requests exist.
+  - **false → manual / auto**: the stored requests reappear unchanged, and the pending requester is
+    "awaiting a review" again.
+
+  (W = `observations/2026-10-05-owner-walkthrough.md`.)
+- **CFG-7** `PUT …/settings {gatedNotificationsMode}` → `200 {}`: the notification fields are not
+  even echoed (unlike `gated`), so the API gives no confirmation that they were stored. [OBS 2026-10-05,
+  `observations/2026-10-05-ui-walkthrough.md` #245–246]
 
 ### Access request
 
@@ -44,25 +56,30 @@ There is at most one request per (repo, user). Shape as listed by the API [SPEC]
 | `status` | `pending` \| `accepted` \| `rejected` \| `reset` | [SPEC] [DOC] |
 | `fields` | answers to the gate form, map `label → string` | [SPEC] [CLIENT] |
 | `timestamp` | when the user initially made the request (required) | [SPEC] [DOC] |
-| `reviewedAt` | when accepted/rejected; unset for pending | [SPEC] [DOC] |
-| `grantedBy` | user object of the granter, or `{}` | [SPEC]; when each form appears [Q-10] |
+| `reviewedAt` | time of the last accept, reject, reset or grant; removed when the request goes back to pending | [SPEC] [DOC] [OBS 2026-10-05] |
+| `grantedBy` | user object of whoever **accepted** (`handle` accepted or `grant`), e.g. the owner. It is absent for pending, rejected and reset entries | [SPEC] [OBS 2026-10-05] |
 
 - **REQ-4** `rejectionReason` and `resetReason` are **not** in the list item schema
-  (`additionalProperties: false`). The owner cannot read them back through the list API. [SPEC] [Q-19]
+  (`additionalProperties: false`), and observed lists never contain them. The requester's API error
+  message does not include them either. [SPEC] [OBS 2026-10-05] Where the requester sees the reason
+  (page or email) is [Q-19].
+- **REQ-6** Observed list-item key order: `user, timestamp, reviewedAt, status, grantedBy`, with
+  absent keys skipped (a pending item is `user, timestamp, status`). [OBS 2026-10-05]
 - **REQ-5** `user.email` is absent/`null` for users added through **grant**. The client test
   says: "email not shared when granted access manually". [CLIENT tests]
 
 ## 2. States and what they allow
 
-"No request" is a real state: the user has never interacted, or the request was removed [Q-3].
+"No request" is a real state: the user has never interacted, or the request was removed [Q-3] [Q-26].
+The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [OBS 2026-10-05]
 
-| State | Can read gated files | Can (re)submit the form | Shown on repo page | Evidence |
+| State | Content routes answer (requester token) | Re-submitting the form | Shown on repo page | Evidence |
 |---|---|---|---|---|
-| no request | no | yes (must be logged in) | consent form | [DOC] |
-| `pending` | no; content routes answer `403 GatedRepo` "Your request to access model {id} is awaiting a review from the repo authors." | re-submitting is accepted silently (303), still `pending` | "awaiting review" message [Q-11] | [DOC] [OBS 2026-10-05] |
-| `accepted` | **yes** | n/a | access granted | [DOC] |
-| `rejected` | no | **no**, "cannot request access again" | "Your request to access this repo has been rejected by the repo's authors." + reason if any | [DOC] |
-| `reset` | no | **yes**, prompted to agree and submit again on next visit | consent form again [Q-11] | [DOC] |
+| no request | `403 GatedRepo` "Access to model {id} is restricted and you are not in the authorized list. Visit https://huggingface.co/{id} to ask for access." | creates the request (§4) | consent form | [DOC] [OBS] |
+| `pending` | `403 GatedRepo` "Your request to access model {id} is awaiting a review from the repo authors." | `303`, no change | "awaiting review" message [Q-11] | [DOC] [OBS] |
+| `accepted` | `200` (`auth-check` body `OK`; files served) | unknown [Q-2] | no gate box | [DOC] [OBS] |
+| `rejected` | `403 GatedRepo` "Your request to access model {id} has been rejected by the repo's authors." (no reason) | `303`, **silently ignored**, stays `rejected` ("cannot request access again") | "Your request to access this repo has been rejected by the repo's authors." + reason if any | [DOC] [OBS] |
+| `reset` | `403 GatedRepo` "Your request to access model {id} has been reset by the repo's authors. Visit https://huggingface.co/{id} to submit a new request." | creates a **new** request (§4) | consent form again [DOC]; extra notice [Q-11] | [DOC] [OBS] |
 
 ## 3. Who bypasses the gate
 
@@ -96,10 +113,11 @@ There is at most one request per (repo, user). Shape as listed by the API [SPEC]
 | From | Action | Mode | To | Evidence |
 |---|---|---|---|---|
 | no request | submit gate form (`POST /{id}/ask-access`) | auto | `accepted` (immediately) | [DOC] |
-| no request | submit gate form | manual | `pending`; response `303` → repo page | [DOC] [OBS 2026-10-05] |
-| `reset` | submit gate form again | auto / manual | `accepted` / `pending` | [DOC-implied] [Q-5] |
-| `rejected` | submit again | any | refused (exact response unknown) | [DOC] [Q-2] |
-| `pending` | submit again | manual | `303` → repo page, still `pending`, no error. Whether `timestamp`/`fields` change is unknown | [OBS 2026-10-05] [Q-2] |
+| no request | submit gate form | manual | `pending`, `timestamp` = submission time; response `303` → repo page | [DOC] [OBS] |
+| `reset` | submit gate form again | manual | `pending` with a **new `timestamp`**; `reviewedAt` removed; gone from the `reset` list | [OBS 2026-10-05, W s5b] |
+| `reset` | submit gate form again | auto | presumably `accepted` | [DOC-implied] |
+| `rejected` | submit again | manual | `303`, **no change** (still `rejected`, same `reviewedAt`) | [DOC] [OBS 2026-10-05, C m7] |
+| `pending` | submit again | manual | `303`, still `pending`; whether `timestamp`/`fields` change is unknown | [OBS] [Q-2] |
 | `accepted` | submit again | any | unknown | [Q-2] |
 | any | self-cancel (`POST /api/models/{id}/user-access-request/cancel`) | any | unknown (probably removes the request) | [SPEC] [Q-3] |
 
@@ -122,58 +140,77 @@ token gets 403. [DOC] [CLIENT]
 
 ### 5.1 `POST …/user-access-request/handle` `{user|userId, status, rejectionReason?, resetReason?}`
 
+Success → `200`, JSON body `{}`. [OBS 2026-10-05] Evidence for the table: W = `observations/2026-10-05-owner-walkthrough.md`,
+C = `observations/2026-10-05-owner-walkthrough-completion.md`, plus the UI walkthrough (`observations/2026-10-05-ui-walkthrough.md`).
+
 | From \ To | `pending` ("Cancel") | `accepted` ("Accept") | `rejected` ("Reject") | `reset` |
 |---|---|---|---|---|
-| no request | 404 request not found [CLIENT doc] | 404 [CLIENT doc] | 404 [CLIENT doc] | ? [Q-5] |
-| `pending` | **error**, already pending [CLIENT tests; 404 per CLIENT doc] | ok [DOC] [CLIENT tests] | ok [DOC] [CLIENT tests] | ? [Q-5] |
-| `accepted` | ok, user loses access [DOC] [CLIENT tests] | **error**, already accepted [CLIENT tests; 404 per doc] | ok [DOC] [CLIENT tests] | ok [DOC] |
-| `rejected` | ok [CLIENT doc] | ok [CLIENT tests] | **error**, already rejected [CLIENT tests; 404 per doc] | ok? [DOC-implied] [Q-5] |
+| no request | 404 [OBS W s2] | 404 [OBS W s1] | 404 [OBS W s3] | ? |
+| `pending` | **404** [OBS C m4] | ok [OBS C m1, UI] | ok [OBS C m5, UI] | ? [Q-5] |
+| `accepted` | ok, user loses access [OBS C m3, UI] | **404** [OBS C m2] | ok [CLIENT tests] | ok [OBS W s5] |
+| `rejected` | ok [CLIENT doc] | ok [OBS W s4, UI] | **404** [OBS C m6] | ok [OBS C m8] |
 | `reset` | ? | ? | ? | ? [Q-5] |
-| unknown username | 404 user not found [CLIENT doc] | | | |
 
-- **REV-1** A same-status transition is an error, not a no-op. The client tests assert an HTTP error
-  for accept→accepted, reject→rejected and cancel→pending. The status code (404 per docstrings) and
-  the body are [Q-4].
-- **REV-2** `rejectionReason`: optional, at most 200 characters, shown to the user. [DOC] [SPEC] The Python
-  client refuses a reason when `status != "rejected"` (`ValueError`, client-side only). What the
-  server does in that case is [Q-9].
+Every **404** in this table is the same: `404`, no `X-Error-Code`, JSON `{"error": "No access request
+found matching your criteria"}` with the same `X-Error-Message`.
+
+- **REV-1** A same-status transition is an **error**, identical to "no request": the 404 above, not a
+  no-op. (`batch` differs: see REV-9.) [OBS 2026-10-05]
+- **REV-2** `rejectionReason`: optional, at most 200 characters, shown to the user. [DOC] [SPEC] 201 characters → `400`
+  `* Too big: expected string to have <=200 characters * at rejectionReason`. [OBS] The reason is not
+  returned by any API we observed (REQ-4). The Python client refuses a reason when
+  `status != "rejected"` (client-side only); what the server does then is [Q-9].
 - **REV-3** `reset`: revokes the previous decision; the user loses access and **receives an email**
-  that includes the optional `resetReason` (at most 200 characters). Next visit, they must agree and submit
-  again. It differs from `pending` (keeps the request, back in the queue) and from `rejected`
-  (blocks re-requests). [DOC]
+  that includes the optional `resetReason` (at most 200 characters). The entry moves to the `reset` list
+  (`reviewedAt` = reset time, no `grantedBy`, `timestamp` kept) until the user submits again. Reset
+  works from `accepted` and from `rejected`. It differs from `pending` (keeps the request, back in the
+  queue) and from `rejected` (blocks re-requests). [DOC] [OBS 2026-10-05]
 - **REV-4** The `pending` list is **not** always empty in auto mode. Cancelling an accepted user
-  puts them back in `pending` even when `gated == "auto"`: the client integration test runs on an
-  auto repo. The docs' "this list is empty unless manual" only describes the natural flow. [CLIENT tests] [DOC]
-- **REV-5** `user` is the username; `userId` (24-hex) is an alternative, and one of them is required. [SPEC]
+  puts them back in `pending` even when `gated == "auto"` [CLIENT tests], and switching manual → auto
+  leaves pending requests pending [OBS, CFG-6].
+- **REV-5** `user` is the username; `userId` (24-hex) is an alternative, and exactly one is required. `userId` works
+  [OBS C m3]. Neither → `400 * Either userId or user must be provided, but not both`. [OBS]
+- **REV-12** Validation errors are `400` with a zod-style `X-Error-Message`/`{"error"}`, no
+  `X-Error-Code` [OBS 2026-10-05, W s7]:
+  - invalid status → `* Invalid option: expected one of "accepted"|"rejected"|"pending"|"reset" * at status`;
+  - unknown username → `404 User not found`;
+  - a non-owner (requester token) → `403 You have read access but not the required permissions for this operation`.
 
 ### 5.2 `POST …/user-access-request/grant` `{user|userId}`
 
 - **REV-6** Adds the user to `accepted` without them requesting. Their entry has no email. [CLIENT tests]
-- **REV-7** Granting a user who already has access → **400**. [CLIENT doc + tests] Unknown user →
-  404. Repo not gated → 400. [CLIENT doc]
-- **REV-8** Granting a user who is `pending`, `rejected` or `reset`: unknown. The response body is
-  unknown too; the client returns `response.json()`. [Q-6]
+  Success → `200 {}`. [OBS]
+- **REV-7** Granting a user who already has access → `400 That user already has access to the repo`
+  [OBS W s6-grant-again] [CLIENT]. Unknown user → 404. Repo not gated → 400. [CLIENT doc]
+- **REV-8** Granting a **pending** user accepts their request: `reviewedAt` = grant time,
+  `grantedBy` = owner, `timestamp` and `email` kept (it is their own request). [OBS W s6] Granting
+  `rejected` / `reset` users is unknown [Q-6].
 
 ### 5.3 `POST …/user-access-request/batch` `{status, rejectionReason?, resetReason?, requests: [{user|userId}] (1–100)}`
 
-- **REV-9** Applies the same status (and reason) to up to 100 requests in one call. Returns a list of
-  `{userId?, user?, ok, error?}` **in input order**, where `error ∈ {"user_not_found",
-  "request_not_found"}`. [SPEC] How an item already in the target status is reported is [Q-4].
+- **REV-9** Applies the same status (and reason) to up to 100 requests in one call. Returns a list
+  **in input order** [SPEC]; observed items echo the identifier sent: `{"user": "TestingBOrig", "ok":
+  true}`, `{"user": "<unknown>", "ok": false, "error": "user_not_found"}`. **Unlike `handle`, an item
+  already in the target status is `ok: true`.** [OBS 2026-10-05, W s8]
 
 ### 5.4 Listing: `GET …/user-access-request/{pending|accepted|rejected|reset}`
 
 - **REV-10** Query parameters: `limit` (10–1000, default 1000), `after` / `before` (ISO date-time,
   `Z`), and `q` (at most 250 characters), which searches username, fullname, email, email domain and verified org.
-  Pagination uses a `Link: <…>; rel="next"` header. [SPEC] Default ordering, which timestamp
-  `after`/`before` filter on, and how `q` matches are all [Q-10] [Q-21].
+  Pagination uses a `Link: <…>; rel="next"` header. [SPEC] `limit=5` →
+  `400 * Too small: expected number to be >=10 * at limit`; `q=testingb` matches `TestingBOrig`
+  (case-insensitive prefix). [OBS 2026-10-05] Default ordering and the field `after`/`before` filter
+  on are [Q-10] [Q-21].
 - **REV-11** The Python client only knows 3 lists. It has no `reset` list and no batch. [CLIENT]
 
 ## 6. Timestamps
 
-- **TS-1** `timestamp` is set when the user first requests. [DOC] [SPEC]
-- **TS-2** `reviewedAt` is set when the request is accepted or rejected, and is absent for pending requests. [DOC]
-- **TS-3** Whether cancel clears `reviewedAt`, whether a re-request after reset resets `timestamp`,
-  and what `timestamp` a granted entry gets are all [Q-10].
+- **TS-1** `timestamp` = time of the submission that created the request (observed within ~60 ms of
+  the `ask-access` call). A re-request after **reset** sets a new `timestamp`. Accept, cancel,
+  reject, reset and grant never change it. [OBS 2026-10-05]
+- **TS-2** `reviewedAt` = time of the last accept, reject, reset or grant (within ~60 ms of the call).
+  Moving back to `pending` (cancel, batch) **removes** it. [OBS 2026-10-05]
+- **TS-3** Whether a re-submit while pending changes `timestamp` is unknown [Q-2]. List ordering is [Q-10].
 
 ## 7. Side effects that are not HTTP responses
 

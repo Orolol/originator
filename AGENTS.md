@@ -77,12 +77,15 @@ exist yet. Update this section when they land.
 ### Live sandbox (real Hub)
 
 - Sandbox repo: `Orosius/deltanet-mla-latent` (owner `Orosius`, `gated: "manual"`, no extra form
-  fields). Requester account: `TestingBOrig`. Its request has been **pending since
-  2026-10-05**, which needs an owner action before requester "no request" baselines can be re-recorded.
-- `.env` (gitignored) holds `HF_REQUESTER_LOGIN`, `HF_REQUESTER_MDP`, `HF_REQUESTER_ACCESS_TOKEN`. Scripts
-  use only the access token (`probe.py --env-file .env` redacts every `.env` value from its output).
-  **Never read, print or use `HF_REQUESTER_MDP`**: agents do not type passwords into HF. No owner
-  token exists yet (proposed name: `HF_OWNER_ACCESS_TOKEN`), so owner-side endpoints are unverified.
+  fields). Requester account: `TestingBOrig`. At the end of the 2026-10-05 walkthrough
+  (14:23Z) its request was back to **pending**. Always read the current state (owner lists) before
+  scripting transitions: a request once vanished with no bridge write (Q-26).
+- `.env` (gitignored) holds `HF_OWNER_ACCESS_TOKEN`, `HF_REQUESTER_ACCESS_TOKEN`, `HF_REQUESTER_LOGIN`.
+  Scripts use only the tokens (`probe.py --env-file .env` redacts every `.env` value from its output).
+  Agents never type passwords into HF. Through the bridge, use the fake persona tokens
+  (`harness/kb/probes/personas.env`), never the real ones.
+- Recorded walkthroughs: `docs/hf-gated/observations/2026-10-05-owner-walkthrough*.md` (API) and
+  `…-ui-walkthrough.md` (bridge log of the UI). Export a bridge log with `harness/kb/bridge_log_to_md.py`.
 - Each `ask-access` on a manual repo may email the owner. Only send state-changing calls the user asked for.
 
 ## Commands

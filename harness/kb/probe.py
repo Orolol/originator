@@ -121,6 +121,11 @@ def run_case(opener, case, env, allow_writes):
         "headers": {k: response_headers[k] for k in KEPT_HEADERS if response_headers.get(k) is not None},
         "body_excerpt": None if text.lstrip().lower().startswith("<!doctype") else text[:160],
     }
+    if "json" in (response_headers.get("content-type") or "") and len(text) <= 50_000:
+        try:
+            record["body_json"] = json.loads(text)  # full structure (list items, reviewedAt, grantedBy…)
+        except ValueError:
+            pass
     if case.get("extract_props"):
         pattern = r'data-target="%s"[^>]*?data-props="([^"]*)"' % re.escape(case["extract_props"])
         match = re.search(pattern, text)

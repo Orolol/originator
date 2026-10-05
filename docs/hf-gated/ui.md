@@ -67,10 +67,16 @@ Expected: a "you have been granted access" banner, with files downloadable.
 
 ### A5. Rejected [DOC], TO RECORD details
 
+The API side is recorded: `403 GatedRepo` "Your request to access model {id} has been rejected by the
+repo's authors.", with no reason [OBS 2026-10-05]. Our UI shows the docs' page text below.
+
 `Your request to access this repo has been rejected by the repo's authors.` plus the
 `rejectionReason` when one was given. No form, since the user cannot request again.
 
-### A6. Reset [DOC]
+### A6. Reset [DOC] [OBS 2026-10-05 API side]
+
+The API says `…has been reset by the repo's authors. Visit https://huggingface.co/{id} to submit a new request.`
+Our UI shows the consent form again (A2) and was checked live: submit → 303 → pending.
 
 On the next visit the user is prompted to agree and submit again, presumably screen A2. Is the
 `resetReason` shown on the page, or only in the email? [Q-11]
@@ -135,6 +141,11 @@ an action.
 ---
 
 ## D. Side-effect matrix (what the clone UI must fire)
+
+**Verified for our UI on 2026-10-05.** A live walkthrough through the bridge clicked each row below.
+Each fired exactly the listed request, and each got `200`/`303` from huggingface.co:
+`observations/2026-10-05-ui-walkthrough.md`, 13 writes. This proves *our* UI fires these requests; that
+*HF's own* UI fires the same ones is still TO RECORD (it needs a browser session on huggingface.co).
 
 | User action | Request | Then on screen |
 |---|---|---|

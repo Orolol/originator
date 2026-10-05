@@ -1,0 +1,870 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-owner-walkthrough-completion.json",
+  "recorded_at": "2026-10-05T14:19:25Z"
+ },
+ "records": [
+  {
+   "id": "m0-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:10.484Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-05T14:17:07.311Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "m0-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:10.609Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m0-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:10.713Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m0-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:10.817Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m0-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:10.921Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.\"}",
+   "body_json": {
+    "error": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors."
+   }
+  },
+  {
+   "id": "m0-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:11.021Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors."
+  },
+  {
+   "id": "m1-accept",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "accepted"
+   },
+   "request_encoding": "json",
+   "note": "pending -> accepted",
+   "sent_at": "2026-10-05T14:19:11.127Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "m1-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:13.239Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m1-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:13.346Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-05T14:17:07.311Z",
+     "reviewedAt": "2026-10-05T14:19:11.185Z",
+     "status": "accepted",
+     "grantedBy": {
+      "_id": "63ea055c74f940d171e52701",
+      "avatarUrl": "/avatars/321442c65614e6e52fb158f334e9bb1e.svg",
+      "isPro": true,
+      "fullname": "Gaetan Martin",
+      "user": "Orosius",
+      "type": "user"
+     }
+    }
+   ]
+  },
+  {
+   "id": "m1-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:13.449Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m1-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:13.555Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m1-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:13.661Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "OK"
+  },
+  {
+   "id": "m1-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:13.763Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''.gitattributes; filename=\".gitattributes\";"
+   },
+   "body_excerpt": "*.7z filter=lfs diff=lfs merge=lfs -text\n*.arrow filter=lfs diff=lfs merge=lfs -text\n*.bin filter=lfs diff=lfs merge=lfs -text\n*.bz2 filter=lfs diff=lfs merge=l"
+  },
+  {
+   "id": "m2-accept-again",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "accepted"
+   },
+   "request_encoding": "json",
+   "note": "Q-4 same-status (accepted)",
+   "sent_at": "2026-10-05T14:19:13.879Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No access request found matching your criteria",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"No access request found matching your criteria\"}",
+   "body_json": {
+    "error": "No access request found matching your criteria"
+   }
+  },
+  {
+   "id": "m3-cancel-by-userid",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+   "request_body": {
+    "userId": "6ac3a4b8792f9017b6cb67ec",
+    "status": "pending"
+   },
+   "request_encoding": "json",
+   "note": "accepted -> pending, addressed by userId (REV-5)",
+   "sent_at": "2026-10-05T14:19:13.992Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "m3-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:16.101Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-05T14:17:07.311Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "m3-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:16.208Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m3-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:16.311Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m3-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:16.421Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m3-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:16.525Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.\"}",
+   "body_json": {
+    "error": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors."
+   }
+  },
+  {
+   "id": "m3-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:16.635Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors."
+  },
+  {
+   "id": "m4-cancel-again",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "pending"
+   },
+   "request_encoding": "json",
+   "note": "Q-4 same-status (pending)",
+   "sent_at": "2026-10-05T14:19:16.761Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No access request found matching your criteria",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"No access request found matching your criteria\"}",
+   "body_json": {
+    "error": "No access request found matching your criteria"
+   }
+  },
+  {
+   "id": "m5-reject",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "rejected",
+    "rejectionReason": "Rejected by the originator bridge walkthrough (test)."
+   },
+   "request_encoding": "json",
+   "note": "pending -> rejected with reason",
+   "sent_at": "2026-10-05T14:19:16.871Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "m5-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:18.979Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m5-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:19.091Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m5-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:19.197Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-05T14:17:07.311Z",
+     "reviewedAt": "2026-10-05T14:19:16.930Z",
+     "status": "rejected"
+    }
+   ]
+  },
+  {
+   "id": "m5-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:19.301Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m5-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:19.405Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors.\"}",
+   "body_json": {
+    "error": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors."
+   }
+  },
+  {
+   "id": "m5-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:19.517Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors."
+  },
+  {
+   "id": "m6-reject-again",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "rejected"
+   },
+   "request_encoding": "json",
+   "note": "Q-4 same-status (rejected)",
+   "sent_at": "2026-10-05T14:19:19.619Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No access request found matching your criteria",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"No access request found matching your criteria\"}",
+   "body_json": {
+    "error": "No access request found matching your criteria"
+   }
+  },
+  {
+   "id": "m7-req-ask-after-reject",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/ask-access",
+   "request_body": {},
+   "request_encoding": "json",
+   "note": "Q-2 re-request after rejection",
+   "sent_at": "2026-10-05T14:19:19.729Z",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/Orosius/deltanet-mla-latent"
+  },
+  {
+   "id": "m7-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:21.850Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m7-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:21.977Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m7-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:22.087Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-05T14:17:07.311Z",
+     "reviewedAt": "2026-10-05T14:19:16.930Z",
+     "status": "rejected"
+    }
+   ]
+  },
+  {
+   "id": "m7-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:22.193Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m7-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:22.299Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors.\"}",
+   "body_json": {
+    "error": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors."
+   }
+  },
+  {
+   "id": "m7-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:22.402Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent has been rejected by the repo's authors."
+  },
+  {
+   "id": "m8-reset-from-rejected",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "reset",
+    "resetReason": "Reset by the originator bridge walkthrough (test)."
+   },
+   "request_encoding": "json",
+   "note": "Q-5 reset from rejected",
+   "sent_at": "2026-10-05T14:19:22.507Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "m8-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:24.619Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m8-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:24.748Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m8-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:24.859Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "m8-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:24.963Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-05T14:17:07.311Z",
+     "reviewedAt": "2026-10-05T14:19:22.565Z",
+     "status": "reset"
+    }
+   ]
+  },
+  {
+   "id": "m8-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:25.067Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent has been reset by the repo's authors. Visit https://huggingface.co/Orosius/deltanet-mla-latent to submit a new request.",
+    "content-type": "application/json; charset=utf-8"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model Orosius/deltanet-mla-latent has been reset by the repo's authors. Visit https://huggingface.co/Orosius/deltanet-mla-laten",
+   "body_json": {
+    "error": "Your request to access model Orosius/deltanet-mla-latent has been reset by the repo's authors. Visit https://huggingface.co/Orosius/deltanet-mla-latent to submit a new request."
+   }
+  },
+  {
+   "id": "m8-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-05T14:19:25.173Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent has been reset by the repo's authors. Visit https://huggingface.co/Orosius/deltanet-mla-latent to submit a new request.",
+    "content-type": "text/plain; charset=utf-8"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent has been reset by the repo's authors. Visit https://huggingface.co/Orosius/deltanet-mla-latent to submi"
+  }
+ ]
+}

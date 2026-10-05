@@ -111,8 +111,9 @@ client raises the wrong exception class:
 | anonymous | **401** | `GatedRepo` | `Access to model {id} is restricted. You must have access to it and be authenticated to access it. Please log in.` | [OBS] |
 | logged in, no request | **403** | `GatedRepo` | `Access to model {id} is restricted and you are not in the authorized list. Visit https://huggingface.co/{id} to ask for access.` | [OBS 2026-10-05: `auth-check`, `resolve` GET+HEAD] [CLIENT doc] |
 | logged in, `pending` | **403** | `GatedRepo` | `Your request to access model {id} is awaiting a review from the repo authors.` | [OBS 2026-10-05: `auth-check`, `resolve`] |
-| logged in, `rejected` | ? [Q-8] | ? | unknown via API. The web page says `Your request to access this repo has been rejected by the repo's authors.` | [DOC] [OBS-3P] |
-| logged in, `reset` | ? [Q-8] | ? | unknown | |
+| logged in, `rejected` | **403** | `GatedRepo` | `Your request to access model {id} has been rejected by the repo's authors.` (no reason). The web page text per docs is `Your request to access this repo has been rejected by the repo's authors.` | [OBS 2026-10-05] [DOC] |
+| logged in, `reset` | **403** | `GatedRepo` | `Your request to access model {id} has been reset by the repo's authors. Visit https://huggingface.co/{id} to submit a new request.` | [OBS 2026-10-05] |
+| logged in, `accepted` | **200** | none | `auth-check` body `OK`; files served | [OBS 2026-10-05] |
 
 For datasets the message says `dataset` instead of `model`, and the URL is `https://huggingface.co/datasets/{id}`. [OBS-3P]
 
@@ -130,16 +131,20 @@ For datasets the message says `dataset` instead of `model`, and the URL is `http
 | Situation | Status | Evidence |
 |---|---|---|
 | anonymous (any owner endpoint, gated or not, and the report) | 401, `Invalid username or password.`, no `X-Error-Code` | [OBS] |
-| repo not gated | 400 | [CLIENT doc] |
+| repo not gated | 400 per the client doc, **but** with stored requests the list endpoint answers `200` after `gated:false` (CFG-6) | [CLIENT doc] [OBS 2026-10-05] |
 | read-only token / no write role | 403 | [CLIENT doc] |
 | another user (write-role token, but no permission on this repo), list endpoint | 403, no `X-Error-Code`, `You have read access but not the required permissions for this operation` (JSON `{"error": …}`). "read access" refers to the user's permission on the repo, not the token role. | [OBS 2026-10-05] |
-| unknown user | 404 | [CLIENT doc] |
-| request not found | 404 | [CLIENT doc] |
-| request already in the target list | 404 per docstring; tests only assert "an HTTP error" | [CLIENT] [Q-4] |
-| grant to a user who already has access | 400 | [CLIENT doc + tests] |
-| `rejectionReason` / `resetReason` longer than 200, bad `status`, `limit` out of range | probably 400 (schema violation) | [SPEC] [Q-9] |
+| unknown user | `404 User not found` | [OBS 2026-10-05] |
+| request not found | `404 No access request found matching your criteria` | [OBS 2026-10-05] |
+| request already in the target list (`handle`) | `404 No access request found matching your criteria` (same as not found); `batch` answers `ok: true` instead | [OBS 2026-10-05] |
+| grant to a user who already has access | `400 That user already has access to the repo` | [OBS 2026-10-05] |
+| validation (zod-style message, no `X-Error-Code`) | `400`, e.g. `* Too big: expected string to have <=200 characters * at rejectionReason`, `* Invalid option: expected one of "accepted"\|"rejected"\|"pending"\|"reset" * at status`, `* Either userId or user must be provided, but not both`, `* Too small: expected number to be >=10 * at limit` | [OBS 2026-10-05] |
 
-The exact bodies and `X-Error-Message` strings for the owner-side errors still need to be recorded [Q-9].
+All owner-side errors observed carry the message in both `X-Error-Message` and JSON `{"error"}`, and
+**none** carries an `X-Error-Code`. Success bodies: `handle` → `{}`, `grant` → `{}`, settings → the sent
+`gated` field only (CFG-3, CFG-7), `batch` → per-item outcomes (REV-9). [OBS 2026-10-05] The
+`ask-access` 303 has a `text/plain` body `See Other. Redirecting to https://huggingface.co/{id}`.
+Evidence: `observations/2026-10-05-owner-walkthrough*.md`.
 
 ## 4. Client-side gotchas (for conformance drivers)
 

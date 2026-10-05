@@ -1,0 +1,310 @@
+[
+ {
+  "id": "m0-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m0-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m0-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m0-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m0-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m0-req-resolve",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m1-accept",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "accepted"
+  },
+  "note": "pending -> accepted"
+ },
+ {
+  "id": "m1-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 2
+ },
+ {
+  "id": "m1-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m1-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m1-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m1-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m1-req-resolve",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m2-accept-again",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "accepted"
+  },
+  "note": "Q-4 same-status (accepted)"
+ },
+ {
+  "id": "m3-cancel-by-userid",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "userId": "6ac3a4b8792f9017b6cb67ec",
+   "status": "pending"
+  },
+  "note": "accepted -> pending, addressed by userId (REV-5)"
+ },
+ {
+  "id": "m3-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 2
+ },
+ {
+  "id": "m3-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m3-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m3-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m3-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m3-req-resolve",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m4-cancel-again",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "pending"
+  },
+  "note": "Q-4 same-status (pending)"
+ },
+ {
+  "id": "m5-reject",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "rejected",
+   "rejectionReason": "Rejected by the originator bridge walkthrough (test)."
+  },
+  "note": "pending -> rejected with reason"
+ },
+ {
+  "id": "m5-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 2
+ },
+ {
+  "id": "m5-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m5-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m5-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m5-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m5-req-resolve",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m6-reject-again",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "rejected"
+  },
+  "note": "Q-4 same-status (rejected)"
+ },
+ {
+  "id": "m7-req-ask-after-reject",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/ask-access",
+  "auth": "REQUESTER",
+  "body": {},
+  "note": "Q-2 re-request after rejection"
+ },
+ {
+  "id": "m7-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 2
+ },
+ {
+  "id": "m7-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m7-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m7-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m7-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m7-req-resolve",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m8-reset-from-rejected",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "Reset by the originator bridge walkthrough (test)."
+  },
+  "note": "Q-5 reset from rejected"
+ },
+ {
+  "id": "m8-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 2
+ },
+ {
+  "id": "m8-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m8-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m8-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "m8-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "m8-req-resolve",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "auth": "REQUESTER"
+ }
+]
