@@ -68,6 +68,13 @@ host (a CDN) is left untouched. This is the only normalisation the bridge applie
 - Routes outside the table → `404`, `X-Error-Code: BridgeRouteNotAllowed`.
 - No retries and no redirect following; one upstream call per incoming call, so the log reflects
   exactly the requests fired.
+- Bridge-generated errors (as implemented) are JSON `{"error"}` with `X-Error-Message` and an
+  `X-Error-Code` starting with `Bridge…`: `BridgeRouteNotAllowed` (404), `BridgeRepoNotAllowed`
+  (403), `BridgePersonaNotConfigured` (503, so a missing token never silently becomes anonymous),
+  `BridgeUpstreamError` (502), `BridgeUpstreamTimeout` (504). Paths with `.`/`..` segments are
+  refused (404), and upstream cookies are never stored.
+- Responses are buffered, and HEAD responses carry only the kept headers (no `Content-Length` or
+  `X-Linked-*`). Widen the list before driving `hf_hub_download` through the bridge.
 
 ## Web app conventions
 

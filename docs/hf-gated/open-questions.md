@@ -93,7 +93,10 @@ selection; refresh behaviour after an action. Status: open.
 
 ### Q-14 (P1): access report format
 JSON (as the docs say) or CSV? Filename (`Content-Disposition`)? Does it include `fields` and `reset`
-entries? Ordering? Status: open.
+entries? Ordering?
+Partial (2026-10-05) [OBS]: JSON, `attachment; filename=user-access-report-{ns}-{name}.json`;
+pending entry keys `fullname, user, email, time, status`. Status: open for `fields`,
+`reviewedAt` on reviewed entries, `reset` entries, and ordering.
 
 ### Q-15 (P1): stored answer encoding
 How answers are stored in `fields`: checkbox (`"on"`? `"true"`?), select (value or label?), date

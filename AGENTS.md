@@ -42,20 +42,21 @@ Global machine rules (`~/AGENTS.md`) still apply; this file wins where they over
 
 ## Stack and layout
 
-Python for the clone and the bridge, Next.js for the front end. Only `docs/` and `harness/kb/`
-exist so far; the rest is the **planned** layout. Update this section when it lands.
+Python for the clone and the bridge, Next.js for the front end. Rows marked (planned) do not
+exist yet. Update this section when they land.
 
 | Path | What |
 |---|---|
 | `docs/` | Knowledge base. Start at [docs/README.md](docs/README.md) |
 | `docs/method.md` | Target-agnostic replication method (the reusable part of the harness) |
 | `docs/hf-gated/` | Target KB: spec, wire protocol, UI, open questions, sources, observations |
-| `harness/kb/` | KB tooling: `probe.py` (scripted read-only probes), `extract_openapi.py` (vendor-spec extract), `probes/*.json` (cases) |
+| `harness/kb/` | KB tooling: `probe.py` (scripted probes; read-only unless `--allow-writes`), `extract_openapi.py` (vendor-spec extract), `probes/*.json` (cases) |
+| `bridge/` | Python (uv, FastAPI, httpx): HF-compatible proxy with personas, route/repo allowlists, exchange log. See `bridge/README.md` |
 | `clone/` (planned) | Python (uv, FastAPI proposed): in-memory HF-compatible backend for the slice |
-| `bridge/` (planned) | Python: the same HTTP surface, forwarding to huggingface.co with the acting user's token |
 | `web/` (planned) | Next.js (App Router, TypeScript): requester gate box and owner settings/review screens; talks to `BACKEND_URL` (bridge or clone) |
 | `conformance/` (planned) | Scenario scripts run against both backends: API level (pytest + `huggingface_hub`) and UI level (Playwright) |
-| `harness/` (planned additions) | agent prompts and definitions, recorders, diff tooling |
+| `harness/agents/` | Subagent prompts actually used, verbatim, with the shared patterns |
+| `harness/` (planned additions) | recorders, diff tooling |
 
 ### Design decisions (from the KB)
 
@@ -86,7 +87,25 @@ exist so far; the rest is the **planned** layout. Update this section when it la
 
 ## Commands
 
-No app commands yet. Add each one here as soon as it exists (fish-compatible, one per line).
+Add each command here as soon as it exists (fish-compatible, one per block). Run from the repo root.
+
+Bridge (port 8100; needs `.env` tokens):
+
+```bash
+uv run --project bridge bridge
+```
+
+```bash
+uv run --project bridge pytest bridge/tests
+```
+
+```bash
+uv run --project bridge pytest bridge/tests -m live
+```
+
+The last one is GET/HEAD only, against the real Hub.
+
+KB probes:
 
 ```bash
 python3 harness/kb/probe.py harness/kb/probes/hf-gated-anonymous.json --out-json docs/hf-gated/observations/<date>-anonymous-probes.json --out-md docs/hf-gated/observations/<date>-anonymous-probes.md

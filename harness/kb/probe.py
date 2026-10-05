@@ -36,7 +36,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-KEPT_HEADERS = ("x-error-code", "x-error-message", "content-type", "location", "link", "www-authenticate")
+KEPT_HEADERS = (
+    "x-error-code", "x-error-message", "content-type", "content-disposition", "location", "link", "www-authenticate"
+)
 MAX_STRING = 200
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 

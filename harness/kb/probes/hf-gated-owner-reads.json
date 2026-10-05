@@ -1,0 +1,10 @@
+[
+  {"id": "owner-list-pending", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/user-access-request/pending", "note": "requester pending since 2026-10-05"},
+  {"id": "owner-list-accepted", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted"},
+  {"id": "owner-list-rejected", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected"},
+  {"id": "owner-list-reset", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/user-access-request/reset"},
+  {"id": "owner-report", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/user-access-report", "note": "Q-14 format"},
+  {"id": "owner-auth-check", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/auth-check", "note": "owner bypasses (ACC-1)"},
+  {"id": "owner-get-settings", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/settings", "note": "no GET settings (CFG-3)"},
+  {"id": "owner-resolve", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes", "note": "owner downloads gated file"}
+]

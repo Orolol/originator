@@ -1,0 +1,30 @@
+[project]
+name = "bridge"
+version = "0.1.0"
+description = "Thin HTTP proxy between the web UI and the real Hugging Face Hub (gated-models slice)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "httpx",
+]
+
+[project.scripts]
+bridge = "bridge.main:run"
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Live tests hit the real Hub (GET/HEAD only); opt in with `-m live`.
+addopts = "-m 'not live'"
+markers = [
+    "live: read-only smoke tests against the real huggingface.co (needs .env tokens)",
+]

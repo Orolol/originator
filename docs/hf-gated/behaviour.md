@@ -190,8 +190,11 @@ Real emails cannot be reproduced. The clone records them in an inspectable **out
 
 - **REP-1** `GET /{id}/user-access-report` downloads every request in every status. Each entry has
   `user`, `fullname`, `status`, `email`, `time` (initial request) and `reviewedAt` (unset when pending). [DOC]
-  The response carries a `Content-Disposition` filename. [SPEC] The format (the docs say JSON;
-  the spec says the body is a string), the filename, and whether `fields` are included are [Q-14].
+  The response carries a `Content-Disposition` filename. [SPEC] Observed for the owner [OBS 2026-10-05,
+  `observations/2026-10-05-owner-reads.md`]: `200`, `Content-Type: application/json` (no charset),
+  `Content-Disposition: attachment; filename=user-access-report-{ns}-{name}.json`. The body is a JSON
+  array; a pending entry is `{"fullname", "user", "email", "time", "status"}` in that order, with no
+  `reviewedAt`. Whether `fields` and reviewed entries' keys appear is [Q-14].
 - **REP-2** Anonymous → 401 "Invalid username or password." [OBS]
 
 ## 9. Out of this spec
