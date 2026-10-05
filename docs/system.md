@@ -46,6 +46,8 @@ example `expand[]=gated`).
 | POST | `/{repo}/ask-access` | requester submits the gate form → `303` to the repo page |
 | GET | `/{repo}/user-access-report` | report download |
 | GET, HEAD | `/{repo}/resolve/{rev}/{path}` | file download (gate applies) |
+| GET | `/{repo}/raw/{rev}/{path}` | raw file, gate without allowlist (ACC-10) |
+| GET | `/{repo}/blob/{rev}/{path}` | file page (HTML), gated like `raw` (ACC-5); the clone renders a minimal page |
 
 Responses keep HF's status codes, bodies and these headers: `Content-Type`, `Content-Disposition`,
 `X-Error-Code`, `X-Error-Message`, `WWW-Authenticate`, `Link`, `Location`, `X-Total-Count`,
@@ -136,7 +138,7 @@ default seed.
 | PUT | `/__clone__/state` | replace the whole state with a seed document; clears log and outbox |
 | GET / POST | `/__clone__/clock` | read; or set `{"now": iso}` / `{"advance_ms": n}` |
 | GET / DELETE | `/__clone__/outbox` | e-mails HF would send (see below) |
-| GET / DELETE | `/__clone__/log` | exchange log, **same entry schema as `/__bridge__/log`** (`id, started_at, duration_ms, persona, method, path, query, request_body, status, response_headers, response_body, upstream`), with `started_at` from the virtual clock and `duration_ms` = 0, so `harness/kb/bridge_log_to_md.py` and diffs work on both backends |
+| GET / DELETE | `/__clone__/log` | exchange log, **same entry schema and key order as `/__bridge__/log`** (as the bridge emits it: `id, started_at, duration_ms, persona, method, path, query, upstream, request_body, status, response_headers, response_body`), with `started_at` from the virtual clock and `duration_ms` = 0, so `harness/kb/bridge_log_to_md.py` and diffs work on both backends |
 
 Outbox entry: `{"id", "at", "to": <email>, "kind", "repo", "user", "reason"?}`, where `kind` is one of
 `"new_request"` (to the notification recipient, manual mode only: `gatedNotificationsEmail`, else the
@@ -173,13 +175,19 @@ behaviour.md §7 are emitted. Whether HF also e-mails on accept/reject is unknow
   ],
   "requests": [
     {"repo": "Orosius/deltanet-mla-latent", "user": "TestingBOrig", "status": "pending",
-     "timestamp": "2026-10-05T14:20:42.885Z", "reviewedAt": null, "grantedBy": null,
+     "timestamp": "2026-10-05T14:20:42.886Z", "reviewedAt": null, "grantedBy": null,
      "fields": null, "emailShared": true}
   ]
 }
 ```
 
 `emailShared: false` marks an entry created by **grant**, which the lists show without `email` (REQ-5).
+
+Fields the clone added while implementing (part of the format, documented after the fact):
+- `users[].whoami`: extra `whoami-v2` fields served verbatim (`emailVerified`, `canPay`, `auth`, …).
+- `repos[].dirs`: recorded tree entries for directories (`oid`), since directories carry no file.
+- `files[path].lfs`: an object `{"oid": <sha256>, "size", "pointerSize"}` (not a boolean) for LFS files.
+- `files[path].xetHash`: the xet hash, masked by ACC-9 for callers without access.
 Built-in seeds:
 - **`sandbox`** (the default): the real sandbox repo as recorded in
   `hf-gated/observations/2026-10-05-clone-seed-reads.json` (model info, tree, small file contents),

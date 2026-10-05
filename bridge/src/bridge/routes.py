@@ -34,6 +34,8 @@ ROUTES = [
     _route("POST", rf"/{_WEB_REPO}/ask-access"),
     _route("GET", rf"/{_WEB_REPO}/user-access-report"),
     _route("GET HEAD", rf"/{_WEB_REPO}/resolve/[^/]+/.+"),
+    _route("GET", rf"/{_WEB_REPO}/raw/[^/]+/.+"),  # ACC-10
+    _route("GET", rf"/{_WEB_REPO}/blob/[^/]+/.+"),  # ACC-5 (HTML page)
 ]
 
 

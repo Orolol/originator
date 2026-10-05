@@ -1,0 +1,8 @@
+[
+  {"id": "tree-subdir-anon", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842", "note": "anonymous: LFS hashes masked?"},
+  {"id": "tree-subdir-owner", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842", "note": "owner (has access): masked?"},
+  {"id": "tree-subdir-requester", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842", "note": "requester (pending, no access): masked?"},
+  {"id": "raw-readme-owner", "auth": "HF_OWNER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/raw/main/README.md", "note": "/raw/ with access", "keep_text": true},
+  {"id": "raw-readme-requester", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/raw/main/README.md", "note": "/raw/ pending requester"},
+  {"id": "raw-readme-anon", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/raw/main/README.md", "note": "/raw/ anonymous"}
+]

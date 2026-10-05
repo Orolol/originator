@@ -35,7 +35,10 @@ def error_response(status: int, message: str, code: str | None = None) -> Respon
         headers["X-Error-Code"] = code
     if status == 401:
         headers["WWW-Authenticate"] = WWW_AUTHENTICATE
-    return JSONResponse({"error": message}, status_code=status, headers=headers)
+    # HF sends its JSON errors as `application/json; charset=utf-8` [OBS whoami-bad-token].
+    return JSONResponse(
+        {"error": message}, status_code=status, headers=headers, media_type="application/json; charset=utf-8"
+    )
 
 
 def create_app(settings: Settings, transport: httpx.AsyncBaseTransport | None = None) -> FastAPI:

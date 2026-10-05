@@ -106,6 +106,13 @@ The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [O
   the revision or file is resolved. An unknown branch or file in a gated repo returns the gate error,
   not 404. An allowlisted path that does not exist returns `404 EntryNotFound`. [OBS]
 - **ACC-7** With `gated == false`, the repo behaves like any public repo. [DOC]
+- **ACC-9** The tree listing (`GET /api/models/{id}/tree/{rev}/…`) is public (ACC-4), but for LFS
+  files the `xetHash` and `lfs.oid` (sha256) are **masked as 64 `*`** for callers without access
+  (anonymous, pending requester) and **shown** to callers with access (owner). The git `oid` and
+  sizes are never masked. [OBS 2026-10-05, `observations/2026-10-05-tree-masking.md`]
+- **ACC-10** `/raw/{rev}/{path}` applies the same gate and the same per-state messages as `resolve`
+  (401 anonymous, 403 for pending), **without** the ACC-5 allowlist. With access it serves the file,
+  e.g. `README.md` as text. [OBS 2026-10-05, tree-masking and anonymous probes]
 - **ACC-8** The owner can revoke access at any time without notice, in either approval mode. [DOC]
 
 ## 4. Requester transitions

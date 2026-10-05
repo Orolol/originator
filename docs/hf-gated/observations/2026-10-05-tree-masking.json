@@ -1,0 +1,286 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-tree-masking.json",
+  "recorded_at": "2026-10-05T15:08:01Z"
+ },
+ "records": [
+  {
+   "id": "tree-subdir-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "anonymous: LFS hashes masked?",
+   "sent_at": "2026-10-05T15:08:00.516Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"509-0MZOW2PA/gZ6X65pv8AnZesheI4\"",
+    "content-length": "1289"
+   },
+   "body_excerpt": "[{\"type\":\"file\",\"oid\":\"0a7ba649036761f60fc6500b85716c498875e5a2\",\"size\":1541,\"path\":\"checkpoint_tokens_20M_loss_4.9842/README.md\"},{\"type\":\"file\",\"oid\":\"61ec78e",
+   "body_json": [
+    {
+     "type": "file",
+     "oid": "0a7ba649036761f60fc6500b85716c498875e5a2",
+     "size": 1541,
+     "path": "checkpoint_tokens_20M_loss_4.9842/README.md"
+    },
+    {
+     "type": "file",
+     "oid": "61ec78e813565cb8cdc4760c3de24819a0884001",
+     "size": 1576,
+     "path": "checkpoint_tokens_20M_loss_4.9842/config.json"
+    },
+    {
+     "type": "file",
+     "oid": "226b0752cac7789c48f0cb3ec53eda48b7be36cc",
+     "size": 456318,
+     "path": "checkpoint_tokens_20M_loss_4.9842/merges.txt"
+    },
+    {
+     "type": "file",
+     "oid": "05cfb29bfc3d15db751bd707b6cf23a8ea47b933",
+     "size": 3381162243,
+     "lfs": {
+      "oid": "****************************************************************",
+      "size": 3381162243,
+      "pointerSize": 135
+     },
+     "xetHash": "****************************************************************",
+     "path": "checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin"
+    },
+    {
+     "type": "file",
+     "oid": "7433646544cc332d7eb43c85199b5ce98e2cc0ed",
+     "size": 131,
+     "path": "checkpoint_tokens_20M_loss_4.9842/special_tokens_map.json"
+    },
+    {
+     "type": "file",
+     "oid": "d469fce8cf3cdfde529baad7b2528afa4205aabf",
+     "size": 3557680,
+     "path": "checkpoint_tokens_20M_loss_4.9842/tokenizer.json"
+    },
+    {
+     "type": "file",
+     "oid": "1eb0c395616e29ebddd0b13f6ace394ce5223e84",
+     "size": 507,
+     "path": "checkpoint_tokens_20M_loss_4.9842/tokenizer_config.json"
+    },
+    {
+     "type": "file",
+     "oid": "84ef7fb594b5c0979e48bdeddb60a0adef33df0b",
+     "size": 798156,
+     "path": "checkpoint_tokens_20M_loss_4.9842/vocab.json"
+    }
+   ]
+  },
+  {
+   "id": "tree-subdir-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner (has access): masked?",
+   "sent_at": "2026-10-05T15:08:00.662Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"509-6ZOYw+/huenFMxbINbNDqIclBdk\"",
+    "content-length": "1289"
+   },
+   "body_excerpt": "[{\"type\":\"file\",\"oid\":\"0a7ba649036761f60fc6500b85716c498875e5a2\",\"size\":1541,\"path\":\"checkpoint_tokens_20M_loss_4.9842/README.md\"},{\"type\":\"file\",\"oid\":\"61ec78e",
+   "body_json": [
+    {
+     "type": "file",
+     "oid": "0a7ba649036761f60fc6500b85716c498875e5a2",
+     "size": 1541,
+     "path": "checkpoint_tokens_20M_loss_4.9842/README.md"
+    },
+    {
+     "type": "file",
+     "oid": "61ec78e813565cb8cdc4760c3de24819a0884001",
+     "size": 1576,
+     "path": "checkpoint_tokens_20M_loss_4.9842/config.json"
+    },
+    {
+     "type": "file",
+     "oid": "226b0752cac7789c48f0cb3ec53eda48b7be36cc",
+     "size": 456318,
+     "path": "checkpoint_tokens_20M_loss_4.9842/merges.txt"
+    },
+    {
+     "type": "file",
+     "oid": "05cfb29bfc3d15db751bd707b6cf23a8ea47b933",
+     "size": 3381162243,
+     "lfs": {
+      "oid": "010167c241decb1ebc90d041ecfb0ddd4d9dd6931a7c96a7b84262919a9cdd8d",
+      "size": 3381162243,
+      "pointerSize": 135
+     },
+     "xetHash": "0c6167a268354949eabb7862cdefe9b5759bdb481e9c523a24b36daf5e474f3e",
+     "path": "checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin"
+    },
+    {
+     "type": "file",
+     "oid": "7433646544cc332d7eb43c85199b5ce98e2cc0ed",
+     "size": 131,
+     "path": "checkpoint_tokens_20M_loss_4.9842/special_tokens_map.json"
+    },
+    {
+     "type": "file",
+     "oid": "d469fce8cf3cdfde529baad7b2528afa4205aabf",
+     "size": 3557680,
+     "path": "checkpoint_tokens_20M_loss_4.9842/tokenizer.json"
+    },
+    {
+     "type": "file",
+     "oid": "1eb0c395616e29ebddd0b13f6ace394ce5223e84",
+     "size": 507,
+     "path": "checkpoint_tokens_20M_loss_4.9842/tokenizer_config.json"
+    },
+    {
+     "type": "file",
+     "oid": "84ef7fb594b5c0979e48bdeddb60a0adef33df0b",
+     "size": 798156,
+     "path": "checkpoint_tokens_20M_loss_4.9842/vocab.json"
+    }
+   ]
+  },
+  {
+   "id": "tree-subdir-requester",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "requester (pending, no access): masked?",
+   "sent_at": "2026-10-05T15:08:00.785Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"509-0MZOW2PA/gZ6X65pv8AnZesheI4\"",
+    "content-length": "1289"
+   },
+   "body_excerpt": "[{\"type\":\"file\",\"oid\":\"0a7ba649036761f60fc6500b85716c498875e5a2\",\"size\":1541,\"path\":\"checkpoint_tokens_20M_loss_4.9842/README.md\"},{\"type\":\"file\",\"oid\":\"61ec78e",
+   "body_json": [
+    {
+     "type": "file",
+     "oid": "0a7ba649036761f60fc6500b85716c498875e5a2",
+     "size": 1541,
+     "path": "checkpoint_tokens_20M_loss_4.9842/README.md"
+    },
+    {
+     "type": "file",
+     "oid": "61ec78e813565cb8cdc4760c3de24819a0884001",
+     "size": 1576,
+     "path": "checkpoint_tokens_20M_loss_4.9842/config.json"
+    },
+    {
+     "type": "file",
+     "oid": "226b0752cac7789c48f0cb3ec53eda48b7be36cc",
+     "size": 456318,
+     "path": "checkpoint_tokens_20M_loss_4.9842/merges.txt"
+    },
+    {
+     "type": "file",
+     "oid": "05cfb29bfc3d15db751bd707b6cf23a8ea47b933",
+     "size": 3381162243,
+     "lfs": {
+      "oid": "****************************************************************",
+      "size": 3381162243,
+      "pointerSize": 135
+     },
+     "xetHash": "****************************************************************",
+     "path": "checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin"
+    },
+    {
+     "type": "file",
+     "oid": "7433646544cc332d7eb43c85199b5ce98e2cc0ed",
+     "size": 131,
+     "path": "checkpoint_tokens_20M_loss_4.9842/special_tokens_map.json"
+    },
+    {
+     "type": "file",
+     "oid": "d469fce8cf3cdfde529baad7b2528afa4205aabf",
+     "size": 3557680,
+     "path": "checkpoint_tokens_20M_loss_4.9842/tokenizer.json"
+    },
+    {
+     "type": "file",
+     "oid": "1eb0c395616e29ebddd0b13f6ace394ce5223e84",
+     "size": 507,
+     "path": "checkpoint_tokens_20M_loss_4.9842/tokenizer_config.json"
+    },
+    {
+     "type": "file",
+     "oid": "84ef7fb594b5c0979e48bdeddb60a0adef33df0b",
+     "size": 798156,
+     "path": "checkpoint_tokens_20M_loss_4.9842/vocab.json"
+    }
+   ]
+  },
+  {
+   "id": "raw-readme-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/raw/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/raw/ with access",
+   "sent_at": "2026-10-05T15:08:00.907Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''README.md; filename=\"README.md\";",
+    "etag": "\"7be5fc7f47d5db027d120b8024982df93db95b74\"",
+    "x-repo-commit": "6f1dade6f974de81ce21aa14b87add2e0217b05e",
+    "content-length": "24"
+   },
+   "body_excerpt": "---\r\nlicense: mit\r\n---\r\n",
+   "body_text": "---\r\nlicense: mit\r\n---\r\n"
+  },
+  {
+   "id": "raw-readme-requester",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/raw/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/raw/ pending requester",
+   "sent_at": "2026-10-05T15:08:01.031Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"64-Q5erU3IQZWlAEXL3mpBVWeHQkj0\"",
+    "content-length": "100"
+   },
+   "body_excerpt": "Your request to access model Orosius/deltanet-mla-latent is awaiting a review from the repo authors."
+  },
+  {
+   "id": "raw-readme-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/Orosius/deltanet-mla-latent/raw/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/raw/ anonymous",
+   "sent_at": "2026-10-05T15:08:01.145Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model Orosius/deltanet-mla-latent is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\"",
+    "etag": "W/\"87-jWc/Wzp7V7cqVIV3o7xEScQblio\"",
+    "content-length": "135"
+   },
+   "body_excerpt": "Access to model Orosius/deltanet-mla-latent is restricted. You must have access to it and be authenticated to access it. Please log in."
+  }
+ ]
+}

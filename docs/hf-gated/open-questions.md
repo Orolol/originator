@@ -236,7 +236,7 @@ tests, and this table.
 | Q-9 | No "repo not gated" 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work). Check order: validation → unknown user → request lookup. A reason sent with another status is ignored. Unrecorded zod wordings are guessed (`gated`, email, datetime, batch item refinement). An empty body is treated as `{}`. |
 | Q-10 | Lists sorted by `timestamp` ascending, then insertion order. `after`/`before` filter on `timestamp` (exclusive). The `Link` next URL uses `after` = the last timestamp of the page. An auto-accept sets `reviewedAt` = `timestamp`, with no `grantedBy`. |
 | Q-13 / Q-15 / Q-16 | `fields` sits right after `user` in list items. Only the card's labels are stored. Non-string JSON values are stored as JSON text. No field is required. |
-| Q-14 | The report lists every status in list order, adds `reviewedAt` last, and has no email for granted users. |
+| Q-14 | The report is one sequence of every request, all statuses mixed, sorted like the lists (Q-10: `timestamp` ascending, then insertion order). It adds `reviewedAt` as the last key when set and has no `email` for granted users. |
 | Q-21 | `q` = case-insensitive substring on username, fullname and the shared email. |
 | Q-24 | An owner may `ask-access` on their own repo like anyone. |
 | Q-25 | quicksearch → `{"users": [{_id, avatarUrl, fullname, user}]}`, username or fullname prefix, seed order. `type` other than `user` → 400. |

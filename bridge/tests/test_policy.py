@@ -31,6 +31,8 @@ ALLOWED = [
     ("HEAD", f"/{R}/resolve/main/README.md"),
     ("GET", f"/{R}/resolve/main/sub/dir/weights.bin"),
     ("GET", f"/{R}/resolve/refs%2Fpr%2F1/README.md"),
+    ("GET", f"/{R}/raw/main/README.md"),  # ACC-10
+    ("GET", f"/{R}/blob/main/config.json"),
 ]
 
 
@@ -60,7 +62,8 @@ def test_allowed_routes_are_forwarded_unchanged(bridge, method, target):
         ("GET", f"/{R}/ask-access"),
         ("POST", f"/{R}/resolve/main/README.md"),
         ("GET", f"/{R}/resolve/main"),
-        ("GET", f"/{R}/raw/main/README.md"),
+        ("POST", f"/{R}/raw/main/README.md"),
+        ("PUT", f"/{R}/blob/main/config.json"),
         ("GET", "/api/models"),
         ("GET", "/api/whoami-v2/extra"),
         ("POST", "/api/whoami-v2"),
@@ -147,6 +150,7 @@ def test_unknown_authorization_is_401_without_upstream_call(bridge, authorizatio
     assert response.json() == {"error": message}
     assert response.headers["x-error-message"] == message
     assert response.headers["www-authenticate"] == 'Bearer realm="Authentication required", charset="UTF-8"'
+    assert response.headers["content-type"] == "application/json; charset=utf-8"
     assert upstream.requests == []
     (entry,) = client.get("/__bridge__/log").json()
     assert (entry["persona"], entry["upstream"], entry["status"]) == ("invalid", False, 401)
