@@ -15,6 +15,7 @@ from .config import Settings
 from .exchange_log import ExchangeLog, summarize_request_body, summarize_response_body, utc_now_iso
 from .proxy import (
     INVALID_CREDENTIALS,
+    WWW_AUTHENTICATE,
     REQUEST_HEADERS,
     RESPONSE_HEADERS,
     USER_AGENT,
@@ -32,6 +33,8 @@ def error_response(status: int, message: str, code: str | None = None) -> Respon
     headers = {"X-Error-Message": message}
     if code:
         headers["X-Error-Code"] = code
+    if status == 401:
+        headers["WWW-Authenticate"] = WWW_AUTHENTICATE
     return JSONResponse({"error": message}, status_code=status, headers=headers)
 
 

@@ -27,7 +27,10 @@ REQUEST_HEADERS = ("content-type", "accept")
 # docs/system.md "Personas": fake token sent by the web app -> persona.
 FAKE_TOKENS = {"persona-owner": "owner", "persona-requester": "requester"}
 
-INVALID_CREDENTIALS = "Invalid credentials in Authorization header"
+# HF's own answer to an invalid token (same as anonymous on protected routes) [OBS 2026-10-05,
+# docs/hf-gated/observations/2026-10-05-clone-seed-reads.md whoami-bad-token].
+INVALID_CREDENTIALS = "Invalid username or password."
+WWW_AUTHENTICATE = 'Bearer realm="Authentication required", charset="UTF-8"'
 
 
 def identify_persona(authorization: str | None) -> str | None:

@@ -142,14 +142,18 @@ def test_persona_token_mapping(bridge, authorization, expected_upstream_authoriz
 def test_unknown_authorization_is_401_without_upstream_call(bridge, authorization):
     client, upstream = bridge
     response = client.get("/api/whoami-v2", headers={"Authorization": authorization})
-    message = "Invalid credentials in Authorization header"
+    message = "Invalid username or password."  # HF's wording for an invalid token [OBS]
     assert response.status_code == 401
     assert response.json() == {"error": message}
     assert response.headers["x-error-message"] == message
+    assert response.headers["www-authenticate"] == 'Bearer realm="Authentication required", charset="UTF-8"'
     assert upstream.requests == []
     (entry,) = client.get("/__bridge__/log").json()
     assert (entry["persona"], entry["upstream"], entry["status"]) == ("invalid", False, 401)
-    assert authorization.strip() == "" or authorization not in json.dumps(entry)
+    # The credential must not be logged anywhere; the logged WWW-Authenticate response header
+    # legitimately contains "Bearer", so it is excluded from the search.
+    logged = json.dumps({k: v for k, v in entry.items() if k != "response_headers"})
+    assert authorization.strip() == "" or authorization not in logged
 
 
 def test_unconfigured_persona_fails_instead_of_going_anonymous(make_bridge):
