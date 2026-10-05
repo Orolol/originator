@@ -177,19 +177,6 @@ change? This affects the bridge-vs-clone diff tolerance. Status: open.
 Can a repo owner `ask-access` on their own repo, or appear in the lists? In the list schema `user` is
 not required: what does an entry for a deleted account look like? Status: open.
 
-### Q-26 (P1): requests that disappeared
-On 2026-10-05, `TestingBOrig`'s pending request vanished **twice**, with no write through the bridge:
-- between 14:11:34Z (still pending) and 14:13:32Z;
-- again between 14:13:35Z (re-created through our UI) and 14:16:49Z.
-It vanished from every list, not just moved, and the requester's `auth-check` went back to "not in
-the authorized list". During the scripted walkthrough (14:16:59–14:19:25Z) and the UI walkthrough, the
-request was stable. Candidate explanations:
-- an action on huggingface.co outside the bridge (owner UI or requester UI);
-- a requester self-cancel (Q-3);
-- an automatic HF behaviour.
-Evidence: `harness/recordings/raw/bridge.jsonl` (local, gitignored) and the s0 steps of the walkthrough
-fixture. Status: open. Ask the account owner what was done on huggingface.co at those times.
-
 ### Q-25 (P1): user search for "Add access"
 `GET /api/quicksearch?q=<username>&type=user` returns `users: []` for token callers (owner token,
 queries `Orosius`, `TestingBOrig`, `julien-c`); models are returned, and `type=users` is a validation
@@ -232,3 +219,25 @@ and strike the line.
 | 24 | Q-11 / Q-19 | Rejected (A5): show the docs' page text `Your request to access this repo has been rejected by the repo's authors.`; no reason (not exposed by the API). |
 | 25 | Q-11 | Reset (A6): show the consent form again, with no reset notice. |
 | 23 | (none) | Settings control order follows the doc screenshots: `New requests` select, `Review access requests (N)`, `Download user access report`, `Add access` on one row; notifications on the next row. The Disable/Enable button sits under the text, not at the top right. |
+
+## Provisional choices in the clone (2026-10-05)
+
+Recorded from the clone builder's report (`harness/agents/runs/2026-10-05-clone-builder.md`), marked
+`Provisional (Q-n)` in `clone/src`. When one is recorded on the real Hub, update the clone, its
+tests, and this table.
+
+| Q | Choice |
+|---|---|
+| Q-1 / REQ-1 | Anonymous `ask-access` → 401 `Invalid username or password.` with an HTML body. |
+| Q-2 | Re-submit while accepted → no-op; re-submit while pending keeps `timestamp` and `fields`; `ask-access` on a non-gated repo → no-op 303; after reset, the new submission's `fields` replace the old ones. |
+| Q-3 | Requester self-cancel deletes the caller's request whatever its status, answering `{}`; with no request → the handle 404. |
+| Q-5 | pending→reset and every move out of `reset` are allowed (uniform rule: any change is OK, same status → 404). |
+| Q-6 | Granting a rejected or reset user accepts them like a pending one; self-grant → 400 "already has access" (ACC-1). |
+| Q-9 | No "repo not gated" 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work). Check order: validation → unknown user → request lookup. A reason sent with another status is ignored. Unrecorded zod wordings are guessed (`gated`, email, datetime, batch item refinement). An empty body is treated as `{}`. |
+| Q-10 | Lists sorted by `timestamp` ascending, then insertion order. `after`/`before` filter on `timestamp` (exclusive). The `Link` next URL uses `after` = the last timestamp of the page. An auto-accept sets `reviewedAt` = `timestamp`, with no `grantedBy`. |
+| Q-13 / Q-15 / Q-16 | `fields` sits right after `user` in list items. Only the card's labels are stored. Non-string JSON values are stored as JSON text. No field is required. |
+| Q-14 | The report lists every status in list order, adds `reviewedAt` last, and has no email for granted users. |
+| Q-21 | `q` = case-insensitive substring on username, fullname and the shared email. |
+| Q-24 | An owner may `ask-access` on their own repo like anyone. |
+| Q-25 | quicksearch → `{"users": [{_id, avatarUrl, fullname, user}]}`, username or fullname prefix, seed order. `type` other than `user` → 400. |
+| (none) | A logged-in caller on an unknown repo → 404 RepoNotFound on resolve, auth-check and ask-access. A private repo looks missing to non-owners. `RevisionNotFound` "Revision not found" (revisions: `main`, head sha). Unknown tree path → 404 EntryNotFound. LFS → 302 to the clone's `/api/resolve-cache/…` with `X-Linked-Size`/`X-Linked-Etag`, and no xet `Link`. `resolve-cache` applies the gate. No ETag on a 307. Unknown `expand[]` names are skipped. The settings echo returns only `gated`/`private`/`visibility`. |
