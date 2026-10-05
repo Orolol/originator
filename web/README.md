@@ -43,3 +43,15 @@ state. It uses the system Chrome (`PLAYWRIGHT_CHANNEL=chrome` by default).
 | `src/lib/hubClient.ts` | browser-side requests fired by the owner controls |
 
 Provisional choices are marked `// Provisional (Q-n)` in the code.
+
+## Scripted walkthrough against the clone
+
+```bash
+npm --prefix web run test:e2e:clone
+```
+
+`playwright.clone.config.ts` starts the clone on `127.0.0.1:8201` and a production build on `:3101`
+(`BACKEND_URL` must be a `127.0.0.1:82xx` clone; the guard refuses anything else). The test replays the
+journey of the live UI walkthrough using role/label selectors only, then diffs the clone's request log
+against the live recording (`harness/kb/compare_logs.py`); the report is `e2e/out/clone-vs-live.md`.
+Writes happen here because the clone is local. The default `playwright.config.ts` ignores this spec.

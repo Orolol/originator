@@ -45,3 +45,5 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+# clone walkthrough output (log export, clone-vs-live diff)
+e2e/out/

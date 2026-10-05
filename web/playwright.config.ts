@@ -6,6 +6,8 @@ const PORT = Number(process.env.E2E_PORT ?? 3100);
 
 export default defineConfig({
   testDir: "e2e",
+  // The clone walkthrough writes: it has its own config (playwright.clone.config.ts) and must never run here.
+  testIgnore: "**/clone-*.spec.ts",
   // One worker: the live Hub is shared state and rate-limited.
   workers: 1,
   timeout: 60_000,

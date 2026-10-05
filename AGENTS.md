@@ -50,11 +50,12 @@ exist yet. Update this section when they land.
 | `docs/` | Knowledge base. Start at [docs/README.md](docs/README.md) |
 | `docs/method.md` | Target-agnostic replication method (the reusable part of the harness) |
 | `docs/hf-gated/` | Target KB: spec, wire protocol, UI, open questions, sources, observations |
-| `harness/kb/` | KB tooling: `probe.py` (scripted probes; read-only unless `--allow-writes`), `extract_openapi.py` (vendor-spec extract), `probes/*.json` (cases) |
+| `harness/kb/` | KB tooling: `probe.py` (scripted probes; read-only unless `--allow-writes`), `extract_openapi.py` (vendor-spec extract), `bridge_log_to_md.py` (export a bridge/clone log), `compare_logs.py` (diff two logs: ordered writes, multiset of reads), `probes/*.json` (cases) |
 | `bridge/` | Python (uv, FastAPI, httpx): HF-compatible proxy with personas, route/repo allowlists, exchange log. See `bridge/README.md` |
 | `clone/` | Python (uv, FastAPI): in-memory, deterministic HF-compatible backend (domain state machine, wire protocol, seeds, `/__clone__/*` control endpoints). See `clone/README.md` |
 | `web/` | Next.js 16 (App Router, TypeScript): requester gate box, owner settings section, review modal; proxies HF-shaped requests to `BACKEND_URL` (bridge or clone). See `web/README.md`; `web/AGENTS.md` is Next's own agent note |
-| `conformance/` (planned) | Scenario scripts run against both backends: API level (pytest + `huggingface_hub`) and UI level (Playwright) |
+| `conformance/` | Blind conformance suite: replays the live recordings against a backend, rule tests by ID, the official `huggingface_hub` client, `divergences.yaml` (every accepted gap with its rule/Q id) |
+| `docs/hf-gated/verification/` | Published verification results (conformance report, clone-vs-live UI walkthrough diff) |
 | `harness/agents/` | Subagent prompts actually used, verbatim, with the shared patterns |
 | `harness/` (planned additions) | recorders, diff tooling |
 
@@ -133,6 +134,28 @@ npm --prefix web run test:e2e
 ```
 
 The e2e suite is read-only against the live bridge: a guard aborts any non-GET/HEAD request.
+
+```bash
+npm --prefix web run test:e2e:clone
+```
+
+This is the scripted UI walkthrough on web + clone (it starts the clone on 8201 and a production
+web build on 3101). It replays the live walkthrough's journey and diffs the clone's request log
+against `docs/hf-gated/observations/2026-10-05-ui-walkthrough.json` with `harness/kb/compare_logs.py`.
+The output goes to `web/e2e/out/` (gitignored).
+
+Conformance (blind suite; start the clone on 8200 first):
+
+```bash
+uv run --project conformance pytest conformance/tests
+```
+
+```bash
+uv run --project conformance conformance-report --pytest
+```
+
+The second command writes `conformance/reports/latest.{md,json}`. Live mode (bridge running, GET/HEAD
+only): `BACKEND_URL=http://127.0.0.1:8100 uv run --project conformance conformance-report --live`.
 `.claude/launch.json` defines `bridge` (8100), `clone` (8200), `web` (3000 → bridge) and `web-clone` (3001 →
 clone, via `BACKEND_URL`). Only one `next dev` can run in `web/` at a time, so stop `web` before
 starting `web-clone`.
