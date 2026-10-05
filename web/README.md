@@ -20,6 +20,10 @@ The header has a backend switch, `Backend: clone | bridge`, which sets the `back
 is the live huggingface.co, so writes reach the real Hub. Use `CLONE_URL` / `BRIDGE_URL` to move them;
 `BACKEND_URL` pins one URL and disables the switch.
 
+While the clone is selected, a **Reset clone** button (`POST /-/clone/reset` → the clone's
+`POST /__clone__/reset`) restores its default seed and reloads the page. The button is hidden on
+the bridge, and the route refuses there.
+
 Pick a persona with `/-/persona?as=anonymous|owner|requester&next=/Orosius/deltanet-mla-latent`
 (or the links in the header).
 

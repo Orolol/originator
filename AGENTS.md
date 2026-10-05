@@ -121,7 +121,8 @@ uv run --project clone pytest clone/tests
 ```
 
 Web (port 3000). Start the clone and/or the bridge first. The header switches between them: the clone
-is the default, and the bridge writes to the real Hub. `BACKEND_URL` pins one and disables the switch:
+is the default, and the bridge writes to the real Hub. A "Reset clone" button restores the clone's
+seed. `BACKEND_URL` pins one and disables the switch:
 
 ```bash
 npm --prefix web run dev

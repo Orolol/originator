@@ -26,6 +26,13 @@ export function BackendSwitcher({ current, pinnedUrl }: { current: BackendId; pi
         </span>
       ))}{" "}
       <small className={current === "bridge" ? "backend-live" : undefined}>({BACKENDS[current].note})</small>
+      {current === "clone" && (
+        // Restores the clone's default seed (POST /-/clone/reset → POST /__clone__/reset), then comes back here.
+        <form method="post" action="/-/clone/reset" className="inline-form">
+          <input type="hidden" name="next" value={pathname} />{" "}
+          <button type="submit">Reset clone</button>
+        </form>
+      )}
     </nav>
   );
 }

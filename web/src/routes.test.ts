@@ -8,6 +8,7 @@ import { POST as askAccess } from "@/app/[ns]/[repo]/ask-access/route";
 import { GET as apiGet } from "@/app/api/[...path]/route";
 import { GET as switchPersona } from "@/app/-/persona/route";
 import { GET as switchBackend } from "@/app/-/backend/route";
+import { POST as resetClone } from "@/app/-/clone/reset/route";
 
 // No backend cookie → the default backend (the clone), unless BACKEND_URL pins one.
 const BACKEND_URL = BACKEND_URLS.clone;
@@ -155,5 +156,50 @@ describe("backend switch", () => {
     const refused = switchBackend(new NextRequest(`${WEB}/-/backend?to=bridge&next=/`));
     expect(refused.status).toBe(409);
     expect(refused.headers.get("set-cookie")).toBeNull();
+  });
+});
+
+describe("POST /-/clone/reset", () => {
+  function resetPost(cookie: string, next = `/${REPO}/settings`) {
+    return new NextRequest(`${WEB}/-/clone/reset`, {
+      method: "POST",
+      body: new URLSearchParams({ next }),
+      headers: { cookie, "content-type": "application/x-www-form-urlencoded" },
+    });
+  }
+
+  it("calls the clone's control endpoint and redirects back (same-origin only)", async () => {
+    const fetchMock = stubBackend(() => Response.json({ ok: true }));
+    const res = await resetClone(resetPost("backend=clone"));
+    expect(fetchMock.mock.calls[0][0]).toBe(`${BACKEND_URLS.clone}/__clone__/reset`);
+    expect(fetchMock.mock.calls[0][1]?.method).toBe("POST");
+    expect(res.status).toBe(303);
+    expect(res.headers.get("location")).toBe(`${WEB}/${REPO}/settings`);
+    const external = await resetClone(resetPost("backend=clone", "//evil.example"));
+    expect(external.headers.get("location")).toBe(`${WEB}/`);
+  });
+
+  it("no backend cookie means the clone (the default)", async () => {
+    const fetchMock = stubBackend(() => Response.json({ ok: true }));
+    expect((await resetClone(resetPost(""))).status).toBe(303);
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
+
+  it.each([
+    ["the bridge is selected", "backend=bridge", undefined],
+    ["the backend is pinned", "backend=clone", "http://127.0.0.1:8201"],
+  ])("refuses with 409 and sends nothing when %s", async (_why, cookie, pinned) => {
+    if (pinned) vi.stubEnv("BACKEND_URL", pinned);
+    const fetchMock = stubBackend(() => Response.json({ ok: true }));
+    const res = await resetClone(resetPost(cookie));
+    expect(res.status).toBe(409);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("reports an unreachable clone as 502", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => { throw new Error("ECONNREFUSED"); }));
+    const res = await resetClone(resetPost("backend=clone"));
+    expect(res.status).toBe(502);
+    expect(await res.text()).toContain("Clone unreachable");
   });
 });

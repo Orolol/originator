@@ -96,6 +96,10 @@ host (a CDN) is left untouched. This is the only normalisation the bridge applie
   `http://127.0.0.1:8200`) and `BRIDGE_URL` (default `http://127.0.0.1:8100`). **`BACKEND_URL`, when
   set, pins every request to it and disables the switch** (`/-/backend` → 409). Both e2e configs pin:
   the read-only one to the bridge, and the clone walkthrough, which writes, to its own clone.
+- **Reset clone** (header button, shown only while the clone is selected and nothing is pinned): a
+  form `POST /-/clone/reset` that calls the clone's `POST /__clone__/reset` (default seed) and
+  redirects back. It refuses with 409 when the bridge is selected or a backend is pinned, so it can
+  never be aimed at the real Hub.
 - **Same accessible structure**: real `<button>`, `<select>`, `<a>`, `role="dialog"`,
   `role="tablist"`/`tab` with HF's exact labels, so `getByRole(…, {name})` selectors work on both
   sites. No styling work.
