@@ -140,6 +140,24 @@ For datasets the message says `dataset` instead of `model`, and the URL is `http
 | grant to a user who already has access | `400 That user already has access to the repo` | [OBS 2026-10-05] |
 | validation (zod-style message, no `X-Error-Code`) | `400`, e.g. `* Too big: expected string to have <=200 characters * at rejectionReason`, `* Invalid option: expected one of "accepted"\|"rejected"\|"pending"\|"reset" * at status`, `* Either userId or user must be provided, but not both`, `* Too small: expected number to be >=10 * at limit` | [OBS 2026-10-05] |
 
+**Validation message format** [OBS 2026-10-05]:
+- The JSON body has zod's pretty format, one issue per line:
+  `{"error": "✖ Too big: expected string to have <=200 characters\n  → at rejectionReason"}`.
+- `X-Error-Message` is an ASCII-sanitised copy of it, `* Too big: expected string to have <=200
+  characters * at rejectionReason`: each non-ASCII character (`✖`, `→`) becomes `*`, and whitespace
+  runs (including the newline) collapse to one space.
+- The neither-user-nor-userId error is a single issue without a path:
+  `✖ Either userId or user must be provided, but not both`.
+
+**Check order** [OBS where noted]:
+- unknown repo → `404 RepoNotFound "Repository not found"` (owner token; anonymous gets 401) [OBS];
+- then authentication: anonymous or invalid token → `401 Invalid username or password.` + `WWW-Authenticate` [OBS];
+- then permission: no write → `403 You have read access but not the required permissions for this operation`,
+  even on someone else's non-gated repo [OBS];
+- then body validation (400), unknown user (`404 User not found`), and request lookup
+  (`404 No access request found matching your criteria`). The relative order of these last three is
+  unrecorded (provisional: that order).
+
 All owner-side errors observed carry the message in both `X-Error-Message` and JSON `{"error"}`, and
 **none** carries an `X-Error-Code`. Success bodies: `handle` → `{}`, `grant` → `{}`, settings → the sent
 `gated` field only (CFG-3, CFG-7), `batch` → per-item outcomes (REV-9). [OBS 2026-10-05] The

@@ -8,6 +8,7 @@ Each case is:
      "auth"?: "ENV_VAR_NAME",            # send `Authorization: Bearer $ENV_VAR_NAME` (value from --env-file)
      "body"?: {...}, "body_encoding"?: "json" | "form",
      "wait"?: seconds,                   # sleep before the request (eventual consistency)
+     "keep_text"?: true,                 # store the full body when ≤ 20 kB (small files used as seeds)
      "extract_props"?: "Component",      # capture JSON `data-props` of a server-rendered `data-target`
      "extract_text"?: {"from": regex, "lines": n}}   # n visible text nodes from the first match
 
@@ -37,7 +38,8 @@ import urllib.parse
 import urllib.request
 
 KEPT_HEADERS = (
-    "x-error-code", "x-error-message", "content-type", "content-disposition", "location", "link", "www-authenticate"
+    "x-error-code", "x-error-message", "content-type", "content-disposition", "location", "link", "www-authenticate",
+    "etag", "x-repo-commit", "x-linked-size", "x-linked-etag", "content-length",
 )
 MAX_STRING = 200
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
@@ -108,6 +110,11 @@ def run_case(opener, case, env, allow_writes):
     except urllib.error.HTTPError as error:
         status, response_headers, body = error.code, error.headers, error.read()
     text = body.decode("utf-8", errors="replace")
+    kept_headers = {k: response_headers[k] for k in KEPT_HEADERS if response_headers.get(k) is not None}
+    location = kept_headers.get("location")
+    if location and urllib.parse.urlsplit(location).netloc not in ("", urllib.parse.urlsplit(case["url"]).netloc):
+        # Cross-host redirects (CDN) carry signed, expiring query strings: never store them.
+        kept_headers["location"] = urllib.parse.urlsplit(location)._replace(query="<signed-query-redacted>").geturl()
     record = {
         "id": case["id"],
         "as": case.get("auth") or "anonymous",
@@ -118,10 +125,12 @@ def run_case(opener, case, env, allow_writes):
         "note": case.get("note"),
         "sent_at": sent_at,  # lets server-side timestamps be matched to the request that set them
         "status": status,
-        "headers": {k: response_headers[k] for k in KEPT_HEADERS if response_headers.get(k) is not None},
+        "headers": kept_headers,
         "body_excerpt": None if text.lstrip().lower().startswith("<!doctype") else text[:160],
     }
-    if "json" in (response_headers.get("content-type") or "") and len(text) <= 50_000:
+    if case.get("keep_text") and len(text) <= 20_000:
+        record["body_text"] = text  # full small text file (seed fixtures for the clone)
+    if "json" in (response_headers.get("content-type") or "") and len(text) <= 2_000_000:
         try:
             record["body_json"] = json.loads(text)  # full structure (list items, reviewedAt, grantedBy…)
         except ValueError:

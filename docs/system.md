@@ -23,8 +23,10 @@ HF tokens.
 | `owner` | `persona-owner` | `.env` `HF_OWNER_ACCESS_TOKEN` (HF user `Orosius`) | user `Orosius` |
 | `requester` | `persona-requester` | `.env` `HF_REQUESTER_ACCESS_TOKEN` (HF user `TestingBOrig`) | user `TestingBOrig` |
 
-Any other bearer value → `401`, JSON `{"error": "Invalid credentials in Authorization header"}`,
-with the same text in `X-Error-Message` (HF's own wording, per `huggingface_hub`'s `_http.py`).
+Any other bearer value → `401`, JSON `{"error": "Invalid username or password."}`, with the same text in
+`X-Error-Message` and `WWW-Authenticate: Bearer realm="Authentication required", charset="UTF-8"`. That
+is exactly what HF answers for an invalid token and for anonymous calls to protected routes
+[OBS 2026-10-05, `hf-gated/observations/2026-10-05-clone-seed-reads.md`].
 
 ## Backend surface (both backends)
 
@@ -105,3 +107,86 @@ host (a CDN) is left untouched. This is the only normalisation the bridge applie
   from HF's wire protocol to do so.
 - The HF UI reads request status from server-side page props; we infer it from `auth-check`
   messages (see above).
+
+## Clone (Python, `:8200`): contract
+
+The clone implements the **backend surface** above (same paths, payloads, status codes, `X-Error-*`
+headers, bodies) from [hf-gated/behaviour.md](hf-gated/behaviour.md) and [hf-gated/api.md](hf-gated/api.md),
+entirely **in memory**, plus `GET /api/resolve-cache/models/{repo}/{sha}/{path}` (target of the 307 that a
+non-gated repo's `resolve` returns, CFG-6). A process restart or `POST /__clone__/reset` restores the
+default seed.
+
+### Determinism
+
+- **Virtual clock**, never the wall clock. It starts at the seed's `now`. Each request that **changes
+  state** advances it by `tick_ms` (seed field, default `1000`) *before* stamping `timestamp` /
+  `reviewedAt`; reads do not advance it.
+- **IDs**: 24-hex ObjectId-like strings from a counter. Seeded IDs are kept verbatim.
+- **Ordering**: lists in a stable order (provisional until Q-10 is recorded: by `timestamp`
+  ascending, then insertion order).
+- Same seed + same request sequence ⇒ byte-identical responses, log and outbox.
+
+### Control endpoints (reserved prefix `/__clone__/`, never part of HF's surface)
+
+| Method | Path | Effect |
+|---|---|---|
+| GET | `/__clone__/health` | `{"ok": true, "seed": <name>, "now": <clock>}` |
+| POST | `/__clone__/reset` | body optional `{"seed": "<built-in seed name>"}` (default `sandbox`); clears log and outbox |
+| GET | `/__clone__/state` | full state, in the seed format below (round-trips with PUT) |
+| PUT | `/__clone__/state` | replace the whole state with a seed document; clears log and outbox |
+| GET / POST | `/__clone__/clock` | read; or set `{"now": iso}` / `{"advance_ms": n}` |
+| GET / DELETE | `/__clone__/outbox` | e-mails HF would send (see below) |
+| GET / DELETE | `/__clone__/log` | exchange log, **same entry schema as `/__bridge__/log`** (`id, started_at, duration_ms, persona, method, path, query, request_body, status, response_headers, response_body, upstream`), with `started_at` from the virtual clock and `duration_ms` = 0, so `harness/kb/bridge_log_to_md.py` and diffs work on both backends |
+
+Outbox entry: `{"id", "at", "to": <email>, "kind", "repo", "user", "reason"?}`, where `kind` is one of
+`"new_request"` (to the notification recipient, manual mode only: `gatedNotificationsEmail`, else the
+owner's email) and `"request_reset"` (to the requester, with `resetReason`). Only effects documented in
+behaviour.md §7 are emitted. Whether HF also e-mails on accept/reject is unknown (Q-20).
+
+### Seed format (`PUT /__clone__/state`, `GET /__clone__/state`, built-in seeds)
+
+```jsonc
+{
+  "seed": "sandbox",                       // name, informational
+  "now": "2026-10-05T14:30:00.000Z",       // virtual clock
+  "tick_ms": 1000,
+  "users": [
+    {"user": "Orosius", "_id": "63ea055c74f940d171e52701", "fullname": "Gaetan Martin",
+     "email": "orosius@example.com", "avatarUrl": "/avatars/321442c65614e6e52fb158f334e9bb1e.svg",
+     "isPro": true, "token": "persona-owner", "orgs": []},
+    {"user": "TestingBOrig", "_id": "6ac3a4b8792f9017b6cb67ec", "fullname": "Bridge",
+     "email": "testingborig@example.com", "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false, "token": "persona-requester", "orgs": []}
+  ],
+  "repos": [
+    {"id": "Orosius/deltanet-mla-latent", "_id": "69414ed409f9267fc5b494e2", "author": "Orosius",
+     "private": false, "gated": "manual", "orgMembersGated": false,
+     "gatedNotificationsMode": "bulk", "gatedNotificationsEmail": null,
+     "sha": "6f1dade6f974de81ce21aa14b87add2e0217b05e",
+     "createdAt": "2025-12-16T12:21:40.000Z", "lastModified": "2026-01-01T02:52:44.000Z",
+     "cardData": {"license": "mit"},
+     "info": { /* any other model-info fields served verbatim: tags, downloads, likes, config, … */ },
+     "files": {                             // path -> file; directories are implied by paths
+       "README.md": {"text": "---\r\nlicense: mit\r\n---\r\n", "oid": "7be5fc7f…"},
+       "big/pytorch_model.bin": {"size": 497807197, "oid": "…", "lfs": true}
+     }}
+  ],
+  "requests": [
+    {"repo": "Orosius/deltanet-mla-latent", "user": "TestingBOrig", "status": "pending",
+     "timestamp": "2026-10-05T14:20:42.885Z", "reviewedAt": null, "grantedBy": null,
+     "fields": null, "emailShared": true}
+  ]
+}
+```
+
+`emailShared: false` marks an entry created by **grant**, which the lists show without `email` (REQ-5).
+Built-in seeds:
+- **`sandbox`** (the default): the real sandbox repo as recorded in
+  `hf-gated/observations/2026-10-05-clone-seed-reads.json` (model info, tree, small file contents),
+  the two users above, and `TestingBOrig` pending.
+- Clone-only demo repos for gate-form coverage, all owned by `Orosius`:
+  - `Orosius/gated-auto-demo`: auto, one checkbox field;
+  - `Orosius/gated-form-demo`: manual, every field type, custom heading/description/button;
+  - `Orosius/not-gated-demo`: `gated: false`, with a stale `extra_gated_description`.
+- Third user `DemoCarol`, token `persona-carol`, with no relation to any repo (grant tests).
+  **These demos and DemoCarol do not exist on huggingface.co.**
