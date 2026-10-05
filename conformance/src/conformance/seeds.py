@@ -254,7 +254,7 @@ def pinned_timestamps(document: dict) -> set[str]:
 def scenario_seed(scenario: str) -> dict:
     if scenario == "owner-walkthrough":
         # s0: all four lists empty, requester "not in the authorized list". The pending request seen
-        # at 13:57 had vanished outside the bridge (sources.md, Q-26): replayed as "no request".
+        # at 13:57 had been cancelled by hand on huggingface.co, outside the bridge (sources.md): replayed as "no request".
         return seed("conformance:owner-walkthrough", _first_sent_at("2026-10-05-owner-walkthrough.json"), [])
     if scenario == "owner-walkthrough-completion":
         # m0: TestingBOrig pending since 14:17:07.311Z (= owner-walkthrough s5b/s11).

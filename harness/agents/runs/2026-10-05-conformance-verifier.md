@@ -5,6 +5,8 @@
 - Inputs it relied on: `AGENTS.md`, `docs/method.md`, `docs/system.md`, `docs/hf-gated/*`, the
   recorded observations (ground truth).
 - Output: `conformance/`.
+- Later note: the prompt below cites Q-26 (a request that vanished outside the bridge). Q-26 was
+  withdrawn: the account owner had cancelled that request by hand on huggingface.co.
 
 ## Prompt (verbatim)
 

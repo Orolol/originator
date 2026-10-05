@@ -70,7 +70,7 @@ There is at most one request per (repo, user). Shape as listed by the API [SPEC]
 
 ## 2. States and what they allow
 
-"No request" is a real state: the user has never interacted, or the request was removed [Q-3] [Q-26].
+"No request" is a real state: the user has never interacted, or the request was removed [Q-3].
 The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [OBS 2026-10-05]
 
 | State | Content routes answer (requester token) | Re-submitting the form | Shown on repo page | Evidence |

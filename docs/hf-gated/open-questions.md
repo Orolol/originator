@@ -36,7 +36,10 @@ Status: open for `accepted` and for `timestamp` on a re-submit while pending.
 ### Q-3 (P0): requester self-cancel
 `POST /api/models/{id}/user-access-request/cancel`: is the request deleted (back to "no request") or
 moved to a status? From which states is it allowed? What is the error when there is no request? Is
-there a UI control for it? Status: open.
+there a UI control for it? Weak evidence (2026-10-05): the account owner cancelled a pending request by hand on huggingface.co
+(the exact UI action is not recorded). Afterwards the request was gone from every list and the
+requester's `auth-check` said "not in the authorized list". That fits a deletion, which is the clone's
+provisional choice, if the action was the requester-side cancel. Status: open.
 
 ### Q-4 (P0): same-status and success responses
 Exact status code and body for handle → the current status (the docstrings say 404 "already in the …

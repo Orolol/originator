@@ -80,7 +80,8 @@ exist yet. Update this section when they land.
 - Sandbox repo: `Orosius/deltanet-mla-latent` (owner `Orosius`, `gated: "manual"`, no extra form
   fields). Requester account: `TestingBOrig`. At the end of the 2026-10-05 walkthrough
   (14:23Z) its request was back to **pending**. Always read the current state (owner lists) before
-  scripting transitions: a request once vanished with no bridge write (Q-26).
+  scripting transitions: the account owner also acts on huggingface.co directly (on 2026-10-05 a
+  pending request was cancelled by hand there, outside the bridge).
 - `.env` (gitignored) holds `HF_OWNER_ACCESS_TOKEN`, `HF_REQUESTER_ACCESS_TOKEN`, `HF_REQUESTER_LOGIN`.
   Scripts use only the tokens (`probe.py --env-file .env` redacts every `.env` value from its output).
   Agents never type passwords into HF. Through the bridge, use the fake persona tokens
