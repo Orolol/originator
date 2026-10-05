@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-05T15:05:23Z",
+ "generated": "2026-10-05T15:18:30Z",
  "backend": "http://127.0.0.1:8200",
  "mode": "seeded",
  "scenarios": [
@@ -2568,12 +2568,8 @@
      "expected_status": 404,
      "actual_status": 404,
      "outcome": "pass",
-     "reason": "HF answers a GET on the POST-only web route with its HTML 404 page; HTML pages are not part of the backend surface (docs/system.md), so only the status and error headers are comparable",
-     "restricted_to": [
-      "status",
-      "header:x-error-code",
-      "header:x-error-message"
-     ],
+     "reason": "",
+     "restricted_to": null,
      "diffs": []
     },
     {
@@ -3478,6 +3474,7 @@
     "ACC-4",
     "ACC-5",
     "ACC-6",
+    "ACC-10",
     "CFG-5",
     "REP-2",
     "api.md §3.1-3.3"
@@ -3486,9 +3483,9 @@
    "error": null,
    "ok": true,
    "counts": {
-    "pass": 34,
+    "pass": 36,
     "fail": 0,
-    "diverged": 2,
+    "diverged": 0,
     "skipped": 8,
     "error": 0
    },
@@ -3893,54 +3890,11 @@
      "path": "/meta-llama/Llama-3.2-1B/raw/main/README.md",
      "request_body": null,
      "expected_status": 401,
-     "actual_status": 404,
-     "outcome": "diverged",
+     "actual_status": 401,
+     "outcome": "pass",
      "reason": "",
      "restricted_to": null,
-     "diffs": [
-      {
-       "field": "status",
-       "expected": 401,
-       "actual": 404,
-       "detail": "",
-       "divergence": "D-2"
-      },
-      {
-       "field": "header:content-type",
-       "expected": "text/plain; charset=utf-8",
-       "actual": "text/html; charset=utf-8",
-       "detail": "",
-       "divergence": "D-2"
-      },
-      {
-       "field": "header:www-authenticate",
-       "expected": "Bearer realm=\"Authentication required\", charset=\"UTF-8\"",
-       "actual": null,
-       "detail": "missing",
-       "divergence": "D-2"
-      },
-      {
-       "field": "header:x-error-code",
-       "expected": "GatedRepo",
-       "actual": null,
-       "detail": "missing",
-       "divergence": "D-2"
-      },
-      {
-       "field": "header:x-error-message",
-       "expected": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
-       "actual": "Sorry, we can't find the page you are looking for.",
-       "detail": "",
-       "divergence": "D-2"
-      },
-      {
-       "field": "body",
-       "expected": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
-       "actual": "Sorry, we can&#x27;t find the page you are looking for.",
-       "detail": "",
-       "divergence": "D-2"
-      }
-     ]
+     "diffs": []
     },
     {
      "id": "blob-config",
@@ -3949,38 +3903,11 @@
      "path": "/meta-llama/Llama-3.2-1B/blob/main/config.json",
      "request_body": null,
      "expected_status": 401,
-     "actual_status": 404,
-     "outcome": "diverged",
-     "reason": "/blob/ is an HTML page on HF; only the gate decision (ACC-5) is backend behaviour",
-     "restricted_to": [
-      "status",
-      "header:x-error-code",
-      "header:x-error-message",
-      "header:www-authenticate"
-     ],
-     "diffs": [
-      {
-       "field": "status",
-       "expected": 401,
-       "actual": 404,
-       "detail": "",
-       "divergence": "D-2"
-      },
-      {
-       "field": "header:x-error-code",
-       "expected": "GatedRepo",
-       "actual": null,
-       "detail": "missing",
-       "divergence": "D-2"
-      },
-      {
-       "field": "header:x-error-message",
-       "expected": "Access to model meta-llama/Llama-3.2-1B is restricted. You must have access to it and be authenticated to access it. Please log in.",
-       "actual": "Sorry, we can't find the page you are looking for.",
-       "detail": "",
-       "divergence": "D-2"
-      }
-     ]
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
     },
     {
      "id": "gate-before-entry",
@@ -4139,8 +4066,109 @@
      "diffs": []
     }
    ]
+  },
+  {
+   "name": "tree-masking",
+   "recording": "2026-10-05-tree-masking.json",
+   "mode": "seeded",
+   "covers": [
+    "ACC-9",
+    "ACC-10",
+    "ACC-4"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 6,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "tree-subdir-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-subdir-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-subdir-requester",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "raw-readme-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "raw-readme-requester",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "raw-readme-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
   }
  ],
+ "stale_divergences": [],
  "divergences": [
   {
    "id": "D-1",
@@ -4153,27 +4181,6 @@
    "rule": "out-of-scope.md \"Real file serving (LFS/Xet, 302 to CDN)\"",
    "reason": "Out of scope. HF redirects an LFS/Xet file to its CDN (signed URL) and advertises Xet endpoints in Link; the clone serves stub bytes for authorised files and redirects to its own resolve-cache. The authorisation decision (302 for the owner, X-Repo-Commit, X-Linked-Size/-Etag) is still compared and matches.",
    "evidence": "docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json owner-head-lfs"
-  },
-  {
-   "id": "D-2",
-   "scenario": "anonymous-probes",
-   "step": [
-    "raw-readme",
-    "blob-config"
-   ],
-   "field": "*",
-   "rule": "ACC-5 (/raw/ and /blob/ clause) vs docs/system.md \"Backend surface\"",
-   "reason": "Outside the backend surface. docs/system.md lists the only routes both backends serve and has no /raw/ or /blob/ route, so the clone answers 404 there; behaviour.md ACC-5 nevertheless records that HF gates them (anonymous 401 GatedRepo). KB inconsistency to resolve: either add the routes to the surface (and the clone) or scope ACC-5's /raw/ and /blob/ sentence out explicitly.",
-   "evidence": "docs/system.md \"Backend surface\"; docs/hf-gated/behaviour.md ACC-5; anonymous-probes raw-readme, blob-config"
-  },
-  {
-   "id": "D-3",
-   "scenario": "live:clone-seed-reads",
-   "step": "whoami-bad-token",
-   "field": "header:content-type",
-   "rule": "docs/system.md \"Personas\" (invalid bearer -> HF's 401)",
-   "reason": "Bridge artefact, live mode only. The bridge never forwards an unknown bearer token: it answers the 401 itself (system.md: \"Any other bearer value -> 401 ... exactly what HF answers\"), but with `application/json` where HF sends `application/json; charset=utf-8` (recorded). The status, message, body and WWW-Authenticate match. To fix in the bridge, not in the clone.",
-   "evidence": "docs/system.md \"Personas\"; observations/2026-10-05-clone-seed-reads.json whoami-bad-token"
   },
   {
    "id": "D-4",
@@ -4217,7 +4224,7 @@
  ],
  "pytest": {
   "exit_code": 0,
-  "tail": "........................................................................ [ 26%]\n........................................................................ [ 52%]\n........................................................................ [ 79%]\n.............................x..........................                 [100%]\n271 passed, 2 deselected, 1 xfailed in 7.27s\n",
+  "tail": "........................................................................ [ 23%]\n........................................................................ [ 47%]\n........................................................................ [ 70%]\n............................................................x........... [ 94%]\n.................                                                        [100%]\n304 passed, 4 deselected, 1 xfailed in 8.42s\n",
   "tests": [
    {
     "file": "tests.test_harness_offline",
@@ -4258,6 +4265,12 @@
    {
     "file": "tests.test_harness_offline",
     "name": "test_recording_compared_with_itself_is_clean[2026-10-05-anonymous-probes.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-05-tree-masking.json]",
     "outcome": "passed",
     "message": ""
    },
@@ -4377,6 +4390,12 @@
    },
    {
     "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[tree-masking]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
     "name": "test_sandbox_repo_matches_recording",
     "outcome": "passed",
     "message": ""
@@ -4390,6 +4409,24 @@
    {
     "file": "tests.test_harness_offline",
     "name": "test_divergences_file_is_valid_and_globs_match",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_stale_divergence_detection",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_stale_divergence_fails_the_report",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_saved_run_is_rejudged_against_current_divergences",
     "outcome": "passed",
     "message": ""
    },
@@ -4665,6 +4702,12 @@
    },
    {
     "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q14_report_one_sequence_sorted_like_the_lists",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
     "name": "test_provisional_Q21_q_is_substring_on_username_fullname_shared_email[BOri-expected0]",
     "outcome": "passed",
     "message": ""
@@ -4725,6 +4768,48 @@
    },
    {
     "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_raw_on_lfs_serves_the_pointer",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_raw_on_non_gated_repo_is_200_without_redirect",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_blob_with_access_shows_escaped_content",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_blob_of_lfs_shows_the_pointer",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_blob_404_is_html_and_unknown_repo_401_keeps_www_authenticate",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_raw_and_blob_answer_get_only[raw]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_raw_and_blob_answer_get_only[blob]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
     "name": "test_provisional_unknown_repo_logged_in_is_404[GET-/Orosius/does-not-exist-xyz/resolve/main/config.json]",
     "outcome": "passed",
     "message": ""
@@ -4761,6 +4846,12 @@
    },
    {
     "file": "tests.test_provisional_clone",
+    "name": "test_provisional_acc9_access_is_the_auth_check_decision",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
     "name": "test_provisional_no_etag_on_307_and_unknown_expand_skipped",
     "outcome": "passed",
     "message": ""
@@ -4785,7 +4876,13 @@
    },
    {
     "file": "tests.test_rules_control",
-    "name": "test_builtin_sandbox_seed_reproduces_recorded_reads",
+    "name": "test_builtin_sandbox_seed_reproduces_recorded_reads[clone-seed-reads]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_control",
+    "name": "test_builtin_sandbox_seed_reproduces_recorded_reads[tree-masking]",
     "outcome": "passed",
     "message": ""
    },
@@ -5498,6 +5595,102 @@
     "message": ""
    },
    {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_9_lfs_hashes_masked_without_access[anonymous-None-True]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_9_lfs_hashes_masked_without_access[requester-pending-True]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_9_lfs_hashes_masked_without_access[owner-None-False]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_9_lfs_hashes_masked_without_access[requester-None-True]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_9_lfs_hashes_masked_without_access[requester-rejected-True]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_9_lfs_hashes_masked_without_access[requester-accepted-False]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_anonymous_is_401_even_for_allowlisted_paths[README.md]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_anonymous_is_401_even_for_allowlisted_paths[LICENSE.txt]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_anonymous_is_401_even_for_allowlisted_paths[config.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_same_per_state_messages_as_resolve[no request]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_same_per_state_messages_as_resolve[pending]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_same_per_state_messages_as_resolve[rejected]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_same_per_state_messages_as_resolve[reset]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_same_per_state_messages_as_resolve[accepted]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_serves_text_to_the_owner",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_blob_anonymous_is_401_html_without_www_authenticate",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
     "file": "tests.test_rules_lists",
     "name": "test_REV_10_pagination_with_link_next",
     "outcome": "passed",
@@ -5848,6 +6041,18 @@
    {
     "file": "tests.test_scenarios",
     "name": "test_replay[anonymous-probes]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[tree-masking]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_no_stale_divergences",
     "outcome": "passed",
     "message": ""
    }

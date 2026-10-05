@@ -188,7 +188,10 @@ found matching your criteria"}` with the same `X-Error-Message`.
 - **REV-6** Adds the user to `accepted` without them requesting. Their entry has no email. [CLIENT tests]
   Success → `200 {}`. [OBS]
 - **REV-7** Granting a user who already has access → `400 That user already has access to the repo`
-  [OBS W s6-grant-again] [CLIENT]. Unknown user → 404. Repo not gated → 400. [CLIENT doc]
+  [OBS W s6-grant-again] [CLIENT]. Unknown user → 404. Repo not gated → 400 per the client docstring
+  [CLIENT doc], **unobserved**. The same docstring's "400 if not gated" is already contradicted for
+  lists (CFG-6), so the clone answers normally (provisional, Q-9). The conformance suite keeps the
+  docstring's claim as a strict expected failure (`divergences.yaml` D-4) until it is recorded.
 - **REV-8** Granting a **pending** user accepts their request: `reviewedAt` = grant time,
   `grantedBy` = owner, `timestamp` and `email` kept (it is their own request). [OBS W s6] Granting
   `rejected` / `reset` users is unknown [Q-6].

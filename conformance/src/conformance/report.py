@@ -22,7 +22,8 @@ from pathlib import Path
 from .compare import NORMALISATIONS
 from .config import CONFORMANCE, REPORTS, backend_url
 from .divergences import load_divergences
-from .replay import ScenarioResult, live_scenario_names, load_manifest, make_client, run_scenario, scenario_names
+from .replay import (ScenarioResult, live_scenario_names, load_manifest, make_client, results_from_json, run_scenarios,
+                     scenario_names, stale_divergences, stale_message)
 
 
 def _md_cell(value: object, limit: int = 160) -> str:
@@ -56,8 +57,10 @@ def run_pytest(backend: str) -> dict:
     return {"exit_code": proc.returncode, "tail": proc.stdout[-3000:], "tests": tests}
 
 
-def build_markdown(results: list[ScenarioResult], backend: str, generated: str, pytest_result: dict | None) -> str:
+def build_markdown(results: list[ScenarioResult], backend: str, generated: str, pytest_result: dict | None,
+                   note: str = "") -> str:
     divergences = load_divergences()
+    stale = {entry.id for entry in stale_divergences(results, divergences)}
     manifest = load_manifest()
     lines = [
         "# Conformance report: clone vs real-Hub recordings",
@@ -66,8 +69,12 @@ def build_markdown(results: list[ScenarioResult], backend: str, generated: str, 
         "Ground truth: `docs/hf-gated/observations/2026-10-05-*.json`. Expectations come from the "
         "recordings and the KB only (the suite never reads the clone's code). Reproduce with "
         "`uv run --project conformance conformance-report --pytest` (clone on :8200).",
+        *([note] if note else []),
         "",
         "## Summary",
+        "",
+        f"Overall: **{'PASS' if all(r.ok for r in results) and not stale else 'FAIL'}** "
+        f"({sum(not r.ok for r in results)} failing scenario(s), {len(stale)} stale divergence(s)).",
         "",
         "| scenario | recording | steps | pass | diverged (listed) | fail | skipped | error | result |",
         "|---|---|---|---|---|---|---|---|---|",
@@ -113,6 +120,12 @@ def build_markdown(results: list[ScenarioResult], backend: str, generated: str, 
     if not any_unexpected:
         lines += ["None.", ""]
 
+    lines += ["## Stale divergences", "",
+              "A listed replay divergence that covers no mismatch in this run fails the run: the known-gaps list "
+              "must not overstate the gaps.", ""]
+    lines += [f"- **{stale_message(entry)}**" for entry in divergences if entry.id in stale] or ["None."]
+    lines.append("")
+
     from fnmatch import fnmatchcase
 
     run_names = [r.name for r in results]
@@ -128,6 +141,8 @@ def build_markdown(results: list[ScenarioResult], backend: str, generated: str, 
         for entry in divergences:
             if entry.scenario.startswith("rules:"):
                 covered = "pytest strict xfail"
+            elif entry.id in stale:
+                covered = "**STALE**: covers nothing"
             elif not any(fnmatchcase(name, entry.scenario) for name in run_names):
                 covered = "n/a (scenario not run)"
             else:
@@ -201,17 +216,25 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--scenario", action="append", help="only these scenarios (repeatable)")
     parser.add_argument("--live", action="store_true", help="read-only replay against the bridge, no seeding")
     parser.add_argument("--pytest", action="store_true", help="also run the pytest suite and include its results")
+    parser.add_argument("--from-json", default=None,
+                        help="re-judge a saved report JSON against the current divergences.yaml (sends nothing)")
     args = parser.parse_args(argv)
+    if args.from_json:
+        saved = json.loads(Path(args.from_json).read_text())
+        args.live = saved["mode"] == "live"
+        args.backend = args.backend or saved["backend"]
 
     backend = (args.backend or backend_url()).rstrip("/")
-    os.environ["BACKEND_URL"] = backend
     names = args.scenario or (live_scenario_names() if args.live else scenario_names())
-    results = []
-    with make_client(backend) as client:
-        for name in names:
-            results.append(run_scenario(name, client, live=args.live))
+    if args.from_json:
+        results = results_from_json(saved, load_divergences())
+        names = [r.name for r in results]
+    else:
+        with make_client(backend) as client:
+            results = run_scenarios(names, client, live=args.live)
+    stale = stale_divergences(results, load_divergences())
     pytest_result = run_pytest(backend) if args.pytest else None
-    generated = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+    generated = saved["generated"] if args.from_json else datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     out = Path(args.out or REPORTS / ("live" if args.live else "latest"))
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {
@@ -219,21 +242,27 @@ def main(argv: list[str] | None = None) -> int:
         "backend": backend,
         "mode": "live" if args.live else "seeded",
         "scenarios": [r.as_dict() for r in results],
+        "stale_divergences": [entry.id for entry in stale],
         "divergences": [vars(d) for d in load_divergences()],
         "normalisations": [{"name": n, "rule": t} for n, t in NORMALISATIONS],
         "pytest": pytest_result,
     }
     out.with_suffix(".json").write_text(json.dumps(payload, indent=1, ensure_ascii=False, default=str) + "\n")
-    out.with_suffix(".md").write_text(build_markdown(results, backend, generated, pytest_result))
+    note = (f"Re-judged on {datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')} from the saved run of {generated} "
+            "against the current divergences.yaml; no request was sent." if args.from_json else "")
+    out.with_suffix(".md").write_text(build_markdown(results, backend, generated, pytest_result, note))
     for result in results:
         c = result.counts()
         verdict = "ERROR " + result.error if result.error else ("PASS" if result.ok else "FAIL")
         print(f"{result.name}: {verdict} (pass {c['pass']}, diverged {c['diverged']}, fail {c['fail']}, "
               f"skipped {c['skipped']}, error {c['error']})")
+    for entry in stale:
+        print(stale_message(entry))
     if pytest_result is not None:
         print(f"pytest exit code {pytest_result['exit_code']}")
     print(f"report: {out.with_suffix('.md')}")
-    failed = any(not r.ok for r in results) or (pytest_result is not None and pytest_result["exit_code"] != 0)
+    failed = (any(not r.ok for r in results) or bool(stale)
+              or (pytest_result is not None and pytest_result["exit_code"] != 0))
     return 1 if failed else 0
 
 

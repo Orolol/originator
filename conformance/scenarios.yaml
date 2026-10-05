@@ -33,10 +33,6 @@ scenarios:
     recording: 2026-10-05-clone-seed-reads.json
     covers: [ACC-4, ACC-5, "api.md §3.3 check order", "system.md Personas (401 wording)", "system.md seed fidelity"]
     stand_ins: true  # openai-community/gpt2
-    compare_only:
-      anon-ask-access-get:
-        fields: [status, "header:x-error-code", "header:x-error-message"]
-        reason: "HF answers a GET on the POST-only web route with its HTML 404 page; HTML pages are not part of the backend surface (docs/system.md), so only the status and error headers are comparable"
 
   ui-walkthrough:
     recording: 2026-10-05-ui-walkthrough.json
@@ -44,7 +40,7 @@ scenarios:
 
   anonymous-probes:
     recording: 2026-10-05-anonymous-probes.json
-    covers: [ACC-3, ACC-4, ACC-5, ACC-6, CFG-5, REP-2, "api.md §3.1-3.3"]
+    covers: [ACC-3, ACC-4, ACC-5, ACC-6, ACC-10, CFG-5, REP-2, "api.md §3.1-3.3"]
     stand_ins: true  # meta-llama/Llama-3.2-1B, bigcode/starcoder, mistralai/Mistral-7B-v0.1, openai-community/gpt2
     skip:
       page: "HTML model page (web/), not part of the backend surface (docs/system.md)"
@@ -59,9 +55,10 @@ scenarios:
       tree:
         fields: [status, "header:content-type"]
         reason: "stand-in repo: the real Llama-3.2-1B file list (oids, sizes) is not reproducible"
-      blob-config:
-        fields: [status, "header:x-error-code", "header:x-error-message", "header:www-authenticate"]
-        reason: "/blob/ is an HTML page on HF; only the gate decision (ACC-5) is backend behaviour"
+
+  tree-masking:
+    recording: 2026-10-05-tree-masking.json
+    covers: [ACC-9, ACC-10, ACC-4]
 
 # Live mode (-m live): read-only steps replayed against the bridge (BACKEND_URL=http://127.0.0.1:8100),
 # no seeding. Steps whose answer depends on the live request state (lists, report, gate messages) are
@@ -74,3 +71,5 @@ live:
                      whoami-owner, whoami-requester, whoami-anon, whoami-bad-token, owner-readme,
                      owner-gitattributes, owner-head-gitattributes, owner-config, anon-readme,
                      anon-head-readme]
+  # tree-subdir-requester and raw-readme-requester depend on the requester's live request state.
+  tree-masking: [tree-subdir-anon, tree-subdir-owner, raw-readme-owner, raw-readme-anon]

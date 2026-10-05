@@ -1,3 +1,4 @@
+<!-- Published copy of conformance/reports/live.md (read-only replay through the bridge against the real Hub). -->
 # Conformance report: clone vs real-Hub recordings
 
 Generated 2026-10-05T15:16:10Z against `http://127.0.0.1:8100` by `conformance-report` (conformance/). Ground truth: `docs/hf-gated/observations/2026-10-05-*.json`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).

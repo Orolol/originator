@@ -196,6 +196,62 @@ def run_scenario(name: str, client: httpx.Client | None = None, divergences: lis
     return result
 
 
+def results_from_json(payload: dict, divergences: list[Divergence]) -> list[ScenarioResult]:
+    """Rebuild a saved run (report JSON) and re-judge it against the current divergences, without sending
+    any request: used to re-render a live run after divergences.yaml changed."""
+    manifest = load_manifest()
+    results = []
+    for saved in payload["scenarios"]:
+        base = saved["name"].removeprefix("live:")
+        steps = {s.id: s for s in load_recording(manifest["scenarios"][base]["recording"]).steps}
+        result = ScenarioResult(saved["name"], saved["recording"], saved["covers"], saved["stand_ins"], saved["mode"],
+                                error=saved["error"])
+        for item in saved["steps"]:
+            diffs = [Diff(d["field"], d["expected"], d["actual"], d["detail"]) for d in item["diffs"]]
+            outcome = item["outcome"]
+            if outcome in ("pass", "fail", "diverged"):
+                apply_divergences(saved["name"], item["id"], diffs, divergences)
+                outcome = classify(diffs)
+            result.steps.append(StepResult(steps[item["id"]], outcome, diffs, item["reason"], item["actual_status"],
+                                           item["restricted_to"]))
+        results.append(result)
+    return results
+
+
+def stale_divergences(results: list[ScenarioResult], divergences: list[Divergence]) -> list[Divergence]:
+    """Replay divergences that a run could have used but did not: they overstate the known gaps.
+
+    An entry is judged only when every scenario its pattern matches in `results` ran without a harness
+    error (a seeding failure proves nothing). Rule-test entries (`rules:*`) are strict xfails instead.
+    """
+    stale = []
+    for entry in divergences:
+        if entry.scenario.startswith("rules:"):
+            continue
+        matching = [r for r in results if fnmatchcase(r.name, entry.scenario)]
+        if not matching or any(r.error for r in matching):
+            continue
+        used = any(d.divergence == entry.id for r in matching for step in r.steps for d in step.diffs)
+        if not used:
+            stale.append(entry)
+    return stale
+
+
+def stale_message(entry: Divergence) -> str:
+    return f"stale divergence {entry.id}: remove or re-justify (it covers no mismatch in {entry.scenario})"
+
+
+def run_scenarios(names: list[str], client: httpx.Client | None = None, live: bool = False) -> list[ScenarioResult]:
+    divergences = load_divergences()
+    own = client is None
+    client = client or make_client()
+    try:
+        return [run_scenario(name, client, divergences, live=live) for name in names]
+    finally:
+        if own:
+            client.close()
+
+
 def scenario_names() -> list[str]:
     return list(load_manifest()["scenarios"])
 

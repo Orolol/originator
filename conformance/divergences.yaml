@@ -27,30 +27,6 @@ divergences:
       and matches.
     evidence: docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json owner-head-lfs
 
-  - id: D-2
-    scenario: anonymous-probes
-    step: [raw-readme, blob-config]
-    field: "*"
-    rule: ACC-5 (/raw/ and /blob/ clause) vs docs/system.md "Backend surface"
-    reason: >-
-      Outside the backend surface. docs/system.md lists the only routes both backends serve and has no
-      /raw/ or /blob/ route, so the clone answers 404 there; behaviour.md ACC-5 nevertheless records that
-      HF gates them (anonymous 401 GatedRepo). KB inconsistency to resolve: either add the routes to the
-      surface (and the clone) or scope ACC-5's /raw/ and /blob/ sentence out explicitly.
-    evidence: docs/system.md "Backend surface"; docs/hf-gated/behaviour.md ACC-5; anonymous-probes raw-readme, blob-config
-
-  - id: D-3
-    scenario: "live:clone-seed-reads"
-    step: whoami-bad-token
-    field: "header:content-type"
-    rule: docs/system.md "Personas" (invalid bearer -> HF's 401)
-    reason: >-
-      Bridge artefact, live mode only. The bridge never forwards an unknown bearer token: it answers the
-      401 itself (system.md: "Any other bearer value -> 401 ... exactly what HF answers"), but with
-      `application/json` where HF sends `application/json; charset=utf-8` (recorded). The status, message,
-      body and WWW-Authenticate match. To fix in the bridge, not in the clone.
-    evidence: docs/system.md "Personas"; observations/2026-10-05-clone-seed-reads.json whoami-bad-token
-
   - id: D-4
     scenario: "rules:test_rules_requests"
     step: test_REV_7_grant_on_non_gated_repo_is_400

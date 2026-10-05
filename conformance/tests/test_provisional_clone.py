@@ -6,7 +6,7 @@ from HF. When a question is resolved, move the test to a test_rules_* module or 
 
 Sources (read as text; expectations are written from these sentences, not from the clone's code):
 - docs/hf-gated/open-questions.md, "Provisional choices in the clone (2026-10-05)" (table rows cited
-  by their Q-id below);
+  by their Q-id below, including Q-27 `/raw/` and `/blob/` details and the reworded Q-14);
 - docs/system.md "Determinism" (list order) and "Outbox entry" (only §7 effects);
 - docs/hf-gated/api.md §3.3 "Check order" (validation, then unknown user, then request lookup).
 """
@@ -19,7 +19,7 @@ import pytest
 
 from conformance import expect as E
 from conformance.rule_seeds import (AUTO, AUTO_FIELDS, CAROL, FORM, FORM_ANSWERS, MANUAL, OWNER, PUBLIC, REQUESTER,
-                                    demo_repo, pending, rules_seed)
+                                    demo_repo, pending, rules_seed, text_file)
 from conformance.seeds import request
 
 pytestmark = pytest.mark.provisional
@@ -250,6 +250,20 @@ def test_provisional_Q14_report_reviewedAt_last_and_no_email_when_granted(be):
     assert "email" not in entries[CAROL] and list(entries[CAROL])[-1] == "reviewedAt"
 
 
+def test_provisional_Q14_report_one_sequence_sorted_like_the_lists(be):
+    # "one sequence of every request, all statuses mixed, sorted like the lists (timestamp ascending,
+    # then insertion order)"; inserted out of order, with a tie broken by insertion
+    be.put_state(rules_seed([
+        request("conf-user-01", "rejected", "2026-10-05T12:00:00.000Z", "2026-10-05T12:30:00.000Z", repo=MANUAL),
+        pending("conf-user-02", "2026-10-05T10:00:00.000Z"),
+        request("conf-user-03", "reset", "2026-10-05T11:00:00.000Z", "2026-10-05T11:30:00.000Z", repo=MANUAL),
+        request("conf-user-04", "accepted", "2026-10-05T11:00:00.000Z", "2026-10-05T11:40:00.000Z", OWNER,
+                repo=MANUAL),
+    ], users=4))
+    assert [e["user"] for e in be.report(MANUAL).json()] == ["conf-user-02", "conf-user-03", "conf-user-04",
+                                                             "conf-user-01"]
+
+
 @pytest.mark.parametrize("q,expected", [
     ("BOri", {REQUESTER}),  # substring of the username, any case
     ("ridg", {REQUESTER}),  # substring of the fullname "Bridge"
@@ -287,6 +301,67 @@ def test_provisional_Q25_quicksearch_users_prefix(be, q, expected):
 def test_provisional_Q25_quicksearch_other_type_is_400(be):
     be.put_state(rules_seed())
     assert be.get("owner", "/api/quicksearch?q=Test&type=model").status_code == 400
+
+
+# --- Q-27: /raw/ and /blob/ details ---------------------------------------------------------------
+
+def _lfs_pointer() -> str:
+    from conformance.seeds import LFS_FILE, sandbox_repo
+
+    lfs = sandbox_repo()["files"][LFS_FILE]["lfs"]
+    # git-lfs pointer; 135 bytes = the recorded pointerSize, and its git blob sha1 is the recorded oid
+    return f"version https://git-lfs.github.com/spec/v1\noid sha256:{lfs['oid']}\nsize {lfs['size']}\n"
+
+
+def test_provisional_Q27_raw_on_lfs_serves_the_pointer(be):
+    from conformance.seeds import LFS_FILE, SANDBOX, sandbox_repo, scenario_seed
+    be.put_state(scenario_seed("tree-masking"))
+    response = be.req("owner", "GET", f"/{SANDBOX}/raw/main/{LFS_FILE}")
+    E.assert_ok(response)
+    assert response.text == _lfs_pointer() and len(response.content) == 135
+    assert response.headers.get("etag", "").removeprefix("W/") == f'"{sandbox_repo()["files"][LFS_FILE]["oid"]}"'
+
+
+def test_provisional_Q27_raw_on_non_gated_repo_is_200_without_redirect(be):
+    be.put_state(rules_seed())
+    response = be.req("anonymous", "GET", f"/{PUBLIC}/raw/main/config.json")
+    E.assert_ok(response)
+    assert response.content == text_file("config.json")["text"].encode()
+
+
+def test_provisional_Q27_blob_with_access_shows_escaped_content(be):
+    document = rules_seed()
+    repo = next(r for r in document["repos"] if r["id"] == MANUAL)
+    repo["files"]["special.txt"] = text_file("special.txt", "a <b>bold</b> & co\n")
+    be.put_state(document)
+    response = be.req("owner", "GET", f"/{MANUAL}/blob/main/special.txt")
+    E.assert_ok(response)
+    assert E.media(response) == "text/html"
+    assert "a &lt;b&gt;bold&lt;/b&gt; &amp; co" in response.text and "<b>bold</b>" not in response.text
+
+
+def test_provisional_Q27_blob_of_lfs_shows_the_pointer(be):
+    from conformance.seeds import LFS_FILE, SANDBOX, scenario_seed
+    be.put_state(scenario_seed("tree-masking"))
+    response = be.req("owner", "GET", f"/{SANDBOX}/blob/main/{LFS_FILE}")
+    E.assert_ok(response)
+    assert _lfs_pointer().splitlines()[1] in response.text  # "oid sha256:…"
+
+
+def test_provisional_Q27_blob_404_is_html_and_unknown_repo_401_keeps_www_authenticate(be):
+    be.put_state(rules_seed())
+    missing = be.req("owner", "GET", f"/{MANUAL}/blob/main/no-such-file.txt")
+    assert missing.status_code == 404 and E.media(missing) == "text/html", E.describe(missing)
+    unknown = be.req("anonymous", "GET", "/Orosius/does-not-exist-xyz/blob/main/config.json")
+    assert unknown.status_code == 401, E.describe(unknown)
+    assert unknown.headers.get("www-authenticate") == E.WWW_AUTHENTICATE
+
+
+@pytest.mark.parametrize("route", ["raw", "blob"])
+def test_provisional_Q27_raw_and_blob_answer_get_only(be, route):
+    be.put_state(rules_seed())
+    response = be.req("owner", "HEAD", f"/{MANUAL}/{route}/main/README.md")
+    assert response.status_code >= 400, E.describe(response)
 
 
 # --- the "(none)" row -----------------------------------------------------------------------------------
@@ -336,6 +411,17 @@ def test_provisional_lfs_redirects_to_resolve_cache_which_applies_the_gate(be):
     location = response.headers["location"].removeprefix(be.base_url)
     gated = be.req("anonymous", "GET", location)
     assert (gated.status_code, gated.headers.get("x-error-code")) == (401, "GatedRepo"), E.describe(gated)
+
+
+def test_provisional_acc9_access_is_the_auth_check_decision(be):
+    # "(none)" row: "access" = the auth-check decision, so on a non-gated repo anonymous callers see the hashes
+    from conformance.seeds import LFS_FILE, SANDBOX, sandbox_repo, scenario_seed
+    document = scenario_seed("tree-masking")
+    document["repos"][0]["gated"] = False
+    be.put_state(document)
+    [lfs] = [e for e in be.get("anonymous", f"/api/models/{SANDBOX}/tree/main/checkpoint_tokens_20M_loss_4.9842").json()
+             if e["path"] == LFS_FILE]
+    assert lfs["xetHash"] == sandbox_repo()["files"][LFS_FILE]["xetHash"], lfs
 
 
 def test_provisional_no_etag_on_307_and_unknown_expand_skipped(be):

@@ -287,6 +287,13 @@ def scenario_seed(scenario: str) -> dict:
             "conformance:ui-walkthrough", _first_sent_at("2026-10-05-ui-walkthrough.json"),
             [request("TestingBOrig", "reset", "2026-10-05T14:17:07.311Z", "2026-10-05T14:19:22.565Z")],
         )
+    if scenario == "tree-masking":
+        # Recorded at 15:08 with the requester still pending ("requester (pending, no access)",
+        # raw-readme-requester "awaiting a review"): the pending request left by the UI walkthrough (#252).
+        return seed(
+            "conformance:tree-masking", _first_sent_at("2026-10-05-tree-masking.json"),
+            [request("TestingBOrig", "pending", "2026-10-05T14:20:42.886Z")],
+        )
     if scenario == "anonymous-probes":
         # Recorded at 13:33 without sent_at; only repos matter (anonymous, no requests).
         return seed("conformance:anonymous-probes", "2026-10-05T13:33:00.000Z", [],
@@ -302,4 +309,5 @@ SCENARIO_NAMES = (
     "clone-seed-reads",
     "ui-walkthrough",
     "anonymous-probes",
+    "tree-masking",
 )

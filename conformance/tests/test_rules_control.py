@@ -9,6 +9,8 @@ from __future__ import annotations
 import json
 from datetime import datetime, timedelta
 
+import pytest
+
 from conformance import expect as E
 from conformance.clone_api import snapshot
 from conformance.compare import Context, TimestampTracker, compare_response
@@ -52,19 +54,21 @@ def test_reset_restores_default_sandbox_seed(be):
     assert be.state() == baseline
 
 
-def test_builtin_sandbox_seed_reproduces_recorded_reads(be):
-    # The default seed must serve the recorded model info, tree and files (clone-seed-reads, anonymous steps).
+@pytest.mark.parametrize("recording", ["clone-seed-reads", "tree-masking"])
+def test_builtin_sandbox_seed_reproduces_recorded_reads(be, recording):
+    # The default seed must serve what anonymous callers were recorded getting (model info, tree with ACC-9
+    # masking, files, gate answers), with the same accepted divergences as the replay of that recording.
     assert be.reset().status_code < 300
-    recording = load_recording("2026-10-05-clone-seed-reads.json")
+    steps = load_recording(f"2026-10-05-{recording}.json").steps
     ctx = Context(TimestampTracker(set()), be.base_url, RECORDED_ORIGINS)
-    divergences = load_divergences()  # the same accepted divergences as the clone-seed-reads replay
+    divergences = load_divergences()
     problems = {}
-    for step in recording.steps:
-        if step.persona != "anonymous" or step.id == "anon-ask-access-get":
+    for step in steps:
+        if step.persona != "anonymous":
             continue
         response = be.req(step.persona, step.method, step.path)
         diffs = compare_response(step.expected, to_actual(response), ctx)
-        apply_divergences("clone-seed-reads", step.id, diffs, divergences)
+        apply_divergences(recording, step.id, diffs, divergences)
         diffs = [d for d in diffs if d.divergence is None]
         if diffs:
             problems[step.id] = [(d.field, d.expected, d.actual) for d in diffs[:5]]

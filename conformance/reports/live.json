@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-05T15:00:38Z",
+ "generated": "2026-10-05T15:16:10Z",
  "backend": "http://127.0.0.1:8100",
  "mode": "live",
  "scenarios": [
@@ -144,10 +144,10 @@
    ],
    "stand_ins": true,
    "error": null,
-   "ok": false,
+   "ok": true,
    "counts": {
-    "pass": 14,
-    "fail": 1,
+    "pass": 15,
+    "fail": 0,
     "diverged": 0,
     "skipped": 4,
     "error": 0
@@ -265,18 +265,10 @@
      "request_body": null,
      "expected_status": 401,
      "actual_status": 401,
-     "outcome": "fail",
+     "outcome": "pass",
      "reason": "",
      "restricted_to": null,
-     "diffs": [
-      {
-       "field": "header:content-type",
-       "expected": "application/json; charset=utf-8",
-       "actual": "application/json",
-       "detail": "",
-       "divergence": null
-      }
-     ]
+     "diffs": []
     },
     {
      "id": "owner-readme",
@@ -409,8 +401,109 @@
      "diffs": []
     }
    ]
+  },
+  {
+   "name": "live:tree-masking",
+   "recording": "2026-10-05-tree-masking.json",
+   "mode": "live",
+   "covers": [
+    "ACC-9",
+    "ACC-10",
+    "ACC-4"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 4,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 2,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "tree-subdir-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-subdir-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "tree-subdir-requester",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/Orosius/deltanet-mla-latent/tree/main/checkpoint_tokens_20M_loss_4.9842",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "raw-readme-owner",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "raw-readme-requester",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": null,
+     "outcome": "skipped",
+     "reason": "not in the live read-only selection",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "raw-readme-anon",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/Orosius/deltanet-mla-latent/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
   }
  ],
+ "stale_divergences": [],
  "divergences": [
   {
    "id": "D-1",
@@ -425,16 +518,13 @@
    "evidence": "docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json owner-head-lfs"
   },
   {
-   "id": "D-2",
-   "scenario": "anonymous-probes",
-   "step": [
-    "raw-readme",
-    "blob-config"
-   ],
+   "id": "D-4",
+   "scenario": "rules:test_rules_requests",
+   "step": "test_REV_7_grant_on_non_gated_repo_is_400",
    "field": "*",
-   "rule": "ACC-5 (/raw/ and /blob/ clause) vs docs/system.md \"Backend surface\"",
-   "reason": "Outside the backend surface. docs/system.md lists the only routes both backends serve and has no /raw/ or /blob/ route, so the clone answers 404 there; behaviour.md ACC-5 nevertheless records that HF gates them (anonymous 401 GatedRepo). KB inconsistency to resolve: either add the routes to the surface (and the clone) or scope ACC-5's /raw/ and /blob/ sentence out explicitly.",
-   "evidence": "docs/system.md \"Backend surface\"; docs/hf-gated/behaviour.md ACC-5; anonymous-probes raw-readme, blob-config"
+   "rule": "REV-7 vs open-questions.md \"Provisional choices in the clone\" (Q-9)",
+   "reason": "Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records \"No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)\" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded.",
+   "evidence": "docs/hf-gated/behaviour.md REV-7, CFG-6; docs/hf-gated/open-questions.md Q-9 provisional row"
   }
  ],
  "normalisations": [

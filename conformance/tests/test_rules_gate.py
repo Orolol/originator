@@ -171,3 +171,94 @@ def test_ACC_8_revoked_user_loses_access(be):
     E.assert_ok(be.handle(MANUAL, {"user": REQUESTER, "status": "pending"}))
     E.assert_error(be.resolve(MANUAL, "config.json", "requester"), 403, E.gate_pending(MANUAL), code="GatedRepo",
                    body="text")
+
+
+# --- ACC-9: LFS hashes in the tree listing --------------------------------------------------------
+
+MASK = "*" * 64
+LFS_DIR = "checkpoint_tokens_20M_loss_4.9842"
+
+
+def _sandbox_seed(requests: list[dict]) -> dict:
+    from conformance.seeds import seed
+
+    return seed("conformance:acc-9", "2026-10-05T15:00:00.000Z", requests)
+
+
+@pytest.mark.parametrize("persona,state,masked", [
+    ("anonymous", None, True),  # [OBS] tree-masking tree-subdir-anon
+    ("requester", "pending", True),  # [OBS] tree-masking tree-subdir-requester
+    ("owner", None, False),  # [OBS] tree-masking tree-subdir-owner
+    ("requester", None, True),  # ACC-9: no request = no access
+    ("requester", "rejected", True),
+    ("requester", "accepted", False),  # ACC-9: "shown to callers with access"
+])
+def test_ACC_9_lfs_hashes_masked_without_access(be, persona, state, masked):
+    from conformance.seeds import LFS_FILE, SANDBOX, sandbox_repo
+
+    requests = []
+    if state:
+        requests = [request(REQUESTER, state, "2026-10-05T14:00:00.000Z",
+                            None if state == "pending" else "2026-10-05T14:05:00.000Z",
+                            "Orosius" if state == "accepted" else None)]
+    be.put_state(_sandbox_seed(requests))
+    response = be.get(persona, f"/api/models/{SANDBOX}/tree/main/{LFS_DIR}")
+    E.assert_ok(response)
+    seeded = sandbox_repo()["files"]
+    for entry in response.json():
+        recorded = seeded[entry["path"]]
+        assert (entry["oid"], entry["size"]) == (recorded["oid"], recorded["size"]), entry  # never masked
+        if entry["path"] != LFS_FILE:
+            assert "lfs" not in entry and "xetHash" not in entry, entry
+    [lfs] = [entry for entry in response.json() if entry["path"] == LFS_FILE]
+    expected = seeded[LFS_FILE]
+    assert lfs["lfs"]["size"] == expected["lfs"]["size"] and lfs["lfs"]["pointerSize"] == 135
+    if masked:
+        assert (lfs["lfs"]["oid"], lfs["xetHash"]) == (MASK, MASK), lfs
+    else:
+        assert (lfs["lfs"]["oid"], lfs["xetHash"]) == (expected["lfs"]["oid"], expected["xetHash"]), lfs
+
+
+# --- ACC-10: /raw/ gate without the allowlist -------------------------------------------------------
+
+def _raw(be, repo: str, path: str, persona: str, method: str = "GET"):
+    return be.req(persona, method, f"/{repo}/raw/main/{path}")
+
+
+@pytest.mark.parametrize("path", ["README.md", "LICENSE.txt", "config.json"])
+def test_ACC_10_raw_anonymous_is_401_even_for_allowlisted_paths(seeded, path):
+    # [OBS] tree-masking raw-readme-anon, anonymous-probes raw-readme: no ACC-5 allowlist on /raw/
+    E.assert_error(_raw(seeded, MANUAL, path, "anonymous"), 401, E.gate_anonymous(MANUAL), code="GatedRepo",
+                   body="text", www_authenticate=True)
+
+
+@pytest.mark.parametrize("state", list(STATES))
+def test_ACC_10_raw_same_per_state_messages_as_resolve(be, state):
+    status_name, status, message = STATES[state]
+    requests = []
+    if status_name:
+        reviewed = None if status_name == "pending" else "2026-10-05T14:10:00.000Z"
+        requests = [request(REQUESTER, status_name, "2026-10-05T14:00:00.000Z", reviewed,
+                            "Orosius" if status_name == "accepted" else None, repo=MANUAL)]
+    be.put_state(rules_seed(requests))
+    for path in ("README.md", "config.json"):
+        response = _raw(be, MANUAL, path, "requester")
+        if status == 200:
+            E.assert_ok(response)
+            assert response.content == text_file(path)["text"].encode()
+        else:
+            E.assert_error(response, status, message(MANUAL), code="GatedRepo", body="text")
+
+
+def test_ACC_10_raw_serves_text_to_the_owner(seeded):
+    response = _raw(seeded, MANUAL, "README.md", "owner")  # [OBS] raw-readme-owner
+    E.assert_ok(response)
+    assert E.media(response) == "text/plain"
+    assert response.content == text_file("README.md")["text"].encode()
+
+
+def test_ACC_5_blob_anonymous_is_401_html_without_www_authenticate(seeded):
+    # [OBS] anonymous-probes blob-config; Q-27: HTML, X-Error-Code GatedRepo, no WWW-Authenticate
+    response = seeded.req("anonymous", "GET", f"/{MANUAL}/blob/main/config.json")
+    E.assert_error(response, 401, E.gate_anonymous(MANUAL), code="GatedRepo", body="any", www_authenticate=False)
+    assert E.media(response) == "text/html"

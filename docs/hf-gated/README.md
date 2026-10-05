@@ -28,6 +28,8 @@ report export, emails). Rationale and approach choice: [../../writeup.md](../../
 8. [sources.md](sources.md): pinned sources and how to re-fetch them.
 9. `observations/`: raw recorded probes (generated; do not hand-edit). `snapshots/`: generated
    extracts of the vendor spec.
+10. [verification/](verification/README.md): what is proven about the clone (conformance report,
+    clone-vs-live UI walkthrough diff, live re-check), and what is not.
 
 ## Scope
 

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 import re
 
 import pytest
@@ -256,3 +257,72 @@ def test_divergences_file_is_valid_and_globs_match():
     apply_divergences("live:owner-reads", "owner-resolve", diffs, [entry])
     assert classify(diffs) == "fail"  # status and body are not covered by header:*
     assert all(d.divergence == "D-x" for d in diffs if d.field.startswith("header:"))
+
+
+# --- stale divergences -----------------------------------------------------------------------------
+
+def _result(name: str, diffs_by_step: dict[str, list], error: str | None = None):
+    from conformance.compare import Diff
+    from conformance.replay import ScenarioResult, StepResult
+
+    step = _step(*GATE_STEP)
+    result = ScenarioResult(name, "x.json", [], False, "seeded", error=error)
+    for step_id, fields in diffs_by_step.items():
+        diffs = [Diff(field, 1, 2) for field in fields]
+        result.steps.append(StepResult(step, "fail" if diffs else "pass", diffs))
+        result.steps[-1].step = type(step)(**{**vars(step), "id": step_id})
+    return result
+
+
+def test_stale_divergence_detection():
+    from conformance.replay import stale_divergences, stale_message
+
+    used = Divergence("D-used", "scen-a", "s1", "status", "R", "used")
+    unused = Divergence("D-unused", "scen-a", "s2", "*", "R", "nothing to cover")
+    other_run = Divergence("D-elsewhere", "live:*", "*", "*", "R", "scenario not in this run")
+    errored = Divergence("D-errored", "scen-b", "*", "*", "R", "scenario failed to seed")
+    rule = Divergence("D-rule", "rules:test_x", "test_y", "*", "R", "strict xfail instead")
+    entries = [used, unused, other_run, errored, rule]
+    results = [_result("scen-a", {"s1": ["status"], "s2": []}), _result("scen-b", {}, error="seed refused")]
+    for result in results:
+        for step_result in result.steps:
+            apply_divergences(result.name, step_result.step.id, step_result.diffs, entries)
+    assert [entry.id for entry in stale_divergences(results, entries)] == ["D-unused"]
+    assert stale_message(unused).startswith("stale divergence D-unused: remove or re-justify")
+    # once the mismatch it was written for comes back, the entry is no longer stale
+    again = [_result("scen-a", {"s1": ["status"], "s2": ["body"]})]
+    for step_result in again[0].steps:
+        apply_divergences("scen-a", step_result.step.id, step_result.diffs, entries)
+    assert stale_divergences(again, entries) == []
+
+
+def test_stale_divergence_fails_the_report(monkeypatch, tmp_path):
+    import conformance.report as report
+
+    entry = Divergence("D-9", "scen-a", "s2", "*", "R", "nothing to cover")
+    monkeypatch.setattr(report, "load_divergences", lambda: [entry])
+    monkeypatch.setattr(report, "scenario_names", lambda: ["scen-a"])
+    monkeypatch.setattr(report, "run_scenarios", lambda names, client, live=False: [_result("scen-a", {"s1": []})])
+    monkeypatch.setattr(report, "load_manifest", lambda: {"scenarios": {}})
+    monkeypatch.setenv("BACKEND_URL", os.environ.get("BACKEND_URL", "http://127.0.0.1:8200"))  # restored after
+    assert report.main(["--out", str(tmp_path / "r"), "--backend", "http://127.0.0.1:1"]) == 1
+    markdown = (tmp_path / "r.md").read_text()
+    assert "stale divergence D-9: remove or re-justify" in markdown and "Overall: **FAIL**" in markdown
+
+
+def test_saved_run_is_rejudged_against_current_divergences():
+    from conformance.replay import results_from_json
+
+    step = load_recording("2026-10-05-clone-seed-reads.json").steps[0]
+    payload = {"scenarios": [{
+        "name": "live:clone-seed-reads", "recording": "2026-10-05-clone-seed-reads.json", "covers": [],
+        "stand_ins": True, "mode": "live", "error": None,
+        "steps": [{"id": step.id, "outcome": "diverged", "reason": "", "actual_status": 200, "restricted_to": None,
+                   "diffs": [{"field": "header:content-type", "expected": "a", "actual": "b", "detail": "",
+                              "divergence": "D-old"}]}],
+    }]}
+    [result] = results_from_json(payload, [])  # the entry that covered it is gone
+    assert result.steps[0].outcome == "fail" and not result.ok
+    entry = Divergence("D-new", "live:*", step.id, "header:content-type", "R", "still needed")
+    [result] = results_from_json(payload, [entry])
+    assert result.steps[0].outcome == "diverged" and result.ok
