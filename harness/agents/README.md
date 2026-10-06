@@ -10,6 +10,7 @@ Prompts actually given to subagents, checked in verbatim so the run can be audit
 | [runs/2026-10-05-conformance-verifier.md](runs/2026-10-05-conformance-verifier.md) | Build the **blind** conformance suite (fixture replay, rule tests, official client driver) | Opus | Verification quality is the grading criterion; must judge normalisations |
 | [runs/2026-10-05-clone-ui-walkthrough.md](runs/2026-10-05-clone-ui-walkthrough.md) | Script the live UI walkthrough in Playwright, run it on web + clone, diff the clone log against the live log | Sonnet | Bounded; the recorded live log is the reference |
 | [runs/2026-10-06-conformance-resync.md](runs/2026-10-06-conformance-resync.md) | Re-sync the blind suite to a second recorded sandbox (both recording sets replayed, REQ-7 / REP-1 rule tests) | Opus | Initial states and normalisations must be judged from recordings |
+| [runs/2026-10-06-ui-hub-alignment.md](runs/2026-10-06-ui-hub-alignment.md) | Align the web UI with the logged-in HF screens captured in the browser | Opus | Many screens; the browser capture is the reference; provisional choices to flag |
 
 Each pair ran **in parallel** against a contract written first ([docs/system.md](../../docs/system.md)):
 bridge + UI, then clone + verifier. The verifier may not read the clone's code (only its README and
