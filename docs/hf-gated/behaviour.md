@@ -124,8 +124,8 @@ The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [O
 | `reset` | submit gate form again | manual | `pending` with a **new `timestamp`**; `reviewedAt` removed; gone from the `reset` list | [OBS 2026-10-05, W s5b] |
 | `reset` | submit gate form again | auto | presumably `accepted` | [DOC-implied] |
 | `rejected` | submit again | manual | `303`, **no change** (still `rejected`, same `reviewedAt`) | [DOC] [OBS 2026-10-05, C m7] |
-| `pending` | submit again | manual | `303`, still `pending`; whether `timestamp`/`fields` change is unknown | [OBS] [Q-2] |
-| `accepted` | submit again | any | unknown | [Q-2] |
+| `pending` | submit again | manual | `303`, still `pending`, same `timestamp`; `fields` unknown | [OBS 2026-10-06, requester-ask-access + owner-reads] [Q-2] |
+| `accepted` | submit again | manual | `303`, same `timestamp`; status in between not listed | [OBS 2026-10-06, X c4-ask] [Q-2] |
 | `pending` | self-cancel (`POST /api/models/{id}/user-access-request/cancel`) | manual | **no request** (deleted from every list and the report); `200 {"ok":true}` (REQ-7) | [OBS 2026-10-06, X c2] |
 | `accepted` / `rejected` / `reset` / none | self-cancel | manual | **no change**; `404` (REQ-7) | [OBS 2026-10-06, X c1 c3 c4 c2-again] |
 

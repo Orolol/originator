@@ -31,7 +31,16 @@ Partial (2026-10-05) [OBS]: re-submitting while `pending` → `303` to the repo,
 pending. Whether that touches `timestamp` needs the owner's list view. Answer (2026-10-05) [OBS, `observations/2026-10-05-owner-walkthrough.md` s5b, `observations/2026-10-05-owner-walkthrough-completion.md` m7]:
 - after **rejected** → `303`, silently ignored (still rejected);
 - after **reset** → a new `pending` request with a new `timestamp` and no `reviewedAt`.
-Status: open for `accepted` and for `timestamp` on a re-submit while pending.
+Update (2026-10-06) [OBS]:
+- re-submit while **pending** keeps the `timestamp`: the JSON ask at 13:49:34.735Z and the form ask at
+  13:49:38.273Z leave one pending entry stamped 13:49:34.895Z (`observations/2026-10-06-requester-ask-access.md`
+  ask-access-json / ask-access-form, then `…-owner-reads.md` owner-list-pending). Matches the clone's
+  provisional choice;
+- re-submit while **accepted** → `303`, and the `timestamp` is kept (X c4-ask at 13:51:17.849Z; the entry
+  rejected right after, c4-list-rejected, still has c3-ask's 13:51:15.900Z). Whether the status stayed
+  `accepted` in between was not listed.
+Status: open for the status after a re-submit while accepted, and for `fields` on a pending re-submit
+(the sandbox has no extra fields).
 
 ### Q-3 (P0): requester self-cancel
 `POST /api/models/{id}/user-access-request/cancel`: is the request deleted (back to "no request") or
