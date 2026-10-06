@@ -42,6 +42,7 @@ Update (2026-10-06) [OBS]:
 Update (2026-10-06) [OBS E e2-ask-while-accepted, e2b]: re-submit while accepted leaves it accepted
 (same `timestamp`, `reviewedAt`, `grantedBy`). Status: open only for `fields` on a re-submit (the sandbox
 has no extra fields).
+Not covered by decision (2026-10-06): no repo with extra fields within the time box.
 
 ### Q-3 (P0): requester self-cancel
 `POST /api/models/{id}/user-access-request/cancel`: is the request deleted (back to "no request") or
@@ -56,7 +57,9 @@ UI answer (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: the 
 to `/settings/gated-repos` ("Gated Repos Status"), where each row has an icon-only
 `<button title="Cancel this access request">`. Not clicked yet, so its confirmation step and the
 request it fires are unrecorded. Our UI's button on the model page (web choice #26) diverges.
-Status: open only for that click (confirmation, request) and whether a self-cancel e-mails anyone.
+Click recorded (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 2]: a **native `confirm()` "Are you sure you want to cancel this
+access request?"**, then `POST …/user-access-request/cancel` (no body) → 200, and the row disappears
+without a reload. Status: open only for whether a self-cancel e-mails anyone.
 
 ### Q-4 (P0): same-status and success responses
 Exact status code and body for handle → the current status (the docstrings say 404 "already in the …
@@ -133,6 +136,7 @@ None of them carries an `X-Error-Code`. Update (2026-10-06) [OBS E e7, e12]:
   lists answer `200` (an empty list once the request is gone) and self-cancel works.
 Status: open for read-only tokens, `batch` on a non-gated repo, and the check order when several
 errors apply.
+Remaining parts out of scope by decision (2026-10-06): extra tokens and accounts.
 
 ### Q-10 (P1): list ordering and timestamps
 Default order of each list (by `timestamp`? `reviewedAt`? ascending or descending?). Which field
@@ -143,6 +147,7 @@ self-service accepts and auto-approvals? Partial (2026-10-05) [OBS]:
 - `grantedBy` is the accepting user (owner) for both handle-accepted and grant, and absent otherwise;
 - `timestamp` never changes except on a re-request after reset (TS-1, TS-2).
 Status: open for ordering and the `after`/`before` field.
+Out of scope by decision (2026-10-06): ordering needs several requesters.
 
 ### Q-11 (P1): logged-in gate screens
 Exact texts and controls for A2–A6 in [ui.md](ui.md): the default button label in auto vs manual; field
@@ -160,8 +165,10 @@ Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]:
   review from the repository authors. You can check the status of all your access requests in your
   settings." ("your settings" → `/settings/gated-repos`);
 - **owner / with access**: a block "Gated model" / "You have been granted access to this model".
-Status: open for A5 (rejected, with reason), A6 (reset) and the requester's accepted view. These need
-state changes.
+Update (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 2]: the manual-mode default button is **"Agree and send request to access
+repo"** (re-captured). Submitting is a native form POST, one 303, landing on the A3 text, with no toast.
+Status: open for A5 (rejected, with reason), A6 (reset) and the requester's accepted view (the clicks
+were blocked by the session's safety check).
 
 ### Q-12 (P1): settings section mechanics
 Does each control save immediately? Are there confirmation dialogs (disable)? The default
@@ -193,9 +200,18 @@ Mostly answered (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]
   `_id`); a selection shows "n selected", **"Accept selected"** and **"Reject selected"**;
 - **row**: username link, e-mail, relative time ("about 4 hours ago"), `Accept`, `Reject` (pending
   tab); **pagination**: `Previous` / `Next` links.
-Status: open for N (with only one pending request and nothing else, pending count and total are
-equal), the rejection-reason input, the rejected and accepted tab actions (both lists were empty),
-how `fields` are displayed, and what the bulk buttons send.
+Update (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 2]:
+- **N is the pending count**: after an Accept it reads `(0)` with one accepted request. It shows no
+  number until loaded;
+- the HF UI's `handle` body is **`{"status": …, "userId": "<_id>"}`**, by `userId`, where ours sends
+  `user`;
+- after an action it refetches only the source and destination lists and stays on the current tab;
+- empty tabs read "No pending access requests" / "No accepted access requests";
+- switching tabs refetches that list, showing "Processing..." meanwhile;
+- the accepted tab offers Reject and Cancel;
+- the row time follows `timestamp`.
+Status: open for the rejection-reason input, the rejected-tab actions, how `fields` are displayed and
+what the bulk buttons send (Reject was blocked by the session's safety check).
 
 ### Q-14 (P1): access report format
 JSON (as the docs say) or CSV? Filename (`Content-Disposition`)? Does it include `fields` and `reset`
@@ -205,6 +221,7 @@ pending entry keys `fullname, user, email, time, status`. Partial (2026-10-06) [
 entry is `fullname, user, email, time, reviewedAt, status, grantedBy {fullname, user}`; a self-cancelled
 request is not in it (X c2b). Update (2026-10-06) [OBS E e3-report, e5-report]: rejected and reset entries are `fullname, user,
 email, time, reviewedAt, status`. Status: open for `fields` and the ordering of several entries.
+Not covered by decision (2026-10-06): `fields` would need a repo with extra fields (time box).
 
 ### Q-15 (P1): stored answer encoding
 How answers are stored in `fields`: checkbox (`"on"`? `"true"`?), select (value or label?), date
@@ -216,6 +233,7 @@ Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: what t
 Internet address) will be shared with the model owner.", so its value is server-side. This matches
 web choices #6/#7, except that #7 renders no line. Status: open for what is **stored** in `fields`;
 it needs a request on a repo with fields.
+Not covered by decision (2026-10-06): needs a repo with extra fields (time box).
 
 ### Q-16 (P1): form validation
 Are all extra fields required? Must checkboxes be checked? Is it enforced client-side, server-side,
@@ -224,14 +242,17 @@ Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: **ever
 checkboxes included. Text inputs show the placeholder "<Label> (required)"; selects start on an empty
 "Select an option". Web choice #5 (no validation) is wrong. Status: open for server-side enforcement
 and error messages.
+Not covered by decision (2026-10-06): server-side checks need a repo with extra fields (time box).
 
 ### Q-17 (P2): bypass rules in detail
 On user-owned repos, does anyone besides the owner bypass (for example, HF staff)? With org repos and
 `orgMembersGated=false`, do read-role members bypass? [DOC-implied: yes] Status: open.
+Out of scope by decision (2026-10-06): needs an organisation with members.
 
 ### Q-18 (P2): email in lists
 Is `user.email` always present for self-service requests? Is it ever hidden (user privacy settings)?
 Status: open.
+Out of scope by decision (2026-10-06): needs an account with hidden e-mail.
 
 ### Q-19 (P2): rejection reason visibility
 The owner cannot read `rejectionReason` back through the list API (it is not in the schema). Is it
@@ -249,6 +270,7 @@ and a prefix is enough. Update (2026-10-06) [OBS E e0-search-*, `observations/20
 only a **prefix of the username** matches (`t`, `TESTINGB`); a substring (`orig`, `estingB`) or the
 fullname (`Bridge`, any case) does not, contrary to the spec's list. Status: open for e-mail, e-mail
 domain and verified-org matching, and `q` with pagination.
+Remaining parts out of scope by decision (2026-10-06): e-mail and org matching need more accounts.
 
 ### Q-22 (P2): `gated: true` in README YAML
 The EU section of the docs shows `gated: true` in card metadata. Does YAML `gated` do anything, or is
@@ -268,6 +290,7 @@ Partial (2026-10-06) [OBS E e8, e9, b f0]: the owner **can** appear in the lists
 (REV-6); their own entry then behaves like anyone's (handle to pending, self-cancel). An owner
 `ask-access` while holding that accepted entry → `303`, no change. Status: open for an owner
 `ask-access` with no entry, and for deleted accounts.
+Remaining parts out of scope by decision (2026-10-06): needs a deleted account.
 
 ### Q-27 (P2): `/raw/` and `/blob/` details
 ACC-10 records the gate on `/raw/` (anonymous 401, pending 403, owner 200 text), and an anonymous
@@ -278,12 +301,13 @@ ACC-10 records the gate on `/raw/` (anonymous 401, pending 403, owner 200 text),
 - HEAD on `raw`/`blob`.
 UI (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: with access, `/blob/` is a full file viewer (last commit; Download box
 with "Download file <size>" → `resolve/…?download=true`, the link, the `hf download` and `curl`
-commands; Raw / History / Blame / Edit / Delete links; then the content).
+commands; Raw / History / Blame / Edit / Delete links; then the content). With this, every
+part of the question is answered.
 Answer (2026-10-06) [OBS E e10, e12, `observations/2026-10-06-blob.md`], now in ACC-5 / ACC-10: `/raw/`
 serves an LFS file's pointer, a non-gated repo's file directly (200), `404 Entry not found` for a
 missing file, and answers HEAD like GET. `/blob/` ignores the Bearer token (HTML page): README.md is
-public, everything else (missing files included) is the anonymous 401. Status: open only for the
-`/blob/` page content itself (never captured with access, since tokens are ignored there).
+public, everything else (missing files included) is the anonymous 401. The page content with access
+was captured in the browser (UI note above). Status: **resolved**.
 
 ### Q-25 (P1): user search for "Add access"
 `GET /api/quicksearch?q=<username>&type=user` returns `users: []` for token callers (owner token,

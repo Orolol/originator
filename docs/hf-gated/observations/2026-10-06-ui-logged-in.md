@@ -115,3 +115,38 @@ notifications `bulk`, one request (`TestingBOrig`, pending, submitted 2026-10-06
     Internet address) will be shared with the model owner.";
   - the checkbox: `value="on"`, `required`.
 - The submit button is "Submit" (`extra_gated_button_content`).
+
+## Session 2: state-changing steps approved by the account owner (~18:55–19:05Z)
+
+The account owner approved "group 1" (state changes on the sandbox, observed in the browser). Requests
+were logged by a same-origin `fetch` hook in the page. Native `confirm()`/`prompt()` were stubbed to
+record their text. Requester e-mails, CSRF and WAF tokens were not kept.
+
+### Requester (`TestingBOrig`)
+- **Self-cancel** from `/settings/gated-repos`: the icon button "Cancel this access request" opens a
+  **native `confirm()`: "Are you sure you want to cancel this access request?"**. On OK it sends
+  `POST /api/models/{repo}/user-access-request/cancel` (no body) → `200`. The row disappears without a
+  page reload.
+- With **no request** on the manual sandbox (no custom button), the form button is **"Agree and send
+  request to access repo"**. There is no Cancel button and no `accessRequestStatus` prop.
+- **Submit**: native form POST to `/{repo}/ask-access?next=/{repo}`. The navigation records one redirect
+  (`redirectCount: 1`, the 303) and lands on the repo page in A3 ("Your request to access this
+  repository has been submitted…"), with `accessRequestStatus: "pending"`. No toast or extra message.
+
+### Owner (`OwnerOfTheGatedModel`), "Manage access requests"
+- On page load the button reads "Review access requests" with no number, then `(1)` once loaded.
+- **Accept** (pending tab) sends `POST /api/models/{repo}/user-access-request/handle` with JSON
+  `{"status":"accepted","userId":"<user _id>"}` → `200 {}`. The UI then refetches **only**
+  `…/pending?limit=100` and `…/accepted?limit=100`, stays on the pending tab, which now reads **"No
+  pending access requests"**, and the settings button becomes **"Review access requests (0)"**.
+- **Accepted tab**: switching to a tab refetches its list ("Processing..." while loading). The row
+  actions are **Reject** and **Cancel**. The row's relative time ("2 minutes ago") follows the
+  request's `timestamp`, not `reviewedAt`.
+- **Cancel** (accepted tab) sends `POST …/handle` `{"status":"pending","userId":"<user _id>"}` →
+  `200 {}`, refetches pending and accepted, and the tab shows **"No accepted access requests"**.
+- **Reject**: not captured. The agent's click was blocked by the session's safety check (an
+  external write), so the rejection-reason input, the rejected tab, the bulk actions and the
+  settings controls remain unrecorded.
+
+End state: `TestingBOrig` **pending** (timestamp 2026-10-06T18:58:59.445Z), repo `manual`,
+notifications `bulk`. Nothing else changed.
