@@ -25,9 +25,8 @@ While the clone is selected, a **Reset clone** button (`POST /-/clone/reset` →
 the bridge, and the route refuses there.
 
 Pick a persona with `/-/persona?as=anonymous|owner|requester&next=/{repo}`
-(or the links in the header). The index links to the sandbox repo of the chosen backend: the clone's
-seeded `Orosius/deltanet-mla-latent`, or the live `OwnerOfTheGatedModel/tiny-gated-model` on the
-bridge (`SANDBOX_REPO` overrides both).
+(or the links in the header). The index links to the sandbox repo `OwnerOfTheGatedModel/tiny-gated-model`
+(live on the bridge, seeded in the clone; `SANDBOX_REPO` overrides it).
 
 ## Tests
 
@@ -57,14 +56,26 @@ state. It uses the system Chrome (`PLAYWRIGHT_CHANNEL=chrome` by default).
 
 Provisional choices are marked `// Provisional (Q-n)` in the code.
 
-## Scripted walkthrough against the clone
+## Scripted walkthrough: live, then clone
+
+One journey, `e2e/walkthrough.ts` (role/label selectors only), drives both backends:
+
+```bash
+E2E_LIVE_WRITES=1 npm --prefix web run test:e2e:live
+```
+
+`playwright.live.config.ts` serves a production build on `:3102` pinned to the bridge (`:8100`, start it
+first). The spec puts TestingBOrig's request in `reset` through the bridge, clears the bridge log, runs
+the journey on huggingface.co, and exports the log to
+`docs/hf-gated/observations/<today>-ui-walkthrough.{json,md}`. It **writes** to the real Hub (and the
+owner gets e-mails): run it only when asked.
 
 ```bash
 npm --prefix web run test:e2e:clone
 ```
 
 `playwright.clone.config.ts` starts the clone on `127.0.0.1:8201` and a production build on `:3101`
-(`BACKEND_URL` must be a `127.0.0.1:82xx` clone; the guard refuses anything else). The test replays the
-journey of the live UI walkthrough using role/label selectors only, then diffs the clone's request log
-against the live recording (`harness/kb/compare_logs.py`); the report is `e2e/out/clone-vs-live.md`.
-Writes happen here because the clone is local. The default `playwright.config.ts` ignores this spec.
+(`BACKEND_URL` must be a `127.0.0.1:82xx` clone; the guard refuses anything else). It runs the same
+journey, then diffs the clone's request log against the live recording (`harness/kb/compare_logs.py`);
+the report is `e2e/out/clone-vs-live.md`. The default `playwright.config.ts` ignores both specs.
+Without system Chrome, prefix any e2e command with `PLAYWRIGHT_CHANNEL=chromium`.

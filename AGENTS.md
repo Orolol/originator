@@ -80,19 +80,25 @@ exist yet. Update this section when they land.
 - Sandbox repo (since 2026-10-06): `OwnerOfTheGatedModel/tiny-gated-model` (dedicated owner account
   `OwnerOfTheGatedModel`, `gated: "manual"`, no extra form fields). It holds a tiny, randomly
   initialised GPT-2 (`README.md`, `checkpoint-0/{config.json,generation_config.json,model.safetensors}`).
-  Requester account: `TestingBOrig`. At creation (2026-10-06) the repo had no request. Always read the
-  current state (owner lists) before scripting transitions.
-- Previous sandbox (2026-10-05 recordings, clone seeds, conformance): `Orosius/deltanet-mla-latent`,
-  owned by the candidate's personal account. It is no longer driven through the bridge; the
-  recordings and the clone keep its name as evidence. At the end of the 2026-10-05 walkthrough (14:23Z)
+  Requester account: `TestingBOrig`. At the end of the second scripted UI walkthrough
+  (2026-10-06 ~14:02Z) its request was **pending** and the repo `manual`. Always read the current state
+  (owner lists) before scripting transitions; the live walkthrough spec does it and resets the request
+  itself.
+- Previous sandbox: `Orosius/deltanet-mla-latent`, owned by the candidate's personal account (the
+  2026-10-05 recordings). It is no longer driven through the bridge; the conformance suite still replays
+  its recordings, with seeds built from them. Everything else (clone seeds, e2e, rule tests) uses the
+  new sandbox and the 2026-10-06 recordings. At the end of the 2026-10-05 walkthrough (14:23Z)
   its request was back to **pending**; that day a pending request was also cancelled by hand on
   huggingface.co, outside the bridge.
 - `.env` (gitignored) holds `HF_OWNER_ACCESS_TOKEN`, `HF_REQUESTER_ACCESS_TOKEN`, `HF_REQUESTER_LOGIN`.
-  Scripts use only the tokens (`probe.py --env-file .env` redacts every `.env` value from its output).
+  Scripts use only the tokens (`probe.py --env-file …` redacts every value of that file from its output).
+  Give `probe.py` an env file **without** `HF_REQUESTER_LOGIN`: it is now the plain username, so it
+  would be redacted wherever it appears (it happened once on 2026-10-06; see `sources.md`).
   Agents never type passwords into HF. Through the bridge, use the fake persona tokens
   (`harness/kb/probes/personas.env`), never the real ones.
-- Recorded walkthroughs: `docs/hf-gated/observations/2026-10-05-owner-walkthrough*.md` (API) and
-  `…-ui-walkthrough.md` (bridge log of the UI). Export a bridge log with `harness/kb/bridge_log_to_md.py`.
+- Recorded walkthroughs: `docs/hf-gated/observations/<date>-owner-walkthrough*.md` (API),
+  `…-requester-cancel.md` (REQ-7) and `…-ui-walkthrough.md` (bridge log of the UI; on 2026-10-06 the
+  scripted journey `web/e2e/walkthrough.ts`). Export a bridge log with `harness/kb/bridge_log_to_md.py`.
 - Each `ask-access` on a manual repo may email the owner. Only send state-changing calls the user asked for.
 
 ## Commands
@@ -147,10 +153,19 @@ The e2e suite is read-only against the live bridge: a guard aborts any non-GET/H
 npm --prefix web run test:e2e:clone
 ```
 
-This is the scripted UI walkthrough on web + clone (it starts the clone on 8201 and a production
-web build on 3101). It replays the live walkthrough's journey and diffs the clone's request log
-against `docs/hf-gated/observations/2026-10-05-ui-walkthrough.json` with `harness/kb/compare_logs.py`.
-The output goes to `web/e2e/out/` (gitignored).
+This is the scripted UI walkthrough (`web/e2e/walkthrough.ts`) on web + clone (it starts the clone on
+8201 and a production web build on 3101). It diffs the clone's request log against the live run of
+the same script, `docs/hf-gated/observations/2026-10-06-ui-walkthrough.json`, with
+`harness/kb/compare_logs.py`. The output goes to `web/e2e/out/` (gitignored).
+
+```bash
+E2E_LIVE_WRITES=1 npm --prefix web run test:e2e:live
+```
+
+The same journey against the real Hub through the bridge (bridge on 8100 first; web on 3102). It
+**writes** on the sandbox (ask-access, self-cancel, handle, settings; the owner gets e-mails) and
+re-records `docs/hf-gated/observations/<today>-ui-walkthrough.{json,md}`. Only when the user asks.
+Without system Chrome, add `PLAYWRIGHT_CHANNEL=chromium` to any e2e command.
 
 Conformance (blind suite; start the clone on 8200 first):
 
@@ -174,8 +189,12 @@ python3 harness/kb/probe.py harness/kb/probes/hf-gated-anonymous.json --out-json
 ```
 
 ```bash
-python3 harness/kb/probe.py harness/kb/probes/<cases>.json --env-file .env --allow-writes --out-json docs/hf-gated/observations/<date>-<name>.json --out-md docs/hf-gated/observations/<date>-<name>.md
+python3 harness/kb/probe.py harness/kb/probes/<cases>.json --env-file <tokens.env> --var SANDBOX=OwnerOfTheGatedModel/tiny-gated-model --var OWNER=OwnerOfTheGatedModel --var SUBDIR=checkpoint-0 --var LFS_FILE=checkpoint-0/model.safetensors --allow-writes --out-json docs/hf-gated/observations/<date>-<name>.json --out-md docs/hf-gated/observations/<date>-<name>.md
 ```
+
+Cases use `{SANDBOX}`-style placeholders; `<tokens.env>` holds `HF_OWNER_ACCESS_TOKEN`,
+`HF_REQUESTER_ACCESS_TOKEN` (direct cases), the persona tokens of `harness/kb/probes/personas.env`
+(`OWNER`, `REQUESTER`: cases through the bridge) and any `BAD_TOKEN`.
 
 ```bash
 python3 harness/kb/extract_openapi.py --spec-url https://huggingface.co/.well-known/openapi.json --include 'user-access-request|ask-access|user-access-report|/settings$' --exclude '^/api/(datasets|spaces|buckets|containers|organizations)/|^/datasets/|resource-groups|settings/tokens' --out docs/hf-gated/snapshots/openapi-gated.json

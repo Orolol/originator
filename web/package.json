@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:e2e:clone": "playwright test -c playwright.clone.config.ts"
+    "test:e2e:clone": "playwright test -c playwright.clone.config.ts",
+    "test:e2e:live": "playwright test -c playwright.live.config.ts"
   },
   "dependencies": {
     "date-fns": "^4.4.0",

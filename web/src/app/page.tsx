@@ -1,9 +1,7 @@
-import { currentBackend } from "@/lib/backend";
-import { sandboxRepoFor } from "@/lib/config";
+import { SANDBOX_REPO } from "@/lib/config";
 
 // Web-app index (no HF equivalent): entry points to the sandbox repo screens.
-export default async function Home() {
-  const SANDBOX_REPO = sandboxRepoFor(await currentBackend());
+export default function Home() {
   return (
     <main>
       <h1>Gated models replica</h1>

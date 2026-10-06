@@ -8,8 +8,8 @@ const BACKEND_URL = process.env.BACKEND_URL ?? "http://127.0.0.1:8100";
 
 export default defineConfig({
   testDir: "e2e",
-  // The clone walkthrough writes: it has its own config (playwright.clone.config.ts) and must never run here.
-  testIgnore: "**/clone-*.spec.ts",
+  // The clone and live walkthroughs write: they have their own configs (playwright.{clone,live}.config.ts) and must never run here.
+  testIgnore: ["**/clone-*.spec.ts", "**/live-*.spec.ts"],
   // One worker: the live Hub is shared state and rate-limited.
   workers: 1,
   timeout: 60_000,

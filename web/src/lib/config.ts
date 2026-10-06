@@ -24,15 +24,5 @@ export function backendUrlFor(backend: BackendId): string {
   return pinnedBackendUrl() ?? BACKEND_URLS[backend];
 }
 
-/**
- * Repo linked from the index page, per backend: the bridge only allows its live sandbox repo, the
- * clone serves its seeded copy of the repo recorded on 2026-10-05. `SANDBOX_REPO` overrides both.
- */
-const SANDBOX_REPOS: Record<BackendId, string> = {
-  clone: "Orosius/deltanet-mla-latent",
-  bridge: "OwnerOfTheGatedModel/tiny-gated-model",
-};
-
-export function sandboxRepoFor(backend: BackendId): string {
-  return process.env.SANDBOX_REPO ?? SANDBOX_REPOS[backend];
-}
+/** Repo linked from the index page: the live sandbox, which the clone's built-in seeds hold too. */
+export const SANDBOX_REPO = process.env.SANDBOX_REPO ?? "OwnerOfTheGatedModel/tiny-gated-model";
