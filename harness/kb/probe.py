@@ -125,11 +125,21 @@ def run_case(opener, case, env, allow_writes):
             headers["Content-Type"] = "application/json"
     request = urllib.request.Request(case["url"], data=data, method=method, headers=headers)
     sent_at = dt.datetime.now(dt.timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
-    try:
-        response = opener.open(request, timeout=30)
-        status, response_headers, body = response.status, response.headers, response.read()
-    except urllib.error.HTTPError as error:
-        status, response_headers, body = error.code, error.headers, error.read()
+    for attempt in (1, 2):
+        try:
+            response = opener.open(request, timeout=30)
+            status, response_headers, body = response.status, response.headers, response.read()
+            break
+        except urllib.error.HTTPError as error:
+            status, response_headers, body = error.code, error.headers, error.read()
+            break
+        except (urllib.error.URLError, ConnectionError, TimeoutError) as error:
+            # A dropped connection: retry once, and only a read (a write may have reached the server).
+            if attempt == 1 and method in ("GET", "HEAD"):
+                continue
+            return {"id": case["id"], "as": case.get("auth") or "anonymous", "method": method, "url": case["url"],
+                    "request_body": case.get("body"), "note": case.get("note"), "sent_at": sent_at,
+                    "status": None, "error": f"{type(error).__name__}: {error}", "headers": {}, "body_excerpt": None}
     text = body.decode("utf-8", errors="replace")
     kept_headers = {k: response_headers[k] for k in KEPT_HEADERS if response_headers.get(k) is not None}
     location = kept_headers.get("location")
@@ -234,6 +244,10 @@ def main() -> int:
     for case in cases:
         records.append(run_case(opener, case, env, args.allow_writes))
         print(f"{case['id']}: {records[-1]['status']}", file=sys.stderr)
+        if records[-1]["status"] is None and case.get("method", "GET") not in ("GET", "HEAD"):
+            # Unknown outcome of a write: stop, so later cases do not run from an unknown state.
+            print(f"{case['id']}: {records[-1]['error']}; stopping (write outcome unknown)", file=sys.stderr)
+            break
     records = redact(records, env)
     meta = {
         "cases_file": args.cases,

@@ -1,0 +1,235 @@
+[
+ {
+  "id": "f0-owner-to-pending",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "{OWNER}",
+   "status": "pending"
+  },
+  "note": "cleanup of e8 (self-grant): owner's own entry back to pending"
+ },
+ {
+  "id": "f0-owner-cancel",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/cancel",
+  "auth": "OWNER",
+  "note": "cleanup: owner withdraws it (REQ-7), so it leaves every list"
+ },
+ {
+  "id": "f0-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "f0-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "f0-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "f0-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e10-head-raw-owner",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/raw/main/README.md",
+  "note": "Q-27 HEAD raw (direct: the bridge routes GET only)",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "e10-head-raw-anon",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/raw/main/.gitattributes",
+  "note": "Q-27 HEAD raw anonymous on a gated file"
+ },
+ {
+  "id": "e10-head-blob-owner",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/README.md",
+  "note": "Q-27 HEAD blob",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "e11-ask",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
+  "auth": "REQUESTER",
+  "body": {},
+  "note": "back to pending (after reset)"
+ },
+ {
+  "id": "e11-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e11-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e11-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e11-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e11-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e12-to-false",
+  "method": "PUT",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
+  "auth": "OWNER",
+  "body": {
+   "gated": false
+  },
+  "note": "gated -> false with a pending request"
+ },
+ {
+  "id": "e12-grant-not-gated",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/grant",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig"
+  },
+  "note": "D-4 / REV-7: grant on a non-gated repo (400 per the client docstring?)"
+ },
+ {
+  "id": "e12-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e12-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e12-raw-anon-not-gated",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/raw/main/.gitattributes",
+  "note": "Q-27 /raw/ anonymous on a non-gated repo (200 or 307?)"
+ },
+ {
+  "id": "e12-cancel",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/cancel",
+  "auth": "REQUESTER",
+  "note": "remove the request if still pending (REQ-7)"
+ },
+ {
+  "id": "e12-list-pending-empty",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "note": "Q-9 list on a non-gated repo; empty if the cancel worked",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-handle-not-gated",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "rejected"
+  },
+  "note": "Q-9 handle on a non-gated repo"
+ },
+ {
+  "id": "e13-to-manual",
+  "method": "PUT",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
+  "auth": "OWNER",
+  "body": {
+   "gated": "manual"
+  },
+  "note": "restore manual"
+ },
+ {
+  "id": "e13-ask",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
+  "auth": "REQUESTER",
+  "body": {},
+  "note": "end state: pending"
+ },
+ {
+  "id": "e13-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e13-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e13-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e13-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e13-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ }
+]

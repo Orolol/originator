@@ -44,6 +44,8 @@ def main() -> int:
         "http://127.0.0.1:8201/__clone__/log); overrides --bridge. `limit=10000` is added when the URL has no "
         "`limit` parameter (the clone's default is 100)",
     )
+    parser.add_argument("--after-id", type=int, help="keep only entries whose id is greater (a window of the log)")
+    parser.add_argument("--until-id", type=int, help="keep only entries whose id is at most this")
     parser.add_argument("--title", required=True)
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
@@ -63,6 +65,8 @@ def main() -> int:
         kind = "Bridge"
     with urllib.request.urlopen(log_url, timeout=30) as response:
         entries = redact(json.load(response))
+    entries = [e for e in entries if (args.after_id is None or e["id"] > args.after_id)
+               and (args.until_id is None or e["id"] <= args.until_id)]
 
     with open(args.out_json, "w") as handle:
         json.dump(entries, handle, indent=1, ensure_ascii=False)

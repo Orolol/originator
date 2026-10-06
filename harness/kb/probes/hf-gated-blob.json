@@ -1,0 +1,80 @@
+[
+ {
+  "id": "blob-README.md-get-anon",
+  "method": "GET",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/README.md",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?"
+ },
+ {
+  "id": "blob-README.md-get-owner",
+  "method": "GET",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/README.md",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "blob-README.md-head-anon",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/README.md",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?"
+ },
+ {
+  "id": "blob-README.md-head-owner",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/README.md",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "blob-config.json-get-anon",
+  "method": "GET",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/checkpoint-0/config.json",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?"
+ },
+ {
+  "id": "blob-config.json-get-owner",
+  "method": "GET",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/checkpoint-0/config.json",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "blob-config.json-head-anon",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/checkpoint-0/config.json",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?"
+ },
+ {
+  "id": "blob-config.json-head-owner",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/checkpoint-0/config.json",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "blob-no-such-file.txt-get-anon",
+  "method": "GET",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/no-such-file.txt",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?"
+ },
+ {
+  "id": "blob-no-such-file.txt-get-owner",
+  "method": "GET",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/no-such-file.txt",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "blob-no-such-file.txt-head-anon",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/no-such-file.txt",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?"
+ },
+ {
+  "id": "blob-no-such-file.txt-head-owner",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/no-such-file.txt",
+  "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ }
+]

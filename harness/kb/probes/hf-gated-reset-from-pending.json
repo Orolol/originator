@@ -1,0 +1,138 @@
+[
+ {
+  "id": "r0-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 0
+ },
+ {
+  "id": "r0-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r0-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r0-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r1-reset-from-pending",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "confirm Q-5"
+  },
+  "note": "Q-5 pending -> reset, again"
+ },
+ {
+  "id": "r1-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "r1-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r1-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r1-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r1b-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 6
+ },
+ {
+  "id": "r1b-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r1b-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r1b-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r1-report",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/user-access-report",
+  "auth": "OWNER",
+  "note": "is the reset-from-pending entry in the report?"
+ },
+ {
+  "id": "r1-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "r2-pending-from-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "pending"
+  },
+  "note": "restore pending"
+ },
+ {
+  "id": "r2-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "r2-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r2-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "r2-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ }
+]

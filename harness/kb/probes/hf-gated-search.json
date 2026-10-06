@@ -1,0 +1,51 @@
+[
+ {
+  "id": "q-Bridge",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=Bridge",
+  "auth": "OWNER",
+  "note": "Q-21: TestingBOrig (fullname Bridge) pending"
+ },
+ {
+  "id": "q-Br",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=Br",
+  "auth": "OWNER",
+  "note": "Q-21: TestingBOrig (fullname Bridge) pending"
+ },
+ {
+  "id": "q-bridge",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=bridge",
+  "auth": "OWNER",
+  "note": "Q-21: TestingBOrig (fullname Bridge) pending"
+ },
+ {
+  "id": "q-BRIDGE",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=BRIDGE",
+  "auth": "OWNER",
+  "note": "Q-21: TestingBOrig (fullname Bridge) pending"
+ },
+ {
+  "id": "q-testing",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=testing",
+  "auth": "OWNER",
+  "note": "Q-21: TestingBOrig (fullname Bridge) pending"
+ },
+ {
+  "id": "q-TestingBOrig",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=TestingBOrig",
+  "auth": "OWNER",
+  "note": "Q-21: TestingBOrig (fullname Bridge) pending"
+ },
+ {
+  "id": "q-estingB",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=estingB",
+  "auth": "OWNER",
+  "note": "Q-21: TestingBOrig (fullname Bridge) pending"
+ }
+]

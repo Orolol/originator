@@ -1,0 +1,776 @@
+[
+ {
+  "id": "e0-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e0-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e0-search-orig",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=orig",
+  "note": "Q-21 q=orig",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-search-TESTINGB",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=TESTINGB",
+  "note": "Q-21 q=TESTINGB",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-search-testingborig",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=testingborig",
+  "note": "Q-21 q=testingborig",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-search-bridge",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=bridge",
+  "note": "Q-21 q=bridge",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-search-t",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=t",
+  "note": "Q-21 q=t",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e0-search-xyz",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending?q=xyz",
+  "note": "Q-21 q=xyz",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e1-reset-from-pending",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "note": "Q-5 pending -> reset"
+ },
+ {
+  "id": "e1-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e1-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e1-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e1-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e1-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e2-accept-from-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "accepted"
+  },
+  "note": "Q-5 reset -> accepted (owner, directly)"
+ },
+ {
+  "id": "e2-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e2-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e2-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e2-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e2-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e2-ask-while-accepted",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
+  "auth": "REQUESTER",
+  "body": {},
+  "note": "Q-2 re-submit while accepted: status after?"
+ },
+ {
+  "id": "e2b-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e2b-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e2b-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e2b-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e2b-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e3-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "note": "accepted -> reset (known)"
+ },
+ {
+  "id": "e3-reject-from-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "rejected"
+  },
+  "note": "Q-5 reset -> rejected (owner, directly)"
+ },
+ {
+  "id": "e3-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e3-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e3-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e3-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e3-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e3-report",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/user-access-report",
+  "auth": "OWNER",
+  "wait": 1,
+  "note": "Q-14 a rejected entry"
+ },
+ {
+  "id": "e4-grant-rejected",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/grant",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig"
+  },
+  "note": "Q-6 grant a rejected user"
+ },
+ {
+  "id": "e4-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e4-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e4-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e4-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e4-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e5-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "note": "accepted -> reset (known)"
+ },
+ {
+  "id": "e5-report",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/user-access-report",
+  "auth": "OWNER",
+  "wait": 1,
+  "note": "Q-14 a reset entry"
+ },
+ {
+  "id": "e5-grant-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/grant",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig"
+  },
+  "note": "Q-6 grant a reset user"
+ },
+ {
+  "id": "e5-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e5-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e5-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e5-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e5-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e6-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "note": "accepted -> reset (known)"
+ },
+ {
+  "id": "e6-pending-from-reset",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "pending"
+  },
+  "note": "Q-5 reset -> pending (owner, directly)"
+ },
+ {
+  "id": "e6-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e6-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e6-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e6-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e6-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e7-accept-with-reason",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "accepted",
+   "rejectionReason": "should be ignored?"
+  },
+  "note": "Q-9 rejectionReason with a non-rejected status"
+ },
+ {
+  "id": "e7-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e7-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e7-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e7-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e7-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e7-reset-no-reason",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "reset"
+  },
+  "note": "Q-9 reset without resetReason"
+ },
+ {
+  "id": "e7b-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e7b-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e7b-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e7b-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e7b-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e8-self-grant",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/grant",
+  "auth": "OWNER",
+  "body": {
+   "user": "{OWNER}"
+  },
+  "note": "Q-6 owner grants themselves"
+ },
+ {
+  "id": "e9-owner-ask-access",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
+  "auth": "OWNER",
+  "body": {},
+  "note": "Q-24 owner asks for access to their own repo"
+ },
+ {
+  "id": "e9-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e9-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e9-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e9-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e9-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e9-owner-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "note": "Q-24 owner still bypasses?",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e9-owner-cancel",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/cancel",
+  "auth": "OWNER",
+  "note": "Q-24 cleanup: owner self-cancel (REQ-7)"
+ },
+ {
+  "id": "e10-raw-lfs-owner",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/raw/main/{LFS_FILE}",
+  "note": "Q-27 /raw/ on an LFS file",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e10-raw-missing-owner",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/raw/main/no-such-file.txt",
+  "note": "Q-27 /raw/ 404",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e10-blob-missing-owner",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/blob/main/no-such-file.txt",
+  "note": "Q-27 /blob/ 404",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e10-head-raw-owner",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/raw/main/README.md",
+  "note": "Q-27 HEAD raw (direct: the bridge routes GET only)",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "e10-head-raw-anon",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/raw/main/.gitattributes",
+  "note": "Q-27 HEAD raw anonymous on a gated file"
+ },
+ {
+  "id": "e10-head-blob-owner",
+  "method": "HEAD",
+  "url": "https://huggingface.co/{SANDBOX}/blob/main/README.md",
+  "note": "Q-27 HEAD blob",
+  "auth": "HF_OWNER_ACCESS_TOKEN"
+ },
+ {
+  "id": "e11-ask",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
+  "auth": "REQUESTER",
+  "body": {},
+  "note": "back to pending (after reset)"
+ },
+ {
+  "id": "e11-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e11-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e11-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e11-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e11-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e12-to-false",
+  "method": "PUT",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
+  "auth": "OWNER",
+  "body": {
+   "gated": false
+  },
+  "note": "gated -> false with a pending request"
+ },
+ {
+  "id": "e12-grant-not-gated",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/grant",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig"
+  },
+  "note": "D-4 / REV-7: grant on a non-gated repo (400 per the client docstring?)"
+ },
+ {
+  "id": "e12-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e12-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ },
+ {
+  "id": "e12-raw-anon-not-gated",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/raw/main/.gitattributes",
+  "note": "Q-27 /raw/ anonymous on a non-gated repo (200 or 307?)"
+ },
+ {
+  "id": "e12-cancel",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/cancel",
+  "auth": "REQUESTER",
+  "note": "remove the request if still pending (REQ-7)"
+ },
+ {
+  "id": "e12-list-pending-empty",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "note": "Q-9 list on a non-gated repo; empty if the cancel worked",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e12-handle-not-gated",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
+  "auth": "OWNER",
+  "body": {
+   "user": "TestingBOrig",
+   "status": "rejected"
+  },
+  "note": "Q-9 handle on a non-gated repo"
+ },
+ {
+  "id": "e13-to-manual",
+  "method": "PUT",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
+  "auth": "OWNER",
+  "body": {
+   "gated": "manual"
+  },
+  "note": "restore manual"
+ },
+ {
+  "id": "e13-ask",
+  "method": "POST",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
+  "auth": "REQUESTER",
+  "body": {},
+  "note": "end state: pending"
+ },
+ {
+  "id": "e13-list-pending",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
+  "auth": "OWNER",
+  "wait": 1
+ },
+ {
+  "id": "e13-list-accepted",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e13-list-rejected",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e13-list-reset",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
+  "auth": "OWNER"
+ },
+ {
+  "id": "e13-req-auth-check",
+  "method": "GET",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
+  "auth": "REQUESTER"
+ }
+]
