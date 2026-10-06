@@ -24,8 +24,10 @@ While the clone is selected, a **Reset clone** button (`POST /-/clone/reset` →
 `POST /__clone__/reset`) restores its default seed and reloads the page. The button is hidden on
 the bridge, and the route refuses there.
 
-Pick a persona with `/-/persona?as=anonymous|owner|requester&next=/Orosius/deltanet-mla-latent`
-(or the links in the header).
+Pick a persona with `/-/persona?as=anonymous|owner|requester&next=/{repo}`
+(or the links in the header). The index links to the sandbox repo of the chosen backend: the clone's
+seeded `Orosius/deltanet-mla-latent`, or the live `OwnerOfTheGatedModel/tiny-gated-model` on the
+bridge (`SANDBOX_REPO` overrides both).
 
 ## Tests
 

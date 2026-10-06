@@ -77,11 +77,16 @@ exist yet. Update this section when they land.
 
 ### Live sandbox (real Hub)
 
-- Sandbox repo: `Orosius/deltanet-mla-latent` (owner `Orosius`, `gated: "manual"`, no extra form
-  fields). Requester account: `TestingBOrig`. At the end of the 2026-10-05 walkthrough
-  (14:23Z) its request was back to **pending**. Always read the current state (owner lists) before
-  scripting transitions: the account owner also acts on huggingface.co directly (on 2026-10-05 a
-  pending request was cancelled by hand there, outside the bridge).
+- Sandbox repo (since 2026-10-06): `OwnerOfTheGatedModel/tiny-gated-model` (dedicated owner account
+  `OwnerOfTheGatedModel`, `gated: "manual"`, no extra form fields). It holds a tiny, randomly
+  initialised GPT-2 (`README.md`, `checkpoint-0/{config.json,generation_config.json,model.safetensors}`).
+  Requester account: `TestingBOrig`. At creation (2026-10-06) the repo had no request. Always read the
+  current state (owner lists) before scripting transitions.
+- Previous sandbox (2026-10-05 recordings, clone seeds, conformance): `Orosius/deltanet-mla-latent`,
+  owned by the candidate's personal account. It is no longer driven through the bridge; the
+  recordings and the clone keep its name as evidence. At the end of the 2026-10-05 walkthrough (14:23Z)
+  its request was back to **pending**; that day a pending request was also cancelled by hand on
+  huggingface.co, outside the bridge.
 - `.env` (gitignored) holds `HF_OWNER_ACCESS_TOKEN`, `HF_REQUESTER_ACCESS_TOKEN`, `HF_REQUESTER_LOGIN`.
   Scripts use only the tokens (`probe.py --env-file .env` redacts every `.env` value from its output).
   Agents never type passwords into HF. Through the bridge, use the fake persona tokens

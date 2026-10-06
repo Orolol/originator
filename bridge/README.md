@@ -21,7 +21,7 @@ Environment variables, plus the repo-root `.env` (the process environment wins; 
 |---|---|---|
 | `BRIDGE_UPSTREAM` | `https://huggingface.co` | Hub origin to forward to |
 | `BRIDGE_PUBLIC_URL` | `http://127.0.0.1:8100` | origin that replaces the upstream one in `Location` / `Link`; set it if you change host or port |
-| `BRIDGE_REPOS` | `Orosius/deltanet-mla-latent` | comma-separated repo allowlist |
+| `BRIDGE_REPOS` | `OwnerOfTheGatedModel/tiny-gated-model` | comma-separated repo allowlist |
 | `BRIDGE_HOST`, `BRIDGE_PORT` | `127.0.0.1`, `8100` | where uvicorn listens |
 | `BRIDGE_LOG_FILE` | `<repo>/harness/recordings/raw/bridge.jsonl` | JSONL exchange log (gitignored); empty string disables it |
 | `HF_OWNER_ACCESS_TOKEN` | none | real token behind `Bearer persona-owner` |

@@ -14,7 +14,7 @@ from bridge.config import Settings
 
 pytestmark = pytest.mark.live
 
-REPO = "Orosius/deltanet-mla-latent"
+REPO = "OwnerOfTheGatedModel/tiny-gated-model"
 OWNER = {"Authorization": "Bearer persona-owner"}
 REQUESTER = {"Authorization": "Bearer persona-requester"}
 
@@ -41,7 +41,7 @@ def live():
 def test_whoami_owner(live):
     response = live.get("/api/whoami-v2", headers=OWNER)
     assert response.status_code == 200
-    assert response.json()["name"] == "Orosius"
+    assert response.json()["name"] == "OwnerOfTheGatedModel"
 
 
 def test_whoami_requester(live):

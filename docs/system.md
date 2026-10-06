@@ -21,7 +21,7 @@ HF tokens.
 | Persona | Token sent by web | Bridge maps to | Clone (planned) seeds |
 |---|---|---|---|
 | `anonymous` | no `Authorization` header | forwarded anonymously | anonymous |
-| `owner` | `persona-owner` | `.env` `HF_OWNER_ACCESS_TOKEN` (HF user `Orosius`) | user `Orosius` |
+| `owner` | `persona-owner` | `.env` `HF_OWNER_ACCESS_TOKEN` (HF user `OwnerOfTheGatedModel` since 2026-10-06; `Orosius` before) | user `Orosius` |
 | `requester` | `persona-requester` | `.env` `HF_REQUESTER_ACCESS_TOKEN` (HF user `TestingBOrig`) | user `TestingBOrig` |
 
 Any other bearer value → `401`, JSON `{"error": "Invalid username or password."}`, with the same text in
@@ -68,7 +68,7 @@ host (a CDN) is left untouched. This is the only normalisation the bridge applie
 
 ## Bridge safety rules
 
-- **Repo allowlist** (`BRIDGE_REPOS`, default `Orosius/deltanet-mla-latent`). Repo-scoped calls on
+- **Repo allowlist** (`BRIDGE_REPOS`, default `OwnerOfTheGatedModel/tiny-gated-model`; `Orosius/deltanet-mla-latent` before 2026-10-06). Repo-scoped calls on
   any other repo → `403`, `X-Error-Code: BridgeRepoNotAllowed`.
 - Routes outside the table → `404`, `X-Error-Code: BridgeRouteNotAllowed`.
 - No retries and no redirect following; one upstream call per incoming call, so the log reflects

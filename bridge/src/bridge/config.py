@@ -18,7 +18,7 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 
 DEFAULT_UPSTREAM = "https://huggingface.co"
 DEFAULT_PUBLIC_URL = "http://127.0.0.1:8100"
-DEFAULT_REPOS = "Orosius/deltanet-mla-latent"
+DEFAULT_REPOS = "OwnerOfTheGatedModel/tiny-gated-model"
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8100
 DEFAULT_LOG_FILE = REPO_ROOT / "harness" / "recordings" / "raw" / "bridge.jsonl"

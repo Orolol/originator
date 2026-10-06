@@ -3,7 +3,7 @@
 // aborted and fails the test.
 import { expect, test, type Page } from "@playwright/test";
 
-const REPO = process.env.E2E_REPO ?? "Orosius/deltanet-mla-latent";
+const REPO = process.env.E2E_REPO ?? "OwnerOfTheGatedModel/tiny-gated-model";
 const DEFAULT_HEADING = "You need to agree to share your contact information to access this model";
 const SUBMIT = "Agree and send request to access repo";
 

@@ -16,7 +16,7 @@ def test_defaults(tmp_path):
     settings = Settings.from_env({"BRIDGE_ENV_FILE": str(empty)})
     assert settings.upstream == "https://huggingface.co"
     assert settings.public_url == "http://127.0.0.1:8100"
-    assert settings.repos == ("Orosius/deltanet-mla-latent",)
+    assert settings.repos == ("OwnerOfTheGatedModel/tiny-gated-model",)
     assert settings.tokens == {}
     assert settings.log_file == DEFAULT_LOG_FILE
     assert DEFAULT_LOG_FILE.parts[-4:] == ("harness", "recordings", "raw", "bridge.jsonl")
