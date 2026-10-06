@@ -14,7 +14,17 @@ The pytest side of the suite adds rule tests by ID, the clone's provisional choi
 labelled group), and the official `huggingface_hub` client running its own access-request flow against
 the clone: 351 passed, no expected failure left (D-4 was settled by a recording) at the last run (2026-10-06).
 
-**What this does not prove.** HF's *own* web UI firing these requests, and its logged-in screens, have
-not been recorded; that needs a browser session on huggingface.co. Behaviour listed in
-[../open-questions.md](../open-questions.md) is provisional by definition: the clone's choice is
-tested, not proven against the Hub.
+**Latest live re-check (2026-10-06 ~18:35Z): FAIL, on token metadata only.** `conformance/reports/live.md`
+mismatches only `whoami-*` → `auth.accessToken.displayName` / `createdAt`. These describe the access
+token configured in `.env`, which had been replaced since the recording. No Hub behaviour changed, and
+the other 19 replayed live steps match. The fix (not applied) would be to normalise those two token
+fields in live mode.
+
+**What this does not prove.**
+- The UI walkthrough compares *our* web UI against the clone and against the Hub through the bridge.
+  **HF's own UI** was observed separately in a logged-in browser
+  (`observations/2026-10-06-ui-logged-in.md`, `[OBS-UI]`). It sends some requests differently, for
+  example `handle` by `userId` where ours sends `user`. No single script has driven both HF's
+  interface and ours.
+- Behaviour listed in [../open-questions.md](../open-questions.md) is provisional by definition: the
+  clone's choice is tested, not proven against the Hub.

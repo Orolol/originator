@@ -1,6 +1,6 @@
 # Conformance report: clone vs real-Hub recordings
 
-Generated 2026-10-06T14:52:29Z against `http://127.0.0.1:8200` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
+Generated 2026-10-06T17:23:33Z against `http://127.0.0.1:8200` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
 
 ## Summary
 

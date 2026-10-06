@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-06T14:52:39Z",
+ "generated": "2026-10-06T18:33:23Z",
  "backend": "http://127.0.0.1:8100",
  "mode": "live",
  "scenarios": [
@@ -144,10 +144,10 @@
    ],
    "stand_ins": true,
    "error": null,
-   "ok": true,
+   "ok": false,
    "counts": {
-    "pass": 15,
-    "fail": 0,
+    "pass": 13,
+    "fail": 2,
     "diverged": 0,
     "skipped": 4,
     "error": 0
@@ -226,10 +226,25 @@
      "request_body": null,
      "expected_status": 200,
      "actual_status": 200,
-     "outcome": "pass",
+     "outcome": "fail",
      "reason": "",
      "restricted_to": null,
-     "diffs": []
+     "diffs": [
+      {
+       "field": "body$.auth.accessToken.displayName",
+       "expected": "orig",
+       "actual": "a",
+       "detail": "",
+       "divergence": null
+      },
+      {
+       "field": "body$.auth.accessToken.createdAt",
+       "expected": "2026-10-06T13:15:23.159Z",
+       "actual": "2026-10-06T18:32:23.698Z",
+       "detail": "order differs from recording relative to 2026-10-06T13:24:38.000Z (backend 2026-10-06T13:24:38.000Z)",
+       "divergence": null
+      }
+     ]
     },
     {
      "id": "whoami-requester",
@@ -239,10 +254,25 @@
      "request_body": null,
      "expected_status": 200,
      "actual_status": 200,
-     "outcome": "pass",
+     "outcome": "fail",
      "reason": "",
      "restricted_to": null,
-     "diffs": []
+     "diffs": [
+      {
+       "field": "body$.auth.accessToken.displayName",
+       "expected": "origLap",
+       "actual": "orig",
+       "detail": "",
+       "divergence": null
+      },
+      {
+       "field": "body$.auth.accessToken.createdAt",
+       "expected": "2026-10-06T13:21:13.627Z",
+       "actual": "2026-10-05T13:28:04.823Z",
+       "detail": "order differs from recording relative to 2026-10-06T13:15:23.159Z (backend 2026-10-06T18:32:23.698Z)",
+       "divergence": null
+      }
+     ]
     },
     {
      "id": "whoami-anon",

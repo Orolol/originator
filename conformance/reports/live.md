@@ -1,20 +1,27 @@
 # Conformance report: clone vs real-Hub recordings
 
-Generated 2026-10-06T14:52:39Z against `http://127.0.0.1:8100` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
+Generated 2026-10-06T18:33:23Z against `http://127.0.0.1:8100` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
 
 ## Summary
 
-Overall: **PASS** (0 failing scenario(s), 0 stale divergence(s)).
+Overall: **FAIL** (1 failing scenario(s), 0 stale divergence(s)).
 
 | scenario | recording | steps | pass | diverged (listed) | fail | skipped | error | result |
 |---|---|---|---|---|---|---|---|---|
 | live:2026-10-06/owner-reads | `2026-10-06-owner-reads.json` | 8 | 2 | 0 | 0 | 6 | 0 | **PASS** |
-| live:2026-10-06/clone-seed-reads (stand-ins) | `2026-10-06-clone-seed-reads.json` | 19 | 15 | 0 | 0 | 4 | 0 | **PASS** |
+| live:2026-10-06/clone-seed-reads (stand-ins) | `2026-10-06-clone-seed-reads.json` | 19 | 13 | 0 | 2 | 4 | 0 | **FAIL** |
 | live:2026-10-06/tree-masking | `2026-10-06-tree-masking.json` | 6 | 4 | 0 | 0 | 2 | 0 | **PASS** |
 
 ## Unexpected mismatches (verbatim)
 
-None.
+### live:2026-10-06/clone-seed-reads
+
+| step | request | field | expected (recording) | actual (backend) | detail |
+|---|---|---|---|---|---|
+| whoami-owner | `owner GET /api/whoami-v2` | `body$.auth.accessToken.displayName` | `orig` | `a` |  |
+| whoami-owner | `owner GET /api/whoami-v2` | `body$.auth.accessToken.createdAt` | `2026-10-06T13:15:23.159Z` | `2026-10-06T18:32:23.698Z` | order differs from recording relative to 2026-10-06T13:24:38.000Z (backend 2026-10-06T13:24:38.000Z) |
+| whoami-requester | `requester GET /api/whoami-v2` | `body$.auth.accessToken.displayName` | `origLap` | `orig` |  |
+| whoami-requester | `requester GET /api/whoami-v2` | `body$.auth.accessToken.createdAt` | `2026-10-06T13:21:13.627Z` | `2026-10-05T13:28:04.823Z` | order differs from recording relative to 2026-10-06T13:15:23.159Z (backend 2026-10-06T18:32:23.698Z) |
 
 ## Stale divergences
 
@@ -85,8 +92,8 @@ Covers: ACC-4, ACC-5, api.md §3.3 check order, system.md Personas (401 wording)
 | model-info-expand | anonymous | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model?expand[]=gated&expand[]=cardData` | 200 → 200 | pass |  |
 | tree-main | anonymous | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/tree/main` | 200 → 200 | pass |  |
 | tree-subdir | anonymous | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/tree/main/checkpoint-0` | 200 → 200 | pass |  |
-| whoami-owner | owner | `GET /api/whoami-v2` | 200 → 200 | pass |  |
-| whoami-requester | requester | `GET /api/whoami-v2` | 200 → 200 | pass |  |
+| whoami-owner | owner | `GET /api/whoami-v2` | 200 → 200 | fail | body$.auth.accessToken.displayName; body$.auth.accessToken.createdAt |
+| whoami-requester | requester | `GET /api/whoami-v2` | 200 → 200 | fail | body$.auth.accessToken.displayName; body$.auth.accessToken.createdAt |
 | whoami-anon | anonymous | `GET /api/whoami-v2` | 401 → 401 | pass |  |
 | whoami-bad-token | bad | `GET /api/whoami-v2` | 401 → 401 | pass |  |
 | owner-readme | owner | `GET /OwnerOfTheGatedModel/tiny-gated-model/resolve/main/README.md` | 200 → 200 | pass |  |
