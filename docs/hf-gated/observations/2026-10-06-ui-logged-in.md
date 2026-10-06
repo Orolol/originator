@@ -150,3 +150,28 @@ record their text. Requester e-mails, CSRF and WAF tokens were not kept.
 
 End state: `TestingBOrig` **pending** (timestamp 2026-10-06T18:58:59.445Z), repo `manual`,
 notifications `bulk`. Nothing else changed.
+
+## Session 3: clicks by the account owner, observed by the agent (~19:05–19:25Z)
+
+The agent's own Reject click was blocked by the session's safety check. The account owner then made the
+remaining clicks; the agent only read the page, its props and the browser's network log.
+
+- **Reject (owner, pending tab)**: **no reason is asked** (account owner's report). One
+  `POST …/user-access-request/handle` → 200, then the UI refetches `…/pending?limit=100` and
+  `…/rejected?limit=100`. The request body is not in the network log.
+- **Rejected tab**: row actions **Accept** and **Cancel**. No reason is displayed in the modal.
+- **Settings controls**: "Disable Access requests", "Enable Access requests" (which comes back in
+  **automatic approval**, `gated: "auto"`), the "New requests" select and the "Notifications
+  frequency" select each send one `PUT /api/models/{repo}/settings` → 200, followed by a **full page
+  reload**. No confirmation. The bodies are unrecorded (the reload clears the page hook).
+- **Requester, rejected (A5)**: props `accessRequestStatus: "rejected"`. Text: "You need to agree to
+  share your contact information to access this model" / the default sub-line / **"Your request to
+  access this repo has been rejected by the repo's authors."**. No form, link or button. No reason was
+  shown (none was given).
+- **Requester `/settings/gated-repos`**: the row reads `… model Oct 6 REJECTED`, and **it still has the
+  "Cancel this access request" button**, although the API refuses to cancel a non-pending request
+  (REQ-7, 404). Not clicked.
+- Props `gatedReposRequests[0]`: `{_id, repoName, repoType: "model", status: "rejected", submittedAt:
+  "2026-10-06T18:58:59.445Z"}`.
+
+End state: `TestingBOrig` **rejected** (no reason), repo `manual`, notifications `bulk`.

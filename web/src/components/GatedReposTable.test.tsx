@@ -1,5 +1,5 @@
 // `/settings/gated-repos` table [OBS-UI 2026-10-06]: header buttons, one row per request, HF's
-// self-cancel button only where the API allows it (REQ-7: pending), behind a native confirm().
+// self-cancel button on PENDING and REJECTED rows as HF shows it [OBS-UI], behind a native confirm().
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { CONFIRM_CANCEL, GatedReposTable } from "./GatedReposTable";
@@ -60,10 +60,14 @@ describe("GatedReposTable", () => {
     expect(screen.getByRole("link", { name: REPO })).toBeTruthy();
   });
 
-  it.each(["rejected", "reset"] as const)("a %s row has no cancel button (REQ-7: only pending can be withdrawn)", (status) => {
+  it.each([
+    ["pending", true],
+    ["rejected", true], // [OBS-UI 2026-10-06]: HF keeps the button on a REJECTED row
+    ["reset", false], // Provisional (Q-3): never seen
+  ] as const)("a %s row: cancel button shown = %s", (status, shown) => {
     render(<GatedReposTable rows={[row("a/b", status)]} />);
     expect(screen.getByRole("cell", { name: status.toUpperCase() })).toBeTruthy();
-    expect(screen.queryByRole("button", { name: "Cancel this access request" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Cancel this access request" }) !== null).toBe(shown);
   });
 
   it("no request → an empty table", () => {

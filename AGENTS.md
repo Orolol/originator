@@ -80,8 +80,10 @@ exist yet. Update this section when they land.
 - Sandbox repo (since 2026-10-06): `OwnerOfTheGatedModel/tiny-gated-model` (dedicated owner account
   `OwnerOfTheGatedModel`, `gated: "manual"`, no extra form fields). It holds a tiny, randomly
   initialised GPT-2 (`README.md`, `checkpoint-0/{config.json,generation_config.json,model.safetensors}`).
-  Requester account: `TestingBOrig`. At the end of the second scripted UI walkthrough
-  (2026-10-06 ~14:02Z) its request was **pending** and the repo `manual`. Always read the current state
+  Requester account: `TestingBOrig`. After the logged-in browser sessions (2026-10-06 ~19:25Z) its
+  request is **rejected** (no reason) and the repo `manual`, notifications `bulk`. The read-only e2e
+  (`test:e2e`) expects a pending request, so its owner/requester checks fail until the owner moves
+  the request back to pending (rejected tab → Cancel). Always read the current state
   (owner lists) before scripting transitions; the live walkthrough spec does it and resets the request
   itself.
 - Previous sandbox: `Orosius/deltanet-mla-latent`, owned by the candidate's personal account (the

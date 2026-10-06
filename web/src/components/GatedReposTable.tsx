@@ -1,7 +1,7 @@
 "use client";
 // Table of `/settings/gated-repos` [OBS-UI 2026-10-06]: sortable header buttons `Repo Name`, `Type`,
 // `Date`, `Request Status`; one row per request (repo link, `model`, date, status in uppercase) and,
-// on rows the API lets the user withdraw, an icon-only button titled "Cancel this access request".
+// an icon-only button titled "Cancel this access request" (on PENDING and REJECTED rows alike).
 // Session 2: the button asks a native confirm(), then sends `POST …/user-access-request/cancel` (no
 // body) and the row disappears without a page reload.
 import { useState } from "react";
@@ -71,8 +71,10 @@ export function GatedReposTable({ rows }: { rows: GatedRepoRow[] }) {
               <td>{row.date ?? ""}</td>
               <td>{row.status.toUpperCase()}</td>
               <td>
-                {/* REQ-7: only a pending request can be withdrawn, so only pending rows get the button. */}
-                {row.status === "pending" && (
+                {/* [OBS-UI 2026-10-06]: HF shows the button on PENDING and on REJECTED rows, although the
+                    API only withdraws a pending request (REQ-7: a rejected one answers 404, shown
+                    verbatim below). Provisional (Q-3): RESET rows, never seen, get no button. */}
+                {(row.status === "pending" || row.status === "rejected") && (
                   <button
                     type="button"
                     title="Cancel this access request"

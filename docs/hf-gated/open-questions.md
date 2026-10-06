@@ -57,6 +57,9 @@ UI answer (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: the 
 to `/settings/gated-repos` ("Gated Repos Status"), where each row has an icon-only
 `<button title="Cancel this access request">`. Not clicked yet, so its confirmation step and the
 request it fires are unrecorded. Our UI's button on the model page (web choice #26) diverges.
+Session 3 [OBS-UI]: HF **keeps the button on a REJECTED row**, although the API only withdraws a
+pending request (REQ-7). What a click shows there is unrecorded. Our page now shows the button on
+pending and rejected rows.
 Click recorded (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 2]: a **native `confirm()` "Are you sure you want to cancel this
 access request?"**, then `POST …/user-access-request/cancel` (no body) → 200, and the row disappears
 without a reload. Status: open only for whether a self-cancel e-mails anyone.
@@ -167,8 +170,9 @@ Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]:
 - **owner / with access**: a block "Gated model" / "You have been granted access to this model".
 Update (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 2]: the manual-mode default button is **"Agree and send request to access
 repo"** (re-captured). Submitting is a native form POST, one 303, landing on the A3 text, with no toast.
-Status: open for A5 (rejected, with reason), A6 (reset) and the requester's accepted view (the clicks
-were blocked by the session's safety check).
+**A5 recorded** [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 3]: "Your request to access this repo has been rejected by the repo's
+authors.", `accessRequestStatus: "rejected"`, no form and no link (web choice #24 confirmed). Status: open
+for A6 (reset) and the requester's accepted view.
 
 ### Q-12 (P1): settings section mechanics
 Does each control save immediately? Are there confirmation dialogs (disable)? The default
@@ -183,7 +187,10 @@ Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]:
 - `New requests:` is a JS-driven `<select>` outside any form; the notifications select and email sit in
   a form without action or submit button; `Disable Access requests` submits a form to
   `/api/models/{repo}/settings` with `gated=false`.
-Status: open for what each control sends and when, and for confirmations. These need state changes.
+Update (sessions 2–3) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: each control (both
+selects, Disable, Enable) saves at once with one `PUT …/settings`, then reloads the page, with no
+confirmation. Enable comes back in **automatic approval** (CFG-1 confirmed). Status: open only for the
+exact PUT bodies.
 
 ### Q-13 (P1): review modal details
 What `Review access requests (N)` counts; whether a `reset` tab exists; how `fields` answers are
@@ -210,8 +217,9 @@ Update (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 2
 - switching tabs refetches that list, showing "Processing..." meanwhile;
 - the accepted tab offers Reject and Cancel;
 - the row time follows `timestamp`.
-Status: open for the rejection-reason input, the rejected-tab actions, how `fields` are displayed and
-what the bulk buttons send (Reject was blocked by the session's safety check).
+Update (session 3) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 3]: there is **no rejection-reason input**: Reject sends at once, then
+refetches pending and rejected. The **rejected tab** offers **Accept** and **Cancel** (web choice #16
+confirmed). Status: open for how `fields` are displayed and what the bulk buttons send.
 
 ### Q-14 (P1): access report format
 JSON (as the docs say) or CSV? Filename (`Content-Disposition`)? Does it include `fields` and `reset`
@@ -257,7 +265,10 @@ Out of scope by decision (2026-10-06): needs an account with hidden e-mail.
 ### Q-19 (P2): rejection reason visibility
 The owner cannot read `rejectionReason` back through the list API (it is not in the schema). Is it
 in the report? How does the requester page render it? Partial (2026-10-05) [OBS]: the reason is absent from the lists, from the report entry, and from
-the requester's `auth-check`/`resolve` messages. Status: open for the page rendering and the email.
+the requester's `auth-check`/`resolve` messages. Update (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md` session 3]: **HF's Reject asks
+for no reason**, so a reason can only come from the API, and the rejected page shows only the
+standard text. Status: open only for how the page shows a reason sent through the API, and for the
+e-mail.
 
 ### Q-20 (P2): notification side effects
 Can an owner observe the "new request" email or the reset email in a test mailbox, with what content
