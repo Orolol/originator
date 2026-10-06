@@ -48,6 +48,7 @@ state. It uses the system Chrome (`PLAYWRIGHT_CHANNEL=chrome` by default).
 | `src/app/api/[...path]/route.ts` | `/api/*` proxy to the backend with the persona token |
 | `src/app/[ns]/[repo]/{ask-access,user-access-report,resolve/[...rest]}/route.ts` | HF web routes, proxied |
 | `src/app/-/persona/route.ts` | persona switch (cookie) |
+| `src/app/-/cancel-request/route.ts` | requester self-cancel from A3 → `POST /api/models/{repo}/user-access-request/cancel` (provisional, Q-3) |
 | `src/lib/gateState.ts` | the only auth-check → gate-state mapping |
 | `src/lib/gateForm.ts` | `extra_gated_*` card metadata → form config |
 | `src/lib/hubClient.ts` | browser-side requests fired by the owner controls |

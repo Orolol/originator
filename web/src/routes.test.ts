@@ -9,6 +9,7 @@ import { GET as apiGet } from "@/app/api/[...path]/route";
 import { GET as switchPersona } from "@/app/-/persona/route";
 import { GET as switchBackend } from "@/app/-/backend/route";
 import { POST as resetClone } from "@/app/-/clone/reset/route";
+import { POST as cancelRequest } from "@/app/-/cancel-request/route";
 
 // No backend cookie → the default backend (the clone), unless BACKEND_URL pins one.
 const BACKEND_URL = BACKEND_URLS.clone;
@@ -201,5 +202,47 @@ describe("POST /-/clone/reset", () => {
     const res = await resetClone(resetPost("backend=clone"));
     expect(res.status).toBe(502);
     expect(await res.text()).toContain("Clone unreachable");
+  });
+});
+
+describe("POST /-/cancel-request (requester self-cancel, Q-3)", () => {
+  function cancelPost(repo: string) {
+    return new NextRequest(`${WEB}/-/cancel-request`, {
+      method: "POST",
+      body: new URLSearchParams({ repo }),
+      headers: { cookie: "persona=requester", "content-type": "application/x-www-form-urlencoded" },
+    });
+  }
+
+  it("posts the cancel endpoint with the persona token and no body, then 303 to the repo page", async () => {
+    const fetchMock = stubBackend(() => Response.json({}));
+    const res = await cancelRequest(cancelPost(REPO));
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe(`${BACKEND_URL}/api/models/${REPO}/user-access-request/cancel`);
+    expect(init?.method).toBe("POST");
+    expect(sentHeaders(init)).toEqual({ Authorization: "Bearer persona-requester" });
+    expect(init?.body).toBe("");
+    expect(res.status).toBe(303);
+    expect(res.headers.get("location")).toBe(`${WEB}/${REPO}`);
+  });
+
+  it("relays a backend error verbatim (status, X-Error-*, body)", async () => {
+    stubBackend(
+      () =>
+        new Response(JSON.stringify({ error: "No access request found matching your criteria" }), {
+          status: 404,
+          headers: { "content-type": "application/json", "x-error-message": "No access request found matching your criteria" },
+        }),
+    );
+    const res = await cancelRequest(cancelPost(REPO));
+    expect(res.status).toBe(404);
+    expect(res.headers.get("x-error-message")).toBe("No access request found matching your criteria");
+  });
+
+  it.each(["", "no-slash", "a/b/c", "../x", "a/..", "//evil.example"])("refuses repo %j with 400 and sends nothing", async (repo) => {
+    const fetchMock = stubBackend(() => Response.json({}));
+    const res = await cancelRequest(cancelPost(repo));
+    expect(res.status).toBe(400);
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });

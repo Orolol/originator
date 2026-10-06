@@ -52,7 +52,17 @@ function GateBody({ repoId, config, state }: { repoId: string; config: GateConfi
     case "pending":
       // Provisional (Q-11): the page wording for A3 is unrecorded; we show the backend's auth-check
       // message verbatim ("Your request to access model {id} is awaiting a review from the repo authors.").
-      return <p role="status">{state.message}</p>;
+      // Requester self-cancel [SPEC] `POST …/user-access-request/cancel`. Provisional (Q-3): HF's page
+      // control and its label are unrecorded; offered on A3 only, through the web route /-/cancel-request.
+      return (
+        <>
+          <p role="status">{state.message}</p>
+          <form method="post" action="/-/cancel-request">
+            <input type="hidden" name="repo" value={repoId} />
+            <button type="submit">Cancel my request</button>
+          </form>
+        </>
+      );
     case "unmapped":
       // docs/system.md: unknown auth-check answers are shown verbatim and flagged, never mapped to a
       // guessed screen.

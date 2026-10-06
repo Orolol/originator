@@ -39,7 +39,8 @@ moved to a status? From which states is it allowed? What is the error when there
 there a UI control for it? Weak evidence (2026-10-05): the account owner cancelled a pending request by hand on huggingface.co
 (the exact UI action is not recorded). Afterwards the request was gone from every list and the
 requester's `auth-check` said "not in the authorized list". That fits a deletion, which is the clone's
-provisional choice, if the action was the requester-side cancel. Status: open.
+provisional choice, if the action was the requester-side cancel. The web UI now offers a
+provisional self-cancel button on A3 (web choice #26). Status: open.
 
 ### Q-4 (P0): same-status and success responses
 Exact status code and body for handle → the current status (the docstrings say 404 "already in the …
@@ -230,6 +231,7 @@ and strike the line.
 | 22 | (none) | Unmapped gate states: the message is shown verbatim, plus `[unmapped gate state: auth-check HTTP {status} {code}]`. |
 | 24 | Q-11 / Q-19 | Rejected (A5): show the docs' page text `Your request to access this repo has been rejected by the repo's authors.`; no reason (not exposed by the API). |
 | 25 | Q-11 | Reset (A6): show the consent form again, with no reset notice. |
+| 26 | Q-3 | Pending (A3): a `Cancel my request` button (label invented) posts the web-only route `/-/cancel-request`, which calls `POST …/user-access-request/cancel` with no body and redirects to the repo page; a backend error is shown verbatim. Offered on A3 only (accepted users see no gate box; rejected/reset untested). Added 2026-10-06. |
 | 23 | (none) | Settings control order follows the doc screenshots: `New requests` select, `Review access requests (N)`, `Download user access report`, `Add access` on one row; notifications on the next row. The Disable/Enable button sits under the text, not at the top right. |
 
 ## Provisional choices in the clone (2026-10-05)

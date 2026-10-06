@@ -109,11 +109,23 @@ describe("A5 rejected and A6 reset (OBS 2026-10-05)", () => {
 });
 
 describe("A3 pending and unmapped states", () => {
-  it("pending shows the backend message, no form", () => {
+  it("pending shows the backend message, no gate form, and a self-cancel control (Q-3)", () => {
     const msg = `Your request to access model ${REPO} is awaiting a review from the repo authors.`;
     const { container } = renderGate(STARCODER_CARD, { kind: "pending", message: msg });
     expect(screen.getByRole("status").textContent).toBe(msg);
-    expect(container.querySelector("form")).toBeNull();
+    const forms = container.querySelectorAll("form");
+    expect(forms).toHaveLength(1);
+    expect(forms[0].getAttribute("method")).toBe("post");
+    expect(forms[0].getAttribute("action")).toBe("/-/cancel-request");
+    expect(forms[0].querySelector<HTMLInputElement>('input[type="hidden"][name="repo"]')?.value).toBe(REPO);
+    expect(screen.getByRole("button", { name: "Cancel my request" })).toBeTruthy();
+    expect(screen.queryByRole("textbox")).toBeNull();
+    expect(screen.queryByRole("checkbox")).toBeNull();
+  });
+
+  it.each(["no-request", "reset", "rejected", "anonymous"] as const)("%s offers no self-cancel control", (kind) => {
+    renderGate(STARCODER_CARD, { kind, message: "" });
+    expect(screen.queryByRole("button", { name: "Cancel my request" })).toBeNull();
   });
 
   it("unmapped shows the message verbatim and flags it", () => {
