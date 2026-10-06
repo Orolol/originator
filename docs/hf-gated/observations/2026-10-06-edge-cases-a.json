@@ -1,0 +1,1751 @@
+[
+ {
+  "id": 447,
+  "started_at": "2026-10-06T14:40:36.364Z",
+  "duration_ms": 113.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"117-UFxkorwkTJU25ibD1NdejicCrwY\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "status": "pending"
+   }
+  ]
+ },
+ {
+  "id": 448,
+  "started_at": "2026-10-06T14:40:36.480Z",
+  "duration_ms": 109.4,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 449,
+  "started_at": "2026-10-06T14:40:36.591Z",
+  "duration_ms": 136.4,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 450,
+  "started_at": "2026-10-06T14:40:36.729Z",
+  "duration_ms": 113.4,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 451,
+  "started_at": "2026-10-06T14:40:36.844Z",
+  "duration_ms": 111.2,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 403,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "X-Error-Code": "GatedRepo",
+   "X-Error-Message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+   "ETag": "W/\"7a-CFXFppoGafPdMfycdenmDrdDbeM\""
+  },
+  "response_body": {
+   "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+  }
+ },
+ {
+  "id": 452,
+  "started_at": "2026-10-06T14:40:36.957Z",
+  "duration_ms": 111.0,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "q=orig",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 453,
+  "started_at": "2026-10-06T14:40:37.070Z",
+  "duration_ms": 112.2,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "q=TESTINGB",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"117-UFxkorwkTJU25ibD1NdejicCrwY\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "status": "pending"
+   }
+  ]
+ },
+ {
+  "id": 454,
+  "started_at": "2026-10-06T14:40:37.184Z",
+  "duration_ms": 111.3,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "q=testingborig",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"117-UFxkorwkTJU25ibD1NdejicCrwY\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "status": "pending"
+   }
+  ]
+ },
+ {
+  "id": 455,
+  "started_at": "2026-10-06T14:40:37.297Z",
+  "duration_ms": 113.3,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "q=bridge",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 456,
+  "started_at": "2026-10-06T14:40:37.412Z",
+  "duration_ms": 113.2,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "q=t",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"117-UFxkorwkTJU25ibD1NdejicCrwY\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "status": "pending"
+   }
+  ]
+ },
+ {
+  "id": 457,
+  "started_at": "2026-10-06T14:40:37.527Z",
+  "duration_ms": 112.4,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "q=xyz",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 458,
+  "started_at": "2026-10-06T14:40:37.641Z",
+  "duration_ms": 115.6,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 459,
+  "started_at": "2026-10-06T14:40:38.760Z",
+  "duration_ms": 109.9,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 460,
+  "started_at": "2026-10-06T14:40:38.872Z",
+  "duration_ms": 106.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 461,
+  "started_at": "2026-10-06T14:40:38.981Z",
+  "duration_ms": 107.6,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 462,
+  "started_at": "2026-10-06T14:40:39.091Z",
+  "duration_ms": 108.0,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 463,
+  "started_at": "2026-10-06T14:40:39.201Z",
+  "duration_ms": 106.4,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 403,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "X-Error-Code": "GatedRepo",
+   "X-Error-Message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+   "ETag": "W/\"d0-/coPsV2pPZU9uAlll7yARiBlvp4\""
+  },
+  "response_body": {
+   "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request."
+  }
+ },
+ {
+  "id": 464,
+  "started_at": "2026-10-06T14:40:39.309Z",
+  "duration_ms": 124.9,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "accepted"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 465,
+  "started_at": "2026-10-06T14:40:40.437Z",
+  "duration_ms": 112.8,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 466,
+  "started_at": "2026-10-06T14:40:40.551Z",
+  "duration_ms": 114.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"1fd-t4xVpGnvQK56I/ykAUThTLX3gvI\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:39.379Z",
+    "status": "accepted",
+    "grantedBy": {
+     "_id": "6ac4f4465de11a43eb34fb52",
+     "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+     "isPro": false,
+     "fullname": "Ower Model",
+     "user": "OwnerOfTheGatedModel",
+     "type": "user"
+    }
+   }
+  ]
+ },
+ {
+  "id": 467,
+  "started_at": "2026-10-06T14:40:40.668Z",
+  "duration_ms": 111.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 468,
+  "started_at": "2026-10-06T14:40:40.781Z",
+  "duration_ms": 111.8,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 469,
+  "started_at": "2026-10-06T14:40:40.895Z",
+  "duration_ms": 106.4,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+  },
+  "response_body": "OK"
+ },
+ {
+  "id": 470,
+  "started_at": "2026-10-06T14:40:41.004Z",
+  "duration_ms": 125.6,
+  "persona": "requester",
+  "method": "POST",
+  "path": "/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+  "query": "",
+  "upstream": true,
+  "request_body": {},
+  "status": 303,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "Location": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  "response_body": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+ },
+ {
+  "id": 471,
+  "started_at": "2026-10-06T14:40:42.132Z",
+  "duration_ms": 109.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 472,
+  "started_at": "2026-10-06T14:40:42.243Z",
+  "duration_ms": 109.2,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"1fd-t4xVpGnvQK56I/ykAUThTLX3gvI\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:39.379Z",
+    "status": "accepted",
+    "grantedBy": {
+     "_id": "6ac4f4465de11a43eb34fb52",
+     "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+     "isPro": false,
+     "fullname": "Ower Model",
+     "user": "OwnerOfTheGatedModel",
+     "type": "user"
+    }
+   }
+  ]
+ },
+ {
+  "id": 473,
+  "started_at": "2026-10-06T14:40:42.354Z",
+  "duration_ms": 107.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 474,
+  "started_at": "2026-10-06T14:40:42.463Z",
+  "duration_ms": 113.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 475,
+  "started_at": "2026-10-06T14:40:42.578Z",
+  "duration_ms": 112.7,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+  },
+  "response_body": "OK"
+ },
+ {
+  "id": 476,
+  "started_at": "2026-10-06T14:40:42.692Z",
+  "duration_ms": 111.0,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 477,
+  "started_at": "2026-10-06T14:40:42.805Z",
+  "duration_ms": 114.9,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "rejected"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 478,
+  "started_at": "2026-10-06T14:40:43.922Z",
+  "duration_ms": 109.5,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 479,
+  "started_at": "2026-10-06T14:40:44.033Z",
+  "duration_ms": 105.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 480,
+  "started_at": "2026-10-06T14:40:44.140Z",
+  "duration_ms": 111.2,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"140-4DkPbjKJrCs75Cs0/429ZXzK5xk\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:42.867Z",
+    "status": "rejected"
+   }
+  ]
+ },
+ {
+  "id": 481,
+  "started_at": "2026-10-06T14:40:44.254Z",
+  "duration_ms": 111.2,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 482,
+  "started_at": "2026-10-06T14:40:44.367Z",
+  "duration_ms": 105.6,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 403,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "X-Error-Code": "GatedRepo",
+   "X-Error-Message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors.",
+   "ETag": "W/\"77-IUIRfFJtUqsI9ZxvWz+3Fick8yo\""
+  },
+  "response_body": {
+   "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors."
+  }
+ },
+ {
+  "id": 483,
+  "started_at": "2026-10-06T14:40:45.476Z",
+  "duration_ms": 110.0,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json",
+   "Content-Disposition": "attachment; filename=user-access-report-OwnerOfTheGatedModel-tiny-gated-model.json"
+  },
+  "response_body": [
+   {
+    "fullname": "Bridge",
+    "user": "TestingBOrig",
+    "email": "<email>",
+    "time": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:42.867Z",
+    "status": "rejected"
+   }
+  ]
+ },
+ {
+  "id": 484,
+  "started_at": "2026-10-06T14:40:45.589Z",
+  "duration_ms": 113.6,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 485,
+  "started_at": "2026-10-06T14:40:46.705Z",
+  "duration_ms": 111.0,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 486,
+  "started_at": "2026-10-06T14:40:46.818Z",
+  "duration_ms": 111.3,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"1fd-7ns1qoTS1YDQTYfojbdVMLQ8seg\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:45.652Z",
+    "status": "accepted",
+    "grantedBy": {
+     "_id": "6ac4f4465de11a43eb34fb52",
+     "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+     "isPro": false,
+     "fullname": "Ower Model",
+     "user": "OwnerOfTheGatedModel",
+     "type": "user"
+    }
+   }
+  ]
+ },
+ {
+  "id": 487,
+  "started_at": "2026-10-06T14:40:46.932Z",
+  "duration_ms": 108.4,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 488,
+  "started_at": "2026-10-06T14:40:47.042Z",
+  "duration_ms": 109.9,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 489,
+  "started_at": "2026-10-06T14:40:47.155Z",
+  "duration_ms": 133.3,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+  },
+  "response_body": "OK"
+ },
+ {
+  "id": 490,
+  "started_at": "2026-10-06T14:40:47.291Z",
+  "duration_ms": 156.8,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 491,
+  "started_at": "2026-10-06T14:40:48.456Z",
+  "duration_ms": 109.3,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json",
+   "Content-Disposition": "attachment; filename=user-access-report-OwnerOfTheGatedModel-tiny-gated-model.json"
+  },
+  "response_body": [
+   {
+    "fullname": "Bridge",
+    "user": "TestingBOrig",
+    "email": "<email>",
+    "time": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:47.371Z",
+    "status": "reset"
+   }
+  ]
+ },
+ {
+  "id": 492,
+  "started_at": "2026-10-06T14:40:48.569Z",
+  "duration_ms": 119.5,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 493,
+  "started_at": "2026-10-06T14:40:49.693Z",
+  "duration_ms": 111.3,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 494,
+  "started_at": "2026-10-06T14:40:49.807Z",
+  "duration_ms": 113.9,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"1fd-QTfOxTRvoYXMTl0J7eyD8TBTNfQ\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:48.634Z",
+    "status": "accepted",
+    "grantedBy": {
+     "_id": "6ac4f4465de11a43eb34fb52",
+     "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+     "isPro": false,
+     "fullname": "Ower Model",
+     "user": "OwnerOfTheGatedModel",
+     "type": "user"
+    }
+   }
+  ]
+ },
+ {
+  "id": 495,
+  "started_at": "2026-10-06T14:40:49.923Z",
+  "duration_ms": 109.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 496,
+  "started_at": "2026-10-06T14:40:50.035Z",
+  "duration_ms": 112.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 497,
+  "started_at": "2026-10-06T14:40:50.150Z",
+  "duration_ms": 108.9,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+  },
+  "response_body": "OK"
+ },
+ {
+  "id": 498,
+  "started_at": "2026-10-06T14:40:50.262Z",
+  "duration_ms": 114.6,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "reset",
+   "resetReason": "edge-case probe"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 499,
+  "started_at": "2026-10-06T14:40:50.379Z",
+  "duration_ms": 117.9,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "pending"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 500,
+  "started_at": "2026-10-06T14:40:51.499Z",
+  "duration_ms": 111.0,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"117-UFxkorwkTJU25ibD1NdejicCrwY\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "status": "pending"
+   }
+  ]
+ },
+ {
+  "id": 501,
+  "started_at": "2026-10-06T14:40:51.613Z",
+  "duration_ms": 108.8,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 502,
+  "started_at": "2026-10-06T14:40:51.724Z",
+  "duration_ms": 121.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 503,
+  "started_at": "2026-10-06T14:40:51.847Z",
+  "duration_ms": 110.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 504,
+  "started_at": "2026-10-06T14:40:51.960Z",
+  "duration_ms": 106.5,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 403,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "X-Error-Code": "GatedRepo",
+   "X-Error-Message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+   "ETag": "W/\"7a-CFXFppoGafPdMfycdenmDrdDbeM\""
+  },
+  "response_body": {
+   "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+  }
+ },
+ {
+  "id": 505,
+  "started_at": "2026-10-06T14:40:52.068Z",
+  "duration_ms": 115.0,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "accepted",
+   "rejectionReason": "should be ignored?"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 506,
+  "started_at": "2026-10-06T14:40:53.186Z",
+  "duration_ms": 112.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 507,
+  "started_at": "2026-10-06T14:40:53.300Z",
+  "duration_ms": 109.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"1fd-Kr7sfpJV29511qe6Lrq6OrEn+iU\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:52.129Z",
+    "status": "accepted",
+    "grantedBy": {
+     "_id": "6ac4f4465de11a43eb34fb52",
+     "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+     "isPro": false,
+     "fullname": "Ower Model",
+     "user": "OwnerOfTheGatedModel",
+     "type": "user"
+    }
+   }
+  ]
+ },
+ {
+  "id": 508,
+  "started_at": "2026-10-06T14:40:53.411Z",
+  "duration_ms": 156.2,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 509,
+  "started_at": "2026-10-06T14:40:53.569Z",
+  "duration_ms": 108.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 510,
+  "started_at": "2026-10-06T14:40:53.680Z",
+  "duration_ms": 155.4,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+  },
+  "response_body": "OK"
+ },
+ {
+  "id": 511,
+  "started_at": "2026-10-06T14:40:53.837Z",
+  "duration_ms": 117.4,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "TestingBOrig",
+   "status": "reset"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 512,
+  "started_at": "2026-10-06T14:40:54.958Z",
+  "duration_ms": 108.6,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 513,
+  "started_at": "2026-10-06T14:40:55.069Z",
+  "duration_ms": 128.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 514,
+  "started_at": "2026-10-06T14:40:55.200Z",
+  "duration_ms": 109.0,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 515,
+  "started_at": "2026-10-06T14:40:55.312Z",
+  "duration_ms": 112.0,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"13d-bCRO524tWc9kl5DIw+UyAsl/pRE\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:53.901Z",
+    "status": "reset"
+   }
+  ]
+ },
+ {
+  "id": 516,
+  "started_at": "2026-10-06T14:40:55.426Z",
+  "duration_ms": 150.2,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 403,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "X-Error-Code": "GatedRepo",
+   "X-Error-Message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+   "ETag": "W/\"d0-/coPsV2pPZU9uAlll7yARiBlvp4\""
+  },
+  "response_body": {
+   "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request."
+  }
+ },
+ {
+  "id": 517,
+  "started_at": "2026-10-06T14:40:55.579Z",
+  "duration_ms": 119.6,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant",
+  "query": "",
+  "upstream": true,
+  "request_body": {
+   "user": "OwnerOfTheGatedModel"
+  },
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\""
+  },
+  "response_body": {}
+ },
+ {
+  "id": 518,
+  "started_at": "2026-10-06T14:40:55.701Z",
+  "duration_ms": 139.4,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+  "query": "",
+  "upstream": true,
+  "request_body": {},
+  "status": 303,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "Location": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  "response_body": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+ },
+ {
+  "id": 519,
+  "started_at": "2026-10-06T14:40:56.844Z",
+  "duration_ms": 288.5,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 520,
+  "started_at": "2026-10-06T14:40:57.135Z",
+  "duration_ms": 112.2,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"1f1-30e4w8hLQXw5fm2f+ydIUVEOYxw\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac4f4465de11a43eb34fb52",
+     "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+     "isPro": false,
+     "fullname": "Ower Model",
+     "user": "OwnerOfTheGatedModel",
+     "type": "user",
+     "verifiedOrgNames": []
+    },
+    "timestamp": "2026-10-06T14:40:55.646Z",
+    "reviewedAt": "2026-10-06T14:40:55.646Z",
+    "status": "accepted",
+    "grantedBy": {
+     "_id": "6ac4f4465de11a43eb34fb52",
+     "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+     "isPro": false,
+     "fullname": "Ower Model",
+     "user": "OwnerOfTheGatedModel",
+     "type": "user"
+    }
+   }
+  ]
+ },
+ {
+  "id": 521,
+  "started_at": "2026-10-06T14:40:57.250Z",
+  "duration_ms": 114.6,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\""
+  },
+  "response_body": []
+ },
+ {
+  "id": 522,
+  "started_at": "2026-10-06T14:40:57.367Z",
+  "duration_ms": 110.6,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "ETag": "W/\"13d-bCRO524tWc9kl5DIw+UyAsl/pRE\""
+  },
+  "response_body": [
+   {
+    "user": {
+     "_id": "6ac3a4b8792f9017b6cb67ec",
+     "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+     "isPro": false,
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "type": "user",
+     "verifiedOrgNames": [],
+     "email": "<email>"
+    },
+    "timestamp": "2026-10-06T14:01:52.302Z",
+    "reviewedAt": "2026-10-06T14:40:53.901Z",
+    "status": "reset"
+   }
+  ]
+ },
+ {
+  "id": 523,
+  "started_at": "2026-10-06T14:40:57.480Z",
+  "duration_ms": 109.9,
+  "persona": "requester",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 403,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "X-Error-Code": "GatedRepo",
+   "X-Error-Message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+   "ETag": "W/\"d0-/coPsV2pPZU9uAlll7yARiBlvp4\""
+  },
+  "response_body": {
+   "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request."
+  }
+ },
+ {
+  "id": 524,
+  "started_at": "2026-10-06T14:40:57.591Z",
+  "duration_ms": 106.7,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\""
+  },
+  "response_body": "OK"
+ },
+ {
+  "id": 525,
+  "started_at": "2026-10-06T14:40:57.700Z",
+  "duration_ms": 111.2,
+  "persona": "owner",
+  "method": "POST",
+  "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 404,
+  "response_headers": {
+   "Content-Type": "application/json; charset=utf-8",
+   "X-Error-Message": "No pending access request found for this repo and this user",
+   "ETag": "W/\"47-bQmRUjLRa5atGaP6Q9nBoo8XSDo\""
+  },
+  "response_body": {
+   "error": "No pending access request found for this repo and this user"
+  }
+ },
+ {
+  "id": 526,
+  "started_at": "2026-10-06T14:40:57.813Z",
+  "duration_ms": 116.9,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/OwnerOfTheGatedModel/tiny-gated-model/raw/main/checkpoint-0/model.safetensors",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 200,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "Content-Disposition": "inline; filename*=UTF-8''model.safetensors; filename=\"model.safetensors\";",
+   "X-Repo-Commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+   "ETag": "\"73500655b76ca057265c754b218fbfab58751f0b\""
+  },
+  "response_body": "version https://git-lfs.github.com/spec/v1\noid sha256:321019a3b5ea40a247b2cd8db89a7f2dd7bbfe6aeab29c92fc5f58e098cef177\nsize 691784\n"
+ },
+ {
+  "id": 527,
+  "started_at": "2026-10-06T14:40:57.932Z",
+  "duration_ms": 105.1,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/OwnerOfTheGatedModel/tiny-gated-model/raw/main/no-such-file.txt",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 404,
+  "response_headers": {
+   "Content-Type": "text/plain; charset=utf-8",
+   "X-Error-Code": "EntryNotFound",
+   "X-Error-Message": "Entry not found",
+   "ETag": "W/\"f-mY2VvLxuxB7KhsoOdQTlMTccuAQ\""
+  },
+  "response_body": "Entry not found"
+ },
+ {
+  "id": 528,
+  "started_at": "2026-10-06T14:40:58.039Z",
+  "duration_ms": 129.3,
+  "persona": "owner",
+  "method": "GET",
+  "path": "/OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt",
+  "query": "",
+  "upstream": true,
+  "request_body": null,
+  "status": 401,
+  "response_headers": {
+   "Content-Type": "text/html; charset=utf-8",
+   "X-Error-Code": "GatedRepo",
+   "X-Error-Message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+   "ETag": "W/\"cd30-pWq37Oa9lHgo+dvdCKpd+Vc/BQA\""
+  },
+  "response_body": "<!doctype html>\n<html class=\"\">\n\t<head>\n\t\t<meta charset=\"utf-8\" />\n\n\t\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\" />\n\n\t\t<meta name=\"description\" content=\"We’re on a journey to advance and democratize artificial intelligence through open source and open science.\" />\n\n\t\t<meta property=\"fb:app_id\" content=\"1321688464574422\" />\n\n\t\t<meta name=\"twitter:card\" content=\"summary_large_image\" />\n\n\t\t<meta name=\"twitter:site\" content=\"@huggingface\" />\n\n\t\t<meta name=\"twitter:image\" content=\"https://huggingface.co/front/thumbnails/v2-2.png\" />\n\n\t\t<meta property=\"og:title\" content=\"401 – Hugging Face\" />\n\n\t\t<meta property=\"og:description\" content=\"We’re on a journey to advance and democratize artificial intelligence through open source and open science.\" />\n\n\t\t<meta property=\"og:type\" content=\"website\" />\n\n\t\t<meta property=\"og:url\" content=\"https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt\" />\n\n\t\t<meta property=\"og:image\" content=\"https://huggingface.co/front/thumbnails/v2-2.png\" />\n\n\t\t<link\n\t\t\trel=\"preload\"\n\t\t\thref=\"/front/assets/fonts/source-sans-pro-latin-400-normal.woff2\"\n\t\t\tas=\"font\"\n\t\t\ttype=\"font/woff2\"\n\t\t\tcrossorigin\n\t\t/>\n\n\t\t<link\n\t\t\trel=\"preload\"\n\t\t\thref=\"/front/assets/fonts/source-sans-pro-latin-600-normal.woff2\"\n\t\t\tas=\"font\"\n\t\t\ttype=\"font/woff2\"\n\t\t\tcrossorigin\n\t\t/>\n\n\t\t<link\n\t\t\trel=\"preload\"\n\t\t\thref=\"/front/assets/fonts/source-sans-pro-latin-700-normal.woff2\"\n\t\t\tas=\"font\"\n\t\t\ttype=\"font/woff2\"\n\t\t\tcrossorigin\n\t\t/>\n\n\t\t<link rel=\"stylesheet\" href=\"/front/build/kube-69ef646/style.css\" />\n\n\t\t<link\n\t\t\trel=\"preload\"\n\t\t\thref=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css\"\n\t\t\tas=\"style\"\n\t\t\tonload=\"\n\t\t\t\tthis.onload = null;\n\t\t\t\tthis.rel = 'stylesheet';\n\t\t\t\"\n\t\t/>\n\n\t\t<noscript>\n\t\t\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css\" />\n\t\t</noscript>\n\t\t<script>const guestTheme = document.cookie.match(/theme=(\\w+)/)?.[1]; document.documentElement…"
+ }
+]

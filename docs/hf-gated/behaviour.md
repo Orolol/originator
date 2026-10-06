@@ -101,7 +101,10 @@ The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [O
   `path` is exactly `README.md`, `LICENSE`, `LICENSE.md` or `LICENSE.txt` at the repo root. The match
   is case-sensitive. Everything else is gated, including `.gitattributes`, `readme.md`,
   `README.MD`, `README.txt`, `LICENSE.rst`, `license.txt`, `LICENCE`, `COPYING`, and `README.md` /
-  `LICENSE.txt` in sub-folders. `/raw/` and `/blob/` are gated even for `README.md`. [OBS]
+  `LICENSE.txt` in sub-folders. [OBS] `/raw/` is gated even for `README.md` [OBS tree-masking
+  raw-readme-anon]; the `/blob/` page is not: `README.md` is public there too (GET and HEAD, 200 HTML)
+  [OBS 2026-10-06 `observations/2026-10-06-blob.md`]. (An earlier version of this rule said `/blob/`
+  was gated for `README.md`, with no recording behind it.)
 - **ACC-6** **Gate before existence.** For a non-allowlisted path, the gate is checked *before*
   the revision or file is resolved. An unknown branch or file in a gated repo returns the gate error,
   not 404. An allowlisted path that does not exist returns `404 EntryNotFound`. [OBS]
@@ -112,7 +115,13 @@ The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [O
   sizes are never masked. [OBS 2026-10-05, `observations/2026-10-05-tree-masking.md`]
 - **ACC-10** `/raw/{rev}/{path}` applies the same gate and the same per-state messages as `resolve`
   (401 anonymous, 403 for pending), **without** the ACC-5 allowlist. With access it serves the file,
-  e.g. `README.md` as text. [OBS 2026-10-05, tree-masking and anonymous probes]
+  e.g. `README.md` as text. [OBS 2026-10-05, tree-masking and anonymous probes] More [OBS 2026-10-06, E
+  e10, e12]: an LFS file is served as its **pointer** text; a missing file → `404 Entry not found`; HEAD
+  answers like GET (owner: 200 with the file headers; anonymous: 401 GatedRepo with `WWW-Authenticate`);
+  on a non-gated repo it serves the file directly (200, no 307 unlike `resolve`).
+  The `/blob/{rev}/{path}` page is HTML and, like every HF page, **ignores the Bearer token**: even the
+  owner gets the anonymous `401 GatedRepo` (HTML, no `WWW-Authenticate`), for missing files too (ACC-6);
+  `README.md` is allowlisted (ACC-5). [OBS 2026-10-06 `observations/2026-10-06-blob.md`]
 - **ACC-8** The owner can revoke access at any time without notice, in either approval mode. [DOC]
 
 ## 4. Requester transitions
@@ -125,7 +134,7 @@ The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [O
 | `reset` | submit gate form again | auto | presumably `accepted` | [DOC-implied] |
 | `rejected` | submit again | manual | `303`, **no change** (still `rejected`, same `reviewedAt`) | [DOC] [OBS 2026-10-05, C m7] |
 | `pending` | submit again | manual | `303`, still `pending`, same `timestamp`; `fields` unknown | [OBS 2026-10-06, requester-ask-access + owner-reads] [Q-2] |
-| `accepted` | submit again | manual | `303`, same `timestamp`; status in between not listed | [OBS 2026-10-06, X c4-ask] [Q-2] |
+| `accepted` | submit again | manual | `303`, **no change** (still `accepted`, same `timestamp` and `reviewedAt`) | [OBS 2026-10-06, X c4-ask, E e2b] |
 | `pending` | self-cancel (`POST /api/models/{id}/user-access-request/cancel`) | manual | **no request** (deleted from every list and the report); `200 {"ok":true}` (REQ-7) | [OBS 2026-10-06, X c2] |
 | `accepted` / `rejected` / `reset` / none | self-cancel | manual | **no change**; `404` (REQ-7) | [OBS 2026-10-06, X c1 c3 c4 c2-again] |
 
@@ -170,13 +179,18 @@ s3b shows a re-request after a rejection leaving it rejected (as C m7). X =
 | From \ To | `pending` ("Cancel") | `accepted` ("Accept") | `rejected` ("Reject") | `reset` |
 |---|---|---|---|---|
 | no request | 404 [OBS W s2] | 404 [OBS W s1] | 404 [OBS W s3] | ? |
-| `pending` | **404** [OBS C m4] | ok [OBS C m1, UI] | ok [OBS C m5, UI] | ? [Q-5] |
+| `pending` | **404** [OBS C m4] | ok [OBS C m1, UI] | ok [OBS C m5, UI] | ok [OBS 2026-10-06 E e1, R r1] |
 | `accepted` | ok, user loses access [OBS C m3, UI] | **404** [OBS C m2] | ok [CLIENT tests] | ok [OBS W s5] |
 | `rejected` | ok [CLIENT doc] | ok [OBS W s4, UI] | **404** [OBS C m6] | ok [OBS C m8] |
-| `reset` | ? | ? | ? | ? [Q-5] |
+| `reset` | ok, `reviewedAt` removed [OBS E e6, R r2] | ok [OBS E e2] | ok [OBS E e3] | ? (presumably 404) [Q-5] |
 
 Every **404** in this table is the same: `404`, no `X-Error-Code`, JSON `{"error": "No access request
-found matching your criteria"}` with the same `X-Error-Message`.
+found matching your criteria"}` with the same `X-Error-Message`. Every move keeps the `timestamp`;
+`reviewedAt` is the move's time, or removed when back to `pending`. E = `observations/2026-10-06-edge-cases-{a,b}.md`
+(cases `harness/kb/probes/hf-gated-edge-cases{,-b}.json`, in order; part A is a bridge-log export), R =
+`observations/2026-10-06-reset-from-pending.md`. On a **non-gated** repo every `handle` is `400 RepoNotGated`
+(REV-7). Right after pending → reset, one reset list once came back empty (E #462) while `auth-check`
+already said "reset"; re-probed (R), the entry is listed 1 s later: a Hub lag [Q-23], not a rule.
 
 - **REV-1** A same-status transition is an **error**, identical to "no request": the 404 above, not a
   no-op. (`batch` differs: see REV-9.) [OBS 2026-10-05]
@@ -203,15 +217,18 @@ found matching your criteria"}` with the same `X-Error-Message`.
 ### 5.2 `POST …/user-access-request/grant` `{user|userId}`
 
 - **REV-6** Adds the user to `accepted` without them requesting. Their entry has no email. [CLIENT tests]
-  Success → `200 {}`. [OBS]
+  Success → `200 {}`. [OBS] The owner can grant themselves: `200 {}`, and an accepted entry for the
+  owner appears (`timestamp` = `reviewedAt` = grant time, `grantedBy` = owner, no email). Only
+  self-cancel (REQ-7) removes it again: owner `handle` → pending, then owner `cancel`.
+  [OBS 2026-10-06 E e8, e9, b f0]
 - **REV-7** Granting a user who already has access → `400 That user already has access to the repo`
-  [OBS W s6-grant-again] [CLIENT]. Unknown user → 404. Repo not gated → 400 per the client docstring
-  [CLIENT doc], **unobserved**. The same docstring's "400 if not gated" is already contradicted for
-  lists (CFG-6), so the clone answers normally (provisional, Q-9). The conformance suite keeps the
-  docstring's claim as a strict expected failure (`divergences.yaml` D-4) until it is recorded.
+  [OBS W s6-grant-again] [CLIENT]. Unknown user → 404. Repo not gated → `400`, `X-Error-Code:
+  RepoNotGated`, `{"error": "model {id} is not gated"}`, for `grant` **and** `handle` [OBS 2026-10-06 E
+  e12-grant-not-gated, e12-handle-not-gated], as the client docstring says; the lists still answer
+  there (CFG-6), and so does the requester's self-cancel. `batch` on a non-gated repo is unobserved.
 - **REV-8** Granting a **pending** user accepts their request: `reviewedAt` = grant time,
-  `grantedBy` = owner, `timestamp` and `email` kept (it is their own request). [OBS W s6] Granting
-  `rejected` / `reset` users is unknown [Q-6].
+  `grantedBy` = owner, `timestamp` and `email` kept (it is their own request). [OBS W s6] Granting a
+  `rejected` or `reset` user does the same. [OBS 2026-10-06 E e4, e5]
 
 ### 5.3 `POST …/user-access-request/batch` `{status, rejectionReason?, resetReason?, requests: [{user|userId}] (1–100)}`
 
@@ -223,11 +240,13 @@ found matching your criteria"}` with the same `X-Error-Message`.
 ### 5.4 Listing: `GET …/user-access-request/{pending|accepted|rejected|reset}`
 
 - **REV-10** Query parameters: `limit` (10–1000, default 1000), `after` / `before` (ISO date-time,
-  `Z`), and `q` (at most 250 characters), which searches username, fullname, email, email domain and verified org.
-  Pagination uses a `Link: <…>; rel="next"` header. [SPEC] `limit=5` →
-  `400 * Too small: expected number to be >=10 * at limit`; `q=testingb` matches `TestingBOrig`
-  (case-insensitive prefix). [OBS 2026-10-05] Default ordering and the field `after`/`before` filter
-  on are [Q-10] [Q-21].
+  `Z`), and `q` (at most 250 characters). Pagination uses a `Link: <…>; rel="next"` header. [SPEC]
+  `limit=5` → `400 * Too small: expected number to be >=10 * at limit`. [OBS 2026-10-05] `q` matches a
+  **case-insensitive prefix of the username** only: `testingb`, `TESTINGB`, `t` match `TestingBOrig`;
+  the substrings `orig`, `estingB` and the fullname `Bridge` (any case) do not. [OBS 2026-10-05 W s7-list-q;
+  2026-10-06 E e0-search-*, `observations/2026-10-06-search.md`] The spec's wording (username, fullname,
+  email, email domain, verified org) is contradicted for the fullname; e-mail and org matching are
+  untested [Q-21]. Default ordering and the field `after`/`before` filter on are [Q-10].
 - **REV-11** The Python client only knows 3 lists. It has no `reset` list and no batch. [CLIENT]
 
 ## 6. Timestamps
@@ -259,9 +278,10 @@ Real emails cannot be reproduced. The clone records them in an inspectable **out
   `Content-Disposition: attachment; filename=user-access-report-{ns}-{name}.json`. The body is a JSON
   array; a pending entry is `{"fullname", "user", "email", "time", "status"}` in that order, with no
   `reviewedAt`. An accepted entry is `{"fullname", "user", "email", "time", "reviewedAt", "status",
-  "grantedBy": {"fullname", "user"}}` in that order [OBS 2026-10-06, W s1]. A self-cancelled request is
-  gone from it (REQ-7). The response has **no `ETag`** (unlike the JSON API responses) [OBS 2026-10-06,
-  owner-reads, W s1, s11]. Rejected and reset entries, and `fields`, are still [Q-14].
+  "grantedBy": {"fullname", "user"}}` in that order [OBS 2026-10-06, W s1]; rejected and reset entries
+  are `{"fullname", "user", "email", "time", "reviewedAt", "status"}` [OBS 2026-10-06 E e3-report,
+  e5-report]. A self-cancelled request is gone from it (REQ-7). The response has **no `ETag`** (unlike the JSON API responses) [OBS 2026-10-06,
+  owner-reads, W s1, s11]. `fields` and the ordering of several entries are still [Q-14].
 - **REP-2** Anonymous → 401 "Invalid username or password." [OBS]
 
 ## 9. Out of this spec

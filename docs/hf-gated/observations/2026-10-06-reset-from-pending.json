@@ -1,0 +1,453 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-reset-from-pending.json",
+  "recorded_at": "2026-10-06T14:44:41Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model"
+  }
+ },
+ "records": [
+  {
+   "id": "r0-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:30.284Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"117-Eq4uQjmgiMntX/2VZ8aKyuHVB6w\"",
+    "content-length": "279"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T14:42:55.348Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "r0-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:30.514Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r0-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:30.629Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r0-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:30.747Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r1-reset-from-pending",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "reset",
+    "resetReason": "confirm Q-5"
+   },
+   "request_encoding": "json",
+   "note": "Q-5 pending -> reset, again",
+   "sent_at": "2026-10-06T14:44:30.862Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "r1-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:31.979Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r1-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:32.091Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r1-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:32.202Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r1-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:32.321Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"13d-PzbM7Qlkigy+QGte4aSHYMgJX8k\"",
+    "content-length": "317"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T14:42:55.348Z",
+     "reviewedAt": "2026-10-06T14:44:30.927Z",
+     "status": "reset"
+    }
+   ]
+  },
+  {
+   "id": "r1b-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:38.438Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r1b-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:38.646Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r1b-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:38.760Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r1b-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:38.874Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"13d-PzbM7Qlkigy+QGte4aSHYMgJX8k\"",
+    "content-length": "317"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T14:42:55.348Z",
+     "reviewedAt": "2026-10-06T14:44:30.927Z",
+     "status": "reset"
+    }
+   ]
+  },
+  {
+   "id": "r1-report",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "is the reset-from-pending entry in the report?",
+   "sent_at": "2026-10-06T14:44:38.993Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json",
+    "content-disposition": "attachment; filename=user-access-report-OwnerOfTheGatedModel-tiny-gated-model.json",
+    "content-length": "160"
+   },
+   "body_excerpt": "[{\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"email\":\"<email>\",\"time\":\"2026-10-06T14:42:55.348Z\",\"reviewedAt\":\"2026-10-06T14:44:30.927Z\",\"status\":\"reset\"}]",
+   "body_json": [
+    {
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "email": "<email>",
+     "time": "2026-10-06T14:42:55.348Z",
+     "reviewedAt": "2026-10-06T14:44:30.927Z",
+     "status": "reset"
+    }
+   ]
+  },
+  {
+   "id": "r1-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:39.345Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"d0-/coPsV2pPZU9uAlll7yARiBlvp4\"",
+    "content-length": "208"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedM",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request."
+   }
+  },
+  {
+   "id": "r2-pending-from-reset",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "pending"
+   },
+   "request_encoding": "json",
+   "note": "restore pending",
+   "sent_at": "2026-10-06T14:44:39.470Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "r2-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:40.602Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"117-Eq4uQjmgiMntX/2VZ8aKyuHVB6w\"",
+    "content-length": "279"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T14:42:55.348Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "r2-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:40.717Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r2-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:40.834Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "r2-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T14:44:40.963Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  }
+ ]
+}

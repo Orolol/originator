@@ -1,0 +1,231 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-blob.json",
+  "recorded_at": "2026-10-06T14:45:32Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model"
+  }
+ },
+ "records": [
+  {
+   "id": "blob-README.md-get-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:29.410Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"16241-PTZ9u9JC4JtJwcVvkA0cUK4i538\"",
+    "content-length": "90689"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "blob-README.md-get-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:29.715Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"16338-VALYr+0teO0sBb9SIt/NVjsC3uc\"",
+    "content-length": "90936"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "blob-README.md-head-anon",
+   "as": "anonymous",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:29.990Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"16241-K9MALTzDcB9UngYyt/4q8ur4n70\"",
+    "content-length": "90689"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "blob-README.md-head-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:30.268Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"16241-Kx8EaxuJmVpY0XbW7hDZxgM4N0U\"",
+    "content-length": "90689"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "blob-config.json-get-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/checkpoint-0/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:30.518Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd40-QYMHL7IDx5a7p/tLwa68JWwBHxU\"",
+    "content-length": "52544"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "blob-config.json-get-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/checkpoint-0/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:30.762Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd40-pC8oattO4MRrf7W9aRwLxWaJCBA\"",
+    "content-length": "52544"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "blob-config.json-head-anon",
+   "as": "anonymous",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/checkpoint-0/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:30.937Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd40-KITuIsFogx7HHrxRvwq/N6w344c\"",
+    "content-length": "52544"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "blob-config.json-head-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/checkpoint-0/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:31.092Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd40-Sgf68f9BEsVee8iaxXFuxOjsaGs\"",
+    "content-length": "52544"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "blob-no-such-file.txt-get-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:31.241Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd30-WmBF3ksIpUsC1/jpopJX8/GQrlM\"",
+    "content-length": "52528"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "blob-no-such-file.txt-get-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:31.455Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd30-0eHE/Mk+Nm8z18NsMvtcPLL1K4A\"",
+    "content-length": "52528"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "blob-no-such-file.txt-head-anon",
+   "as": "anonymous",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:31.666Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd30-5D3AlJvisIKC+tqw9DDKV8rkNf8\"",
+    "content-length": "52528"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "blob-no-such-file.txt-head-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-27 /blob/: allowlist? Bearer honoured?",
+   "sent_at": "2026-10-06T14:45:31.852Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"cd30-Jn0TzeSDLdb7C5+rI7BRwBwuOo8\"",
+    "content-length": "52528"
+   },
+   "body_excerpt": ""
+  }
+ ]
+}

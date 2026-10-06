@@ -39,8 +39,9 @@ Update (2026-10-06) [OBS]:
 - re-submit while **accepted** → `303`, and the `timestamp` is kept (X c4-ask at 13:51:17.849Z; the entry
   rejected right after, c4-list-rejected, still has c3-ask's 13:51:15.900Z). Whether the status stayed
   `accepted` in between was not listed.
-Status: open for the status after a re-submit while accepted, and for `fields` on a pending re-submit
-(the sandbox has no extra fields).
+Update (2026-10-06) [OBS E e2-ask-while-accepted, e2b]: re-submit while accepted leaves it accepted
+(same `timestamp`, `reviewedAt`, `grantedBy`). Status: open only for `fields` on a re-submit (the sandbox
+has no extra fields).
 
 ### Q-3 (P0): requester self-cancel
 `POST /api/models/{id}/user-access-request/cancel`: is the request deleted (back to "no request") or
@@ -71,7 +72,10 @@ pending directly? Partial (2026-10-05) [OBS]:
 - reset is allowed from `accepted` (`observations/2026-10-05-owner-walkthrough.md` s5) and from `rejected` (`observations/2026-10-05-owner-walkthrough-completion.md` m8);
 - the entry stays in the `reset` list (`reviewedAt` = reset time) until the user re-requests, which
   creates a new pending request.
-Status: open for reset from `pending` and for owner transitions out of `reset`.
+Answer (2026-10-06) [OBS `observations/2026-10-06-edge-cases-a.md` e1, e2, e3, e6;
+`…-reset-from-pending.md`]: reset is allowed from `pending` (listed under `reset`, `timestamp` kept);
+from `reset` the owner can move the request directly to `accepted`, `rejected` or `pending` (back to
+pending removes `reviewedAt`). Only reset → reset is unrecorded. Status: **resolved**.
 
 ### Q-6 (P0): grant edge cases
 `grant` for a user who is `pending`, `rejected` or `reset`: moves to accepted, or 400? The grant
@@ -80,7 +84,10 @@ entry? Can the owner grant themselves? Partial (2026-10-05) [OBS, `observations/
 - grant on a **pending** user → `200 {}`, accepted with `reviewedAt` = grant time, `grantedBy` =
   owner, and its `timestamp` kept;
 - grant again → `400 That user already has access to the repo`.
-Status: open for rejected and reset users, and for self-grant.
+Answer (2026-10-06) [OBS E e4, e5, e8, e9]: granting a rejected or reset user accepts them like a
+pending one (`timestamp` kept, `reviewedAt` = grant time, `grantedBy` = owner). The owner **can grant
+themselves**: `200 {}` and an accepted entry of their own (no email), which only owner `handle` →
+pending + owner self-cancel removes. Status: **resolved**.
 
 ### Q-7 (P0): approval-mode changes
 manual→auto while requests are pending: auto-accepted, or left pending? auto→manual: no effect?
@@ -116,8 +123,13 @@ Partial (2026-10-05) [OBS]: a non-owner calling the list endpoint → `403`, no 
 - reason > 200 → `400 * Too big: expected string to have <=200 characters * at rejectionReason`;
 - neither `user` nor `userId` → `400 * Either userId or user must be provided, but not both`;
 - `limit=5` → `400 * Too small: expected number to be >=10 * at limit`.
-None of them carries an `X-Error-Code`. Status: open for read-only tokens, `rejectionReason` sent
-with a non-rejected status, and a non-gated repo with no requests.
+None of them carries an `X-Error-Code`. Update (2026-10-06) [OBS E e7, e12]:
+- `rejectionReason` sent with `accepted` → `200`, accepted (the reason is not visible anywhere);
+- `reset` without `resetReason` → `200`;
+- non-gated repo: `grant` and `handle` → `400 RepoNotGated` "model {id} is not gated" (REV-7); the
+  lists answer `200` (an empty list once the request is gone) and self-cancel works.
+Status: open for read-only tokens, `batch` on a non-gated repo, and the check order when several
+errors apply.
 
 ### Q-10 (P1): list ordering and timestamps
 Default order of each list (by `timestamp`? `reviewedAt`? ascending or descending?). Which field
@@ -150,7 +162,8 @@ entries? Ordering?
 Partial (2026-10-05) [OBS]: JSON, `attachment; filename=user-access-report-{ns}-{name}.json`;
 pending entry keys `fullname, user, email, time, status`. Partial (2026-10-06) [OBS W s1]: an accepted
 entry is `fullname, user, email, time, reviewedAt, status, grantedBy {fullname, user}`; a self-cancelled
-request is not in it (X c2b). Status: open for `fields`, rejected and `reset` entries, and ordering.
+request is not in it (X c2b). Update (2026-10-06) [OBS E e3-report, e5-report]: rejected and reset entries are `fullname, user,
+email, time, reviewedAt, status`. Status: open for `fields` and the ordering of several entries.
 
 ### Q-15 (P1): stored answer encoding
 How answers are stored in `fields`: checkbox (`"on"`? `"true"`?), select (value or label?), date
@@ -180,7 +193,10 @@ and when (bulk = daily)? The clone only records an outbox. Status: open; likely 
 ### Q-21 (P2): search semantics
 How `q` matches (substring or prefix? case-insensitive?), what "email domain" and "verified
 organization" matching mean, and how combining `q` with pagination behaves. Partial (2026-10-05) [OBS]: `q=testingb` matched `TestingBOrig`, so matching is case-insensitive
-and a prefix is enough. Status: open.
+and a prefix is enough. Update (2026-10-06) [OBS E e0-search-*, `observations/2026-10-06-search.md`]:
+only a **prefix of the username** matches (`t`, `TESTINGB`); a substring (`orig`, `estingB`) or the
+fullname (`Bridge`, any case) does not, contrary to the spec's list. Status: open for e-mail, e-mail
+domain and verified-org matching, and `q` with pagination.
 
 ### Q-22 (P2): `gated: true` in README YAML
 The EU section of the docs shows `gated: true` in card metadata. Does YAML `gated` do anything, or is
@@ -188,11 +204,18 @@ gating only set through settings? Status: open.
 
 ### Q-23 (P2): eventual consistency on the real Hub
 The client tests sleep 1 s after writes. How long until the lists, `auth-check` and `resolve` reflect a
-change? This affects the bridge-vs-clone diff tolerance. Status: open.
+change? This affects the bridge-vs-clone diff tolerance. One lag seen (2026-10-06, E #462): about 1.3 s
+after pending → reset, the `reset` list was still empty while `auth-check` already said "reset"; the
+same move re-probed was listed 1 s later (`…-reset-from-pending.md`). Accepted as divergence D-5. Status:
+open (no timing measured).
 
 ### Q-24 (P2): self and deleted users
 Can a repo owner `ask-access` on their own repo, or appear in the lists? In the list schema `user` is
-not required: what does an entry for a deleted account look like? Status: open.
+not required: what does an entry for a deleted account look like?
+Partial (2026-10-06) [OBS E e8, e9, b f0]: the owner **can** appear in the lists, through a self-grant
+(REV-6); their own entry then behaves like anyone's (handle to pending, self-cancel). An owner
+`ask-access` while holding that accepted entry → `303`, no change. Status: open for an owner
+`ask-access` with no entry, and for deleted accounts.
 
 ### Q-27 (P2): `/raw/` and `/blob/` details
 ACC-10 records the gate on `/raw/` (anonymous 401, pending 403, owner 200 text), and an anonymous
@@ -201,7 +224,11 @@ ACC-10 records the gate on `/raw/` (anonymous 401, pending 403, owner 200 text),
 - `/raw/` on a non-gated repo (200 or a 307 like resolve?);
 - the `/blob/` page content with access, and its 404s;
 - HEAD on `raw`/`blob`.
-Status: open.
+Answer (2026-10-06) [OBS E e10, e12, `observations/2026-10-06-blob.md`], now in ACC-5 / ACC-10: `/raw/`
+serves an LFS file's pointer, a non-gated repo's file directly (200), `404 Entry not found` for a
+missing file, and answers HEAD like GET. `/blob/` ignores the Bearer token (HTML page): README.md is
+public, everything else (missing files included) is the anonymous 401. Status: open only for the
+`/blob/` page content itself (never captured with access, since tokens are ignored there).
 
 ### Q-25 (P1): user search for "Add access"
 `GET /api/quicksearch?q=<username>&type=user` returns `users: []` for token callers (owner token,
@@ -256,16 +283,16 @@ tests, and this table.
 | Q | Choice |
 |---|---|
 | Q-1 / REQ-1 | Anonymous `ask-access` → 401 `Invalid username or password.` with an HTML body. |
-| Q-2 | Re-submit while accepted → no-op; re-submit while pending keeps `timestamp` and `fields`; `ask-access` on a non-gated repo → no-op 303; after reset, the new submission's `fields` replace the old ones. |
+| Q-2 | ~~Re-submit while accepted → no-op~~ [OBS 2026-10-06]; re-submit while pending keeps ~~`timestamp`~~ [OBS 2026-10-06] and `fields`; `ask-access` on a non-gated repo → no-op 303; after reset, the new submission's `fields` replace the old ones. |
 | ~~Q-3~~ | ~~Requester self-cancel deletes the caller's request whatever its status, answering `{}`; with no request → the handle 404.~~ Replaced by REQ-7 [OBS 2026-10-06]: pending only, `{"ok":true}`, its own 404 message. |
-| Q-5 | pending→reset and every move out of `reset` are allowed (uniform rule: any change is OK, same status → 404). |
-| Q-6 | Granting a rejected or reset user accepts them like a pending one; self-grant → 400 "already has access" (ACC-1). |
-| Q-9 | No "repo not gated" 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work). Check order: validation → unknown user → request lookup. A reason sent with another status is ignored. Unrecorded zod wordings are guessed (`gated`, email, datetime, batch item refinement). An empty body is treated as `{}`. |
+| ~~Q-5~~ | ~~pending→reset and every move out of `reset` are allowed~~ Confirmed [OBS 2026-10-06]; only reset → reset (same status → 404) stays provisional. |
+| ~~Q-6~~ | ~~Granting a rejected or reset user accepts them like a pending one~~ (confirmed); ~~self-grant → 400 "already has access"~~ (wrong: it is allowed, REV-6) [OBS 2026-10-06]. |
+| Q-9 | ~~No "repo not gated" 400 on grant/handle~~ (wrong: 400 RepoNotGated, REV-7 [OBS 2026-10-06]); batch keeps no such check. Check order: permission → not gated → validation → unknown user → request lookup. ~~A reason sent with another status is ignored~~ (confirmed). Unrecorded zod wordings are guessed (`gated`, email, datetime, batch item refinement). An empty body is treated as `{}`. |
 | Q-10 | Lists sorted by `timestamp` ascending, then insertion order. `after`/`before` filter on `timestamp` (exclusive). The `Link` next URL uses `after` = the last timestamp of the page. An auto-accept sets `reviewedAt` = `timestamp`, with no `grantedBy`. |
 | Q-13 / Q-15 / Q-16 | `fields` sits right after `user` in list items. Only the card's labels are stored. Non-string JSON values are stored as JSON text. No field is required. |
 | Q-14 | The report is one sequence of every request, all statuses mixed, sorted like the lists (Q-10: `timestamp` ascending, then insertion order). Rejected and reset entries use the observed accepted order (REP-1: `…, time, reviewedAt, status`, then `grantedBy` when set); granted users have no `email`. |
-| Q-21 | `q` = case-insensitive substring on username, fullname and the shared email. |
+| Q-21 | ~~`q` = case-insensitive substring on username, fullname and the shared email~~ (wrong) → case-insensitive username prefix [OBS 2026-10-06]; e-mail matching left out (unobserved). |
 | Q-24 | An owner may `ask-access` on their own repo like anyone. |
 | Q-25 | quicksearch → `{"users": [{_id, avatarUrl, fullname, user}]}`, username or fullname prefix, seed order. `type` other than `user` → 400. |
-| Q-27 | `/raw/` on an LFS file serves the git blob, i.e. the pointer (ETag = git oid). `/raw/` on a non-gated repo → 200 directly, without the 307. The `/blob/` page with access shows the escaped content (the pointer for LFS, only the size above 1 MiB); blob 404s are HTML; a blob 401 for an unknown repo keeps `WWW-Authenticate`. raw and blob answer GET only. |
+| Q-27 | ~~`/raw/` on an LFS file serves the pointer; on a non-gated repo 200 directly~~ (confirmed). The `/blob/` page shows the escaped content (the pointer for LFS, only the size above 1 MiB); a blob 401 for an unknown repo keeps `WWW-Authenticate`. ~~blob honours the token; raw and blob answer GET only~~ (wrong: blob ignores the token, HEAD works) [OBS 2026-10-06]. |
 | (none) | ACC-9 masking implemented per the recording; "access" = the auth-check decision (the allowlist does not count). A logged-in caller on an unknown repo → 404 RepoNotFound on resolve, auth-check and ask-access. A private repo looks missing to non-owners. `RevisionNotFound` "Revision not found" (revisions: `main`, head sha). Unknown tree path → 404 EntryNotFound. LFS → 302 to the clone's `/api/resolve-cache/…` with `X-Linked-Size`/`X-Linked-Etag`, and no xet `Link`. `resolve-cache` applies the gate. No ETag on a 307. Unknown `expand[]` names are skipped. The settings echo returns only `gated`/`private`/`visibility`. |

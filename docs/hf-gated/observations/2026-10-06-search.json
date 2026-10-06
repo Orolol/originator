@@ -1,0 +1,167 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-search.json",
+  "recorded_at": "2026-10-06T14:49:48Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model"
+  }
+ },
+ "records": [
+  {
+   "id": "q-Bridge",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=Bridge",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-21: TestingBOrig (fullname Bridge) pending",
+   "sent_at": "2026-10-06T14:49:47.446Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "q-Br",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=Br",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-21: TestingBOrig (fullname Bridge) pending",
+   "sent_at": "2026-10-06T14:49:47.626Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "q-bridge",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=bridge",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-21: TestingBOrig (fullname Bridge) pending",
+   "sent_at": "2026-10-06T14:49:47.737Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "q-BRIDGE",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=BRIDGE",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-21: TestingBOrig (fullname Bridge) pending",
+   "sent_at": "2026-10-06T14:49:47.848Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "q-testing",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=testing",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-21: TestingBOrig (fullname Bridge) pending",
+   "sent_at": "2026-10-06T14:49:47.966Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"117-Eq4uQjmgiMntX/2VZ8aKyuHVB6w\"",
+    "content-length": "279"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T14:42:55.348Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "q-TestingBOrig",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=TestingBOrig",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-21: TestingBOrig (fullname Bridge) pending",
+   "sent_at": "2026-10-06T14:49:48.084Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"117-Eq4uQjmgiMntX/2VZ8aKyuHVB6w\"",
+    "content-length": "279"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T14:42:55.348Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "q-estingB",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=estingB",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-21: TestingBOrig (fullname Bridge) pending",
+   "sent_at": "2026-10-06T14:49:48.197Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  }
+ ]
+}
