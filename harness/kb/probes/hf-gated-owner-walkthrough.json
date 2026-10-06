@@ -2,43 +2,43 @@
  {
   "id": "s0-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER"
  },
  {
   "id": "s0-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s0-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s0-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s0-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s0-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s1-accept",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -49,44 +49,44 @@
  {
   "id": "s1-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s1-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s1-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s1-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s1-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s1-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s1-accept-again",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -97,14 +97,14 @@
  {
   "id": "s1-report",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/user-access-report",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/user-access-report",
   "auth": "OWNER",
   "note": "Q-14 report with an accepted entry"
  },
  {
   "id": "s2-cancel",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -115,44 +115,44 @@
  {
   "id": "s2-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s2-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s2-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s2-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s2-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s2-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s2-cancel-again",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -163,7 +163,7 @@
  {
   "id": "s3-reject",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -175,44 +175,44 @@
  {
   "id": "s3-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s3-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s3-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s3-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s3-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s3-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s3-reject-again",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -223,7 +223,7 @@
  {
   "id": "s3-req-ask-again",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/ask-access",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
   "auth": "REQUESTER",
   "body": {},
   "note": "Q-2 re-request after rejection"
@@ -231,44 +231,44 @@
  {
   "id": "s3b-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s3b-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s3b-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s3b-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s3b-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s3b-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s4-accept-from-rejected",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -279,32 +279,32 @@
  {
   "id": "s4-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s4-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s4-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s4-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s5-reset",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -316,44 +316,44 @@
  {
   "id": "s5-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s5-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s5-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s5-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s5-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s5-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s5-req-ask-after-reset",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/ask-access",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/ask-access",
   "auth": "REQUESTER",
   "body": {},
   "note": "Q-5 re-request after reset"
@@ -361,44 +361,44 @@
  {
   "id": "s5b-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s5b-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s5b-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s5b-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s5b-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s5b-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s6-grant-while-pending",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/grant",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/grant",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig"
@@ -408,44 +408,44 @@
  {
   "id": "s6-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s6-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s6-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s6-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s6-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s6-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s6-grant-again",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/grant",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/grant",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig"
@@ -455,7 +455,7 @@
  {
   "id": "s7-handle-unknown-user",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "this-user-does-not-exist-xyz-123",
@@ -466,7 +466,7 @@
  {
   "id": "s7-handle-bad-status",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -477,7 +477,7 @@
  {
   "id": "s7-reject-reason-too-long",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "user": "TestingBOrig",
@@ -489,7 +489,7 @@
  {
   "id": "s7-handle-no-user",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "OWNER",
   "body": {
    "status": "pending"
@@ -499,21 +499,21 @@
  {
   "id": "s7-list-limit-5",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted?limit=5",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted?limit=5",
   "auth": "OWNER",
   "note": "Q-21 limit below minimum"
  },
  {
   "id": "s7-list-q",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted?q=testingb",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted?q=testingb",
   "auth": "OWNER",
   "note": "Q-21 search, lower-case prefix"
  },
  {
   "id": "s7-req-handle",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/handle",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/handle",
   "auth": "REQUESTER",
   "body": {
    "user": "TestingBOrig",
@@ -524,7 +524,7 @@
  {
   "id": "s8-batch",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/batch",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/batch",
   "auth": "OWNER",
   "body": {
    "status": "pending",
@@ -542,32 +542,32 @@
  {
   "id": "s8-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s8-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s8-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s8-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s8-batch-same-status",
   "method": "POST",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/batch",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/batch",
   "auth": "OWNER",
   "body": {
    "status": "pending",
@@ -582,7 +582,7 @@
  {
   "id": "s9-to-auto",
   "method": "PUT",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/settings",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
   "auth": "OWNER",
   "body": {
    "gated": "auto"
@@ -592,44 +592,44 @@
  {
   "id": "s9-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s9-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s9-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s9-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s9-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s9-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s9-to-manual",
   "method": "PUT",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/settings",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
   "auth": "OWNER",
   "body": {
    "gated": "manual"
@@ -639,7 +639,7 @@
  {
   "id": "s10-to-false",
   "method": "PUT",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/settings",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
   "auth": "OWNER",
   "body": {
    "gated": false
@@ -649,7 +649,7 @@
  {
   "id": "s10-list-pending-not-gated",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2,
   "note": "owner list on a non-gated repo"
@@ -657,20 +657,20 @@
  {
   "id": "s10-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER",
   "note": "ACC-7 non-gated"
  },
  {
   "id": "s10-anon-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "note": "ACC-7 non-gated: anonymous download"
  },
  {
   "id": "s10-to-manual",
   "method": "PUT",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/settings",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/settings",
   "auth": "OWNER",
   "body": {
    "gated": "manual"
@@ -680,44 +680,44 @@
  {
   "id": "s10-list-pending",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/pending",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/pending",
   "auth": "OWNER",
   "wait": 2
  },
  {
   "id": "s10-list-accepted",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/accepted",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/accepted",
   "auth": "OWNER"
  },
  {
   "id": "s10-list-rejected",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/rejected",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/rejected",
   "auth": "OWNER"
  },
  {
   "id": "s10-list-reset",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/user-access-request/reset",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/user-access-request/reset",
   "auth": "OWNER"
  },
  {
   "id": "s10-req-auth-check",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/api/models/Orosius/deltanet-mla-latent/auth-check",
+  "url": "http://127.0.0.1:8100/api/models/{SANDBOX}/auth-check",
   "auth": "REQUESTER"
  },
  {
   "id": "s10-req-resolve",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/resolve/main/.gitattributes",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/resolve/main/.gitattributes",
   "auth": "REQUESTER"
  },
  {
   "id": "s11-report",
   "method": "GET",
-  "url": "http://127.0.0.1:8100/Orosius/deltanet-mla-latent/user-access-report",
+  "url": "http://127.0.0.1:8100/{SANDBOX}/user-access-report",
   "auth": "OWNER",
   "note": "Q-14 report at the end"
  }

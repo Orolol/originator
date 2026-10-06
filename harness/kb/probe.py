@@ -12,6 +12,9 @@ Each case is:
      "extract_props"?: "Component",      # capture JSON `data-props` of a server-rendered `data-target`
      "extract_text"?: {"from": regex, "lines": n}}   # n visible text nodes from the first match
 
+`{NAME}` placeholders in a case's `url` and string `body` values are filled from `--var NAME=value`,
+so one cases file can target several sandboxes (the values used are kept in the output's `_meta`).
+
 Redirects are NOT followed, so a 302/303 is recorded as-is. Long strings are truncated, so we never
 store whole licence texts. Every secret value from --env-file is replaced by `<ENV_VAR_NAME>` and
 every e-mail address by `<email>` before anything is written.
@@ -82,6 +85,24 @@ def redact(node, secrets):
             if value:
                 node = node.replace(value, f"<{name}>")
         return EMAIL.sub("<email>", node)
+    return node
+
+
+PLACEHOLDER = re.compile(r"\{([A-Z][A-Z0-9_]*)\}")
+
+
+def fill(node, variables):
+    """Replace `{NAME}` in every string; an unknown NAME is an error, never sent as is."""
+    if isinstance(node, dict):
+        return {k: fill(v, variables) for k, v in node.items()}
+    if isinstance(node, list):
+        return [fill(v, variables) for v in node]
+    if isinstance(node, str):
+        def value(match):
+            if match.group(1) not in variables:
+                raise SystemExit(f"placeholder {{{match.group(1)}}} has no --var {match.group(1)}=…")
+            return variables[match.group(1)]
+        return PLACEHOLDER.sub(value, node)
     return node
 
 
@@ -197,10 +218,13 @@ def main() -> int:
     parser.add_argument("--out-md", required=True)
     parser.add_argument("--env-file", default=None, help="KEY=VALUE file providing the tokens named by `auth`")
     parser.add_argument("--allow-writes", action="store_true", help="allow non-GET/HEAD cases (state changes)")
+    parser.add_argument("--var", action="append", default=[], metavar="NAME=VALUE",
+                        help="fill `{NAME}` placeholders in case URLs and bodies (repeatable)")
     args = parser.parse_args()
 
+    variables = dict(v.split("=", 1) for v in args.var)
     with open(args.cases) as handle:
-        cases = json.load(handle)
+        cases = fill(json.load(handle), variables)
     env = load_env(args.env_file)
     missing = sorted({c["auth"] for c in cases if c.get("auth")} - env.keys())
     if missing:
@@ -215,6 +239,8 @@ def main() -> int:
         "cases_file": args.cases,
         "recorded_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
+    if variables:
+        meta["vars"] = variables
     with open(args.out_json, "w") as handle:
         json.dump({"_meta": meta, "records": records}, handle, indent=1, ensure_ascii=False)
         handle.write("\n")

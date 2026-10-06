@@ -1,13 +1,13 @@
 [
-  {"id": "pre-auth-check", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/auth-check", "note": "baseline: logged in, no request"},
-  {"id": "pre-resolve", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes", "note": "baseline file access"},
-  {"id": "pre-head", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "HEAD", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes", "note": "baseline HEAD"},
-  {"id": "pre-owner-list", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/user-access-request/pending", "note": "owner endpoint with a non-owner write token"},
-  {"id": "pre-page", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent", "note": "does the website honour Bearer tokens?", "extract_props": "RepoGatedModal"},
-  {"id": "ask-access-json", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "POST", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/ask-access", "body": {}, "body_encoding": "json", "note": "Q-1: request access with a token, JSON body (repo has no extra fields)"},
-  {"id": "post-json-auth-check", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/auth-check", "wait": 3, "note": "state after JSON attempt"},
-  {"id": "post-json-resolve", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes", "note": "state after JSON attempt"},
-  {"id": "ask-access-form", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "POST", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/ask-access", "body": {}, "body_encoding": "form", "note": "Q-1/Q-2: same with form encoding (re-submit if the first one worked)"},
-  {"id": "post-form-auth-check", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/Orosius/deltanet-mla-latent/auth-check", "wait": 3, "note": "state after form attempt"},
-  {"id": "post-form-resolve", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/Orosius/deltanet-mla-latent/resolve/main/.gitattributes", "note": "state after form attempt"}
+  {"id": "pre-auth-check", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/{SANDBOX}/auth-check", "note": "baseline: logged in, no request"},
+  {"id": "pre-resolve", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/{SANDBOX}/resolve/main/.gitattributes", "note": "baseline file access"},
+  {"id": "pre-head", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "HEAD", "url": "https://huggingface.co/{SANDBOX}/resolve/main/.gitattributes", "note": "baseline HEAD"},
+  {"id": "pre-owner-list", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/{SANDBOX}/user-access-request/pending", "note": "owner endpoint with a non-owner write token"},
+  {"id": "pre-page", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/{SANDBOX}", "note": "does the website honour Bearer tokens?", "extract_props": "RepoGatedModal"},
+  {"id": "ask-access-json", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "POST", "url": "https://huggingface.co/{SANDBOX}/ask-access", "body": {}, "body_encoding": "json", "note": "Q-1: request access with a token, JSON body (repo has no extra fields)"},
+  {"id": "post-json-auth-check", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/{SANDBOX}/auth-check", "wait": 3, "note": "state after JSON attempt"},
+  {"id": "post-json-resolve", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/{SANDBOX}/resolve/main/.gitattributes", "note": "state after JSON attempt"},
+  {"id": "ask-access-form", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "POST", "url": "https://huggingface.co/{SANDBOX}/ask-access", "body": {}, "body_encoding": "form", "note": "Q-1/Q-2: same with form encoding (re-submit if the first one worked)"},
+  {"id": "post-form-auth-check", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/api/models/{SANDBOX}/auth-check", "wait": 3, "note": "state after form attempt"},
+  {"id": "post-form-resolve", "auth": "HF_REQUESTER_ACCESS_TOKEN", "method": "GET", "url": "https://huggingface.co/{SANDBOX}/resolve/main/.gitattributes", "note": "state after form attempt"}
 ]
