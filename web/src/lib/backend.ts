@@ -2,7 +2,8 @@
 import { cookies } from "next/headers";
 import { BACKEND_COOKIE, parseBackend, type BackendId } from "./backends";
 import { backendUrlFor } from "./config";
-import { toApiResult, type ApiResult } from "./httpError";
+import { deriveGateState, type GateState } from "./gateState";
+import { readBackendError, toApiResult, type ApiResult } from "./httpError";
 import { authHeaders, parsePersona, PERSONA_COOKIE, type PersonaId } from "./personas";
 
 export async function currentPersona(): Promise<PersonaId> {
@@ -41,6 +42,17 @@ export async function backendJson<T>(path: string): Promise<ApiResult<T>> {
 /** `/api/models/{ns}/{name}` style prefix with each segment encoded. */
 export function repoPath(ns: string, name: string): string {
   return `${encodeURIComponent(ns)}/${encodeURIComponent(name)}`;
+}
+
+/** Requester gate state of `repo` (an encoded `repoPath`) for the current persona, from auth-check (lib/gateState). */
+export async function fetchGateState(repo: string): Promise<GateState> {
+  try {
+    const res = await backendFetch(`/api/models/${repo}/auth-check`);
+    if (res.status === 200) return deriveGateState({ status: 200, code: null, message: "" });
+    return deriveGateState(await readBackendError(res));
+  } catch (err) {
+    return { kind: "unmapped", status: 502, code: null, message: `Backend unreachable: ${String(err)}` };
+  }
 }
 
 export interface WhoAmI {

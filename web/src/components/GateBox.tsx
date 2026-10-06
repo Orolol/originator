@@ -1,13 +1,37 @@
 // Requester gate box on the model page (docs/hf-gated/ui.md §A). Pure render: the state comes
 // from lib/gateState (auth-check), the texts from lib/gateForm (card metadata).
 import type { GateState } from "@/lib/gateState";
-import { DEFAULT_GATE_HEADING, DEFAULT_SUBMIT_LABEL, type GateConfig, type GateField } from "@/lib/gateForm";
+import { GATED_REPOS_PATH } from "@/lib/gatedRepos";
+import { DEFAULT_GATE_HEADING, submitLabel, type GateConfig, type GateField } from "@/lib/gateForm";
 import { countries } from "@/lib/countries";
 import { renderMarkdown } from "@/lib/markdown";
 
 type GateBoxState = Exclude<GateState, { kind: "access" }>;
+export type GateMode = "auto" | "manual";
 
-export function GateBox({ repoId, config, state }: { repoId: string; config: GateConfig; state: GateBoxState }) {
+interface GateBoxProps {
+  repoId: string;
+  config: GateConfig;
+  state: GateBoxState;
+  /** The repo's `gated` mode: it picks the default submit label (Q-11). */
+  mode: GateMode;
+}
+
+/**
+ * A caller with access to a gated repo (auth-check 200): HF shows this block instead of the gate box
+ * [OBS-UI 2026-10-06, seen as the owner]. Provisional (Q-11): an accepted requester (A4) is presumed to
+ * see the same block; it gives the same auth-check answer as the owner.
+ */
+export function GatedModelAccess() {
+  return (
+    <section aria-labelledby="gated-model-heading">
+      <h2 id="gated-model-heading">Gated model</h2>
+      <p>You have been granted access to this model</p>
+    </section>
+  );
+}
+
+export function GateBox({ repoId, config, state, mode }: GateBoxProps) {
   return (
     <section aria-labelledby="gate-heading" data-gate-state={state.kind}>
       <h2 id="gate-heading">{config.heading ?? DEFAULT_GATE_HEADING}</h2>
@@ -20,12 +44,12 @@ export function GateBox({ repoId, config, state }: { repoId: string; config: Gat
         </p>
       )}
       {config.prompt && <div dangerouslySetInnerHTML={{ __html: renderMarkdown(config.prompt) }} />}
-      <GateBody repoId={repoId} config={config} state={state} />
+      <GateBody repoId={repoId} config={config} state={state} mode={mode} />
     </section>
   );
 }
 
-function GateBody({ repoId, config, state }: { repoId: string; config: GateConfig; state: GateBoxState }) {
+function GateBody({ repoId, config, state, mode }: GateBoxProps) {
   const back = encodeURIComponent(`/${repoId}`);
   switch (state.kind) {
     case "anonymous":
@@ -40,28 +64,23 @@ function GateBody({ repoId, config, state }: { repoId: string; config: GateConfi
         </p>
       );
     case "no-request":
-      return <GateForm repoId={repoId} config={config} />;
+      return <GateForm repoId={repoId} config={config} mode={mode} />;
     case "reset":
       // A6 [DOC]: after a reset the user is prompted to agree and submit a new request.
       // Provisional (Q-11): whether the page also shows a reset notice (or the resetReason) is unrecorded.
-      return <GateForm repoId={repoId} config={config} />;
+      return <GateForm repoId={repoId} config={config} mode={mode} />;
     case "rejected":
       // A5 [DOC]: the page text from the docs. The rejectionReason is not exposed by the API (REQ-4,
       // Q-19), so it cannot be shown in bridge mode.
       return <p role="status">Your request to access this repo has been rejected by the repo&apos;s authors.</p>;
     case "pending":
-      // Provisional (Q-11): the page wording for A3 is unrecorded; we show the backend's auth-check
-      // message verbatim ("Your request to access model {id} is awaiting a review from the repo authors.").
-      // Requester self-cancel [SPEC] `POST …/user-access-request/cancel`. Provisional (Q-3): HF's page
-      // control and its label are unrecorded; offered on A3 only, through the web route /-/cancel-request.
+      // A3 [OBS-UI 2026-10-06]: HF's own text (not the auth-check message), "your settings" linking to
+      // /settings/gated-repos. There is no cancel control on the model page: self-cancel lives there.
       return (
-        <>
-          <p role="status">{state.message}</p>
-          <form method="post" action="/-/cancel-request">
-            <input type="hidden" name="repo" value={repoId} />
-            <button type="submit">Cancel my request</button>
-          </form>
-        </>
+        <p role="status">
+          Your request to access this repository has been submitted and is awaiting a review from the repository
+          authors. You can check the status of all your access requests in <a href={GATED_REPOS_PATH}>your settings</a>.
+        </p>
       );
     case "unmapped":
       // docs/system.md: unknown auth-check answers are shown verbatim and flagged, never mapped to a
@@ -81,49 +100,53 @@ function GateBody({ repoId, config, state }: { repoId: string; config: GateConfi
 }
 
 /**
- * A2: plain HTML form POST to `/{repo}/ask-access`; each field's `name` is its label (gate-form.md:
- * the label is both the visible text and the key of the stored answers).
+ * A2 [OBS-UI 2026-10-06]: a plain HTML form `POST /{repo}/ask-access?next=/{repo}` (URL-encoded); each
+ * field's `name` is its label (gate-form.md: the label is both the visible text and the key of the
+ * stored answers). Text order as recorded on `bigcode/starcoder`: the consent line, the fields (YAML
+ * order), the button. There is no Cancel button.
+ * Not reproduced: HF's hidden `csrf` input (our backends take the persona token; an extra field would
+ * change the request body), and the "Expand to review and access" button that collapses long forms
+ * (what makes a form "long" is unrecorded).
  */
-export function GateForm({ repoId, config }: { repoId: string; config: GateConfig }) {
+export function GateForm({ repoId, config, mode }: { repoId: string; config: GateConfig; mode: GateMode }) {
   return (
-    <form method="post" action={`/${repoId}/ask-access`}>
+    <form method="post" action={`/${repoId}/ask-access?next=/${repoId}`}>
+      <p>By agreeing you accept to share your contact information (email and username) with the repository authors.</p>
       {config.fields.map((field, i) => (
         <GateFieldInput key={field.label} field={field} id={`gate-field-${i}`} />
       ))}
-      <p>By agreeing you accept to share your contact information (email and username) with the repository authors.</p>
-      {/* Provisional (Q-11): whether the default label differs in auto mode is unrecorded; same label. */}
-      <button type="submit">{config.buttonContent ?? DEFAULT_SUBMIT_LABEL}</button>{" "}
-      {/* Provisional (Q-11): what Cancel does is unrecorded; it does nothing here. */}
-      <button type="button">Cancel</button>
+      <button type="submit">{submitLabel(config, mode)}</button>
     </form>
   );
 }
 
-// Provisional (Q-16): whether fields are required / checkboxes must be checked is unknown, so no
-// client-side validation is added; the backend decides.
-// Provisional (Q-15): submitted values are the browser's native ones (checkbox "on", date
-// "YYYY-MM-DD", country alpha-2 code, select option value).
+// [OBS-UI 2026-10-06] Every extra field is `required` (checkboxes included); text inputs have the
+// placeholder "<Label> (required)"; selects start on an empty "Select an option".
+// Values are the browser's native ones (Q-15, matches what HF's form posts): checkbox "on", date
+// "YYYY-MM-DD", country ISO alpha-2 code, select option value.
+const SELECT_AN_OPTION = <option value="">Select an option</option>;
+
 function GateFieldInput({ field, id }: { field: GateField; id: string }) {
   switch (field.type) {
     case "checkbox":
       return (
         <p>
-          <input type="checkbox" id={id} name={field.label} /> <label htmlFor={id}>{field.label}</label>
+          <input type="checkbox" id={id} name={field.label} value="on" required />{" "}
+          <label htmlFor={id}>{field.label}</label>
         </p>
       );
     case "date_picker":
       return (
         <p>
-          <label htmlFor={id}>{field.label}</label> <input type="date" id={id} name={field.label} />
+          <label htmlFor={id}>{field.label}</label> <input type="date" id={id} name={field.label} required />
         </p>
       );
     case "country":
       return (
         <p>
           <label htmlFor={id}>{field.label}</label>{" "}
-          <select id={id} name={field.label} defaultValue="">
-            {/* Provisional (Q-16): empty first option, so nothing is pre-selected. */}
-            <option value=""></option>
+          <select id={id} name={field.label} defaultValue="" required>
+            {SELECT_AN_OPTION}
             {countries().map((c) => (
               <option key={c.code} value={c.code}>
                 {c.name}
@@ -136,9 +159,8 @@ function GateFieldInput({ field, id }: { field: GateField; id: string }) {
       return (
         <p>
           <label htmlFor={id}>{field.label}</label>{" "}
-          <select id={id} name={field.label} defaultValue="">
-            {/* Provisional (Q-16): empty first option, so nothing is pre-selected. */}
-            <option value=""></option>
+          <select id={id} name={field.label} defaultValue="" required>
+            {SELECT_AN_OPTION}
             {field.options.map((o) => (
               <option key={o.value} value={o.value}>
                 {o.label}
@@ -148,20 +170,28 @@ function GateFieldInput({ field, id }: { field: GateField; id: string }) {
         </p>
       );
     case "ip_location":
-      // Provisional (Q-15): undocumented type; no input (the server presumably records the IP location).
-      return null;
+      // No input; the server records the location [OBS-UI 2026-10-06].
+      return <p>Your country and region (based on approximate Internet address) will be shared with the model owner.</p>;
     case "text":
       return (
         <p>
-          <label htmlFor={id}>{field.label}</label> <input type="text" id={id} name={field.label} />
+          <label htmlFor={id}>{field.label}</label>{" "}
+          <input type="text" id={id} name={field.label} placeholder={`${field.label} (required)`} required />
         </p>
       );
     case "unknown":
-      // Provisional (Q-15): a type gate-form.md does not document; rendered as a text input.
+      // Provisional (Q-15): a type gate-form.md does not document; rendered as a (required) text input.
       return (
         <p>
           <label htmlFor={id}>{field.label}</label>{" "}
-          <input type="text" id={id} name={field.label} data-unknown-field-type={field.rawType} />
+          <input
+            type="text"
+            id={id}
+            name={field.label}
+            placeholder={`${field.label} (required)`}
+            required
+            data-unknown-field-type={field.rawType}
+          />
         </p>
       );
   }

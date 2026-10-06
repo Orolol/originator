@@ -1,7 +1,11 @@
-// Requester submits the gate form (ui.md §A2, REQ-2): the browser posts a plain HTML form here; we
-// forward the answers to the backend's `POST /{repo}/ask-access` as a JSON object
-// `{<field label>: <value>}` (api.md §1: JSON or form-encoded both work [OBS]; JSON matches the spec).
+// Requester submits the gate form (ui.md §A2, REQ-2): the browser posts a plain HTML form here, at
+// `/{repo}/ask-access?next=/{repo}` like HF's form [OBS-UI 2026-10-06]; we forward the answers to the
+// backend's `POST /{repo}/ask-access` as a JSON object `{<field label>: <value>}` (api.md §1: JSON or
+// form-encoded both work [OBS]; JSON matches the spec).
 // Backend 303 → browser 303 to the repo page on the web origin; anything else is relayed verbatim.
+// Provisional (Q-11): what HF does with `next` is unrecorded. It is accepted and not forwarded (the
+// recorded walkthroughs posted without it); the redirect follows the backend's 303, which is the repo
+// page, i.e. the `next` our form sends.
 import type { NextRequest } from "next/server";
 import { backendUnreachable, backendUrlFromRequest, callBackend, relay } from "@/lib/proxy";
 
@@ -33,6 +37,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ ns: string
       method: "POST",
       body: JSON.stringify(fields),
       contentType: "application/json",
+      search: "",
     });
   } catch (err) {
     return backendUnreachable(req, err);

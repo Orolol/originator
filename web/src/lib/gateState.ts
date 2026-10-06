@@ -38,3 +38,24 @@ export function deriveGateState(authCheck: BackendError): GateState {
   }
   return { kind: "unmapped", status, code, message };
 }
+
+/** A row status on `/settings/gated-repos` (HF shows it uppercase, e.g. `PENDING` [OBS-UI 2026-10-06]). */
+export type GatedRepoRequestStatus = "pending" | "rejected" | "reset";
+
+/**
+ * `/settings/gated-repos` row for one repo, from the same auth-check answer. HF fills that page from
+ * server props (`gatedReposRequests`); the API has no "my requests" endpoint, so we derive it.
+ * No request / anonymous → no row; 200 → no row, because an accepted request and the owner bypass
+ * (ACC-1) give the same answer. Provisional (Q-3): only `pending` was seen in HF's table; rejected
+ * and reset requests are assumed to be listed too.
+ */
+export function gatedRepoRequestStatus(state: GateState): GatedRepoRequestStatus | null {
+  switch (state.kind) {
+    case "pending":
+    case "rejected":
+    case "reset":
+      return state.kind;
+    default:
+      return null;
+  }
+}

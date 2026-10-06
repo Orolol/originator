@@ -16,7 +16,7 @@ export interface RepoSettingsUpdate {
 /** List item of `GET …/user-access-request/{status}` (api.md §2). */
 export interface AccessRequest {
   user: {
-    _id?: string;
+    _id: string;
     user: string;
     fullname?: string;
     avatarUrl?: string;
@@ -31,6 +31,21 @@ export interface AccessRequest {
 export interface QuickSearchUser {
   user: string;
   fullname?: string;
+}
+
+/** One page of an owner list, with the `Link: <…>; rel="next"` target (REV-10), as a web-origin path. */
+export interface AccessRequestPage {
+  url: string;
+  items: AccessRequest[];
+  next: string | null;
+}
+
+/** Item of the `batch` response (REV-9, api.md §1). */
+export interface BatchOutcome {
+  user?: string;
+  userId?: string;
+  ok: boolean;
+  error?: string;
 }
 
 function modelApi(repoId: string): string {
@@ -55,14 +70,77 @@ export function updateRepoSettings(repoId: string, body: RepoSettingsUpdate) {
   return jsonRequest<RepoSettingsUpdate>("PUT", `${modelApi(repoId)}/settings`, body);
 }
 
-/** REV-10: one list per status (no query: default limit 1000, one page). */
-export function listAccessRequests(repoId: string, status: RequestStatus) {
-  return jsonRequest<AccessRequest[]>("GET", `${modelApi(repoId)}/user-access-request/${status}`);
+/** HF's review modal asks for 100 items per page [OBS-UI 2026-10-06]. */
+export const LIST_LIMIT = 100;
+
+/**
+ * REV-10 list URL as HF's modal builds it [OBS-UI 2026-10-06]: `…/{status}?limit=100`, plus `&q=` for a
+ * search (current tab only).
+ */
+export function accessRequestsUrl(repoId: string, status: RequestStatus, q = ""): string {
+  const params = new URLSearchParams({ limit: String(LIST_LIMIT) });
+  if (q) params.set("q", q);
+  return `${modelApi(repoId)}/user-access-request/${status}?${params}`;
 }
 
-/** REV-5 / §5.1: `{user, status}` by username. No rejectionReason input in our UI (Q-13). */
+/**
+ * Target of `Link: <…>; rel="next"` (REV-10), reduced to its path and query so that it is fetched
+ * through the web `/api` proxy whatever host the backend wrote (the proxy already maps the backend's
+ * own URL to the web origin). Anything outside `/api/` is ignored.
+ */
+export function nextPageUrl(link: string | null): string | null {
+  const match = link?.match(/<([^>]*)>\s*;\s*rel="?next"?/);
+  if (!match) return null;
+  try {
+    const url = new URL(match[1], "http://web.invalid");
+    return url.pathname.startsWith("/api/") ? `${url.pathname}${url.search}` : null;
+  } catch {
+    return null;
+  }
+}
+
+/** One page of an owner list (`url` from `accessRequestsUrl` or a previous page's `next`). */
+export async function fetchAccessRequestPage(url: string): Promise<ApiResult<AccessRequestPage>> {
+  let res: Response;
+  try {
+    res = await fetch(url);
+  } catch (err) {
+    return { ok: false, error: { status: 0, code: null, message: String(err) } };
+  }
+  const next = nextPageUrl(res.headers.get("link"));
+  const result = await toApiResult<unknown>(res);
+  if (!result.ok) return result;
+  const items = Array.isArray(result.data) ? (result.data as AccessRequest[]) : [];
+  return { ok: true, status: result.status, data: { url, items, next } };
+}
+
+/**
+ * REV-5 / §5.1: `{user, status}` by username. No rejectionReason input in our UI (Q-13).
+ * Provisional (Q-13): HF's own modal sends `{"status", "userId": <_id>}` [OBS-UI 2026-10-06, session 2];
+ * we keep `{user, status}`, the body of the recorded live walkthrough our clone run is diffed against.
+ */
 export function handleAccessRequest(repoId: string, user: string, status: HandleStatus) {
   return jsonRequest<unknown>("POST", `${modelApi(repoId)}/user-access-request/handle`, { user, status });
+}
+
+/**
+ * REV-9: `POST …/batch {status, requests: [{userId}]}`, the user `_id`s being the values of the
+ * modal's row checkboxes [OBS-UI 2026-10-06]. Provisional (Q-13): what HF's "Accept selected" /
+ * "Reject selected" send was not recorded (not clicked); this is the API's documented shape.
+ */
+export function batchAccessRequests(repoId: string, status: "accepted" | "rejected", userIds: string[]) {
+  return jsonRequest<BatchOutcome[]>("POST", `${modelApi(repoId)}/user-access-request/batch`, {
+    status,
+    requests: userIds.map((userId) => ({ userId })),
+  });
+}
+
+/**
+ * Requester self-cancel (REQ-7): `POST …/user-access-request/cancel` with no body, fired by the browser
+ * from `/settings/gated-repos` like HF's page does [OBS-UI 2026-10-06, session 2].
+ */
+export function cancelAccessRequest(repoId: string) {
+  return jsonRequest<unknown>("POST", `${modelApi(repoId)}/user-access-request/cancel`);
 }
 
 /** REV-6: `POST …/grant {user}`. */
@@ -70,7 +148,10 @@ export function grantAccess(repoId: string, user: string) {
   return jsonRequest<unknown>("POST", `${modelApi(repoId)}/user-access-request/grant`, { user });
 }
 
-/** "Add access" user search (docs/system.md backend surface). */
+/**
+ * "Add access" user search: `GET /api/quicksearch?q=<text>&type=user`, with `q=` empty when the dialog
+ * opens [OBS-UI 2026-10-06] (Q-25).
+ */
 export async function searchUsers(q: string): Promise<ApiResult<QuickSearchUser[]>> {
   const res = await jsonRequest<{ users?: unknown }>("GET", `/api/quicksearch?q=${encodeURIComponent(q)}&type=user`);
   if (!res.ok) return res;

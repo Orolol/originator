@@ -27,7 +27,15 @@ export interface GateConfig {
 }
 
 export const DEFAULT_GATE_HEADING = "You need to agree to share your contact information to access this model";
-export const DEFAULT_SUBMIT_LABEL = "Agree and send request to access repo";
+/** Default submit label in auto mode [OBS-UI 2026-10-06, `bigcode/starcoder`]. */
+export const DEFAULT_SUBMIT_LABEL_AUTO = "Agree and access repository";
+/** Default submit label in manual mode [DOC-IMG] [OBS-UI 2026-10-06, session 2: the sandbox]. */
+export const DEFAULT_SUBMIT_LABEL_MANUAL = "Agree and send request to access repo";
+
+/** `extra_gated_button_content`, else the mode's default label (Q-11). */
+export function submitLabel(config: GateConfig, mode: "auto" | "manual"): string {
+  return config.buttonContent ?? (mode === "auto" ? DEFAULT_SUBMIT_LABEL_AUTO : DEFAULT_SUBMIT_LABEL_MANUAL);
+}
 
 const KNOWN_TYPES: readonly string[] = ["text", "checkbox", "date_picker", "country", "select", "ip_location"];
 

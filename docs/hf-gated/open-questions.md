@@ -325,7 +325,7 @@ real dialog finds nobody either. Our empty result is faithful. The dialog layout
 
 ---
 
-## Provisional choices in the web UI (2026-10-05)
+## Provisional choices in the web UI (2026-10-05; updated 2026-10-06 after the UI alignment)
 
 Recorded from the UI builder's report (`harness/agents/runs/2026-10-05-ui-builder.md`). Each one is
 marked `Provisional (Q-n)` in `web/src`. Resolve them by recording the real UI, then update the code
@@ -359,6 +359,24 @@ and strike the line.
 | 25 | Q-11 | Reset (A6): show the consent form again, with no reset notice. |
 | 26 | Q-3 | Pending (A3): a `Cancel my request` button (label invented) posts the web-only route `/-/cancel-request`, which calls `POST …/user-access-request/cancel` with no body and redirects to the repo page; a backend error is shown verbatim. Offered on A3 only, which matches the API (REQ-7: only a pending request can be withdrawn). Whether HF's page has such a control is unrecorded. Added 2026-10-06; the scripted walkthrough drove it live (`observations/2026-10-06-ui-walkthrough.md`). **Contradicted [OBS-UI 2026-10-06]**: HF has no cancel control on the model page; it is an icon button titled "Cancel this access request" on `/settings/gated-repos`. |
 | 23 | (none) | Settings control order follows the doc screenshots: `New requests` select, `Review access requests (N)`, `Download user access report`, `Add access` on one row; notifications on the next row. The Disable/Enable button sits under the text, not at the top right. |
+
+**Alignment with the recorded HF screens (2026-10-06,** `harness/agents/runs/2026-10-06-ui-hub-alignment.md`**).**
+- **Resolved:** #1, #2, #3, #4, #5, #7, #13, #14, #15 and #26 now match the `[OBS-UI]` capture; #19 and
+  #20 mostly. #6 is confirmed. For #10, only the `type="email"` input and the "Real-time" label are
+  settled.
+- **Recorded for Q-12 (2026-10-06):** each settings control saves at once (one `PUT …/settings`), then
+  reloads the page, with no confirmation. The PUT bodies are unrecorded (the reload clears the page
+  hook).
+- **New provisional choices** (marked in `web/src`):
+
+| Q | Choice |
+|---|---|
+| Q-11 | `?next=` is accepted on the form action but not forwarded; the redirect follows the backend's 303. The accepted requester is presumed to see the same "Gated model" block as the owner. |
+| Q-3 | `/settings/gated-repos` lists only `SANDBOX_REPO`, derived from `auth-check` (we have no "my requests" endpoint). The Date column is empty. REJECTED and RESET rows are shown (only PENDING was recorded). Sorting is client-side. There is no empty-state text. |
+| Q-13 | Bulk buttons on every tab, sending `POST …/batch {status, requests:[{userId}]}` (HF's bulk was never clicked). "No rejected access requests" by analogy. The URL flags use `replaceState`. The selection resets on tab, search, page or action. A tab count is its first page's length. "n matching result(s)" counts the shown page. The handle body stays `{user, status}` (HF sends `{status, userId}`), kept so the clone walkthrough stays write-for-write comparable with the live recording. |
+| Q-12 | Add access: a search result is a toggle (`aria-pressed`), a new query clears the choice, and after a grant the dialog closes. |
+| Q-15 | An unknown field type renders as a required text input. |
+| (none) | Debounces are 300 ms. The "Expand to review and access" collapse and HF's hidden `csrf` input are not reproduced. |
 
 ## Provisional choices in the clone (2026-10-05)
 

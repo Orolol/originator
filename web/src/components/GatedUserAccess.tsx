@@ -2,28 +2,25 @@
 // Owner settings section "Gated user access" (docs/hf-gated/ui.md §B1–B3; side effects §D).
 // Provisional (Q-12): every control saves immediately (one PUT per change, no save button, no
 // confirmation on disable); a failed save shows the backend error and keeps the previous value.
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import type { BackendError } from "@/lib/httpError";
 import {
+  accessRequestsUrl,
+  fetchAccessRequestPage,
   grantAccess,
-  handleAccessRequest,
-  listAccessRequests,
   updateRepoSettings,
   userAccessReportUrl,
   type Gated,
-  type HandleStatus,
   type NotificationsMode,
   type RepoSettingsUpdate,
 } from "@/lib/hubClient";
 import { AddAccessDialog } from "./AddAccessDialog";
 import { ErrorNotice } from "./ErrorNotice";
-import { ManageAccessRequestsDialog, REQUEST_TABS, type RequestLists } from "./ManageAccessRequestsDialog";
+import { ManageAccessRequestsDialog } from "./ManageAccessRequestsDialog";
 
 // Provisional (Q-23, Q-13): the real Hub is eventually consistent (~1 s, the client tests sleep 1 s),
 // and HF's refresh behaviour after an action is unrecorded: we refetch the lists after this delay.
 export const REFRESH_DELAY_MS = 1000;
-
-const EMPTY_LISTS: RequestLists = { pending: null, accepted: null, rejected: null };
 
 interface Props {
   repoId: string;
@@ -45,8 +42,6 @@ export function GatedUserAccess({ repoId, initialGated, initialPendingCount, ref
   const [settingsError, setSettingsError] = useState<BackendError | null>(null);
 
   const [reviewOpen, setReviewOpen] = useState(false);
-  const [lists, setLists] = useState<RequestLists>(EMPTY_LISTS);
-  const [listError, setListError] = useState<BackendError | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [grantError, setGrantError] = useState<BackendError | null>(null);
 
@@ -81,40 +76,6 @@ export function GatedUserAccess({ repoId, initialGated, initialPendingCount, ref
     }
   }
 
-  const loadLists = useCallback(async () => {
-    const results = await Promise.all(REQUEST_TABS.map((status) => listAccessRequests(repoId, status)));
-    const next: RequestLists = { ...EMPTY_LISTS };
-    let firstError: BackendError | null = null;
-    results.forEach((res, i) => {
-      if (res.ok) next[REQUEST_TABS[i]] = Array.isArray(res.data) ? res.data : [];
-      else firstError ??= res.error;
-    });
-    setLists(next);
-    setListError(firstError);
-    if (next.pending) setPendingCount(next.pending.length);
-  }, [repoId]);
-
-  async function refreshLater() {
-    await new Promise((resolve) => setTimeout(resolve, refreshDelayMs));
-    await loadLists();
-  }
-
-  function openReview() {
-    setReviewOpen(true);
-    // Provisional (Q-13): all three lists are fetched when the modal opens (the tabs show counts).
-    void loadLists();
-  }
-
-  async function act(user: string, status: HandleStatus) {
-    setListError(null);
-    const res = await handleAccessRequest(repoId, user, status);
-    if (!res.ok) {
-      setListError(res.error);
-      return;
-    }
-    await refreshLater();
-  }
-
   async function grant(user: string) {
     setGrantError(null);
     const res = await grantAccess(repoId, user);
@@ -122,8 +83,12 @@ export function GatedUserAccess({ repoId, initialGated, initialPendingCount, ref
       setGrantError(res.error);
       return;
     }
+    // Provisional (Q-12): after a grant the dialog closes and, after the refresh delay, the pending
+    // count is reread (a pending user who is granted leaves that list).
     setAddOpen(false);
-    await refreshLater();
+    await new Promise((resolve) => setTimeout(resolve, refreshDelayMs));
+    const pending = await fetchAccessRequestPage(accessRequestsUrl(repoId, "pending"));
+    if (pending.ok) setPendingCount(pending.data.items.length);
   }
 
   return (
@@ -163,8 +128,9 @@ export function GatedUserAccess({ repoId, initialGated, initialPendingCount, ref
               <option value="auto">Automatic approval</option>
               <option value="manual">Manual review</option>
             </select>{" "}
-            {/* Provisional (Q-13): N = number of pending requests. */}
-            <button type="button" onClick={openReview}>
+            {/* [OBS-UI 2026-10-06] N = the pending count, no number until it is known. Ours is known at
+                page load (server-side list read); HF's appears after a client-side load. */}
+            <button type="button" onClick={() => setReviewOpen(true)}>
               {pendingCount === null ? "Review access requests" : `Review access requests (${pendingCount})`}
             </button>{" "}
             {/* REP-1: browser download of GET /{repo}/user-access-report. */}
@@ -195,15 +161,16 @@ export function GatedUserAccess({ repoId, initialGated, initialPendingCount, ref
                 onChange={(e) => changeNotificationsMode(e.target.value as NotificationsMode)}
               >
                 <option value="bulk">Once a day</option>
-                {/* Provisional (Q-12): the real-time option's label is unrecorded. */}
+                {/* [OBS-UI 2026-10-06] options bulk = "Once a day", real-time = "Real-time". */}
                 <option value="real-time">Real-time</option>
               </select>{" "}
-              {/* Provisional (Q-12): saved on Enter or when the field loses focus; empty → default
-                  recipients; no client-side email validation (the backend's answer is shown). */}
+              {/* [OBS-UI 2026-10-06] type="email", so the browser validates it (and blocks Enter on an
+                  invalid address). Provisional (Q-12): saved on Enter or when the field loses focus;
+                  empty → default recipients; the backend's answer is shown. */}
               <label htmlFor="gated-notifications-email">Notifications email</label>{" "}
               <input
                 id="gated-notifications-email"
-                type="text"
+                type="email"
                 placeholder="example@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -216,9 +183,9 @@ export function GatedUserAccess({ repoId, initialGated, initialPendingCount, ref
 
       {reviewOpen && (
         <ManageAccessRequestsDialog
-          lists={lists}
-          error={listError}
-          onAction={(user, status) => void act(user, status)}
+          repoId={repoId}
+          refreshDelayMs={refreshDelayMs}
+          onPendingCount={setPendingCount}
           onClose={() => setReviewOpen(false)}
         />
       )}

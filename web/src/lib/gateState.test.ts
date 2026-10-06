@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { deriveGateState } from "./gateState";
+import { deriveGateState, gatedRepoRequestStatus } from "./gateState";
 
 const ID = "Orosius/deltanet-mla-latent";
 // Messages as observed (api.md §3.1, observations/2026-10-05-*.md).
@@ -35,5 +35,20 @@ describe("deriveGateState (docs/system.md: requester gate state comes from auth-
     ["bridge refusal", { status: 403, code: "BridgeRepoNotAllowed", message: "Repo not allowed" }],
   ])("%s → unmapped, verbatim", (_name, input) => {
     expect(deriveGateState(input)).toEqual({ kind: "unmapped", ...input });
+  });
+});
+
+describe("gatedRepoRequestStatus (/settings/gated-repos rows)", () => {
+  it.each([
+    [{ kind: "pending", message: PENDING }, "pending"],
+    [{ kind: "rejected", message: REJECTED }, "rejected"],
+    [{ kind: "reset", message: RESET }, "reset"],
+    [{ kind: "no-request", message: NO_REQUEST }, null],
+    [{ kind: "anonymous", message: ANON }, null],
+    // 200: accepted and the owner bypass (ACC-1) look the same, so no row.
+    [{ kind: "access" }, null],
+    [{ kind: "unmapped", status: 502, code: null, message: "down" }, null],
+  ] as const)("%j → %s", (state, status) => {
+    expect(gatedRepoRequestStatus(state)).toBe(status);
   });
 });

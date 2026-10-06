@@ -27,22 +27,15 @@ section[data-gate-state] {
   margin: 16px 0;
 }
 
-.backdrop {
-  position: fixed;
-  inset: 0;
-  background: #0006;
+dialog.dialog {
+  width: min(720px, 90vw);
+  max-height: 80vh;
+  padding: 16px;
+  border: 1px solid #8888;
 }
 
-.dialog {
-  position: relative;
-  max-width: 720px;
-  max-height: 80vh;
-  overflow: auto;
-  margin: 10vh auto 0;
-  padding: 16px;
-  background: Canvas;
-  color: CanvasText;
-  border: 1px solid #8888;
+dialog.dialog::backdrop {
+  background: #0006;
 }
 
 .dialog-close {
@@ -51,7 +44,8 @@ section[data-gate-state] {
   right: 16px;
 }
 
-[role="tab"][aria-selected="true"] {
+dialog button[aria-current="true"],
+dialog button[aria-pressed="true"] {
   font-weight: bold;
 }
 

@@ -1,8 +1,10 @@
 # web
 
 Next.js (App Router) replica of Hugging Face's gated-model screens: the requester gate box on
-`/{ns}/{repo}` and the owner's "Gated user access" section plus "Manage access requests" modal on
-`/{ns}/{repo}/settings`. It talks to one backend at a time, the clone or the bridge, chosen in the header; the contract is
+`/{ns}/{repo}`, the requester's "Gated Repos Status" page (`/settings/gated-repos`, where HF puts the
+self-cancel), and the owner's "Gated user access" section plus the "Manage access requests" and "Add
+access" dialogs on `/{ns}/{repo}/settings`. The screens follow HF's logged-in UI as captured on 2026-10-06
+([../docs/hf-gated/observations/2026-10-06-ui-logged-in.md](../docs/hf-gated/observations/2026-10-06-ui-logged-in.md)). It talks to one backend at a time, the clone or the bridge, chosen in the header; the contract is
 [../docs/system.md](../docs/system.md), the screens [../docs/hf-gated/ui.md](../docs/hf-gated/ui.md).
 
 ## Run
@@ -44,15 +46,16 @@ state. It uses the system Chrome (`PLAYWRIGHT_CHANNEL=chrome` by default).
 
 | Path | What |
 |---|---|
-| `src/app/[ns]/[repo]/page.tsx` | model page: gate box (A1–A3) + file list |
+| `src/app/[ns]/[repo]/page.tsx` | model page: gate box (A1–A6) or the "Gated model" block (access) + file list |
+| `src/app/settings/gated-repos/page.tsx` | "Gated Repos Status": the requester's request rows (derived from auth-check for `SANDBOX_REPO`) and the "Cancel this access request" button |
 | `src/app/[ns]/[repo]/settings/page.tsx` | owner settings section (B1–B3) |
 | `src/app/api/[...path]/route.ts` | `/api/*` proxy to the backend with the persona token |
 | `src/app/[ns]/[repo]/{ask-access,user-access-report,resolve/[...rest]}/route.ts` | HF web routes, proxied |
 | `src/app/-/persona/route.ts` | persona switch (cookie) |
-| `src/app/-/cancel-request/route.ts` | requester self-cancel from A3 → `POST /api/models/{repo}/user-access-request/cancel` (provisional, Q-3) |
 | `src/lib/gateState.ts` | the only auth-check → gate-state mapping |
 | `src/lib/gateForm.ts` | `extra_gated_*` card metadata → form config |
-| `src/lib/hubClient.ts` | browser-side requests fired by the owner controls |
+| `src/lib/hubClient.ts` | browser-side requests fired by the owner controls and the self-cancel |
+| `src/lib/urlFlag.ts` | `?gated_access_request=true` / `?gated_add_user=true` while a dialog is open |
 
 Provisional choices are marked `// Provisional (Q-n)` in the code.
 

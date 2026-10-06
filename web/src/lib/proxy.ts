@@ -41,6 +41,8 @@ interface ForwardOptions {
   method?: string;
   body?: BodyInit;
   contentType?: string;
+  /** Query string sent upstream (with its `?`); the incoming one by default. */
+  search?: string;
 }
 
 /** One upstream call per incoming call; no redirect following (the browser sees 3xx as is). */
@@ -56,7 +58,7 @@ export async function callBackend(req: NextRequest, path: string, opts: ForwardO
     const ct = req.headers.get("content-type");
     if (ct) headers["Content-Type"] = ct;
   }
-  return fetch(`${backendUrlFromRequest(req)}${path}${req.nextUrl.search}`, {
+  return fetch(`${backendUrlFromRequest(req)}${path}${opts.search ?? req.nextUrl.search}`, {
     method,
     headers,
     body,

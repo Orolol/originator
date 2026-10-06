@@ -39,11 +39,17 @@ export const GEMMA_CARD = {
   extra_gated_prompt: "To access Gemma on Hugging Face, you’re required to review and agree to Google’s usage license.",
 };
 
+/** A distinct 24-hex `_id` per username (TestingBOrig keeps its real one). */
+export function userId(user: string): string {
+  if (user === "TestingBOrig") return "6ac3a4b8792f9017b6cb67ec";
+  return [...user].map((c) => c.charCodeAt(0).toString(16)).join("").padEnd(24, "0").slice(0, 24);
+}
+
 /** Owner list item as observed on the sandbox (api.md §2), with an extra `fields` map. */
 export function accessRequest(user: string, status: string, fields?: Record<string, string>) {
   return {
     user: {
-      _id: "6ac3a4b8792f9017b6cb67ec",
+      _id: userId(user),
       avatarUrl: "/avatars/x.svg",
       isPro: false,
       fullname: user,

@@ -100,9 +100,9 @@ host (a CDN) is left untouched. This is the only normalisation the bridge applie
   form `POST /-/clone/reset` that calls the clone's `POST /__clone__/reset` (default seed) and
   redirects back. It refuses with 409 when the bridge is selected or a backend is pinned, so it can
   never be aimed at the real Hub.
-- **Same accessible structure**: real `<button>`, `<select>`, `<a>`, `role="dialog"`,
-  `role="tablist"`/`tab` with HF's exact labels, so `getByRole(…, {name})` selectors work on both
-  sites. No styling work.
+- **Same accessible structure**: real `<button>`, `<select>`, `<a>` and native `<dialog>` elements, with
+  HF's exact labels and, as on HF, plain buttons for the modal's tabs [OBS-UI 2026-10-06], so
+  `getByRole(…, {name})` selectors work on both sites. No styling work.
 - The web proxy rewrites the chosen backend's absolute URLs in `Location` and `Link` to the web
   origin. This only works if each backend's public URL (`BRIDGE_PUBLIC_URL`, `CLONE_PUBLIC_URL`)
   equals the web app's URL for it exactly (`127.0.0.1` ≠ `localhost`). The file list comes from `siblings`, which is recursive, rather than `/tree/main`.
