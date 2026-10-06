@@ -43,6 +43,11 @@ USER_NOT_FOUND = "User not found"
 REQUEST_NOT_FOUND = "No access request found matching your criteria"
 NO_PENDING_REQUEST = "No pending access request found for this repo and this user"  # REQ-7
 ALREADY_HAS_ACCESS = "That user already has access to the repo"
+
+
+def repo_not_gated(repo: dict) -> HttpError:
+    """REV-7 [OBS 2026-10-06 edge-cases-b e12-grant-not-gated, e12-handle-not-gated]."""
+    return HttpError(error(400, f"model {repo['id']} is not gated", Fmt.API, "RepoNotGated"))
 PAGE_NOT_FOUND = "Sorry, we can't find the page you are looking for."
 ENTRY_NOT_FOUND = "Entry not found"
 # Provisional: the RevisionNotFound wording was never recorded (ACC-6 only shows the gate wins).
@@ -406,8 +411,8 @@ def resolve_cache(ctx: Ctx, ns: str, name: str, sha: str, path: str) -> Response
 
 def raw(ctx: Ctx, ns: str, name: str, rev: str, path: str) -> Response:
     """ACC-10 [OBS raw-readme-*, anonymous-probes raw-readme]: the resolve gate and messages
-    without the ACC-5 allowlist, then the file with resolve's headers. Provisional (no Q yet): no
-    307 on a non-gated repo (the file is served directly, as observed with access)."""
+    without the ACC-5 allowlist, then the file with resolve's headers. An LFS file is served as its
+    pointer, and a non-gated repo serves the file directly, no 307 [OBS 2026-10-06 edge-cases e10, e12]."""
     repo = visible_repo(ctx, f"{ns}/{name}", Fmt.PLAIN)
     gate(ctx, repo, Fmt.PLAIN)  # path not passed: no allowlist
     check_revision(repo, rev, Fmt.PLAIN)
@@ -420,12 +425,14 @@ BLOB_INLINE_MAX = 1 << 20
 
 
 def blob(ctx: Ctx, ns: str, name: str, rev: str, path: str) -> Response:
-    """The file page (HTML), gated like raw (ACC-10). [OBS anonymous-probes blob-config]: the
-    anonymous 401 is HTML with X-Error-Code GatedRepo and no WWW-Authenticate.
-    Provisional (no Q yet): with access, a minimal page with the git blob content (the LFS pointer
-    for LFS files), or only the size above 1 MiB; 404s are HTML like the other web routes."""
+    """The file page (HTML). [OBS anonymous-probes blob-config, 2026-10-06 blob]: an HTML page ignores
+    the Bearer token (REQ-2), so the decision is the anonymous one, with the ACC-5 allowlist
+    (README.md 200, other files and missing ones 401 GatedRepo, HTML, no WWW-Authenticate).
+    Provisional (no Q yet): the page is a minimal one with the git blob content (the LFS pointer for
+    LFS files), or only the size above 1 MiB; 404s are HTML like the other web routes."""
     repo = visible_repo(ctx, f"{ns}/{name}", Fmt.HTML)
-    denied = denial(ctx, repo)
+    denied = domain.check_access(repo_id=repo["id"], gated=repo["gated"], owner=repo["author"], caller=None,
+                                 request_status=None, path=path)
     if denied:
         raise HttpError(error(denied.status, denied.message, Fmt.HTML, "GatedRepo", www_authenticate=False))
     check_revision(repo, rev, Fmt.HTML)
@@ -510,10 +517,11 @@ def list_requests(ctx: Ctx, ns: str, name: str, status: str) -> Response:
     if before is not None:
         items = [r for r in items if parse_iso(r.timestamp) < parse_iso(before)]
     if q:
-        # Provisional (Q-21): case-insensitive substring of username, fullname or shared email
-        # (a prefix match, the only observed case, is a substring match).
+        # REV-10 [OBS 2026-10-06 edge-cases-a e0-search-*]: a case-insensitive prefix of the username
+        # ("t", "TESTINGB" match TestingBOrig; "orig" and the fullname "bridge" do not).
+        # Provisional (Q-21): e-mail matching is unobserved, so it is left out.
         needle = q.lower()
-        items = [r for r in items if any(needle in s.lower() for s in _searchable(ctx.store, r))]
+        items = [r for r in items if r.user.lower().startswith(needle)]
     headers = {}
     if len(items) > limit:
         # REV-10: `Link: <…>; rel="next"`. Provisional (Q-10): the next page is `after` = the last
@@ -523,11 +531,6 @@ def list_requests(ctx: Ctx, ns: str, name: str, status: str) -> Response:
         url = f"{ctx.public_url}/api/models/{repo['id']}/user-access-request/{status}?{urlencode(query)}"
         headers["Link"] = f'<{url}>; rel="next"'
     return json_ok([list_item(ctx.store, r) for r in items], headers)
-
-
-def _searchable(store: Store, req: AccessRequest) -> list[str]:
-    u = store.users[req.user]
-    return [u["user"], u["fullname"]] + ([u["email"]] if req.emailShared else [])
 
 
 REASONS = ("rejectionReason", "resetReason")
@@ -555,9 +558,12 @@ def _target_user(ctx: Ctx, ref: dict) -> dict:
 
 
 def post_handle(ctx: Ctx, ns: str, name: str) -> Response:
-    """§5.1. Provisional (Q-9): validation, then unknown user, then request lookup; a reason sent
-    with another status is accepted and ignored."""
+    """§5.1. A reason sent with another status is accepted and ignored [OBS 2026-10-06 e7]. A non-gated
+    repo → 400 RepoNotGated (REV-7). Provisional (Q-9): check order permission, not-gated, validation,
+    unknown user, request lookup."""
     repo = owner_repo(ctx, f"{ns}/{name}", Fmt.API)
+    if repo["gated"] is False:
+        raise repo_not_gated(repo)
     body = api_body(ctx)
     validate(_check_handle_like(body, with_status=True))
     user = _target_user(ctx, body)["user"]
@@ -572,9 +578,11 @@ def post_handle(ctx: Ctx, ns: str, name: str) -> Response:
 
 
 def post_grant(ctx: Ctx, ns: str, name: str) -> Response:
-    """§5.2. Provisional (Q-9): no "repo not gated" 400 (its wording is unknown, and the lists keep
-    working on a non-gated repo, CFG-6)."""
+    """§5.2. A non-gated repo → 400 RepoNotGated (REV-7); the lists keep working (CFG-6).
+    Provisional (Q-9): the same check order as handle; batch is unobserved and keeps no such check."""
     repo = owner_repo(ctx, f"{ns}/{name}", Fmt.API)
+    if repo["gated"] is False:
+        raise repo_not_gated(repo)
     body = api_body(ctx)
     validate(_check_handle_like(body, with_status=False))
     user = _target_user(ctx, body)["user"]
@@ -739,8 +747,8 @@ ROUTES: list[tuple[frozenset[str], re.Pattern[str], Fmt, Handler]] = [
         ("POST", rf"/{_WEB_REPO}/ask-access", Fmt.HTML, ask_access),
         ("GET", rf"/{_WEB_REPO}/user-access-report", Fmt.HTML, report),
         ("GET HEAD", rf"/{_WEB_REPO}/resolve/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.PLAIN, resolve),
-        ("GET", rf"/{_WEB_REPO}/raw/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.PLAIN, raw),
-        ("GET", rf"/{_WEB_REPO}/blob/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.HTML, blob),
+        ("GET HEAD", rf"/{_WEB_REPO}/raw/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.PLAIN, raw),  # HEAD [OBS 2026-10-06]
+        ("GET HEAD", rf"/{_WEB_REPO}/blob/(?P<rev>[^/]+)/(?P<path>.+)", Fmt.HTML, blob),
         ("GET HEAD", rf"/api/resolve-cache/models/{_REPO}/(?P<sha>[^/]+)/(?P<path>.+)", Fmt.PLAIN, resolve_cache),
     ]
 ]

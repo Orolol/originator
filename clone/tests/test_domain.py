@@ -77,9 +77,11 @@ def test_REV_6_to_8_grant(start, outcome):
     assert new.emailShared is (start is not None)  # REQ-5: no email for a grant without request
 
 
-def test_REV_7_owner_self_grant_already_has_access():
-    with pytest.raises(AlreadyHasAccess):  # Provisional (Q-6): ACC-1 gives the owner access
-        domain.grant(None, repo=REPO, user="Orosius", owner="Orosius", now=NOW, reviewer="Orosius")
+def test_REV_6_owner_can_grant_themselves():
+    """[OBS 2026-10-06 edge-cases-a e8-self-grant, e9-list-accepted]: an entry like any grant."""
+    new = domain.grant(None, repo=REPO, user="Orosius", owner="Orosius", now=NOW, reviewer="Orosius").request
+    assert (new.status, new.timestamp, new.reviewedAt, new.grantedBy, new.emailShared) == (
+        "accepted", NOW, NOW, "Orosius", False)
 
 
 @pytest.mark.parametrize(("start", "gated", "expected"), [

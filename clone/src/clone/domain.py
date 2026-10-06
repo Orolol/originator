@@ -154,15 +154,13 @@ def grant(
     """`POST …/grant` (REV-6..REV-8)."""
     if current is not None and current.status == "accepted":
         raise AlreadyHasAccess  # REV-7 [OBS W s6-grant-again]
-    if user == owner:
-        # Provisional (Q-6, self-grant): the owner already has access (ACC-1), so REV-7 applies.
-        raise AlreadyHasAccess
     if current is None:
         # REV-6, REQ-5: accepted without a request; email not shared. TS-1: the entry's
         # `timestamp` is the grant time (CLIENT tests only say it is a datetime).
         return Change(AccessRequest(repo, user, "accepted", now, now, reviewer, None, False), True)
-    # REV-8 [OBS W s6]: a pending request is accepted, timestamp and email kept.
-    # Provisional (Q-6): rejected and reset requests are accepted the same way.
+    # REV-8 [OBS W s6]: a pending request is accepted, timestamp and email kept; rejected and reset
+    # requests the same way [OBS 2026-10-06 edge-cases-a e4, e5]. The owner can grant themselves: an
+    # entry like any grant (REV-6) [OBS 2026-10-06 e8-self-grant, e9-list-accepted].
     return Change(_with_status(current, "accepted", now, reviewer), True)
 
 

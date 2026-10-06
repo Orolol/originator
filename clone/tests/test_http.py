@@ -46,7 +46,6 @@ ERRORS = [
     ("owner", "POST", f"{LIST}/batch", {"status": "accepted", "requests": []}, 400, None,
      "* Too small: expected array to have >=1 items * at requests", API),
     # REV-7, §5.1 lookups
-    ("owner", "POST", f"{LIST}/grant", {"user": "OwnerOfTheGatedModel"}, 400, None, "That user already has access to the repo", API),
     ("owner", "POST", f"{LIST}/handle", {"userId": "0123456789abcdef01234567", "status": "accepted"}, 404, None,
      "User not found", API),
     ("owner", "POST", f"{LIST}/handle", {"user": "DemoCarol", "status": "accepted"}, 404, None,
@@ -108,8 +107,8 @@ def test_REV_10_pagination_and_search():
                                      f'2026-10-05T10%3A00%3A09.000Z>; rel="next"')
     nxt = client.get(first.headers["link"][1:].split(">")[0].removeprefix("http://clone.test"), headers=owner)
     assert [i["user"]["user"] for i in nxt.json()] == ["user10", "user11"] and "link" not in nxt.headers
-    # Provisional (Q-21): case-insensitive substring of username, fullname or email (domain included)
-    for q, count in (("USER0", 10), ("person 1", 3), ("corp1.org", 6), ("zzz", 0)):
+    # [OBS 2026-10-06 edge-cases-a e0-search-*]: case-insensitive prefix of the username only
+    for q, count in (("USER0", 10), ("user1", 2), ("ser0", 0), ("person 1", 0), ("corp1.org", 0), ("zzz", 0)):
         assert len(client.get(f"{LIST}/pending", params={"q": q}, headers=owner).json()) == count
     before = client.get(f"{LIST}/pending", params={"before": "2026-10-05T10:00:02.000Z"}, headers=owner)
     assert [i["user"]["user"] for i in before.json()] == ["user00", "user01"]
@@ -270,15 +269,19 @@ def test_ACC_10_raw_serves_the_git_blob(client):
     assert (lfs.headers["etag"], lfs.headers["content-length"]) == ('"73500655b76ca057265c754b218fbfab58751f0b"', "131")
 
 
-def test_ACC_10_blob_page_is_gated_like_raw(client):
+def test_ACC_10_blob_page_ignores_the_token_and_allowlists_readme(client):
     path = f"/{REPO}/blob/main/checkpoint-0/config.json"
     anon = client.get(path)
     # [OBS anonymous-probes blob-config]: HTML, GatedRepo, and no WWW-Authenticate on this route
     assert (anon.status_code, anon.headers["x-error-code"], anon.headers["content-type"]) == (401, "GatedRepo", HTML)
     assert "www-authenticate" not in anon.headers and anon.headers["x-error-message"] == GATE_ANON
-    pending = client.get(path, headers=auth("requester"))
-    assert (pending.status_code, pending.headers["x-error-message"]) == (403, PENDING)
-    assert client.get(f"/{REPO}/blob/main/README.md").status_code == 401  # no allowlist
-    page = client.get(path, headers=auth("owner"))  # Provisional (no Q yet): minimal page
-    assert page.status_code == 200 and page.headers["content-type"] == HTML
-    assert "&quot;model_type&quot;: &quot;gpt2&quot;" in page.text
+    # [OBS 2026-10-06 blob]: an HTML page ignores the Bearer token, even the owner's, and missing files
+    # are gated too (ACC-6); README.md is allowlisted (ACC-5), anonymous or not.
+    for persona in ("requester", "owner"):
+        resp = client.get(path, headers=auth(persona))
+        assert (resp.status_code, resp.headers["x-error-message"]) == (401, GATE_ANON)
+    assert client.get(f"/{REPO}/blob/main/no-such-file.txt", headers=auth("owner")).status_code == 401
+    readme = client.get(f"/{REPO}/blob/main/README.md")  # Provisional (no Q yet): minimal page
+    assert readme.status_code == 200 and readme.headers["content-type"] == HTML
+    assert "tiny-gated-model" in readme.text
+    assert client.head(f"/{REPO}/blob/main/README.md").status_code == 200
