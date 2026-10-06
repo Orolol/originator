@@ -35,7 +35,7 @@ HTTP details are in [api.md](api.md), screens in [ui.md](ui.md), the gate form i
   - **manual → auto** does **not** auto-accept pending requests. The requester still gets
     "awaiting a review" in auto mode.
   - **gated → false**: the requester and anonymous users can download (`auth-check` 200; anonymous
-    `resolve` → `307` to `/api/resolve-cache/models/{id}/{sha}/{path}?…`). The owner list endpoint still
+    `resolve` → `307` to `/api/resolve-cache/models/{id}/{sha}/{path}?…`, with `X-Repo-Commit` [OBS 2026-10-06 W s10]). The owner list endpoint still
     answers `200` with the stored requests, which contradicts the client docstring "400 if the repo
     is not gated", at least when requests exist.
   - **false → manual / auto**: the stored requests reappear unchanged, and the pending requester is
@@ -260,7 +260,8 @@ Real emails cannot be reproduced. The clone records them in an inspectable **out
   array; a pending entry is `{"fullname", "user", "email", "time", "status"}` in that order, with no
   `reviewedAt`. An accepted entry is `{"fullname", "user", "email", "time", "reviewedAt", "status",
   "grantedBy": {"fullname", "user"}}` in that order [OBS 2026-10-06, W s1]. A self-cancelled request is
-  gone from it (REQ-7). Rejected and reset entries, and `fields`, are still [Q-14].
+  gone from it (REQ-7). The response has **no `ETag`** (unlike the JSON API responses) [OBS 2026-10-06,
+  owner-reads, W s1, s11]. Rejected and reset entries, and `fields`, are still [Q-14].
 - **REP-2** Anonymous → 401 "Invalid username or password." [OBS]
 
 ## 9. Out of this spec

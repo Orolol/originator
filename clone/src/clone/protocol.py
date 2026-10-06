@@ -384,9 +384,10 @@ def resolve(ctx: Ctx, ns: str, name: str, rev: str, path: str) -> Response:
         return redirect(302, location, "Found", headers={
             "X-Repo-Commit": repo["sha"], "X-Linked-Size": str(meta.size), "X-Linked-Etag": f'"{meta.lfs_oid}"'})
     if repo["gated"] is False:
-        # CFG-6 [OBS W s10-anon-resolve]: a non-gated repo redirects (relative Location) to resolve-cache.
+        # CFG-6 [OBS W s10-anon-resolve]: a non-gated repo redirects (relative Location) to resolve-cache,
+        # with X-Repo-Commit [OBS 2026-10-06 W s10-anon-resolve].
         query = urlencode([(ctx.path, ""), ("etag", f'"{meta.oid}"')], quote_via=quote, safe="")
-        return redirect(307, f"{cache_path}?{query}", "Temporary Redirect")
+        return redirect(307, f"{cache_path}?{query}", "Temporary Redirect", headers={"X-Repo-Commit": repo["sha"]})
     return file_response(ctx, repo, path, lfs_object=False)  # [OBS owner-gitattributes, anon-readme]
 
 
@@ -664,7 +665,8 @@ def report(ctx: Ctx, ns: str, name: str) -> Response:
             entry["grantedBy"] = {"fullname": g["fullname"], "user": g["user"]}  # REP-1 [OBS 2026-10-06 W s1]
         entries.append(entry)
     disposition = f"attachment; filename=user-access-report-{ns}-{name}.json"
-    return respond(200, dumps(entries), "application/json", {"Content-Disposition": disposition})
+    # No ETag on the report [OBS 2026-10-06 owner-reads, W s1/s11: ETag kept for other responses].
+    return respond(200, dumps(entries), "application/json", {"Content-Disposition": disposition}, etag=False)
 
 
 # --- requester side ---------------------------------------------------------------------------------
