@@ -126,7 +126,8 @@ The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [O
 | `rejected` | submit again | manual | `303`, **no change** (still `rejected`, same `reviewedAt`) | [DOC] [OBS 2026-10-05, C m7] |
 | `pending` | submit again | manual | `303`, still `pending`; whether `timestamp`/`fields` change is unknown | [OBS] [Q-2] |
 | `accepted` | submit again | any | unknown | [Q-2] |
-| any | self-cancel (`POST /api/models/{id}/user-access-request/cancel`) | any | unknown (probably removes the request) | [SPEC] [Q-3] |
+| `pending` | self-cancel (`POST /api/models/{id}/user-access-request/cancel`) | manual | **no request** (deleted from every list and the report); `200 {"ok":true}` (REQ-7) | [OBS 2026-10-06, X c2] |
+| `accepted` / `rejected` / `reset` / none | self-cancel | manual | **no change**; `404` (REQ-7) | [OBS 2026-10-06, X c1 c3 c4 c2-again] |
 
 - **REQ-1** The requester must be logged in. Anonymous users see "Log in or Sign Up to review the
   conditions…". [DOC] [OBS]
@@ -139,6 +140,16 @@ The content-route answer is the same on `auth-check`, `resolve` GET and HEAD. [O
   required-field validation, and anonymous posts are still untested [Q-1] [Q-16].
 - **REQ-3** Submitting means agreeing to share **username + email** (plus the extra fields) with the
   repo authors. [DOC]
+- **REQ-7** Self-cancel `POST /api/models/{id}/user-access-request/cancel` (no body) only withdraws a
+  **pending** request, and deletes it: the four lists and the report no longer have it, and
+  `auth-check` is back to "not in the authorized list" (a new `ask-access` then creates a new pending
+  request). Success: `200`, JSON `{"ok":true}`. From `accepted`, `rejected` or `reset`, or with no
+  request (the owner on their own repo too): `404`, `{"error":"No pending access request found for this
+  repo and this user"}` with the same `X-Error-Message`, no `X-Error-Code`, and the request is unchanged
+  (a rejected user cannot clear the rejection this way). Anonymous: `401` "Invalid username or
+  password.". [OBS 2026-10-06, `observations/2026-10-06-requester-cancel.md` (X), and the UI walkthrough
+  `observations/2026-10-06-ui-walkthrough.md`] Not recorded: whether HF's own pages show a control
+  for it, and whether it e-mails anyone [Q-3].
 
 ## 5. Owner (reviewer) transitions
 
@@ -149,6 +160,12 @@ token gets 403. [DOC] [CLIENT]
 
 Success → `200`, JSON body `{}`. [OBS 2026-10-05] Evidence for the table: W = `observations/2026-10-05-owner-walkthrough.md`,
 C = `observations/2026-10-05-owner-walkthrough-completion.md`, plus the UI walkthrough (`observations/2026-10-05-ui-walkthrough.md`).
+Re-observed on 2026-10-06 on the new sandbox `OwnerOfTheGatedModel/tiny-gated-model` (another owner
+account) with the same cases (`harness/kb/probes/*.json`, `--var SANDBOX=…`): every status and
+`X-Error-Message` matches, except W s0–s3b: the 2026-10-05 run started with no request (404 on
+accept, cancel, reject), the 2026-10-06 one with a pending request, so there s1–s3 succeed (`200 {}`) and
+s3b shows a re-request after a rejection leaving it rejected (as C m7). X =
+`observations/2026-10-06-requester-cancel.md` (requester self-cancel, REQ-7).
 
 | From \ To | `pending` ("Cancel") | `accepted` ("Accept") | `rejected` ("Reject") | `reset` |
 |---|---|---|---|---|
@@ -241,7 +258,9 @@ Real emails cannot be reproduced. The clone records them in an inspectable **out
   `observations/2026-10-05-owner-reads.md`]: `200`, `Content-Type: application/json` (no charset),
   `Content-Disposition: attachment; filename=user-access-report-{ns}-{name}.json`. The body is a JSON
   array; a pending entry is `{"fullname", "user", "email", "time", "status"}` in that order, with no
-  `reviewedAt`. Whether `fields` and reviewed entries' keys appear is [Q-14].
+  `reviewedAt`. An accepted entry is `{"fullname", "user", "email", "time", "reviewedAt", "status",
+  "grantedBy": {"fullname", "user"}}` in that order [OBS 2026-10-06, W s1]. A self-cancelled request is
+  gone from it (REQ-7). Rejected and reset entries, and `fields`, are still [Q-14].
 - **REP-2** Anonymous → 401 "Invalid username or password." [OBS]
 
 ## 9. Out of this spec

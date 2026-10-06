@@ -1,0 +1,236 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-requester-ask-access.json",
+  "recorded_at": "2026-10-06T13:49:42Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model",
+   "OWNER": "OwnerOfTheGatedModel",
+   "SUBDIR": "checkpoint-0",
+   "LFS_FILE": "checkpoint-0/model.safetensors"
+  }
+ },
+ "records": [
+  {
+   "id": "pre-auth-check",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "baseline: logged in, no request",
+   "sent_at": "2026-10-06T13:49:33.572Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to ask for access.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"cd-UAGL2q54VKB18utszcARXlB2r8s\"",
+    "content-length": "205"
+   },
+   "body_excerpt": "{\"error\":\"Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGat",
+   "body_json": {
+    "error": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to ask for access."
+   }
+  },
+  {
+   "id": "pre-resolve",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "baseline file access",
+   "sent_at": "2026-10-06T13:49:33.790Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to ask for access.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"c1-mgacLRaVg8HO+z4q9tOBbUQCMTI\"",
+    "content-length": "193"
+   },
+   "body_excerpt": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/ti"
+  },
+  {
+   "id": "pre-head",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "baseline HEAD",
+   "sent_at": "2026-10-06T13:49:33.991Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to ask for access.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"c1-mgacLRaVg8HO+z4q9tOBbUQCMTI\"",
+    "content-length": "193"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "pre-owner-list",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner endpoint with a non-owner write token",
+   "sent_at": "2026-10-06T13:49:34.171Z",
+   "status": 403,
+   "headers": {
+    "x-error-message": "You have read access but not the required permissions for this operation",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"54-58IQULNwaMDQJsZSMHksd4V5jFY\"",
+    "content-length": "84"
+   },
+   "body_excerpt": "{\"error\":\"You have read access but not the required permissions for this operation\"}",
+   "body_json": {
+    "error": "You have read access but not the required permissions for this operation"
+   }
+  },
+  {
+   "id": "pre-page",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "does the website honour Bearer tokens?",
+   "sent_at": "2026-10-06T13:49:34.390Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"16d2b-DuCtLWY5yR1Wx4W1LoQpGcHKIDs\"",
+    "content-length": "93483"
+   },
+   "body_excerpt": null,
+   "props": {
+    "gated": "manual",
+    "isLoggedIn": false,
+    "repoId": "OwnerOfTheGatedModel/tiny-gated-model",
+    "repoType": "model",
+    "isGoogleGemma": false,
+    "requiresPaidPlan": false
+   }
+  },
+  {
+   "id": "ask-access-json",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "POST",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+   "request_body": {},
+   "request_encoding": "json",
+   "note": "Q-1: request access with a token, JSON body (repo has no extra fields)",
+   "sent_at": "2026-10-06T13:49:34.735Z",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model",
+    "content-length": "86"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  {
+   "id": "post-json-auth-check",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after JSON attempt",
+   "sent_at": "2026-10-06T13:49:37.954Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"7a-CFXFppoGafPdMfycdenmDrdDbeM\"",
+    "content-length": "122"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.\"}",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+   }
+  },
+  {
+   "id": "post-json-resolve",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after JSON attempt",
+   "sent_at": "2026-10-06T13:49:38.113Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"6e-eH3a92vV6IehZTFL2b3XO3+iVn4\"",
+    "content-length": "110"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+  },
+  {
+   "id": "ask-access-form",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "POST",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+   "request_body": {},
+   "request_encoding": "form",
+   "note": "Q-1/Q-2: same with form encoding (re-submit if the first one worked)",
+   "sent_at": "2026-10-06T13:49:38.273Z",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model",
+    "content-length": "86"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  {
+   "id": "post-form-auth-check",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after form attempt",
+   "sent_at": "2026-10-06T13:49:42.457Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"7a-CFXFppoGafPdMfycdenmDrdDbeM\"",
+    "content-length": "122"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.\"}",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+   }
+  },
+  {
+   "id": "post-form-resolve",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "state after form attempt",
+   "sent_at": "2026-10-06T13:49:42.609Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"6e-eH3a92vV6IehZTFL2b3XO3+iVn4\"",
+    "content-length": "110"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+  }
+ ]
+}

@@ -60,7 +60,8 @@ Expected: a message that the request was submitted and awaits review. The API-si
 `Your request to access model {id} is awaiting a review from the repo authors.` [OBS-3P]. The page
 wording is not yet recorded. Is there a requester-side "cancel request" control? The spec has a
 self-cancel endpoint [Q-3].
-Our UI provisionally offers a `Cancel my request` button on A3 that calls that endpoint (open-questions.md, web choice #26).
+The endpoint withdraws a pending request (REQ-7 [OBS 2026-10-06]). Our UI offers a `Cancel my request`
+button on A3 that calls it; HF's own page control, if any, is still unrecorded (web choice #26).
 
 ### A4. Accepted, TO RECORD
 

@@ -1,0 +1,202 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-tree-masking.json",
+  "recorded_at": "2026-10-06T13:49:45Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model",
+   "OWNER": "OwnerOfTheGatedModel",
+   "SUBDIR": "checkpoint-0",
+   "LFS_FILE": "checkpoint-0/model.safetensors"
+  }
+ },
+ "records": [
+  {
+   "id": "tree-subdir-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/tree/main/checkpoint-0",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "anonymous: LFS hashes masked?",
+   "sent_at": "2026-10-06T13:49:44.375Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"21d-DjLGr3jwDgkGR0ajh2ABc8cbHTg\"",
+    "content-length": "541"
+   },
+   "body_excerpt": "[{\"type\":\"file\",\"oid\":\"1a78b7e6c35fa843b214689706ce9398ac8fc761\",\"size\":819,\"path\":\"checkpoint-0/config.json\"},{\"type\":\"file\",\"oid\":\"ad61e9690fadc7132837a8a0371",
+   "body_json": [
+    {
+     "type": "file",
+     "oid": "1a78b7e6c35fa843b214689706ce9398ac8fc761",
+     "size": 819,
+     "path": "checkpoint-0/config.json"
+    },
+    {
+     "type": "file",
+     "oid": "ad61e9690fadc7132837a8a037197af97061bd5f",
+     "size": 195,
+     "path": "checkpoint-0/generation_config.json"
+    },
+    {
+     "type": "file",
+     "oid": "73500655b76ca057265c754b218fbfab58751f0b",
+     "size": 691784,
+     "lfs": {
+      "oid": "****************************************************************",
+      "size": 691784,
+      "pointerSize": 131
+     },
+     "xetHash": "****************************************************************",
+     "path": "checkpoint-0/model.safetensors"
+    }
+   ]
+  },
+  {
+   "id": "tree-subdir-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/tree/main/checkpoint-0",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner (has access): masked?",
+   "sent_at": "2026-10-06T13:49:44.541Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"21d-xteaYcbHUfF8RA8RMoBk2ymYMK4\"",
+    "content-length": "541"
+   },
+   "body_excerpt": "[{\"type\":\"file\",\"oid\":\"1a78b7e6c35fa843b214689706ce9398ac8fc761\",\"size\":819,\"path\":\"checkpoint-0/config.json\"},{\"type\":\"file\",\"oid\":\"ad61e9690fadc7132837a8a0371",
+   "body_json": [
+    {
+     "type": "file",
+     "oid": "1a78b7e6c35fa843b214689706ce9398ac8fc761",
+     "size": 819,
+     "path": "checkpoint-0/config.json"
+    },
+    {
+     "type": "file",
+     "oid": "ad61e9690fadc7132837a8a037197af97061bd5f",
+     "size": 195,
+     "path": "checkpoint-0/generation_config.json"
+    },
+    {
+     "type": "file",
+     "oid": "73500655b76ca057265c754b218fbfab58751f0b",
+     "size": 691784,
+     "lfs": {
+      "oid": "321019a3b5ea40a247b2cd8db89a7f2dd7bbfe6aeab29c92fc5f58e098cef177",
+      "size": 691784,
+      "pointerSize": 131
+     },
+     "xetHash": "c9a7ab6a87eaa2ed02b787b3c4959e217c1d43b46ab601eb3c735a998774b0dc",
+     "path": "checkpoint-0/model.safetensors"
+    }
+   ]
+  },
+  {
+   "id": "tree-subdir-requester",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/tree/main/checkpoint-0",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "requester (pending, no access): masked?",
+   "sent_at": "2026-10-06T13:49:44.704Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"21d-DjLGr3jwDgkGR0ajh2ABc8cbHTg\"",
+    "content-length": "541"
+   },
+   "body_excerpt": "[{\"type\":\"file\",\"oid\":\"1a78b7e6c35fa843b214689706ce9398ac8fc761\",\"size\":819,\"path\":\"checkpoint-0/config.json\"},{\"type\":\"file\",\"oid\":\"ad61e9690fadc7132837a8a0371",
+   "body_json": [
+    {
+     "type": "file",
+     "oid": "1a78b7e6c35fa843b214689706ce9398ac8fc761",
+     "size": 819,
+     "path": "checkpoint-0/config.json"
+    },
+    {
+     "type": "file",
+     "oid": "ad61e9690fadc7132837a8a037197af97061bd5f",
+     "size": 195,
+     "path": "checkpoint-0/generation_config.json"
+    },
+    {
+     "type": "file",
+     "oid": "73500655b76ca057265c754b218fbfab58751f0b",
+     "size": 691784,
+     "lfs": {
+      "oid": "****************************************************************",
+      "size": 691784,
+      "pointerSize": 131
+     },
+     "xetHash": "****************************************************************",
+     "path": "checkpoint-0/model.safetensors"
+    }
+   ]
+  },
+  {
+   "id": "raw-readme-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/raw/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/raw/ with access",
+   "sent_at": "2026-10-06T13:49:44.881Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''README.md; filename=\"README.md\";",
+    "etag": "\"0c14ad74222fd13bc2b768196169ee7285f2f1c0\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "201"
+   },
+   "body_excerpt": "---\nlicense: mit\n---\n\n# tiny-gated-model\n\nA tiny, randomly initialised GPT-2 (2 layers, 64 dims, vocab 1000). Its weights are untrained.\nIt exists as a sandbox ",
+   "body_text": "---\nlicense: mit\n---\n\n# tiny-gated-model\n\nA tiny, randomly initialised GPT-2 (2 layers, 64 dims, vocab 1000). Its weights are untrained.\nIt exists as a sandbox for testing gated-model access requests.\n"
+  },
+  {
+   "id": "raw-readme-requester",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/raw/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/raw/ pending requester",
+   "sent_at": "2026-10-06T13:49:45.040Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"6e-eH3a92vV6IehZTFL2b3XO3+iVn4\"",
+    "content-length": "110"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+  },
+  {
+   "id": "raw-readme-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/raw/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "/raw/ anonymous",
+   "sent_at": "2026-10-06T13:49:45.198Z",
+   "status": 401,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in.",
+    "content-type": "text/plain; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\"",
+    "etag": "W/\"91-I8Noec5XnJwfK+8rFmeeSlcfqb8\"",
+    "content-length": "145"
+   },
+   "body_excerpt": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted. You must have access to it and be authenticated to access it. Please log in."
+  }
+ ]
+}

@@ -1,0 +1,184 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-owner-reads.json",
+  "recorded_at": "2026-10-06T13:49:44Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model",
+   "OWNER": "OwnerOfTheGatedModel",
+   "SUBDIR": "checkpoint-0",
+   "LFS_FILE": "checkpoint-0/model.safetensors"
+  },
+  "postprocess": "2026-10-06: HF_REQUESTER_LOGIN held the public username TestingBOrig (not an e-mail) when this was recorded, so probe.py redacted the username itself; every <HF_REQUESTER_LOGIN> was then restored to TestingBOrig (lossless: the placeholder stands for that exact string, no token or e-mail involved)."
+ },
+ "records": [
+  {
+   "id": "owner-list-pending",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "requester pending since 2026-10-05",
+   "sent_at": "2026-10-06T13:49:42.914Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"117-dpwDSzocGpGWreExLTYLxZpZ14Y\"",
+    "content-length": "279"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T13:49:34.895Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "owner-list-accepted",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:49:43.095Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "owner-list-rejected",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:49:43.248Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "owner-list-reset",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:49:43.407Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "owner-report",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-14 format",
+   "sent_at": "2026-10-06T13:49:43.578Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json",
+    "content-disposition": "attachment; filename=user-access-report-OwnerOfTheGatedModel-tiny-gated-model.json"
+   },
+   "body_excerpt": "[{\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"email\":\"<email>\",\"time\":\"2026-10-06T13:49:34.895Z\",\"status\":\"pending\"}]",
+   "body_json": [
+    {
+     "fullname": "Bridge",
+     "user": "TestingBOrig",
+     "email": "<email>",
+     "time": "2026-10-06T13:49:34.895Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "owner-auth-check",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner bypasses (ACC-1)",
+   "sent_at": "2026-10-06T13:49:43.736Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "OK"
+  },
+  {
+   "id": "owner-get-settings",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/settings",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "no GET settings (CFG-3)",
+   "sent_at": "2026-10-06T13:49:43.905Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "Sorry, we can't find the page you are looking for.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"3e-dBsLBrLWpkAnTUHKC2AF6CtVl+k\"",
+    "content-length": "62"
+   },
+   "body_excerpt": "{\"error\":\"Sorry, we can't find the page you are looking for.\"}",
+   "body_json": {
+    "error": "Sorry, we can't find the page you are looking for."
+   }
+  },
+  {
+   "id": "owner-resolve",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner downloads gated file",
+   "sent_at": "2026-10-06T13:49:44.057Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''.gitattributes; filename=\".gitattributes\";",
+    "etag": "\"a6344aac8c09253b3b630fb776ae94478aa0275b\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "1519"
+   },
+   "body_excerpt": "*.7z filter=lfs diff=lfs merge=lfs -text\n*.arrow filter=lfs diff=lfs merge=lfs -text\n*.bin filter=lfs diff=lfs merge=lfs -text\n*.bz2 filter=lfs diff=lfs merge=l"
+  }
+ ]
+}

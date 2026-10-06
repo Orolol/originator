@@ -1,0 +1,1177 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-requester-cancel.json",
+  "recorded_at": "2026-10-06T13:51:21Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  "postprocess": "2026-10-06: HF_REQUESTER_LOGIN held the public username TestingBOrig (not an e-mail) when this was recorded, so probe.py redacted the username itself; every <HF_REQUESTER_LOGIN> was then restored to TestingBOrig (lossless: the placeholder stands for that exact string, no token or e-mail involved)."
+ },
+ "records": [
+  {
+   "id": "c0-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:09.381Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c0-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:09.561Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c0-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:09.678Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c0-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:09.789Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"13d-+NkJKXyMni1SfSNYXndOpaFfeA0\"",
+    "content-length": "317"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T13:50:22.677Z",
+     "reviewedAt": "2026-10-06T13:50:54.253Z",
+     "status": "reset"
+    }
+   ]
+  },
+  {
+   "id": "c0-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:09.904Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"d0-/coPsV2pPZU9uAlll7yARiBlvp4\"",
+    "content-length": "208"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedM",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request."
+   }
+  },
+  {
+   "id": "c0-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:10.012Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"c4-cwV7PFUdYaYK9X7M/EvVDoO+4zE\"",
+    "content-length": "196"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-"
+  },
+  {
+   "id": "c1-cancel-reset",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 self-cancel while reset",
+   "sent_at": "2026-10-06T13:51:10.122Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No pending access request found for this repo and this user",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"47-bQmRUjLRa5atGaP6Q9nBoo8XSDo\"",
+    "content-length": "71"
+   },
+   "body_excerpt": "{\"error\":\"No pending access request found for this repo and this user\"}",
+   "body_json": {
+    "error": "No pending access request found for this repo and this user"
+   }
+  },
+  {
+   "id": "c1-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:11.235Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c1-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:11.360Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c1-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:11.468Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c1-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:11.581Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"13d-+NkJKXyMni1SfSNYXndOpaFfeA0\"",
+    "content-length": "317"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T13:50:22.677Z",
+     "reviewedAt": "2026-10-06T13:50:54.253Z",
+     "status": "reset"
+    }
+   ]
+  },
+  {
+   "id": "c1-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:11.693Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"d0-/coPsV2pPZU9uAlll7yARiBlvp4\"",
+    "content-length": "208"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedM",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request."
+   }
+  },
+  {
+   "id": "c1-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:11.879Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to submit a new request.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"c4-cwV7PFUdYaYK9X7M/EvVDoO+4zE\"",
+    "content-length": "196"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been reset by the repo's authors. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-"
+  },
+  {
+   "id": "c2-ask",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+   "request_body": {},
+   "request_encoding": "json",
+   "note": "back to pending before the next cancel",
+   "sent_at": "2026-10-06T13:51:12.001Z",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model",
+    "content-length": "86"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  {
+   "id": "c2-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:13.118Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"117-7PmtwGV9S0yyjL4YLUp+0xCOa9k\"",
+    "content-length": "279"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T13:51:12.065Z",
+     "status": "pending"
+    }
+   ]
+  },
+  {
+   "id": "c2-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:13.231Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:13.348Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:13.459Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:13.567Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"7a-CFXFppoGafPdMfycdenmDrdDbeM\"",
+    "content-length": "122"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.\"}",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+   }
+  },
+  {
+   "id": "c2-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:13.678Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"6e-eH3a92vV6IehZTFL2b3XO3+iVn4\"",
+    "content-length": "110"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model is awaiting a review from the repo authors."
+  },
+  {
+   "id": "c2-cancel-pending",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 self-cancel while pending",
+   "sent_at": "2026-10-06T13:51:13.785Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"b-Ai2R8hgEarLmHKwesT1qcY913ys\"",
+    "content-length": "11"
+   },
+   "body_excerpt": "{\"ok\":true}",
+   "body_json": {
+    "ok": true
+   }
+  },
+  {
+   "id": "c2b-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:14.899Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2b-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:15.029Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2b-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:15.136Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2b-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:15.271Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2b-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:15.380Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to ask for access.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"cd-UAGL2q54VKB18utszcARXlB2r8s\"",
+    "content-length": "205"
+   },
+   "body_excerpt": "{\"error\":\"Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGat",
+   "body_json": {
+    "error": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to ask for access."
+   }
+  },
+  {
+   "id": "c2b-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:15.492Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model to ask for access.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"c1-mgacLRaVg8HO+z4q9tOBbUQCMTI\"",
+    "content-length": "193"
+   },
+   "body_excerpt": "Access to model OwnerOfTheGatedModel/tiny-gated-model is restricted and you are not in the authorized list. Visit https://huggingface.co/OwnerOfTheGatedModel/ti"
+  },
+  {
+   "id": "c2b-report",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 is the cancelled request still reported?",
+   "sent_at": "2026-10-06T13:51:15.606Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json",
+    "content-disposition": "attachment; filename=user-access-report-OwnerOfTheGatedModel-tiny-gated-model.json",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c2-cancel-again",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 self-cancel with no request (or same state)",
+   "sent_at": "2026-10-06T13:51:15.725Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No pending access request found for this repo and this user",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"47-bQmRUjLRa5atGaP6Q9nBoo8XSDo\"",
+    "content-length": "71"
+   },
+   "body_excerpt": "{\"error\":\"No pending access request found for this repo and this user\"}",
+   "body_json": {
+    "error": "No pending access request found for this repo and this user"
+   }
+  },
+  {
+   "id": "c3-ask",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+   "request_body": {},
+   "request_encoding": "json",
+   "note": "new request",
+   "sent_at": "2026-10-06T13:51:15.836Z",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model",
+    "content-length": "86"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  {
+   "id": "c3-accept",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "accepted"
+   },
+   "request_encoding": "json",
+   "note": "pending -> accepted",
+   "sent_at": "2026-10-06T13:51:15.956Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "c3-cancel-accepted",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 self-cancel while accepted",
+   "sent_at": "2026-10-06T13:51:16.070Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No pending access request found for this repo and this user",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"47-bQmRUjLRa5atGaP6Q9nBoo8XSDo\"",
+    "content-length": "71"
+   },
+   "body_excerpt": "{\"error\":\"No pending access request found for this repo and this user\"}",
+   "body_json": {
+    "error": "No pending access request found for this repo and this user"
+   }
+  },
+  {
+   "id": "c3-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:17.183Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c3-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:17.296Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"1fd-LVOv1LGpipDXK5WNG4FzMYFqGTQ\"",
+    "content-length": "509"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T13:51:15.900Z",
+     "reviewedAt": "2026-10-06T13:51:16.019Z",
+     "status": "accepted",
+     "grantedBy": {
+      "_id": "6ac4f4465de11a43eb34fb52",
+      "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+      "isPro": false,
+      "fullname": "Ower Model",
+      "user": "OwnerOfTheGatedModel",
+      "type": "user"
+     }
+    }
+   ]
+  },
+  {
+   "id": "c3-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:17.407Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c3-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:17.516Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c3-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:17.628Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "OK"
+  },
+  {
+   "id": "c3-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:17.736Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''.gitattributes; filename=\".gitattributes\";",
+    "etag": "W/\"a6344aac8c09253b3b630fb776ae94478aa0275b\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "1519"
+   },
+   "body_excerpt": "*.7z filter=lfs diff=lfs merge=lfs -text\n*.arrow filter=lfs diff=lfs merge=lfs -text\n*.bin filter=lfs diff=lfs merge=lfs -text\n*.bz2 filter=lfs diff=lfs merge=l"
+  },
+  {
+   "id": "c4-ask",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+   "request_body": {},
+   "request_encoding": "json",
+   "note": "re-request (if the cancel removed the request)",
+   "sent_at": "2026-10-06T13:51:17.849Z",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model",
+    "content-length": "86"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  {
+   "id": "c4-reject",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+   "request_body": {
+    "user": "TestingBOrig",
+    "status": "rejected",
+    "rejectionReason": "Rejected by the cancel probe"
+   },
+   "request_encoding": "json",
+   "note": "-> rejected",
+   "sent_at": "2026-10-06T13:51:17.985Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-vyGp6PvFo4RvsFtPoIWeCReyIC8\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "{}",
+   "body_json": {}
+  },
+  {
+   "id": "c4-cancel-rejected",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 self-cancel while rejected",
+   "sent_at": "2026-10-06T13:51:18.100Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No pending access request found for this repo and this user",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"47-bQmRUjLRa5atGaP6Q9nBoo8XSDo\"",
+    "content-length": "71"
+   },
+   "body_excerpt": "{\"error\":\"No pending access request found for this repo and this user\"}",
+   "body_json": {
+    "error": "No pending access request found for this repo and this user"
+   }
+  },
+  {
+   "id": "c4-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:19.217Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c4-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:19.328Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c4-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:19.441Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"140-s3xS+Tk18wR6501ZUvXg1Z/YAAs\"",
+    "content-length": "320"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T13:51:15.900Z",
+     "reviewedAt": "2026-10-06T13:51:18.050Z",
+     "status": "rejected"
+    }
+   ]
+  },
+  {
+   "id": "c4-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:19.554Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c4-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:19.664Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"77-IUIRfFJtUqsI9ZxvWz+3Fick8yo\"",
+    "content-length": "119"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors.\"}",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors."
+   }
+  },
+  {
+   "id": "c4-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:19.777Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"6b-MRdfrPOwBMWRg7QapeTY7QhLK2o\"",
+    "content-length": "107"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors."
+  },
+  {
+   "id": "c5-ask-after-reject-cancel",
+   "as": "REQUESTER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+   "request_body": {},
+   "request_encoding": "json",
+   "note": "Q-3/Q-2 can the user ask again after cancelling a rejection?",
+   "sent_at": "2026-10-06T13:51:19.886Z",
+   "status": 303,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model",
+    "content-length": "86"
+   },
+   "body_excerpt": "See Other. Redirecting to https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model"
+  },
+  {
+   "id": "c5-list-pending",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:21.006Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c5-list-accepted",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:21.117Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c5-list-rejected",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:21.235Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"140-s3xS+Tk18wR6501ZUvXg1Z/YAAs\"",
+    "content-length": "320"
+   },
+   "body_excerpt": "[{\"user\":{\"_id\":\"6ac3a4b8792f9017b6cb67ec\",\"avatarUrl\":\"/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg\",\"isPro\":false,\"fullname\":\"Bridge\",\"user\":\"TestingBOrig\",\"",
+   "body_json": [
+    {
+     "user": {
+      "_id": "6ac3a4b8792f9017b6cb67ec",
+      "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+      "isPro": false,
+      "fullname": "Bridge",
+      "user": "TestingBOrig",
+      "type": "user",
+      "verifiedOrgNames": [],
+      "email": "<email>"
+     },
+     "timestamp": "2026-10-06T13:51:15.900Z",
+     "reviewedAt": "2026-10-06T13:51:18.050Z",
+     "status": "rejected"
+    }
+   ]
+  },
+  {
+   "id": "c5-list-reset",
+   "as": "OWNER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:21.348Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w\"",
+    "content-length": "2"
+   },
+   "body_excerpt": "[]",
+   "body_json": []
+  },
+  {
+   "id": "c5-req-auth-check",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:21.459Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors.",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"77-IUIRfFJtUqsI9ZxvWz+3Fick8yo\"",
+    "content-length": "119"
+   },
+   "body_excerpt": "{\"error\":\"Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors.\"}",
+   "body_json": {
+    "error": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors."
+   }
+  },
+  {
+   "id": "c5-req-resolve",
+   "as": "REQUESTER",
+   "method": "GET",
+   "url": "http://127.0.0.1:8100/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": null,
+   "sent_at": "2026-10-06T13:51:21.578Z",
+   "status": 403,
+   "headers": {
+    "x-error-code": "GatedRepo",
+    "x-error-message": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors.",
+    "content-type": "text/plain; charset=utf-8",
+    "etag": "W/\"6b-MRdfrPOwBMWRg7QapeTY7QhLK2o\"",
+    "content-length": "107"
+   },
+   "body_excerpt": "Your request to access model OwnerOfTheGatedModel/tiny-gated-model has been rejected by the repo's authors."
+  },
+  {
+   "id": "c6-anon-cancel",
+   "as": "anonymous",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 anonymous self-cancel",
+   "sent_at": "2026-10-06T13:51:21.691Z",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\"",
+    "etag": "W/\"29-dEMcHWfJi78ZR1aqzb1ELAhp3Us\"",
+    "content-length": "41"
+   },
+   "body_excerpt": "{\"error\":\"Invalid username or password.\"}",
+   "body_json": {
+    "error": "Invalid username or password."
+   }
+  },
+  {
+   "id": "c6-owner-cancel",
+   "as": "OWNER",
+   "method": "POST",
+   "url": "http://127.0.0.1:8100/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "Q-3 owner self-cancel on own repo (no request)",
+   "sent_at": "2026-10-06T13:51:21.800Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "No pending access request found for this repo and this user",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"47-bQmRUjLRa5atGaP6Q9nBoo8XSDo\"",
+    "content-length": "71"
+   },
+   "body_excerpt": "{\"error\":\"No pending access request found for this repo and this user\"}",
+   "body_json": {
+    "error": "No pending access request found for this repo and this user"
+   }
+  }
+ ]
+}

@@ -36,11 +36,14 @@ Status: open for `accepted` and for `timestamp` on a re-submit while pending.
 ### Q-3 (P0): requester self-cancel
 `POST /api/models/{id}/user-access-request/cancel`: is the request deleted (back to "no request") or
 moved to a status? From which states is it allowed? What is the error when there is no request? Is
-there a UI control for it? Weak evidence (2026-10-05): the account owner cancelled a pending request by hand on huggingface.co
-(the exact UI action is not recorded). Afterwards the request was gone from every list and the
-requester's `auth-check` said "not in the authorized list". That fits a deletion, which is the clone's
-provisional choice, if the action was the requester-side cancel. The web UI now offers a
-provisional self-cancel button on A3 (web choice #26). Status: open.
+there a UI control for it?
+Answer (2026-10-06) [OBS, `observations/2026-10-06-requester-cancel.md`, `…-ui-walkthrough.md`], now
+rule **REQ-7**: only a **pending** request can be withdrawn, and it is deleted (lists, report,
+`auth-check` all back to "no request"); success `200 {"ok":true}`; from accepted / rejected / reset or
+with no request, `404` "No pending access request found for this repo and this user", unchanged;
+anonymous `401`. Status: answered for the API. **Open**: whether HF's own model page shows a control
+for it (HTML pages ignore Bearer tokens, so only a logged-in browser can tell; our UI's button is web
+choice #26), and whether a self-cancel e-mails anyone.
 
 ### Q-4 (P0): same-status and success responses
 Exact status code and body for handle → the current status (the docstrings say 404 "already in the …
@@ -136,8 +139,9 @@ selection; refresh behaviour after an action. Status: open.
 JSON (as the docs say) or CSV? Filename (`Content-Disposition`)? Does it include `fields` and `reset`
 entries? Ordering?
 Partial (2026-10-05) [OBS]: JSON, `attachment; filename=user-access-report-{ns}-{name}.json`;
-pending entry keys `fullname, user, email, time, status`. Status: open for `fields`,
-`reviewedAt` on reviewed entries, `reset` entries, and ordering.
+pending entry keys `fullname, user, email, time, status`. Partial (2026-10-06) [OBS W s1]: an accepted
+entry is `fullname, user, email, time, reviewedAt, status, grantedBy {fullname, user}`; a self-cancelled
+request is not in it (X c2b). Status: open for `fields`, rejected and `reset` entries, and ordering.
 
 ### Q-15 (P1): stored answer encoding
 How answers are stored in `fields`: checkbox (`"on"`? `"true"`?), select (value or label?), date
@@ -231,7 +235,7 @@ and strike the line.
 | 22 | (none) | Unmapped gate states: the message is shown verbatim, plus `[unmapped gate state: auth-check HTTP {status} {code}]`. |
 | 24 | Q-11 / Q-19 | Rejected (A5): show the docs' page text `Your request to access this repo has been rejected by the repo's authors.`; no reason (not exposed by the API). |
 | 25 | Q-11 | Reset (A6): show the consent form again, with no reset notice. |
-| 26 | Q-3 | Pending (A3): a `Cancel my request` button (label invented) posts the web-only route `/-/cancel-request`, which calls `POST …/user-access-request/cancel` with no body and redirects to the repo page; a backend error is shown verbatim. Offered on A3 only (accepted users see no gate box; rejected/reset untested). Added 2026-10-06. |
+| 26 | Q-3 | Pending (A3): a `Cancel my request` button (label invented) posts the web-only route `/-/cancel-request`, which calls `POST …/user-access-request/cancel` with no body and redirects to the repo page; a backend error is shown verbatim. Offered on A3 only, which matches the API (REQ-7: only a pending request can be withdrawn). Whether HF's page has such a control is unrecorded. Added 2026-10-06; the scripted walkthrough drove it live (`observations/2026-10-06-ui-walkthrough.md`). |
 | 23 | (none) | Settings control order follows the doc screenshots: `New requests` select, `Review access requests (N)`, `Download user access report`, `Add access` on one row; notifications on the next row. The Disable/Enable button sits under the text, not at the top right. |
 
 ## Provisional choices in the clone (2026-10-05)
@@ -244,7 +248,7 @@ tests, and this table.
 |---|---|
 | Q-1 / REQ-1 | Anonymous `ask-access` → 401 `Invalid username or password.` with an HTML body. |
 | Q-2 | Re-submit while accepted → no-op; re-submit while pending keeps `timestamp` and `fields`; `ask-access` on a non-gated repo → no-op 303; after reset, the new submission's `fields` replace the old ones. |
-| Q-3 | Requester self-cancel deletes the caller's request whatever its status, answering `{}`; with no request → the handle 404. |
+| ~~Q-3~~ | ~~Requester self-cancel deletes the caller's request whatever its status, answering `{}`; with no request → the handle 404.~~ Replaced by REQ-7 [OBS 2026-10-06]: pending only, `{"ok":true}`, its own 404 message. |
 | Q-5 | pending→reset and every move out of `reset` are allowed (uniform rule: any change is OK, same status → 404). |
 | Q-6 | Granting a rejected or reset user accepts them like a pending one; self-grant → 400 "already has access" (ACC-1). |
 | Q-9 | No "repo not gated" 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work). Check order: validation → unknown user → request lookup. A reason sent with another status is ignored. Unrecorded zod wordings are guessed (`gated`, email, datetime, batch item refinement). An empty body is treated as `{}`. |

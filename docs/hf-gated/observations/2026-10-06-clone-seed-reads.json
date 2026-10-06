@@ -1,0 +1,561 @@
+{
+ "_meta": {
+  "cases_file": "harness/kb/probes/hf-gated-clone-seed-reads.json",
+  "recorded_at": "2026-10-06T13:49:33Z",
+  "vars": {
+   "SANDBOX": "OwnerOfTheGatedModel/tiny-gated-model",
+   "OWNER": "OwnerOfTheGatedModel",
+   "SUBDIR": "checkpoint-0",
+   "LFS_FILE": "checkpoint-0/model.safetensors"
+  },
+  "postprocess": "2026-10-06: HF_REQUESTER_LOGIN held the public username TestingBOrig (not an e-mail) when this was recorded, so probe.py redacted the username itself; every <HF_REQUESTER_LOGIN> was then restored to TestingBOrig (lossless: the placeholder stands for that exact string, no token or e-mail involved)."
+ },
+ "records": [
+  {
+   "id": "model-info-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "model info as seen anonymously (clone seed)",
+   "sent_at": "2026-10-06T13:49:13.934Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2cd-6qN5QrZT4yYJt8peRuB/cEf+r+c\"",
+    "content-length": "717"
+   },
+   "body_excerpt": "{\"_id\":\"6ac4f6932fb5557d4ceee81f\",\"id\":\"OwnerOfTheGatedModel/tiny-gated-model\",\"private\":false,\"tags\":[\"safetensors\",\"license:mit\",\"region:us\"],\"downloads\":0,\"l",
+   "body_json": {
+    "_id": "6ac4f6932fb5557d4ceee81f",
+    "id": "OwnerOfTheGatedModel/tiny-gated-model",
+    "private": false,
+    "tags": [
+     "safetensors",
+     "license:mit",
+     "region:us"
+    ],
+    "downloads": 0,
+    "likes": 0,
+    "modelId": "OwnerOfTheGatedModel/tiny-gated-model",
+    "author": "OwnerOfTheGatedModel",
+    "sha": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "lastModified": "2026-10-06T13:24:38.000Z",
+    "gated": "manual",
+    "disabled": false,
+    "model-index": null,
+    "config": {},
+    "cardData": {
+     "license": "mit"
+    },
+    "siblings": [
+     {
+      "rfilename": ".gitattributes"
+     },
+     {
+      "rfilename": "README.md"
+     },
+     {
+      "rfilename": "checkpoint-0/config.json"
+     },
+     {
+      "rfilename": "checkpoint-0/generation_config.json"
+     },
+     {
+      "rfilename": "checkpoint-0/model.safetensors"
+     }
+    ],
+    "spaces": [],
+    "createdAt": "2026-10-06T13:24:35.000Z",
+    "usedStorage": 691784
+   }
+  },
+  {
+   "id": "model-info-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "model info as owner",
+   "sent_at": "2026-10-06T13:49:14.107Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"2cd-6qN5QrZT4yYJt8peRuB/cEf+r+c\"",
+    "content-length": "717"
+   },
+   "body_excerpt": "{\"_id\":\"6ac4f6932fb5557d4ceee81f\",\"id\":\"OwnerOfTheGatedModel/tiny-gated-model\",\"private\":false,\"tags\":[\"safetensors\",\"license:mit\",\"region:us\"],\"downloads\":0,\"l",
+   "body_json": {
+    "_id": "6ac4f6932fb5557d4ceee81f",
+    "id": "OwnerOfTheGatedModel/tiny-gated-model",
+    "private": false,
+    "tags": [
+     "safetensors",
+     "license:mit",
+     "region:us"
+    ],
+    "downloads": 0,
+    "likes": 0,
+    "modelId": "OwnerOfTheGatedModel/tiny-gated-model",
+    "author": "OwnerOfTheGatedModel",
+    "sha": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "lastModified": "2026-10-06T13:24:38.000Z",
+    "gated": "manual",
+    "disabled": false,
+    "model-index": null,
+    "config": {},
+    "cardData": {
+     "license": "mit"
+    },
+    "siblings": [
+     {
+      "rfilename": ".gitattributes"
+     },
+     {
+      "rfilename": "README.md"
+     },
+     {
+      "rfilename": "checkpoint-0/config.json"
+     },
+     {
+      "rfilename": "checkpoint-0/generation_config.json"
+     },
+     {
+      "rfilename": "checkpoint-0/model.safetensors"
+     }
+    ],
+    "spaces": [],
+    "createdAt": "2026-10-06T13:24:35.000Z",
+    "usedStorage": 691784
+   }
+  },
+  {
+   "id": "model-info-expand",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model?expand[]=gated&expand[]=cardData",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "expand[] selects fields",
+   "sent_at": "2026-10-06T13:49:14.265Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"7d-Vuo9sQyqFZXmcljGN2P8nKbkp8o\"",
+    "content-length": "125"
+   },
+   "body_excerpt": "{\"_id\":\"6ac4f6932fb5557d4ceee81f\",\"id\":\"OwnerOfTheGatedModel/tiny-gated-model\",\"gated\":\"manual\",\"cardData\":{\"license\":\"mit\"}}",
+   "body_json": {
+    "_id": "6ac4f6932fb5557d4ceee81f",
+    "id": "OwnerOfTheGatedModel/tiny-gated-model",
+    "gated": "manual",
+    "cardData": {
+     "license": "mit"
+    }
+   }
+  },
+  {
+   "id": "tree-main",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/tree/main",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "top-level tree",
+   "sent_at": "2026-10-06T13:49:14.421Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"12a-0nRRU4G+CsgLVJjmGAvT76GFTmc\"",
+    "content-length": "298"
+   },
+   "body_excerpt": "[{\"type\":\"directory\",\"oid\":\"05c7a8877e37d8cefdc36a9b918bf77f187f3ed6\",\"size\":0,\"path\":\"checkpoint-0\"},{\"type\":\"file\",\"oid\":\"a6344aac8c09253b3b630fb776ae94478aa0",
+   "body_json": [
+    {
+     "type": "directory",
+     "oid": "05c7a8877e37d8cefdc36a9b918bf77f187f3ed6",
+     "size": 0,
+     "path": "checkpoint-0"
+    },
+    {
+     "type": "file",
+     "oid": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+     "size": 1519,
+     "path": ".gitattributes"
+    },
+    {
+     "type": "file",
+     "oid": "0c14ad74222fd13bc2b768196169ee7285f2f1c0",
+     "size": 201,
+     "path": "README.md"
+    }
+   ]
+  },
+  {
+   "id": "tree-subdir",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/tree/main/checkpoint-0",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "one checkpoint folder",
+   "sent_at": "2026-10-06T13:49:14.592Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"21d-DjLGr3jwDgkGR0ajh2ABc8cbHTg\"",
+    "content-length": "541"
+   },
+   "body_excerpt": "[{\"type\":\"file\",\"oid\":\"1a78b7e6c35fa843b214689706ce9398ac8fc761\",\"size\":819,\"path\":\"checkpoint-0/config.json\"},{\"type\":\"file\",\"oid\":\"ad61e9690fadc7132837a8a0371",
+   "body_json": [
+    {
+     "type": "file",
+     "oid": "1a78b7e6c35fa843b214689706ce9398ac8fc761",
+     "size": 819,
+     "path": "checkpoint-0/config.json"
+    },
+    {
+     "type": "file",
+     "oid": "ad61e9690fadc7132837a8a037197af97061bd5f",
+     "size": 195,
+     "path": "checkpoint-0/generation_config.json"
+    },
+    {
+     "type": "file",
+     "oid": "73500655b76ca057265c754b218fbfab58751f0b",
+     "size": 691784,
+     "lfs": {
+      "oid": "****************************************************************",
+      "size": 691784,
+      "pointerSize": 131
+     },
+     "xetHash": "****************************************************************",
+     "path": "checkpoint-0/model.safetensors"
+    }
+   ]
+  },
+  {
+   "id": "whoami-owner",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/whoami-v2",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner identity",
+   "sent_at": "2026-10-06T13:49:14.764Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"1a0-PR+aTPVnG15own8jJUENMd8qLms\"",
+    "content-length": "416"
+   },
+   "body_excerpt": "{\"type\":\"user\",\"id\":\"6ac4f4465de11a43eb34fb52\",\"name\":\"OwnerOfTheGatedModel\",\"fullname\":\"Ower Model\",\"email\":\"<email>\",\"emailVerified\":true,\"canPay\":fal",
+   "body_json": {
+    "type": "user",
+    "id": "6ac4f4465de11a43eb34fb52",
+    "name": "OwnerOfTheGatedModel",
+    "fullname": "Ower Model",
+    "email": "<email>",
+    "emailVerified": true,
+    "canPay": false,
+    "billingMode": "prepaid",
+    "periodEnd": 1793491200,
+    "isPro": false,
+    "avatarUrl": "/avatars/cad5ae6b479cdea42735e7f5745a6f55.svg",
+    "orgs": [],
+    "auth": {
+     "type": "access_token",
+     "accessToken": {
+      "displayName": "orig",
+      "role": "write",
+      "createdAt": "2026-10-06T13:15:23.159Z"
+     }
+    }
+   }
+  },
+  {
+   "id": "whoami-requester",
+   "as": "HF_REQUESTER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/whoami-v2",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "requester identity",
+   "sent_at": "2026-10-06T13:49:14.929Z",
+   "status": 200,
+   "headers": {
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"195-vPRVwJx8TMYPNI4VUqVU8LGbZOY\"",
+    "content-length": "405"
+   },
+   "body_excerpt": "{\"type\":\"user\",\"id\":\"6ac3a4b8792f9017b6cb67ec\",\"name\":\"TestingBOrig\",\"fullname\":\"Bridge\",\"email\":\"<email>\",\"emailVerified\":true,\"canPay\":false,\"billingMod",
+   "body_json": {
+    "type": "user",
+    "id": "6ac3a4b8792f9017b6cb67ec",
+    "name": "TestingBOrig",
+    "fullname": "Bridge",
+    "email": "<email>",
+    "emailVerified": true,
+    "canPay": false,
+    "billingMode": "prepaid",
+    "periodEnd": 1793491200,
+    "isPro": false,
+    "avatarUrl": "/avatars/eccbd8a248c3753b1ba445d9b80ee712.svg",
+    "orgs": [],
+    "auth": {
+     "type": "access_token",
+     "accessToken": {
+      "displayName": "origLap",
+      "role": "write",
+      "createdAt": "2026-10-06T13:21:13.627Z"
+     }
+    }
+   }
+  },
+  {
+   "id": "whoami-anon",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/api/whoami-v2",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "anonymous whoami",
+   "sent_at": "2026-10-06T13:49:15.100Z",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\"",
+    "etag": "W/\"29-dEMcHWfJi78ZR1aqzb1ELAhp3Us\"",
+    "content-length": "41"
+   },
+   "body_excerpt": "{\"error\":\"Invalid username or password.\"}",
+   "body_json": {
+    "error": "Invalid username or password."
+   }
+  },
+  {
+   "id": "whoami-bad-token",
+   "as": "BAD_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/whoami-v2",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "invalid token wording",
+   "sent_at": "2026-10-06T13:49:15.259Z",
+   "status": 401,
+   "headers": {
+    "x-error-message": "Invalid username or password.",
+    "content-type": "application/json; charset=utf-8",
+    "www-authenticate": "Bearer realm=\"Authentication required\", charset=\"UTF-8\"",
+    "etag": "W/\"29-dEMcHWfJi78ZR1aqzb1ELAhp3Us\"",
+    "content-length": "41"
+   },
+   "body_excerpt": "{\"error\":\"Invalid username or password.\"}",
+   "body_json": {
+    "error": "Invalid username or password."
+   }
+  },
+  {
+   "id": "owner-readme",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "README content + headers",
+   "sent_at": "2026-10-06T13:49:15.426Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''README.md; filename=\"README.md\";",
+    "etag": "\"0c14ad74222fd13bc2b768196169ee7285f2f1c0\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "201"
+   },
+   "body_excerpt": "---\nlicense: mit\n---\n\n# tiny-gated-model\n\nA tiny, randomly initialised GPT-2 (2 layers, 64 dims, vocab 1000). Its weights are untrained.\nIt exists as a sandbox ",
+   "body_text": "---\nlicense: mit\n---\n\n# tiny-gated-model\n\nA tiny, randomly initialised GPT-2 (2 layers, 64 dims, vocab 1000). Its weights are untrained.\nIt exists as a sandbox for testing gated-model access requests.\n"
+  },
+  {
+   "id": "owner-gitattributes",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": ".gitattributes content + headers",
+   "sent_at": "2026-10-06T13:49:16.634Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''.gitattributes; filename=\".gitattributes\";",
+    "etag": "\"a6344aac8c09253b3b630fb776ae94478aa0275b\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "1519"
+   },
+   "body_excerpt": "*.7z filter=lfs diff=lfs merge=lfs -text\n*.arrow filter=lfs diff=lfs merge=lfs -text\n*.bin filter=lfs diff=lfs merge=lfs -text\n*.bz2 filter=lfs diff=lfs merge=l",
+   "body_text": "*.7z filter=lfs diff=lfs merge=lfs -text\n*.arrow filter=lfs diff=lfs merge=lfs -text\n*.bin filter=lfs diff=lfs merge=lfs -text\n*.bz2 filter=lfs diff=lfs merge=lfs -text\n*.ckpt filter=lfs diff=lfs merge=lfs -text\n*.ftz filter=lfs diff=lfs merge=lfs -text\n*.gz filter=lfs diff=lfs merge=lfs -text\n*.h5 filter=lfs diff=lfs merge=lfs -text\n*.joblib filter=lfs diff=lfs merge=lfs -text\n*.lfs.* filter=lfs diff=lfs merge=lfs -text\n*.mlmodel filter=lfs diff=lfs merge=lfs -text\n*.model filter=lfs diff=lfs merge=lfs -text\n*.msgpack filter=lfs diff=lfs merge=lfs -text\n*.npy filter=lfs diff=lfs merge=lfs -text\n*.npz filter=lfs diff=lfs merge=lfs -text\n*.onnx filter=lfs diff=lfs merge=lfs -text\n*.ot filter=lfs diff=lfs merge=lfs -text\n*.parquet filter=lfs diff=lfs merge=lfs -text\n*.pb filter=lfs diff=lfs merge=lfs -text\n*.pickle filter=lfs diff=lfs merge=lfs -text\n*.pkl filter=lfs diff=lfs merge=lfs -text\n*.pt filter=lfs diff=lfs merge=lfs -text\n*.pth filter=lfs diff=lfs merge=lfs -text\n*.rar filter=lfs diff=lfs merge=lfs -text\n*.safetensors filter=lfs diff=lfs merge=lfs -text\nsaved_model/**/* filter=lfs diff=lfs merge=lfs -text\n*.tar.* filter=lfs diff=lfs merge=lfs -text\n*.tar filter=lfs diff=lfs merge=lfs -text\n*.tflite filter=lfs diff=lfs merge=lfs -text\n*.tgz filter=lfs diff=lfs merge=lfs -text\n*.wasm filter=lfs diff=lfs merge=lfs -text\n*.xz filter=lfs diff=lfs merge=lfs -text\n*.zip filter=lfs diff=lfs merge=lfs -text\n*.zst filter=lfs diff=lfs merge=lfs -text\n*tfevents* filter=lfs diff=lfs merge=lfs -text\n"
+  },
+  {
+   "id": "owner-head-gitattributes",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/.gitattributes",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "HEAD headers of a small file",
+   "sent_at": "2026-10-06T13:49:16.811Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''.gitattributes; filename=\".gitattributes\";",
+    "etag": "\"a6344aac8c09253b3b630fb776ae94478aa0275b\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "1519"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "owner-head-lfs",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/checkpoint-0/model.safetensors",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "HEAD of an LFS file (redirect?)",
+   "sent_at": "2026-10-06T13:49:17.021Z",
+   "status": 302,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "location": "https://us.aws.cdn.hf.co/xet-bridge-us/6ac4f6932fb5557d4ceee81f/c9a7ab6a87eaa2ed02b787b3c4959e217c1d43b46ab601eb3c735a998774b0dc?<signed-query-redacted>",
+    "link": "<https://huggingface.co/api/models/OwnerOfTheGatedModel/tiny-gated-model/xet-read-token/5bb9fc53add422c252f7351a8e28c438cb98ea21>; rel=\"xet-auth\", <https://cas-server.xethub.hf.co/v1/reconstructions/c9a7ab6a87eaa2ed02b787b3c4959e217c1d43b46ab601eb3c735a998774b0dc>; rel=\"xet-reconstruction-info\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "x-linked-size": "691784",
+    "x-linked-etag": "\"321019a3b5ea40a247b2cd8db89a7f2dd7bbfe6aeab29c92fc5f58e098cef177\"",
+    "content-length": "1124"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "owner-config",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/checkpoint-0/config.json",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "a small JSON file in a subfolder",
+   "sent_at": "2026-10-06T13:49:17.196Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''config.json; filename=\"config.json\";",
+    "etag": "\"1a78b7e6c35fa843b214689706ce9398ac8fc761\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "819"
+   },
+   "body_excerpt": "{\n  \"activation_function\": \"gelu_new\",\n  \"add_cross_attention\": false,\n  \"architectures\": [\n    \"GPT2LMHeadModel\"\n  ],\n  \"attn_pdrop\": 0.1,\n  \"bos_token_id\": 0,",
+   "body_text": "{\n  \"activation_function\": \"gelu_new\",\n  \"add_cross_attention\": false,\n  \"architectures\": [\n    \"GPT2LMHeadModel\"\n  ],\n  \"attn_pdrop\": 0.1,\n  \"bos_token_id\": 0,\n  \"dtype\": \"float32\",\n  \"embd_pdrop\": 0.1,\n  \"eos_token_id\": 0,\n  \"initializer_range\": 0.02,\n  \"layer_norm_epsilon\": 1e-05,\n  \"model_type\": \"gpt2\",\n  \"n_embd\": 64,\n  \"n_head\": 2,\n  \"n_inner\": null,\n  \"n_layer\": 2,\n  \"n_positions\": 128,\n  \"pad_token_id\": null,\n  \"reorder_and_upcast_attn\": false,\n  \"resid_pdrop\": 0.1,\n  \"scale_attn_by_inverse_layer_idx\": false,\n  \"scale_attn_weights\": true,\n  \"summary_activation\": null,\n  \"summary_first_dropout\": 0.1,\n  \"summary_proj_to_labels\": true,\n  \"summary_type\": \"cls_index\",\n  \"summary_use_proj\": true,\n  \"tie_word_embeddings\": true,\n  \"transformers_version\": \"5.18.0\",\n  \"use_cache\": true,\n  \"vocab_size\": 1000\n}\n"
+  },
+  {
+   "id": "anon-readme",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "allowlisted anonymously (ACC-5)",
+   "sent_at": "2026-10-06T13:49:17.372Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''README.md; filename=\"README.md\";",
+    "etag": "\"0c14ad74222fd13bc2b768196169ee7285f2f1c0\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "201"
+   },
+   "body_excerpt": "---\nlicense: mit\n---\n\n# tiny-gated-model\n\nA tiny, randomly initialised GPT-2 (2 layers, 64 dims, vocab 1000). Its weights are untrained.\nIt exists as a sandbox "
+  },
+  {
+   "id": "anon-head-readme",
+   "as": "anonymous",
+   "method": "HEAD",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/resolve/main/README.md",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "HEAD allowlisted",
+   "sent_at": "2026-10-06T13:49:17.546Z",
+   "status": 200,
+   "headers": {
+    "content-type": "text/plain; charset=utf-8",
+    "content-disposition": "inline; filename*=UTF-8''README.md; filename=\"README.md\";",
+    "etag": "\"0c14ad74222fd13bc2b768196169ee7285f2f1c0\"",
+    "x-repo-commit": "5bb9fc53add422c252f7351a8e28c438cb98ea21",
+    "content-length": "201"
+   },
+   "body_excerpt": ""
+  },
+  {
+   "id": "anon-ask-access-get",
+   "as": "anonymous",
+   "method": "GET",
+   "url": "https://huggingface.co/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "GET on the POST-only web route",
+   "sent_at": "2026-10-06T13:49:17.744Z",
+   "status": 404,
+   "headers": {
+    "x-error-message": "Sorry, we can't find the page you are looking for.",
+    "content-type": "text/html; charset=utf-8",
+    "etag": "W/\"ccb1-wf9QSRsgU9rxDPby7IqKmIJfFNk\"",
+    "content-length": "52401"
+   },
+   "body_excerpt": null
+  },
+  {
+   "id": "owner-unknown-repo-list",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/OwnerOfTheGatedModel/does-not-exist-xyz/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "owner list on a missing repo",
+   "sent_at": "2026-10-06T13:49:17.923Z",
+   "status": 404,
+   "headers": {
+    "x-error-code": "RepoNotFound",
+    "x-error-message": "Repository not found",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"20-bITJowpdmeRi6flSV9yCp5Fkq5k\"",
+    "content-length": "32"
+   },
+   "body_excerpt": "{\"error\":\"Repository not found\"}",
+   "body_json": {
+    "error": "Repository not found"
+   }
+  },
+  {
+   "id": "owner-not-gated-list",
+   "as": "HF_OWNER_ACCESS_TOKEN",
+   "method": "GET",
+   "url": "https://huggingface.co/api/models/openai-community/gpt2/user-access-request/pending",
+   "request_body": null,
+   "request_encoding": null,
+   "note": "list on someone else's non-gated repo",
+   "sent_at": "2026-10-06T13:49:33.169Z",
+   "status": 403,
+   "headers": {
+    "x-error-message": "You have read access but not the required permissions for this operation",
+    "content-type": "application/json; charset=utf-8",
+    "etag": "W/\"54-58IQULNwaMDQJsZSMHksd4V5jFY\"",
+    "content-length": "84"
+   },
+   "body_excerpt": "{\"error\":\"You have read access but not the required permissions for this operation\"}",
+   "body_json": {
+    "error": "You have read access but not the required permissions for this operation"
+   }
+  }
+ ]
+}
