@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-06T14:11:51Z",
+ "generated": "2026-10-06T14:52:29Z",
  "backend": "http://127.0.0.1:8200",
  "mode": "seeded",
  "scenarios": [
@@ -8597,6 +8597,1910 @@
      "diffs": []
     }
    ]
+  },
+  {
+   "name": "2026-10-06/edge-cases-a",
+   "recording": "2026-10-06-edge-cases-a.json",
+   "mode": "seeded",
+   "covers": [
+    "Q-2",
+    "Q-5",
+    "Q-6",
+    "Q-9",
+    "Q-14",
+    "Q-21",
+    "Q-24",
+    "Q-27",
+    "REP-1",
+    "REV-1",
+    "REV-7",
+    "REQ-5",
+    "ACC-10"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 81,
+    "fail": 0,
+    "diverged": 1,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "447",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "448",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "449",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "450",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "451",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "452",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=orig",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "453",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=TESTINGB",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "454",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=testingborig",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "455",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=bridge",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "456",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=t",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "457",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=xyz",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "458",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset",
+      "resetReason": "edge-case probe"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "459",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "460",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "461",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "462",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "diverged",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": [
+      {
+       "field": "body$:length",
+       "expected": 0,
+       "actual": 1,
+       "detail": "array length differs",
+       "divergence": "D-5"
+      }
+     ]
+    },
+    {
+     "id": "463",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "464",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "465",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "466",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "467",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "468",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "469",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "470",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "471",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "472",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "473",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "474",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "475",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "476",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset",
+      "resetReason": "edge-case probe"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "477",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "478",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "479",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "480",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "481",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "482",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "483",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "484",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant",
+     "request_body": {
+      "user": "TestingBOrig"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "485",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "486",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "487",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "488",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "489",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "490",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset",
+      "resetReason": "edge-case probe"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "491",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "492",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant",
+     "request_body": {
+      "user": "TestingBOrig"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "493",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "494",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "495",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "496",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "497",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "498",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset",
+      "resetReason": "edge-case probe"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "499",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "500",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "501",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "502",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "503",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "504",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "505",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "accepted",
+      "rejectionReason": "should be ignored?"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "506",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "507",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "508",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "509",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "510",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "511",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "512",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "513",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "514",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "515",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "516",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "517",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant",
+     "request_body": {
+      "user": "OwnerOfTheGatedModel"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "518",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "519",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "520",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "521",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "522",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "523",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "524",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "525",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "526",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/raw/main/checkpoint-0/model.safetensors",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "527",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/raw/main/no-such-file.txt",
+     "request_body": null,
+     "expected_status": 404,
+     "actual_status": 404,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "528",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "HF's HTML error page body; the clone answers HTML routes with the message only (docs/system.md)",
+     "restricted_to": [
+      "status",
+      "header:*"
+     ],
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "2026-10-06/edge-cases-b",
+   "recording": "2026-10-06-edge-cases-b.json",
+   "mode": "seeded",
+   "covers": [
+    "REV-7",
+    "Q-9",
+    "Q-27",
+    "REQ-7",
+    "CFG-6",
+    "ACC-10"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 33,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "f0-owner-to-pending",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "OwnerOfTheGatedModel",
+      "status": "pending"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "f0-owner-cancel",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "f0-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "f0-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "f0-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "f0-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e10-head-raw-owner",
+     "persona": "owner",
+     "method": "HEAD",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/raw/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e10-head-raw-anon",
+     "persona": "anonymous",
+     "method": "HEAD",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/raw/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 401,
+     "actual_status": 401,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e10-head-blob-owner",
+     "persona": "owner",
+     "method": "HEAD",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/blob/main/README.md",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e11-ask",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e11-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e11-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e11-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e11-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e11-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-to-false",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/settings",
+     "request_body": {
+      "gated": false
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-grant-not-gated",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant",
+     "request_body": {
+      "user": "TestingBOrig"
+     },
+     "expected_status": 400,
+     "actual_status": 400,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-raw-anon-not-gated",
+     "persona": "anonymous",
+     "method": "GET",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/raw/main/.gitattributes",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-cancel",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-list-pending-empty",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e12-handle-not-gated",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "rejected"
+     },
+     "expected_status": 400,
+     "actual_status": 400,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e13-to-manual",
+     "persona": "owner",
+     "method": "PUT",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/settings",
+     "request_body": {
+      "gated": "manual"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e13-ask",
+     "persona": "requester",
+     "method": "POST",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/ask-access",
+     "request_body": {},
+     "expected_status": 303,
+     "actual_status": 303,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e13-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e13-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e13-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e13-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "e13-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
+  },
+  {
+   "name": "2026-10-06/reset-from-pending",
+   "recording": "2026-10-06-reset-from-pending.json",
+   "mode": "seeded",
+   "covers": [
+    "Q-5",
+    "Q-23",
+    "REP-1",
+    "TS-1",
+    "TS-2"
+   ],
+   "stand_ins": false,
+   "error": null,
+   "ok": true,
+   "counts": {
+    "pass": 20,
+    "fail": 0,
+    "diverged": 0,
+    "skipped": 0,
+    "error": 0
+   },
+   "steps": [
+    {
+     "id": "r0-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r0-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r0-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r0-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1-reset-from-pending",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "reset",
+      "resetReason": "confirm Q-5"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1b-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1b-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1b-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1b-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1-report",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/OwnerOfTheGatedModel/tiny-gated-model/user-access-report",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r1-req-auth-check",
+     "persona": "requester",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check",
+     "request_body": null,
+     "expected_status": 403,
+     "actual_status": 403,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r2-pending-from-reset",
+     "persona": "owner",
+     "method": "POST",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle",
+     "request_body": {
+      "user": "TestingBOrig",
+      "status": "pending"
+     },
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r2-list-pending",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r2-list-accepted",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r2-list-rejected",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    },
+    {
+     "id": "r2-list-reset",
+     "persona": "owner",
+     "method": "GET",
+     "path": "/api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset",
+     "request_body": null,
+     "expected_status": 200,
+     "actual_status": 200,
+     "outcome": "pass",
+     "reason": "",
+     "restricted_to": null,
+     "diffs": []
+    }
+   ]
   }
  ],
  "stale_divergences": [],
@@ -8614,13 +10518,13 @@
    "evidence": "docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json and 2026-10-06-clone-seed-reads.json, step owner-head-lfs"
   },
   {
-   "id": "D-4",
-   "scenario": "rules:test_rules_requests",
-   "step": "test_REV_7_grant_on_non_gated_repo_is_400",
-   "field": "*",
-   "rule": "REV-7 vs open-questions.md \"Provisional choices in the clone\" (Q-9)",
-   "reason": "Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records \"No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)\" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded.",
-   "evidence": "docs/hf-gated/behaviour.md REV-7, CFG-6; docs/hf-gated/open-questions.md Q-9 provisional row"
+   "id": "D-5",
+   "scenario": "2026-10-06/edge-cases-a",
+   "step": "462",
+   "field": "body$:length",
+   "rule": "open-questions.md Q-23 (eventual consistency on the real Hub)",
+   "reason": "Recording artefact. Right after `handle` pending -> reset (#458), this one reset list came back empty although the requester's auth-check said \"has been reset\" (#463). The same transition re-probed at 14:44 (2026-10-06-reset-from-pending r1, r1b) lists the entry 1 s and 6 s later, and the report has it: the empty list was the Hub lagging, not a rule. The clone lists the entry.",
+   "evidence": "docs/hf-gated/observations/2026-10-06-edge-cases-a.json"
   }
  ],
  "normalisations": [
@@ -8655,7 +10559,7 @@
  ],
  "pytest": {
   "exit_code": 0,
-  "tail": "........................................................................ [ 21%]\n........................................................................ [ 42%]\n........................................................................ [ 63%]\n........................................................................ [ 84%]\n......x.............................................                     [100%]\n339 passed, 4 deselected, 1 xfailed in 18.11s\n",
+  "tail": "........................................................................ [ 20%]\n........................................................................ [ 41%]\n........................................................................ [ 61%]\n........................................................................ [ 82%]\n...............................................................          [100%]\n351 passed, 4 deselected in 12.17s\n",
   "tests": [
    {
     "file": "tests.test_harness_offline",
@@ -8750,6 +10654,24 @@
    {
     "file": "tests.test_harness_offline",
     "name": "test_recording_compared_with_itself_is_clean[2026-10-06-ui-walkthrough.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-06-edge-cases-a.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-06-edge-cases-b.json]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_recording_compared_with_itself_is_clean[2026-10-06-reset-from-pending.json]",
     "outcome": "passed",
     "message": ""
    },
@@ -8918,6 +10840,24 @@
    {
     "file": "tests.test_harness_offline",
     "name": "test_scenario_seeds_build_and_serialise[2026-10-06/ui-walkthrough]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[2026-10-06/edge-cases-a]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[2026-10-06/edge-cases-b]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_harness_offline",
+    "name": "test_scenario_seeds_build_and_serialise[2026-10-06/reset-from-pending]",
     "outcome": "passed",
     "message": ""
    },
@@ -9151,18 +11091,6 @@
    },
    {
     "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q6_self_grant_is_400",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q9_no_not_gated_400_on_grant_and_handle",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
     "name": "test_provisional_Q9_reason_with_other_status_is_ignored",
     "outcome": "passed",
     "message": ""
@@ -9229,30 +11157,6 @@
    },
    {
     "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q21_q_is_substring_on_username_fullname_shared_email[BOri-expected0]",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q21_q_is_substring_on_username_fullname_shared_email[ridg-expected1]",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q21_q_is_substring_on_username_fullname_shared_email[example.org-expected2]",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q21_unshared_email_is_not_searched",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
     "name": "test_provisional_Q24_owner_may_ask_access_on_own_repo",
     "outcome": "passed",
     "message": ""
@@ -9296,36 +11200,6 @@
    {
     "file": "tests.test_provisional_clone",
     "name": "test_provisional_Q27_raw_on_non_gated_repo_is_200_without_redirect",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q27_blob_with_access_shows_escaped_content",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q27_blob_of_lfs_shows_the_pointer",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q27_blob_404_is_html_and_unknown_repo_401_keeps_www_authenticate",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q27_raw_and_blob_answer_get_only[raw]",
-    "outcome": "passed",
-    "message": ""
-   },
-   {
-    "file": "tests.test_provisional_clone",
-    "name": "test_provisional_Q27_raw_and_blob_answer_get_only[blob]",
     "outcome": "passed",
     "message": ""
    },
@@ -9380,6 +11254,24 @@
    {
     "file": "tests.test_provisional_clone",
     "name": "test_provisional_settings_echo_only_gated_private_visibility",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_blob_page_shows_escaped_content",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_blob_of_lfs_shows_the_pointer",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_provisional_clone",
+    "name": "test_provisional_Q27_blob_unknown_repo_401_keeps_www_authenticate",
     "outcome": "passed",
     "message": ""
    },
@@ -10218,6 +12110,36 @@
     "message": ""
    },
    {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_blob_page_ignores_the_token[requester]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_blob_page_ignores_the_token[owner]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_blob_allowlists_readme[GET]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_5_blob_allowlists_readme[HEAD]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_gate",
+    "name": "test_ACC_10_raw_head_answers_like_get",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
     "file": "tests.test_rules_lists",
     "name": "test_REV_10_pagination_with_link_next",
     "outcome": "passed",
@@ -10285,13 +12207,31 @@
    },
    {
     "file": "tests.test_rules_lists",
-    "name": "test_REV_10_search_q[DemoC-expected4]",
+    "name": "test_REV_10_search_q[bridge-expected4]",
     "outcome": "passed",
     "message": ""
    },
    {
     "file": "tests.test_rules_lists",
-    "name": "test_REV_10_search_q[zzz-no-match-expected5]",
+    "name": "test_REV_10_search_q[estingB-expected5]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[t-expected6]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[DemoC-expected7]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_lists",
+    "name": "test_REV_10_search_q[zzz-no-match-expected8]",
     "outcome": "passed",
     "message": ""
    },
@@ -10424,8 +12364,8 @@
    {
     "file": "tests.test_rules_requests",
     "name": "test_REV_7_grant_on_non_gated_repo_is_400",
-    "outcome": "xfailed",
-    "message": "D-4 (REV-7 vs open-questions.md \"Provisional choices in the clone\" (Q-9)): Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records \"No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)\" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded."
+    "outcome": "passed",
+    "message": ""
    },
    {
     "file": "tests.test_rules_requests",
@@ -10596,6 +12536,18 @@
     "message": ""
    },
    {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_7_handle_on_non_gated_repo_is_400",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_rules_requests",
+    "name": "test_REV_6_owner_can_grant_themselves",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
     "file": "tests.test_scenarios",
     "name": "test_replay[2026-10-05/owner-walkthrough]",
     "outcome": "passed",
@@ -10688,6 +12640,24 @@
    {
     "file": "tests.test_scenarios",
     "name": "test_replay[2026-10-06/ui-walkthrough]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[2026-10-06/edge-cases-a]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[2026-10-06/edge-cases-b]",
+    "outcome": "passed",
+    "message": ""
+   },
+   {
+    "file": "tests.test_scenarios",
+    "name": "test_replay[2026-10-06/reset-from-pending]",
     "outcome": "passed",
     "message": ""
    },

@@ -394,6 +394,23 @@ def _seed_2026_10_06(scenario: str, name: str) -> dict:
         # journey; neither is compared.
         return make([request("TestingBOrig", "reset", "2026-10-06T13:51:15.900Z", "2026-10-06T14:00:00.000Z",
                              repo=sandbox)])
+    if name == "edge-cases-a":
+        # e0-list-pending: TestingBOrig pending since 14:01:52.302Z (the ui-walkthrough's last re-request);
+        # the three other lists empty. Bridge-log export of probe cases e0 .. e10-blob-missing-owner.
+        return make([request("TestingBOrig", "pending", "2026-10-06T14:01:52.302Z", repo=sandbox)])
+    if name == "edge-cases-b":
+        # Where part A stopped: TestingBOrig reset (e7b-list-reset: timestamp 14:01:52.302Z, reviewedAt
+        # 14:40:53.901Z), and the owner's own accepted entry from e8-self-grant (e9-list-accepted: timestamp =
+        # reviewedAt = 14:40:55.646Z, grantedBy the owner, no email: a grant, REQ-5).
+        owner = recording_set(rset).owner
+        return make([
+            request("TestingBOrig", "reset", "2026-10-06T14:01:52.302Z", "2026-10-06T14:40:53.901Z", repo=sandbox),
+            request(owner, "accepted", "2026-10-06T14:40:55.646Z", "2026-10-06T14:40:55.646Z", granted_by=owner,
+                    email_shared=False, repo=sandbox),
+        ])
+    if name == "reset-from-pending":
+        # r0-list-pending: TestingBOrig pending since 14:42:55.348Z (edge-cases-b e13-ask), other lists empty.
+        return make([request("TestingBOrig", "pending", "2026-10-06T14:42:55.348Z", repo=sandbox)])
     raise KeyError(scenario)
 
 
@@ -414,4 +431,7 @@ SCENARIO_NAMES = (
     "2026-10-06/owner-walkthrough-completion",
     "2026-10-06/requester-cancel",
     "2026-10-06/ui-walkthrough",
+    "2026-10-06/edge-cases-a",
+    "2026-10-06/edge-cases-b",
+    "2026-10-06/reset-from-pending",
 )

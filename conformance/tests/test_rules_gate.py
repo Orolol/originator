@@ -261,3 +261,30 @@ def test_ACC_5_blob_anonymous_is_401_html_without_www_authenticate(seeded):
     response = seeded.req("anonymous", "GET", f"/{MANUAL}/blob/main/config.json")
     E.assert_error(response, 401, E.gate_anonymous(MANUAL), code="GatedRepo", body="any", www_authenticate=False)
     assert E.media(response) == "text/html"
+
+
+@pytest.mark.parametrize("persona", ["requester", "owner"])
+def test_ACC_10_blob_page_ignores_the_token(seeded, persona):
+    # [OBS 2026-10-06 blob-config.json-*-owner, blob-no-such-file.txt-*]: an HTML page, so the Bearer token is
+    # ignored: even the owner gets the anonymous 401, and a missing file is gated too (ACC-6).
+    for path in ("config.json", "no-such-file.txt"):
+        response = seeded.req(persona, "GET", f"/{MANUAL}/blob/main/{path}")
+        E.assert_error(response, 401, E.gate_anonymous(MANUAL), code="GatedRepo", body="any", www_authenticate=False)
+
+
+@pytest.mark.parametrize("method", ["GET", "HEAD"])
+def test_ACC_5_blob_allowlists_readme(seeded, method):
+    # [OBS 2026-10-06 blob-README.md-*]: README.md is public on /blob/ too, anonymous or not (GET and HEAD).
+    response = seeded.req("anonymous", method, f"/{MANUAL}/blob/main/README.md")
+    E.assert_ok(response)
+    assert E.media(response) == "text/html"
+
+
+def test_ACC_10_raw_head_answers_like_get(seeded):
+    # [OBS 2026-10-06 edge-cases-b e10-head-raw-owner, e10-head-raw-anon]
+    owner = seeded.req("owner", "HEAD", f"/{MANUAL}/raw/main/README.md")
+    E.assert_ok(owner)
+    assert owner.content == b"" and owner.headers["etag"] == seeded.req("owner", "GET", f"/{MANUAL}/raw/main/README.md").headers["etag"]
+    anon = seeded.req("anonymous", "HEAD", f"/{MANUAL}/raw/main/config.json")
+    assert anon.status_code == 401 and anon.headers["x-error-code"] == "GatedRepo"
+    assert anon.headers.get("www-authenticate") == E.WWW_AUTHENTICATE

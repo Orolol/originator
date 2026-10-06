@@ -116,11 +116,11 @@ def test_REV_7_grant_unknown_user_is_404(be):
 
 
 def test_REV_7_grant_on_non_gated_repo_is_400(be):
-    # REV-7 "Repo not gated -> 400" [CLIENT doc]. Caveat: CFG-6 [OBS] shows the same docstring is wrong for
-    # the list endpoint once requests exist; grant on a non-gated repo has not been recorded.
+    # REV-7 "Repo not gated -> 400" [CLIENT doc], recorded [OBS 2026-10-06 edge-cases-b e12-grant-not-gated]:
+    # 400, X-Error-Code RepoNotGated, "model {id} is not gated". (The list endpoint still answers, CFG-6.)
     be.put_state(rules_seed())
     response = be.grant(PUBLIC, {"user": CAROL})
-    assert response.status_code == 400, E.describe(response)
+    E.assert_error(response, 400, f"model {PUBLIC} is not gated", code="RepoNotGated")
 
 
 @pytest.mark.parametrize("start,target", [
@@ -321,3 +321,24 @@ def test_REQ_7_anonymous_self_cancel_is_401(be):
     be.put_state(rules_seed([pending(REQUESTER, "2026-10-06T14:00:00.000Z")]))
     E.assert_error(be.cancel(MANUAL, persona="anonymous"), 401, E.INVALID_CREDENTIALS, www_authenticate=True)
     assert [status for status, _ in where(be, MANUAL, REQUESTER)] == ["pending"]
+
+
+def test_REV_7_handle_on_non_gated_repo_is_400(be):
+    # [OBS 2026-10-06 edge-cases-b e12-handle-not-gated]: same 400 as grant; the lists still answer (CFG-6).
+    be.put_state(rules_seed([pending(REQUESTER, "2026-10-05T14:00:00.000Z", repo=PUBLIC)]))
+    E.assert_error(be.handle(PUBLIC, {"user": REQUESTER, "status": "accepted"}), 400,
+                   f"model {PUBLIC} is not gated", code="RepoNotGated")
+    assert [i["user"]["user"] for i in be.list_requests(PUBLIC, "pending").json()] == [REQUESTER]
+
+
+def test_REV_6_owner_can_grant_themselves(be):
+    # [OBS 2026-10-06 edge-cases-a e8-self-grant, e9-list-accepted]: 200 {}, then an accepted entry like any
+    # grant: timestamp = reviewedAt, grantedBy the owner, no e-mail (REQ-5).
+    be.put_state(rules_seed())
+    response = be.grant(MANUAL, {"user": OWNER})
+    E.assert_ok(response)
+    assert response.json() == {}
+    [item] = [i for i in be.list_requests(MANUAL, "accepted").json() if i["user"]["user"] == OWNER]
+    assert item["timestamp"] == item["reviewedAt"] and item["grantedBy"]["user"] == OWNER
+    assert "email" not in item["user"]
+

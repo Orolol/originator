@@ -1,6 +1,6 @@
 # Conformance report: clone vs real-Hub recordings
 
-Generated 2026-10-06T14:11:51Z against `http://127.0.0.1:8200` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
+Generated 2026-10-06T14:52:29Z against `http://127.0.0.1:8200` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
 
 ## Summary
 
@@ -24,6 +24,9 @@ Overall: **PASS** (0 failing scenario(s), 0 stale divergence(s)).
 | 2026-10-06/owner-walkthrough-completion | `2026-10-06-owner-walkthrough-completion.json` | 44 | 44 | 0 | 0 | 0 | 0 | **PASS** |
 | 2026-10-06/requester-cancel | `2026-10-06-requester-cancel.json` | 56 | 56 | 0 | 0 | 0 | 0 | **PASS** |
 | 2026-10-06/ui-walkthrough | `2026-10-06-ui-walkthrough.json` | 70 | 70 | 0 | 0 | 0 | 0 | **PASS** |
+| 2026-10-06/edge-cases-a | `2026-10-06-edge-cases-a.json` | 82 | 81 | 1 | 0 | 0 | 0 | **PASS** |
+| 2026-10-06/edge-cases-b | `2026-10-06-edge-cases-b.json` | 33 | 33 | 0 | 0 | 0 | 0 | **PASS** |
+| 2026-10-06/reset-from-pending | `2026-10-06-reset-from-pending.json` | 20 | 20 | 0 | 0 | 0 | 0 | **PASS** |
 
 ## Unexpected mismatches (verbatim)
 
@@ -40,7 +43,7 @@ None.
 | id | scenario / step / field | rule | reason | diffs covered |
 |---|---|---|---|---|
 | D-1 | `????-??-??/clone-seed-reads` / `owner-head-lfs` / `["header:location", "header:link"]` | out-of-scope.md "Real file serving (LFS/Xet, 302 to CDN)" | Out of scope. HF redirects an LFS/Xet file to its CDN (signed URL) and advertises Xet endpoints in Link; the clone serves stub bytes for authorised files and redirects to its own resolve-cache. The authorisation decision (302 for the owner, X-Repo-Commit, X-Linked-Size/-Etag) is still compared and matches. Applies to both recording sets (the LFS file is checkpoint_tokens_20M_loss_4.9842/pytorch_mo… | 4 |
-| D-4 | `rules:test_rules_requests` / `test_REV_7_grant_on_non_gated_repo_is_400` / `*` | REV-7 vs open-questions.md "Provisional choices in the clone" (Q-9) | Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records "No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded. | pytest strict xfail |
+| D-5 | `2026-10-06/edge-cases-a` / `462` / `body$:length` | open-questions.md Q-23 (eventual consistency on the real Hub) | Recording artefact. Right after `handle` pending -> reset (#458), this one reset list came back empty although the requester's auth-check said "has been reset" (#463). The same transition re-probed at 14:44 (2026-10-06-reset-from-pending r1, r1b) lists the entry 1 s and 6 s later, and the report has it: the empty list was the Hub lagging, not a rule. The clone lists the entry. | 1 |
 
 ## Scope restrictions
 
@@ -57,6 +60,7 @@ Steps not replayed, or compared on a subset of fields, and why (from `conformanc
 - 2026-10-05/anonymous-probes / `gate-props-heading`: skipped. HTML page props (gate box) of google/gemma-2-2b; the Gemma special case is out of scope
 - 2026-10-05/anonymous-probes / `tree`: only `status`, `header:content-type`. stand-in repo: the real Llama-3.2-1B file list (oids, sizes) is not reproducible
 - 2026-10-06/requester-ask-access / `pre-page`: skipped. HTML model page: rendered by web/, not part of the backend surface (docs/system.md, 'Backend surface')
+- 2026-10-06/edge-cases-a / `528`: only `status`, `header:*`. HF's HTML error page body; the clone answers HTML routes with the message only (docs/system.md)
 - Stand-in repos (`meta-llama/Llama-3.2-1B`, `bigcode/starcoder`, `mistralai/Mistral-7B-v0.1`, `openai-community/gpt2`) are seeded locally with the recorded ids, `_id` and `gated`; their file contents are stubs (the recorded 160-character excerpt), so for them only status, error headers, content type and allowlist decisions carry evidence.
 
 ## Normalisations
@@ -75,21 +79,17 @@ pytest exit code 0.
 
 | module | passed | failed | error | xfailed (listed divergence) | skipped |
 |---|---|---|---|---|---|
-| `tests.test_harness_offline` | 53 | 0 | 0 | 0 | 0 |
+| `tests.test_harness_offline` | 59 | 0 | 0 | 0 | 0 |
 | `tests.test_hf_client` | 10 | 0 | 0 | 0 | 0 |
-| `tests.test_provisional_clone` | 58 | 0 | 0 | 0 | 0 |
+| `tests.test_provisional_clone` | 50 | 0 | 0 | 0 | 0 |
 | `tests.test_rules_control` | 12 | 0 | 0 | 0 | 0 |
 | `tests.test_rules_errors` | 34 | 0 | 0 | 0 | 0 |
-| `tests.test_rules_gate` | 93 | 0 | 0 | 0 | 0 |
-| `tests.test_rules_lists` | 14 | 0 | 0 | 0 | 0 |
+| `tests.test_rules_gate` | 98 | 0 | 0 | 0 | 0 |
+| `tests.test_rules_lists` | 17 | 0 | 0 | 0 | 0 |
 | `tests.test_rules_outbox` | 7 | 0 | 0 | 0 | 0 |
 | `tests.test_rules_report` | 5 | 0 | 0 | 0 | 0 |
-| `tests.test_rules_requests` | 36 | 0 | 0 | 1 | 0 |
-| `tests.test_scenarios` | 17 | 0 | 0 | 0 | 0 |
-
-Known divergences (strict xfail, see divergences.yaml):
-
-- `tests.test_rules_requests::test_REV_7_grant_on_non_gated_repo_is_400`: D-4 (REV-7 vs open-questions.md "Provisional choices in the clone" (Q-9)): Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records "No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)" and …
+| `tests.test_rules_requests` | 39 | 0 | 0 | 0 | 0 |
+| `tests.test_scenarios` | 20 | 0 | 0 | 0 | 0 |
 
 ## Per-step detail
 
@@ -808,4 +808,160 @@ Covers: REQ-7, §4 reset -> re-request, §5.1 table, REV-1, REQ-6, TS-1, TS-2, C
 | 380 | owner | `GET /api/whoami-v2` | 200 → 200 | pass |  |
 | 381 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model` | 200 → 200 | pass |  |
 | 382 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+
+### 2026-10-06/edge-cases-a
+
+Covers: Q-2, Q-5, Q-6, Q-9, Q-14, Q-21, Q-24, Q-27, REP-1, REV-1, REV-7, REQ-5, ACC-10.
+
+| step | persona | request | status rec → backend | outcome | notes |
+|---|---|---|---|---|---|
+| 447 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 448 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 449 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 450 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 451 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| 452 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=orig` | 200 → 200 | pass |  |
+| 453 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=TESTINGB` | 200 → 200 | pass |  |
+| 454 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=testingborig` | 200 → 200 | pass |  |
+| 455 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=bridge` | 200 → 200 | pass |  |
+| 456 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=t` | 200 → 200 | pass |  |
+| 457 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending?q=xyz` | 200 → 200 | pass |  |
+| 458 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 459 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 460 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 461 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 462 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | diverged | body$:length [D-5] |
+| 463 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| 464 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 465 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 466 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 467 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 468 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 469 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 200 → 200 | pass |  |
+| 470 | requester | `POST /OwnerOfTheGatedModel/tiny-gated-model/ask-access` | 303 → 303 | pass |  |
+| 471 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 472 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 473 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 474 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 475 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 200 → 200 | pass |  |
+| 476 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 477 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 478 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 479 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 480 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 481 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 482 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| 483 | owner | `GET /OwnerOfTheGatedModel/tiny-gated-model/user-access-report` | 200 → 200 | pass |  |
+| 484 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant` | 200 → 200 | pass |  |
+| 485 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 486 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 487 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 488 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 489 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 200 → 200 | pass |  |
+| 490 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 491 | owner | `GET /OwnerOfTheGatedModel/tiny-gated-model/user-access-report` | 200 → 200 | pass |  |
+| 492 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant` | 200 → 200 | pass |  |
+| 493 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 494 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 495 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 496 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 497 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 200 → 200 | pass |  |
+| 498 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 499 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 500 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 501 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 502 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 503 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 504 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| 505 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 506 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 507 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 508 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 509 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 510 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 200 → 200 | pass |  |
+| 511 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| 512 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 513 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 514 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 515 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 516 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| 517 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant` | 200 → 200 | pass |  |
+| 518 | owner | `POST /OwnerOfTheGatedModel/tiny-gated-model/ask-access` | 303 → 303 | pass |  |
+| 519 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| 520 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| 521 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| 522 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| 523 | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| 524 | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 200 → 200 | pass |  |
+| 525 | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel` | 404 → 404 | pass |  |
+| 526 | owner | `GET /OwnerOfTheGatedModel/tiny-gated-model/raw/main/checkpoint-0/model.safetensors` | 200 → 200 | pass |  |
+| 527 | owner | `GET /OwnerOfTheGatedModel/tiny-gated-model/raw/main/no-such-file.txt` | 404 → 404 | pass |  |
+| 528 | owner | `GET /OwnerOfTheGatedModel/tiny-gated-model/blob/main/no-such-file.txt` | 401 → 401 | pass | HF's HTML error page body; the clone answers HTML routes with the message only (docs/system.md) |
+
+### 2026-10-06/edge-cases-b
+
+Covers: REV-7, Q-9, Q-27, REQ-7, CFG-6, ACC-10.
+
+| step | persona | request | status rec → backend | outcome | notes |
+|---|---|---|---|---|---|
+| f0-owner-to-pending | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| f0-owner-cancel | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel` | 200 → 200 | pass |  |
+| f0-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| f0-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| f0-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| f0-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| e10-head-raw-owner | owner | `HEAD /OwnerOfTheGatedModel/tiny-gated-model/raw/main/README.md` | 200 → 200 | pass |  |
+| e10-head-raw-anon | anonymous | `HEAD /OwnerOfTheGatedModel/tiny-gated-model/raw/main/.gitattributes` | 401 → 401 | pass |  |
+| e10-head-blob-owner | owner | `HEAD /OwnerOfTheGatedModel/tiny-gated-model/blob/main/README.md` | 200 → 200 | pass |  |
+| e11-ask | requester | `POST /OwnerOfTheGatedModel/tiny-gated-model/ask-access` | 303 → 303 | pass |  |
+| e11-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| e11-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| e11-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| e11-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| e11-req-auth-check | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| e12-to-false | owner | `PUT /api/models/OwnerOfTheGatedModel/tiny-gated-model/settings` | 200 → 200 | pass |  |
+| e12-grant-not-gated | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/grant` | 400 → 400 | pass |  |
+| e12-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| e12-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| e12-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| e12-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| e12-req-auth-check | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 200 → 200 | pass |  |
+| e12-raw-anon-not-gated | anonymous | `GET /OwnerOfTheGatedModel/tiny-gated-model/raw/main/.gitattributes` | 200 → 200 | pass |  |
+| e12-cancel | requester | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/cancel` | 200 → 200 | pass |  |
+| e12-list-pending-empty | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| e12-handle-not-gated | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 400 → 400 | pass |  |
+| e13-to-manual | owner | `PUT /api/models/OwnerOfTheGatedModel/tiny-gated-model/settings` | 200 → 200 | pass |  |
+| e13-ask | requester | `POST /OwnerOfTheGatedModel/tiny-gated-model/ask-access` | 303 → 303 | pass |  |
+| e13-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| e13-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| e13-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| e13-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| e13-req-auth-check | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+
+### 2026-10-06/reset-from-pending
+
+Covers: Q-5, Q-23, REP-1, TS-1, TS-2.
+
+| step | persona | request | status rec → backend | outcome | notes |
+|---|---|---|---|---|---|
+| r0-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| r0-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| r0-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| r0-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| r1-reset-from-pending | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| r1-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| r1-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| r1-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| r1-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| r1b-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| r1b-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| r1b-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| r1b-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
+| r1-report | owner | `GET /OwnerOfTheGatedModel/tiny-gated-model/user-access-report` | 200 → 200 | pass |  |
+| r1-req-auth-check | requester | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/auth-check` | 403 → 403 | pass |  |
+| r2-pending-from-reset | owner | `POST /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/handle` | 200 → 200 | pass |  |
+| r2-list-pending | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/pending` | 200 → 200 | pass |  |
+| r2-list-accepted | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/accepted` | 200 → 200 | pass |  |
+| r2-list-rejected | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/rejected` | 200 → 200 | pass |  |
+| r2-list-reset | owner | `GET /api/models/OwnerOfTheGatedModel/tiny-gated-model/user-access-request/reset` | 200 → 200 | pass |  |
 

@@ -80,7 +80,12 @@ def test_REV_10_limit_bounds_accepted(be):
     ("testingb", {REQUESTER}),  # [OBS] s7-list-q: lower-case prefix of the username
     ("TESTINGB", {REQUESTER}),  # case-insensitive [OBS Q-21 partial]
     ("TestingBOrig", {REQUESTER}),
-    ("Bridge", {REQUESTER}),  # SPEC: fullname is searched too (TestingBOrig's fullname is "Bridge")
+    # [OBS 2026-10-06 search, edge-cases-a e0-search-*]: the fullname "Bridge" is NOT searched (any case), and
+    # a username substring does not match; this overrides the SPEC's "username, fullname, email…".
+    ("Bridge", set()),
+    ("bridge", set()),
+    ("estingB", set()),
+    ("t", {REQUESTER}),
     ("DemoC", {CAROL}),
     ("zzz-no-match", set()),
 ])

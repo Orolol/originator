@@ -159,17 +159,6 @@ def test_provisional_Q6_grant_accepts_rejected_and_reset_users(be, status):
     assert item["timestamp"] == "2026-10-05T14:00:00.000Z"  # "like a pending one" (REV-8: timestamp kept)
 
 
-def test_provisional_Q6_self_grant_is_400(be):
-    be.put_state(rules_seed())
-    E.assert_error(be.grant(MANUAL, {"user": OWNER}), 400, E.ALREADY_HAS_ACCESS)
-
-
-def test_provisional_Q9_no_not_gated_400_on_grant_and_handle(be):
-    be.put_state(rules_seed([pending(REQUESTER, "2026-10-05T14:00:00.000Z", repo=PUBLIC)]))
-    E.assert_ok(be.grant(PUBLIC, {"user": CAROL}))
-    E.assert_ok(be.handle(PUBLIC, {"user": REQUESTER, "status": "accepted"}))
-
-
 def test_provisional_Q9_reason_with_other_status_is_ignored(be):
     be.put_state(rules_seed([pending(REQUESTER, "2026-10-05T14:00:00.000Z")]))
     E.assert_ok(be.handle(MANUAL, {"user": REQUESTER, "status": "accepted", "rejectionReason": "ignored"}))
@@ -259,23 +248,6 @@ def test_provisional_Q14_report_one_sequence_sorted_like_the_lists(be):
                                                              "conf-user-01"]
 
 
-@pytest.mark.parametrize("q,expected", [
-    ("BOri", {REQUESTER}),  # substring of the username, any case
-    ("ridg", {REQUESTER}),  # substring of the fullname "Bridge"
-    ("example.org", {CAROL}),  # carol's shared e-mail
-])
-def test_provisional_Q21_q_is_substring_on_username_fullname_shared_email(be, q, expected):
-    be.put_state(rules_seed([pending(REQUESTER, "2026-10-05T14:00:00.000Z"), pending(CAROL, "2026-10-05T14:01:00.000Z")]))
-    assert {i["user"]["user"] for i in be.list_requests(MANUAL, "pending", f"?q={q}").json()} == expected
-
-
-def test_provisional_Q21_unshared_email_is_not_searched(be):
-    be.put_state(rules_seed())
-    E.assert_ok(be.grant(MANUAL, {"user": CAROL}))  # granted: e-mail not shared (REQ-5)
-    assert be.list_requests(MANUAL, "accepted", "?q=example.org").json() == []
-    assert [i["user"]["user"] for i in be.list_requests(MANUAL, "accepted", "?q=carol").json()] == [CAROL]
-
-
 def test_provisional_Q24_owner_may_ask_access_on_own_repo(be):
     be.put_state(rules_seed())
     assert be.ask(MANUAL, persona="owner").status_code == 303
@@ -323,41 +295,6 @@ def test_provisional_Q27_raw_on_non_gated_repo_is_200_without_redirect(be):
     response = be.req("anonymous", "GET", f"/{PUBLIC}/raw/main/config.json")
     E.assert_ok(response)
     assert response.content == text_file("config.json")["text"].encode()
-
-
-def test_provisional_Q27_blob_with_access_shows_escaped_content(be):
-    document = rules_seed()
-    repo = next(r for r in document["repos"] if r["id"] == MANUAL)
-    repo["files"]["special.txt"] = text_file("special.txt", "a <b>bold</b> & co\n")
-    be.put_state(document)
-    response = be.req("owner", "GET", f"/{MANUAL}/blob/main/special.txt")
-    E.assert_ok(response)
-    assert E.media(response) == "text/html"
-    assert "a &lt;b&gt;bold&lt;/b&gt; &amp; co" in response.text and "<b>bold</b>" not in response.text
-
-
-def test_provisional_Q27_blob_of_lfs_shows_the_pointer(be):
-    from conformance.seeds import LFS_FILE, SANDBOX, scenario_seed
-    be.put_state(scenario_seed("2026-10-06/tree-masking"))
-    response = be.req("owner", "GET", f"/{SANDBOX}/blob/main/{LFS_FILE}")
-    E.assert_ok(response)
-    assert _lfs_pointer().splitlines()[1] in response.text  # "oid sha256:…"
-
-
-def test_provisional_Q27_blob_404_is_html_and_unknown_repo_401_keeps_www_authenticate(be):
-    be.put_state(rules_seed())
-    missing = be.req("owner", "GET", f"/{MANUAL}/blob/main/no-such-file.txt")
-    assert missing.status_code == 404 and E.media(missing) == "text/html", E.describe(missing)
-    unknown = be.req("anonymous", "GET", f"/{MISSING}/blob/main/config.json")
-    assert unknown.status_code == 401, E.describe(unknown)
-    assert unknown.headers.get("www-authenticate") == E.WWW_AUTHENTICATE
-
-
-@pytest.mark.parametrize("route", ["raw", "blob"])
-def test_provisional_Q27_raw_and_blob_answer_get_only(be, route):
-    be.put_state(rules_seed())
-    response = be.req("owner", "HEAD", f"/{MANUAL}/{route}/main/README.md")
-    assert response.status_code >= 400, E.describe(response)
 
 
 # --- the "(none)" row -----------------------------------------------------------------------------------
@@ -434,3 +371,36 @@ def test_provisional_settings_echo_only_gated_private_visibility(be):
                                     "gatedNotificationsEmail": "x@conformance.test"})
     E.assert_ok(response)
     assert response.json() == {"gated": "auto"}
+
+
+# --- Q-27 /blob/ page content (the decision itself is ACC-5/ACC-10, test_rules_gate.py) ------------------
+
+def test_provisional_Q27_blob_page_shows_escaped_content(be):
+    # Provisional (no Q yet): a minimal page with the escaped git blob content. Non-gated repo: the page
+    # ignores the token anyway [OBS 2026-10-06 blob].
+    document = rules_seed()
+    repo = next(r for r in document["repos"] if r["id"] == PUBLIC)
+    repo["files"]["special.txt"] = text_file("special.txt", "a <b>bold</b> & co\n")
+    be.put_state(document)
+    response = be.req("anonymous", "GET", f"/{PUBLIC}/blob/main/special.txt")
+    E.assert_ok(response)
+    assert E.media(response) == "text/html"
+    assert "a &lt;b&gt;bold&lt;/b&gt; &amp; co" in response.text and "<b>bold</b>" not in response.text
+
+
+def test_provisional_Q27_blob_of_lfs_shows_the_pointer(be):
+    from conformance.seeds import LFS_FILE, SANDBOX, scenario_seed
+    document = scenario_seed("2026-10-06/tree-masking")
+    next(r for r in document["repos"] if r["id"] == SANDBOX)["gated"] = False
+    be.put_state(document)
+    response = be.req("anonymous", "GET", f"/{SANDBOX}/blob/main/{LFS_FILE}")
+    E.assert_ok(response)
+    assert _lfs_pointer().splitlines()[1] in response.text  # "oid sha256:…"
+
+
+def test_provisional_Q27_blob_unknown_repo_401_keeps_www_authenticate(be):
+    be.put_state(rules_seed())
+    unknown = be.req("anonymous", "GET", f"/{MISSING}/blob/main/config.json")
+    assert unknown.status_code == 401, E.describe(unknown)
+    assert unknown.headers.get("www-authenticate") == E.WWW_AUTHENTICATE
+

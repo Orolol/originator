@@ -97,6 +97,22 @@ scenarios:
     recording: 2026-10-06-ui-walkthrough.json
     covers: [REQ-7, "§4 reset -> re-request", "§5.1 table", REV-1, REQ-6, TS-1, TS-2, CFG-3, CFG-6, CFG-7, ACC-1, Q-7]
 
+  2026-10-06/edge-cases-a:
+    recording: 2026-10-06-edge-cases-a.json
+    covers: [Q-2, Q-5, Q-6, Q-9, Q-14, Q-21, Q-24, Q-27, REP-1, REV-1, REV-7, REQ-5, ACC-10]
+    compare_only:
+      "528":
+        fields: [status, "header:*"]
+        reason: "HF's HTML error page body; the clone answers HTML routes with the message only (docs/system.md)"
+
+  2026-10-06/edge-cases-b:
+    recording: 2026-10-06-edge-cases-b.json
+    covers: [REV-7, Q-9, Q-27, REQ-7, CFG-6, ACC-10]
+
+  2026-10-06/reset-from-pending:
+    recording: 2026-10-06-reset-from-pending.json
+    covers: [Q-5, Q-23, REP-1, TS-1, TS-2]
+
 # Live mode (-m live): read-only steps replayed against the bridge (BACKEND_URL=http://127.0.0.1:8100),
 # no seeding. Only the 2026-10-06 set: the bridge's repo allowlist only lets the current sandbox
 # (OwnerOfTheGatedModel/tiny-gated-model) through. Steps whose answer depends on the live request state

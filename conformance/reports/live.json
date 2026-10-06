@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-06T14:11:15Z",
+ "generated": "2026-10-06T14:52:39Z",
  "backend": "http://127.0.0.1:8100",
  "mode": "live",
  "scenarios": [
@@ -518,13 +518,13 @@
    "evidence": "docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json and 2026-10-06-clone-seed-reads.json, step owner-head-lfs"
   },
   {
-   "id": "D-4",
-   "scenario": "rules:test_rules_requests",
-   "step": "test_REV_7_grant_on_non_gated_repo_is_400",
-   "field": "*",
-   "rule": "REV-7 vs open-questions.md \"Provisional choices in the clone\" (Q-9)",
-   "reason": "Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records \"No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)\" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded.",
-   "evidence": "docs/hf-gated/behaviour.md REV-7, CFG-6; docs/hf-gated/open-questions.md Q-9 provisional row"
+   "id": "D-5",
+   "scenario": "2026-10-06/edge-cases-a",
+   "step": "462",
+   "field": "body$:length",
+   "rule": "open-questions.md Q-23 (eventual consistency on the real Hub)",
+   "reason": "Recording artefact. Right after `handle` pending -> reset (#458), this one reset list came back empty although the requester's auth-check said \"has been reset\" (#463). The same transition re-probed at 14:44 (2026-10-06-reset-from-pending r1, r1b) lists the entry 1 s and 6 s later, and the report has it: the empty list was the Hub lagging, not a rule. The clone lists the entry.",
+   "evidence": "docs/hf-gated/observations/2026-10-06-edge-cases-a.json"
   }
  ],
  "normalisations": [

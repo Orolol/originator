@@ -1,7 +1,7 @@
 <!-- Published copy of conformance/reports/live.md (read-only replay through the bridge against the real Hub). -->
 # Conformance report: clone vs real-Hub recordings
 
-Generated 2026-10-06T14:11:15Z against `http://127.0.0.1:8100` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
+Generated 2026-10-06T14:52:39Z against `http://127.0.0.1:8100` by `conformance-report` (conformance/). Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from its own initial state: `2026-10-05-*.json` (sandbox `Orosius/deltanet-mla-latent`, owner `Orosius`) and `2026-10-06-*.json` (sandbox `OwnerOfTheGatedModel/tiny-gated-model`, owner `OwnerOfTheGatedModel`); requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the recordings and the KB only (the suite never reads the clone's code). Reproduce with `uv run --project conformance conformance-report --pytest` (clone on :8200).
 
 ## Summary
 
@@ -28,7 +28,7 @@ None.
 | id | scenario / step / field | rule | reason | diffs covered |
 |---|---|---|---|---|
 | D-1 | `????-??-??/clone-seed-reads` / `owner-head-lfs` / `["header:location", "header:link"]` | out-of-scope.md "Real file serving (LFS/Xet, 302 to CDN)" | Out of scope. HF redirects an LFS/Xet file to its CDN (signed URL) and advertises Xet endpoints in Link; the clone serves stub bytes for authorised files and redirects to its own resolve-cache. The authorisation decision (302 for the owner, X-Repo-Commit, X-Linked-Size/-Etag) is still compared and matches. Applies to both recording sets (the LFS file is checkpoint_tokens_20M_loss_4.9842/pytorch_mo… | n/a (scenario not run) |
-| D-4 | `rules:test_rules_requests` / `test_REV_7_grant_on_non_gated_repo_is_400` / `*` | REV-7 vs open-questions.md "Provisional choices in the clone" (Q-9) | Clone provisional choice. behaviour.md REV-7 says granting on a non-gated repo answers 400 [CLIENT doc]; the clone records "No 'repo not gated' 400 on grant/handle (wording unknown, and CFG-6 shows the lists still work)" and answers 200 {}. Neither side is observed on the Hub. KB inconsistency: REV-7 should carry the Q-9 caveat, or grant on a non-gated repo should be recorded. | pytest strict xfail |
+| D-5 | `2026-10-06/edge-cases-a` / `462` / `body$:length` | open-questions.md Q-23 (eventual consistency on the real Hub) | Recording artefact. Right after `handle` pending -> reset (#458), this one reset list came back empty although the requester's auth-check said "has been reset" (#463). The same transition re-probed at 14:44 (2026-10-06-reset-from-pending r1, r1b) lists the entry 1 s and 6 s later, and the report has it: the empty list was the Hub lagging, not a rule. The clone lists the entry. | n/a (scenario not run) |
 
 ## Scope restrictions
 
@@ -45,6 +45,7 @@ Steps not replayed, or compared on a subset of fields, and why (from `conformanc
 - 2026-10-05/anonymous-probes / `gate-props-heading`: skipped. HTML page props (gate box) of google/gemma-2-2b; the Gemma special case is out of scope
 - 2026-10-05/anonymous-probes / `tree`: only `status`, `header:content-type`. stand-in repo: the real Llama-3.2-1B file list (oids, sizes) is not reproducible
 - 2026-10-06/requester-ask-access / `pre-page`: skipped. HTML model page: rendered by web/, not part of the backend surface (docs/system.md, 'Backend surface')
+- 2026-10-06/edge-cases-a / `528`: only `status`, `header:*`. HF's HTML error page body; the clone answers HTML routes with the message only (docs/system.md)
 - Stand-in repos (`meta-llama/Llama-3.2-1B`, `bigcode/starcoder`, `mistralai/Mistral-7B-v0.1`, `openai-community/gpt2`) are seeded locally with the recorded ids, `_id` and `gated`; their file contents are stubs (the recorded 160-character excerpt), so for them only status, error headers, content type and allowlist decisions carry evidence.
 
 ## Normalisations
