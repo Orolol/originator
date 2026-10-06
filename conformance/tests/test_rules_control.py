@@ -19,11 +19,11 @@ from conformance.recordings import load_recording
 from conformance.divergences import load_divergences
 from conformance.replay import apply_divergences, to_actual
 from conformance.rule_seeds import CAROL, MANUAL, NOW, REQUESTER, rules_seed
-from conformance.seeds import SANDBOX
+from conformance.seeds import LATEST, OWNER, SANDBOX
 
 # system.md: "same entry schema as /__bridge__/log"; the key order is the bridge's, as recorded in
-# observations/2026-10-05-ui-walkthrough.json (a /__bridge__/log export).
-LOG_KEYS = list(json.loads((OBSERVATIONS / "2026-10-05-ui-walkthrough.json").read_text())[0])
+# observations/<set>-ui-walkthrough.json (a /__bridge__/log export).
+LOG_KEYS = list(json.loads((OBSERVATIONS / f"{LATEST}-ui-walkthrough.json").read_text())[0])
 
 
 def plus(iso: str, ms: int) -> str:
@@ -67,8 +67,9 @@ def test_reset_to_named_sandbox_seed(be):
 def test_builtin_sandbox_seed_reproduces_recorded_reads(be, recording):
     # The `sandbox` seed must serve what anonymous callers were recorded getting (model info, tree with ACC-9
     # masking, files, gate answers), with the same accepted divergences as the replay of that recording.
+    # It holds the current sandbox, i.e. the latest recording set's (the bridge's allowlisted repo).
     assert be.reset("sandbox").status_code < 300
-    steps = load_recording(f"2026-10-05-{recording}.json").steps
+    steps = load_recording(f"{LATEST}-{recording}.json").steps
     ctx = Context(TimestampTracker(set()), be.base_url, RECORDED_ORIGINS)
     divergences = load_divergences()
     problems = {}
@@ -77,7 +78,7 @@ def test_builtin_sandbox_seed_reproduces_recorded_reads(be, recording):
             continue
         response = be.req(step.persona, step.method, step.path)
         diffs = compare_response(step.expected, to_actual(response), ctx)
-        apply_divergences(recording, step.id, diffs, divergences)
+        apply_divergences(f"{LATEST}/{recording}", step.id, diffs, divergences)
         diffs = [d for d in diffs if d.divergence is None]
         if diffs:
             problems[step.id] = [(d.field, d.expected, d.actual) for d in diffs[:5]]
@@ -85,10 +86,11 @@ def test_builtin_sandbox_seed_reproduces_recorded_reads(be, recording):
 
 
 def test_builtin_demo_repos_and_carol(be):
-    # system.md "Built-in seeds": demo repos owned by Orosius and the third user DemoCarol
+    # system.md "Built-in seeds": demo repos owned by the sandbox owner and the third user DemoCarol (system.md
+    # still names Orosius, the 2026-10-05 owner; the built-in seeds moved with the sandbox to the latest set's owner)
     assert be.reset().status_code < 300
-    for repo, gated in (("Orosius/gated-auto-demo", "auto"), ("Orosius/gated-form-demo", "manual"),
-                        ("Orosius/not-gated-demo", False)):
+    for repo, gated in ((f"{OWNER}/gated-auto-demo", "auto"), (f"{OWNER}/gated-form-demo", "manual"),
+                        (f"{OWNER}/not-gated-demo", False)):
         response = be.get("anonymous", f"/api/models/{repo}?expand[]=gated")
         E.assert_ok(response)
         assert response.json()["gated"] == gated, response.text

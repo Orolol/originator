@@ -9,7 +9,7 @@ test_provisional_clone.py.
 from __future__ import annotations
 
 from conformance import expect as E
-from conformance.rule_seeds import AUTO, AUTO_FIELDS, MANUAL, REQUESTER, rules_seed
+from conformance.rule_seeds import AUTO, AUTO_FIELDS, MANUAL, OWNER, REQUESTER, rules_seed
 from conformance.seeds import OWNER_EMAIL, REQUESTER_EMAIL, request
 
 ENTRY_KEYS = {"id", "at", "to", "kind", "repo", "user"}
@@ -43,7 +43,7 @@ def test_no_new_request_mail_in_auto_mode(be):
 
 def test_reset_mails_the_user_with_reason(be):
     be.put_state(rules_seed([request(REQUESTER, "accepted", "2026-10-05T14:00:00.000Z", "2026-10-05T14:05:00.000Z",
-                                     "Orosius", repo=MANUAL)]))
+                                     OWNER, repo=MANUAL)]))
     E.assert_ok(be.handle(MANUAL, {"user": REQUESTER, "status": "reset", "resetReason": "Please agree again."}))
     entries = [e for e in be.outbox() if e["kind"] == "request_reset"]
     assert len(entries) == 1, be.outbox()

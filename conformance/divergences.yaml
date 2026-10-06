@@ -16,7 +16,7 @@
 
 divergences:
   - id: D-1
-    scenario: clone-seed-reads
+    scenario: "????-??-??/clone-seed-reads"
     step: owner-head-lfs
     field: ["header:location", "header:link"]
     rule: out-of-scope.md "Real file serving (LFS/Xet, 302 to CDN)"
@@ -24,8 +24,11 @@ divergences:
       Out of scope. HF redirects an LFS/Xet file to its CDN (signed URL) and advertises Xet endpoints in
       Link; the clone serves stub bytes for authorised files and redirects to its own resolve-cache. The
       authorisation decision (302 for the owner, X-Repo-Commit, X-Linked-Size/-Etag) is still compared
-      and matches.
-    evidence: docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json owner-head-lfs
+      and matches. Applies to both recording sets (the LFS file is
+      checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin on 2026-10-05, checkpoint-0/model.safetensors on 2026-10-06).
+    evidence: >-
+      docs/hf-gated/out-of-scope.md; docs/hf-gated/observations/2026-10-05-clone-seed-reads.json and
+      2026-10-06-clone-seed-reads.json, step owner-head-lfs
 
   - id: D-4
     scenario: "rules:test_rules_requests"

@@ -10,35 +10,35 @@
 # Initial states live in src/conformance/seeds.py (scenario_seed), derived from each recording.
 
 scenarios:
-  owner-walkthrough:
+  2026-10-05/owner-walkthrough:
     recording: 2026-10-05-owner-walkthrough.json
     covers: [REV-1, REV-2, REV-3, REV-5, REV-7, REV-8, REV-9, REV-10, REV-12, REQ-2, REQ-4, REQ-6,
              TS-1, TS-2, CFG-3, CFG-6, ACC-7, REP-1, "§2 states", Q-2, Q-4, Q-6, Q-7, Q-9, Q-21]
 
-  owner-walkthrough-completion:
+  2026-10-05/owner-walkthrough-completion:
     recording: 2026-10-05-owner-walkthrough-completion.json
     covers: [REV-1, REV-3, REV-5, REQ-4, REQ-6, TS-1, TS-2, "§2 states", "§5.1 table", Q-2, Q-4, Q-5, Q-8]
 
-  requester-ask-access:
+  2026-10-05/requester-ask-access:
     recording: 2026-10-05-requester-ask-access.json
     covers: [REQ-2, "§2 states", REV-12, Q-1, Q-2, Q-8]
     skip:
       pre-page: "HTML model page: rendered by web/, not part of the backend surface (docs/system.md, 'Backend surface')"
 
-  owner-reads:
+  2026-10-05/owner-reads:
     recording: 2026-10-05-owner-reads.json
     covers: [REP-1, ACC-1, CFG-3, REQ-6, Q-14]
 
-  clone-seed-reads:
+  2026-10-05/clone-seed-reads:
     recording: 2026-10-05-clone-seed-reads.json
     covers: [ACC-4, ACC-5, "api.md §3.3 check order", "system.md Personas (401 wording)", "system.md seed fidelity"]
     stand_ins: true  # openai-community/gpt2
 
-  ui-walkthrough:
+  2026-10-05/ui-walkthrough:
     recording: 2026-10-05-ui-walkthrough.json
     covers: ["§4 reset -> re-request", "§5.1 table", REV-1, REQ-6, TS-1, TS-2, CFG-3, CFG-6, CFG-7, ACC-1, Q-7]
 
-  anonymous-probes:
+  2026-10-05/anonymous-probes:
     recording: 2026-10-05-anonymous-probes.json
     covers: [ACC-3, ACC-4, ACC-5, ACC-6, ACC-10, CFG-5, REP-2, "api.md §3.1-3.3"]
     stand_ins: true  # meta-llama/Llama-3.2-1B, bigcode/starcoder, mistralai/Mistral-7B-v0.1, openai-community/gpt2
@@ -56,20 +56,58 @@ scenarios:
         fields: [status, "header:content-type"]
         reason: "stand-in repo: the real Llama-3.2-1B file list (oids, sizes) is not reproducible"
 
-  tree-masking:
+  2026-10-05/tree-masking:
     recording: 2026-10-05-tree-masking.json
     covers: [ACC-9, ACC-10, ACC-4]
 
+  # --- 2026-10-06 set (sandbox OwnerOfTheGatedModel/tiny-gated-model), in sent_at order -------------
+  2026-10-06/clone-seed-reads:
+    recording: 2026-10-06-clone-seed-reads.json
+    covers: [ACC-4, ACC-5, "api.md §3.3 check order", "system.md Personas (401 wording)", "system.md seed fidelity"]
+    stand_ins: true  # openai-community/gpt2
+
+  2026-10-06/requester-ask-access:
+    recording: 2026-10-06-requester-ask-access.json
+    covers: [REQ-2, "§2 states", REV-12, Q-1, Q-2, Q-8]
+    skip:
+      pre-page: "HTML model page: rendered by web/, not part of the backend surface (docs/system.md, 'Backend surface')"
+
+  2026-10-06/owner-reads:
+    recording: 2026-10-06-owner-reads.json
+    covers: [REP-1, ACC-1, CFG-3, REQ-6, Q-14]
+
+  2026-10-06/tree-masking:
+    recording: 2026-10-06-tree-masking.json
+    covers: [ACC-9, ACC-10, ACC-4]
+
+  2026-10-06/owner-walkthrough:
+    recording: 2026-10-06-owner-walkthrough.json
+    covers: [REV-1, REV-2, REV-3, REV-5, REV-7, REV-8, REV-9, REV-10, REV-12, REQ-2, REQ-4, REQ-6,
+             TS-1, TS-2, CFG-3, CFG-6, ACC-7, REP-1, "§2 states", "§4 rejected re-request", Q-2, Q-4, Q-6, Q-7, Q-9, Q-21]
+
+  2026-10-06/owner-walkthrough-completion:
+    recording: 2026-10-06-owner-walkthrough-completion.json
+    covers: [REV-1, REV-3, REV-5, REQ-4, REQ-6, TS-1, TS-2, "§2 states", "§5.1 table", Q-2, Q-4, Q-5, Q-8]
+
+  2026-10-06/requester-cancel:
+    recording: 2026-10-06-requester-cancel.json
+    covers: [REQ-7, REP-1, "§4 table (self-cancel)", "§4 rejected re-request", REV-1, TS-1, TS-2, Q-2, Q-3]
+
+  2026-10-06/ui-walkthrough:
+    recording: 2026-10-06-ui-walkthrough.json
+    covers: [REQ-7, "§4 reset -> re-request", "§5.1 table", REV-1, REQ-6, TS-1, TS-2, CFG-3, CFG-6, CFG-7, ACC-1, Q-7]
+
 # Live mode (-m live): read-only steps replayed against the bridge (BACKEND_URL=http://127.0.0.1:8100),
-# no seeding. Steps whose answer depends on the live request state (lists, report, gate messages) are
-# left out: that state has moved since the recording. Repos other than the sandbox are refused by
-# the bridge's repo allowlist, so they are left out too.
+# no seeding. Only the 2026-10-06 set: the bridge's repo allowlist only lets the current sandbox
+# (OwnerOfTheGatedModel/tiny-gated-model) through. Steps whose answer depends on the live request state
+# (lists, report, gate messages) are left out: that state has moved since the recording. Repos other
+# than the sandbox are refused by the allowlist, so they are left out too.
 live:
   # owner-get-settings is left out: the bridge only routes PUT …/settings (BridgeRouteNotAllowed).
-  owner-reads: [owner-auth-check, owner-resolve]
-  clone-seed-reads: [model-info-anon, model-info-owner, model-info-expand, tree-main, tree-subdir,
-                     whoami-owner, whoami-requester, whoami-anon, whoami-bad-token, owner-readme,
-                     owner-gitattributes, owner-head-gitattributes, owner-config, anon-readme,
-                     anon-head-readme]
+  2026-10-06/owner-reads: [owner-auth-check, owner-resolve]
+  2026-10-06/clone-seed-reads: [model-info-anon, model-info-owner, model-info-expand, tree-main, tree-subdir,
+                                whoami-owner, whoami-requester, whoami-anon, whoami-bad-token, owner-readme,
+                                owner-gitattributes, owner-head-gitattributes, owner-config, anon-readme,
+                                anon-head-readme]
   # tree-subdir-requester and raw-readme-requester depend on the requester's live request state.
-  tree-masking: [tree-subdir-anon, tree-subdir-owner, raw-readme-owner, raw-readme-anon]
+  2026-10-06/tree-masking: [tree-subdir-anon, tree-subdir-owner, raw-readme-owner, raw-readme-anon]

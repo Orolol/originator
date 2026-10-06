@@ -18,8 +18,8 @@ from urllib.parse import parse_qs, urlsplit
 import pytest
 
 from conformance import expect as E
-from conformance.rule_seeds import (AUTO, AUTO_FIELDS, CAROL, FORM, FORM_ANSWERS, MANUAL, OWNER, PUBLIC, REQUESTER,
-                                    demo_repo, pending, rules_seed, text_file)
+from conformance.rule_seeds import (AUTO, AUTO_FIELDS, CAROL, FORM, FORM_ANSWERS, MANUAL, MISSING, OWNER, PRIVATE, PUBLIC,
+                                    REQUESTER, demo_repo, pending, rules_seed, text_file)
 from conformance.seeds import request
 
 pytestmark = pytest.mark.provisional
@@ -131,17 +131,9 @@ def test_provisional_Q2_resubmit_after_reset_replaces_fields(be):
     assert (status, item["fields"]) == ("pending", FORM_ANSWERS)
 
 
-@pytest.mark.parametrize("status", STATUSES)
-def test_provisional_Q3_self_cancel_deletes_the_request(be, status):
-    seeded = pending(REQUESTER, "2026-10-05T14:00:00.000Z") if status == "pending" else reviewed(REQUESTER, status)
-    be.put_state(rules_seed([seeded]))
-    response = be.req("requester", "POST", f"/api/models/{MANUAL}/user-access-request/cancel")
-    E.assert_ok(response)
-    assert response.json() == {}
-    assert all_lists(be, MANUAL) == {s: [] for s in STATUSES}
-    E.assert_error(be.auth_check(MANUAL, "requester"), 403, E.gate_no_request(MANUAL), code="GatedRepo")
-    again = be.req("requester", "POST", f"/api/models/{MANUAL}/user-access-request/cancel")
-    E.assert_error(again, 404, E.NO_REQUEST)
+# Q-3 (requester self-cancel) is no longer provisional: REQ-7 was recorded on 2026-10-06, and its rule tests
+# live in test_rules_requests.py (test_REQ_7_*). The open-questions.md "Q-3" provisional row ("deletes the
+# caller's request whatever its status, answering {}") is contradicted by that recording.
 
 
 @pytest.mark.parametrize("start,target", [("pending", "reset"), ("reset", "accepted"), ("reset", "rejected"),
@@ -242,12 +234,15 @@ def test_provisional_Q16_no_field_is_required(be):
     assert only(be, FORM, REQUESTER)[0] == "pending"
 
 
-def test_provisional_Q14_report_reviewedAt_last_and_no_email_when_granted(be):
-    be.put_state(rules_seed([reviewed(REQUESTER, "rejected")]))
+def test_provisional_Q14_report_no_email_when_granted(be):
+    # Q-14 row: "no `email` for granted users". The row's other half ("reviewedAt as the last key") is superseded
+    # for accepted entries by REP-1 [OBS 2026-10-06, W s1-report]: …, reviewedAt, status, grantedBy. So a granted
+    # entry is REP-1's accepted order without `email`; the key position on rejected/reset entries stays open.
+    be.put_state(rules_seed())
     E.assert_ok(be.grant(MANUAL, {"user": CAROL}))
-    entries = {e["user"]: e for e in be.report(MANUAL).json()}
-    assert list(entries[REQUESTER])[-1] == "reviewedAt"
-    assert "email" not in entries[CAROL] and list(entries[CAROL])[-1] == "reviewedAt"
+    [entry] = [e for e in be.report(MANUAL).json() if e["user"] == CAROL]
+    assert list(entry) == ["fullname", "user", "time", "reviewedAt", "status", "grantedBy"], entry
+    assert entry["grantedBy"]["user"] == OWNER
 
 
 def test_provisional_Q14_report_one_sequence_sorted_like_the_lists(be):
@@ -309,16 +304,17 @@ def _lfs_pointer() -> str:
     from conformance.seeds import LFS_FILE, sandbox_repo
 
     lfs = sandbox_repo()["files"][LFS_FILE]["lfs"]
-    # git-lfs pointer; 135 bytes = the recorded pointerSize, and its git blob sha1 is the recorded oid
+    # git-lfs pointer; its length is the recorded pointerSize, and its git blob sha1 is the recorded oid
     return f"version https://git-lfs.github.com/spec/v1\noid sha256:{lfs['oid']}\nsize {lfs['size']}\n"
 
 
 def test_provisional_Q27_raw_on_lfs_serves_the_pointer(be):
     from conformance.seeds import LFS_FILE, SANDBOX, sandbox_repo, scenario_seed
-    be.put_state(scenario_seed("tree-masking"))
+    be.put_state(scenario_seed("2026-10-06/tree-masking"))
     response = be.req("owner", "GET", f"/{SANDBOX}/raw/main/{LFS_FILE}")
     E.assert_ok(response)
-    assert response.text == _lfs_pointer() and len(response.content) == 135
+    assert response.text == _lfs_pointer()
+    assert len(response.content) == sandbox_repo()["files"][LFS_FILE]["lfs"]["pointerSize"]
     assert response.headers.get("etag", "").removeprefix("W/") == f'"{sandbox_repo()["files"][LFS_FILE]["oid"]}"'
 
 
@@ -342,7 +338,7 @@ def test_provisional_Q27_blob_with_access_shows_escaped_content(be):
 
 def test_provisional_Q27_blob_of_lfs_shows_the_pointer(be):
     from conformance.seeds import LFS_FILE, SANDBOX, scenario_seed
-    be.put_state(scenario_seed("tree-masking"))
+    be.put_state(scenario_seed("2026-10-06/tree-masking"))
     response = be.req("owner", "GET", f"/{SANDBOX}/blob/main/{LFS_FILE}")
     E.assert_ok(response)
     assert _lfs_pointer().splitlines()[1] in response.text  # "oid sha256:…"
@@ -352,7 +348,7 @@ def test_provisional_Q27_blob_404_is_html_and_unknown_repo_401_keeps_www_authent
     be.put_state(rules_seed())
     missing = be.req("owner", "GET", f"/{MANUAL}/blob/main/no-such-file.txt")
     assert missing.status_code == 404 and E.media(missing) == "text/html", E.describe(missing)
-    unknown = be.req("anonymous", "GET", "/Orosius/does-not-exist-xyz/blob/main/config.json")
+    unknown = be.req("anonymous", "GET", f"/{MISSING}/blob/main/config.json")
     assert unknown.status_code == 401, E.describe(unknown)
     assert unknown.headers.get("www-authenticate") == E.WWW_AUTHENTICATE
 
@@ -367,9 +363,9 @@ def test_provisional_Q27_raw_and_blob_answer_get_only(be, route):
 # --- the "(none)" row -----------------------------------------------------------------------------------
 
 @pytest.mark.parametrize("method,path", [
-    ("GET", "/Orosius/does-not-exist-xyz/resolve/main/config.json"),
-    ("GET", "/api/models/Orosius/does-not-exist-xyz/auth-check"),
-    ("POST", "/Orosius/does-not-exist-xyz/ask-access"),
+    ("GET", f"/{MISSING}/resolve/main/config.json"),
+    ("GET", f"/api/models/{MISSING}/auth-check"),
+    ("POST", f"/{MISSING}/ask-access"),
 ])
 def test_provisional_unknown_repo_logged_in_is_404(be, method, path):
     be.put_state(rules_seed())
@@ -380,13 +376,13 @@ def test_provisional_unknown_repo_logged_in_is_404(be, method, path):
 
 def test_provisional_private_repo_looks_missing_to_non_owners(be):
     document = rules_seed()
-    document["repos"].append(demo_repo("Orosius/conf-private", "manual", ("README.md", "config.json"),
+    document["repos"].append(demo_repo(PRIVATE, "manual", ("README.md", "config.json"),
                                        _id="64b0c0ffee0000000000d005"))
     document["repos"][-1]["private"] = True
     be.put_state(document)
-    response = be.auth_check("Orosius/conf-private", "requester")
+    response = be.auth_check(PRIVATE, "requester")
     assert (response.status_code, response.headers.get("x-error-code")) == (404, "RepoNotFound"), E.describe(response)
-    E.assert_ok(be.auth_check("Orosius/conf-private", "owner"))
+    E.assert_ok(be.auth_check(PRIVATE, "owner"))
 
 
 def test_provisional_revisions_and_tree_paths(be):
@@ -401,7 +397,7 @@ def test_provisional_revisions_and_tree_paths(be):
 
 def test_provisional_lfs_redirects_to_resolve_cache_which_applies_the_gate(be):
     from conformance.seeds import LFS_FILE, SANDBOX, scenario_seed
-    be.put_state(scenario_seed("clone-seed-reads"))
+    be.put_state(scenario_seed("2026-10-06/clone-seed-reads"))
     response = be.resolve(SANDBOX, LFS_FILE, "owner", method="HEAD")
     assert response.status_code == 302, E.describe(response)
     assert response.headers["location"].startswith(f"{be.base_url}/api/resolve-cache/models/{SANDBOX}/") or \
@@ -415,11 +411,11 @@ def test_provisional_lfs_redirects_to_resolve_cache_which_applies_the_gate(be):
 
 def test_provisional_acc9_access_is_the_auth_check_decision(be):
     # "(none)" row: "access" = the auth-check decision, so on a non-gated repo anonymous callers see the hashes
-    from conformance.seeds import LFS_FILE, SANDBOX, sandbox_repo, scenario_seed
-    document = scenario_seed("tree-masking")
+    from conformance.seeds import LFS_DIR, LFS_FILE, SANDBOX, sandbox_repo, scenario_seed
+    document = scenario_seed("2026-10-06/tree-masking")
     document["repos"][0]["gated"] = False
     be.put_state(document)
-    [lfs] = [e for e in be.get("anonymous", f"/api/models/{SANDBOX}/tree/main/checkpoint_tokens_20M_loss_4.9842").json()
+    [lfs] = [e for e in be.get("anonymous", f"/api/models/{SANDBOX}/tree/main/{LFS_DIR}").json()
              if e["path"] == LFS_FILE]
     assert lfs["xetHash"] == sandbox_repo()["files"][LFS_FILE]["xetHash"], lfs
 

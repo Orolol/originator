@@ -10,6 +10,7 @@ INVALID_CREDENTIALS = "Invalid username or password."  # api.md §3.2-3.3, syste
 WWW_AUTHENTICATE = 'Bearer realm="Authentication required", charset="UTF-8"'
 NO_PERMISSION = "You have read access but not the required permissions for this operation"  # REV-12
 NO_REQUEST = "No access request found matching your criteria"  # REV-1
+NO_PENDING_REQUEST = "No pending access request found for this repo and this user"  # REQ-7 (self-cancel)
 USER_NOT_FOUND = "User not found"  # REV-12
 ALREADY_HAS_ACCESS = "That user already has access to the repo"  # REV-7
 REPO_NOT_FOUND = "Repository not found"  # api.md check order

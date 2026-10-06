@@ -6,18 +6,20 @@ forms are ours, so the tests know every label and file without reading the clone
 
 from __future__ import annotations
 
-import copy
 import hashlib
 
-from .seeds import CAROL, base_users, request, sandbox_repo, seed
+from .seeds import CAROL, LATEST, OWNER, SANDBOX, base_users, request, sandbox_repo, seed
 
-OWNER = "Orosius"
+# Rule tests target the latest recording set's sandbox and users (seeds.LATEST): the owner is that set's
+# `whoami-owner`, and the demo repos live in the owner's namespace.
 REQUESTER = "TestingBOrig"
-MANUAL = "Orosius/conf-manual"
-AUTO = "Orosius/conf-auto"
-FORM = "Orosius/conf-form"
-PUBLIC = "Orosius/conf-public"
-NOW = "2026-10-05T15:00:00.000Z"
+MANUAL = f"{OWNER}/conf-manual"
+AUTO = f"{OWNER}/conf-auto"
+FORM = f"{OWNER}/conf-form"
+PUBLIC = f"{OWNER}/conf-public"
+PRIVATE = f"{OWNER}/conf-private"
+MISSING = f"{OWNER}/does-not-exist-xyz"
+NOW = "2026-10-06T15:00:00.000Z"
 
 ALLOWLISTED = ("README.md", "LICENSE", "LICENSE.md", "LICENSE.txt")
 NOT_ALLOWLISTED = (
@@ -70,7 +72,7 @@ def extra_users(count: int) -> list[dict]:
 def rules_seed(requests: list[dict] | None = None, users: int = 0, now: str = NOW, tick_ms: int = 1000) -> dict:
     files = (*ALLOWLISTED, *NOT_ALLOWLISTED)
     repos = [
-        copy.deepcopy(sandbox_repo()),
+        sandbox_repo(LATEST),
         demo_repo(MANUAL, "manual", files, _id="64b0c0ffee0000000000d001"),
         demo_repo(AUTO, "auto", ("README.md", "config.json"),
                   {"license": "mit", "extra_gated_fields": AUTO_FIELDS}, _id="64b0c0ffee0000000000d002"),
@@ -83,7 +85,7 @@ def rules_seed(requests: list[dict] | None = None, users: int = 0, now: str = NO
                   _id="64b0c0ffee0000000000d004"),
     ]
     document = seed("conformance:rules", now, list(requests or []), repos, tick_ms=tick_ms)
-    document["users"] = base_users() + extra_users(users)
+    document["users"] = base_users(rset=LATEST) + extra_users(users)
     return document
 
 
@@ -92,6 +94,6 @@ def pending(user: str, timestamp: str, repo: str = MANUAL, **kwargs) -> dict:
 
 
 __all__ = [
-    "ALLOWLISTED", "AUTO", "AUTO_FIELDS", "CAROL", "FORM", "FORM_ANSWERS", "FORM_FIELDS", "MANUAL", "NOT_ALLOWLISTED",
-    "NOW", "OWNER", "PUBLIC", "REQUESTER", "demo_repo", "extra_users", "pending", "request", "rules_seed", "text_file",
+    "ALLOWLISTED", "AUTO", "AUTO_FIELDS", "CAROL", "FORM", "FORM_ANSWERS", "FORM_FIELDS", "MANUAL", "MISSING",
+    "NOT_ALLOWLISTED", "NOW", "OWNER", "PRIVATE", "PUBLIC", "REQUESTER", "SANDBOX", "demo_repo", "extra_users", "pending", "request", "rules_seed", "text_file",
 ]

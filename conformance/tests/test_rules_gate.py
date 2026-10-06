@@ -8,8 +8,8 @@ from __future__ import annotations
 import pytest
 
 from conformance import expect as E
-from conformance.rule_seeds import (ALLOWLISTED, AUTO, MANUAL, NOT_ALLOWLISTED, PUBLIC, REQUESTER, rules_seed,
-                                    text_file)
+from conformance.rule_seeds import (ALLOWLISTED, AUTO, MANUAL, NOT_ALLOWLISTED, NOW, OWNER, PUBLIC, REQUESTER,
+                                    rules_seed, text_file)
 from conformance.seeds import request
 
 
@@ -104,7 +104,7 @@ def test_states_same_answer_on_auth_check_resolve_get_and_head(be, state):
     requests = []
     if status_name:
         reviewed = None if status_name == "pending" else "2026-10-05T14:10:00.000Z"
-        granted = "Orosius" if status_name == "accepted" else None
+        granted = OWNER if status_name == "accepted" else None
         requests = [request(REQUESTER, status_name, "2026-10-05T14:00:00.000Z", reviewed, granted, repo=MANUAL)]
     be.put_state(rules_seed(requests))
     check = be.auth_check(MANUAL, "requester")
@@ -176,13 +176,12 @@ def test_ACC_8_revoked_user_loses_access(be):
 # --- ACC-9: LFS hashes in the tree listing --------------------------------------------------------
 
 MASK = "*" * 64
-LFS_DIR = "checkpoint_tokens_20M_loss_4.9842"
 
 
 def _sandbox_seed(requests: list[dict]) -> dict:
     from conformance.seeds import seed
 
-    return seed("conformance:acc-9", "2026-10-05T15:00:00.000Z", requests)
+    return seed("conformance:acc-9", NOW, requests)  # the latest set's sandbox
 
 
 @pytest.mark.parametrize("persona,state,masked", [
@@ -194,13 +193,13 @@ def _sandbox_seed(requests: list[dict]) -> dict:
     ("requester", "accepted", False),  # ACC-9: "shown to callers with access"
 ])
 def test_ACC_9_lfs_hashes_masked_without_access(be, persona, state, masked):
-    from conformance.seeds import LFS_FILE, SANDBOX, sandbox_repo
+    from conformance.seeds import LFS_DIR, LFS_FILE, SANDBOX, sandbox_repo
 
     requests = []
     if state:
         requests = [request(REQUESTER, state, "2026-10-05T14:00:00.000Z",
                             None if state == "pending" else "2026-10-05T14:05:00.000Z",
-                            "Orosius" if state == "accepted" else None)]
+                            OWNER if state == "accepted" else None)]
     be.put_state(_sandbox_seed(requests))
     response = be.get(persona, f"/api/models/{SANDBOX}/tree/main/{LFS_DIR}")
     E.assert_ok(response)
@@ -212,7 +211,7 @@ def test_ACC_9_lfs_hashes_masked_without_access(be, persona, state, masked):
             assert "lfs" not in entry and "xetHash" not in entry, entry
     [lfs] = [entry for entry in response.json() if entry["path"] == LFS_FILE]
     expected = seeded[LFS_FILE]
-    assert lfs["lfs"]["size"] == expected["lfs"]["size"] and lfs["lfs"]["pointerSize"] == 135
+    assert lfs["lfs"]["size"] == expected["lfs"]["size"] and lfs["lfs"]["pointerSize"] == expected["lfs"]["pointerSize"]
     if masked:
         assert (lfs["lfs"]["oid"], lfs["xetHash"]) == (MASK, MASK), lfs
     else:
@@ -239,7 +238,7 @@ def test_ACC_10_raw_same_per_state_messages_as_resolve(be, state):
     if status_name:
         reviewed = None if status_name == "pending" else "2026-10-05T14:10:00.000Z"
         requests = [request(REQUESTER, status_name, "2026-10-05T14:00:00.000Z", reviewed,
-                            "Orosius" if status_name == "accepted" else None, repo=MANUAL)]
+                            OWNER if status_name == "accepted" else None, repo=MANUAL)]
     be.put_state(rules_seed(requests))
     for path in ("README.md", "config.json"):
         response = _raw(be, MANUAL, path, "requester")

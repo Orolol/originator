@@ -1,4 +1,4 @@
-"""Request lifecycle rules the recordings do not exercise (behaviour.md §1, §4, §5, §6)."""
+"""Request lifecycle rules, beyond what the recordings replay (behaviour.md §1, §4, §5, §6)."""
 
 from __future__ import annotations
 
@@ -247,3 +247,77 @@ def test_rejected_resubmit_is_silently_ignored(be):
     found = where(be, MANUAL, REQUESTER)
     assert [(s, i["timestamp"], i["reviewedAt"]) for s, i in found] == [
         ("rejected", "2026-10-05T14:00:00.000Z", "2026-10-05T14:05:00.000Z")]
+
+
+# --- REQ-7: requester self-cancel [OBS 2026-10-06, requester-cancel X c1-c6, ui-walkthrough #320] --------
+
+def report_users(be, repo: str) -> list[str]:
+    response = be.report(repo)
+    E.assert_ok(response)
+    return [entry["user"] for entry in response.json()]
+
+
+def test_REQ_7_self_cancel_deletes_a_pending_request(be):
+    be.put_state(rules_seed([pending(REQUESTER, "2026-10-06T14:00:00.000Z")]))
+    response = be.cancel(MANUAL)
+    E.assert_ok(response)  # X c2-cancel-pending: 200, no X-Error-*
+    assert E.media(response) == "application/json"
+    assert response.json() == {"ok": True}
+    assert lists(be, MANUAL) == {status: [] for status in STATUSES}  # X c2b: gone from the four lists
+    assert report_users(be, MANUAL) == []  # X c2b-report: gone from the report
+    E.assert_error(be.auth_check(MANUAL, "requester"), 403, E.gate_no_request(MANUAL), code="GatedRepo")  # X c2b
+    E.assert_error(be.resolve(MANUAL, "config.json", "requester"), 403, E.gate_no_request(MANUAL), code="GatedRepo",
+                   body="text")
+    # a new ask-access then creates a new pending request (X c3-ask, UI #324)
+    assert be.ask(MANUAL).status_code == 303
+    found = where(be, MANUAL, REQUESTER)
+    assert [status for status, _ in found] == ["pending"], found
+    assert found[0][1]["timestamp"] > "2026-10-06T14:00:00.000Z"  # TS-1: a new submission
+
+
+@pytest.mark.parametrize("state", ["accepted", "rejected", "reset", None])
+def test_REQ_7_self_cancel_without_a_pending_request_is_404_and_changes_nothing(be, state):
+    # X c3-cancel-accepted, c4-cancel-rejected, c1-cancel-reset, c2-cancel-again (no request)
+    seeded = []
+    if state:
+        seeded = [request(REQUESTER, state, "2026-10-06T14:00:00.000Z", "2026-10-06T14:05:00.000Z",
+                          OWNER if state == "accepted" else None, repo=MANUAL)]
+    be.put_state(rules_seed(seeded))
+    before = (lists(be, MANUAL), be.report(MANUAL).json(), be.auth_check(MANUAL, "requester").text)
+    E.assert_error(be.cancel(MANUAL), 404, E.NO_PENDING_REQUEST)  # JSON {"error"}, same X-Error-Message, no code
+    after = (lists(be, MANUAL), be.report(MANUAL).json(), be.auth_check(MANUAL, "requester").text)
+    assert after == before
+
+
+def test_REQ_7_rejected_user_cannot_clear_the_rejection(be):
+    # X c4-cancel-rejected then c5-ask-after-reject-cancel: still rejected, same reviewedAt
+    be.put_state(rules_seed([request(REQUESTER, "rejected", "2026-10-06T14:00:00.000Z", "2026-10-06T14:05:00.000Z",
+                                     repo=MANUAL)]))
+    E.assert_error(be.cancel(MANUAL), 404, E.NO_PENDING_REQUEST)
+    assert be.ask(MANUAL).status_code == 303
+    found = where(be, MANUAL, REQUESTER)
+    assert [(s, i["timestamp"], i["reviewedAt"]) for s, i in found] == [
+        ("rejected", "2026-10-06T14:00:00.000Z", "2026-10-06T14:05:00.000Z")]
+    E.assert_error(be.auth_check(MANUAL, "requester"), 403, E.gate_rejected(MANUAL), code="GatedRepo")
+
+
+def test_REQ_7_owner_self_cancel_on_own_repo_is_404(be):
+    # X c6-owner-cancel (the requester's rejected request stays untouched)
+    be.put_state(rules_seed([request(REQUESTER, "rejected", "2026-10-06T14:00:00.000Z", "2026-10-06T14:05:00.000Z",
+                                     repo=MANUAL)]))
+    E.assert_error(be.cancel(MANUAL, persona="owner"), 404, E.NO_PENDING_REQUEST)
+    assert [status for status, _ in where(be, MANUAL, REQUESTER)] == ["rejected"]
+
+
+def test_REQ_7_only_the_callers_own_request_is_cancelled(be):
+    # REQ-7: "only withdraws a pending request" of the caller (the endpoint takes no body)
+    be.put_state(rules_seed([pending(REQUESTER, "2026-10-06T14:00:00.000Z"), pending(CAROL, "2026-10-06T14:01:00.000Z")]))
+    E.assert_ok(be.cancel(MANUAL))
+    assert [i["user"]["user"] for i in lists(be, MANUAL)["pending"]] == [CAROL]
+
+
+def test_REQ_7_anonymous_self_cancel_is_401(be):
+    # X c6-anon-cancel: 401 "Invalid username or password." with WWW-Authenticate, no X-Error-Code
+    be.put_state(rules_seed([pending(REQUESTER, "2026-10-06T14:00:00.000Z")]))
+    E.assert_error(be.cancel(MANUAL, persona="anonymous"), 401, E.INVALID_CREDENTIALS, www_authenticate=True)
+    assert [status for status, _ in where(be, MANUAL, REQUESTER)] == ["pending"]

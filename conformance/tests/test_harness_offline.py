@@ -15,11 +15,11 @@ import re
 import pytest
 
 from conformance.compare import Actual, Context, TimestampTracker, compare_response
-from conformance.config import RECORDED_ORIGINS
+from conformance.config import OBSERVATIONS, RECORDED_ORIGINS
 from conformance.divergences import Divergence, load_divergences
 from conformance.recordings import Expected, load_recording
 from conformance.replay import apply_divergences, classify, load_manifest
-from conformance.seeds import SCENARIO_NAMES, pinned_timestamps, sandbox_repo, scenario_seed
+from conformance.seeds import SCENARIO_NAMES, SETS, pinned_timestamps, recording_set, sandbox_repo, scenario_seed
 
 pytestmark = pytest.mark.offline
 BACKEND = "http://127.0.0.1:8200"
@@ -236,8 +236,44 @@ def test_scenario_seeds_build_and_serialise(name: str):
     assert {"persona-owner", "persona-requester"} <= tokens
 
 
+def test_scenarios_are_named_after_their_recording_set():
+    scenarios = load_manifest()["scenarios"]
+    assert list(scenarios) == list(SCENARIO_NAMES)
+    for name, spec in scenarios.items():
+        rset, recording = name.split("/", 1)
+        assert rset in SETS and spec["recording"] == f"{rset}-{recording}.json", name
+
+
+def test_recording_sets_derived_from_clone_seed_reads():
+    old, new = recording_set("2026-10-05"), recording_set("2026-10-06")
+    assert (old.sandbox, old.owner, old.lfs_file) == (
+        "Orosius/deltanet-mla-latent", "Orosius", "checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin")
+    assert (new.sandbox, new.owner, new.lfs_file) == (
+        "OwnerOfTheGatedModel/tiny-gated-model", "OwnerOfTheGatedModel", "checkpoint-0/model.safetensors")
+    # each set's _meta.vars (when recorded) agrees with what the recordings themselves show
+    meta = json.loads((OBSERVATIONS / "2026-10-06-clone-seed-reads.json").read_text())["_meta"]["vars"]
+    assert (meta["SANDBOX"], meta["OWNER"], meta["LFS_FILE"]) == (new.sandbox, new.owner, new.lfs_file)
+    for name in SCENARIO_NAMES:
+        rset = name.split("/", 1)[0]
+        document = scenario_seed(name)
+        assert document["repos"][0]["id"] == recording_set(rset).sandbox
+        assert document["users"][0]["user"] == recording_set(rset).owner
+        assert all(r["repo"] == recording_set(rset).sandbox for r in document["requests"])
+
+
+def test_sandbox_repo_2026_10_06_matches_recording():
+    repo = sandbox_repo("2026-10-06")
+    assert repo["id"] == "OwnerOfTheGatedModel/tiny-gated-model" and repo["gated"] == "manual"
+    assert repo["files"][".gitattributes"]["oid"] == "a6344aac8c09253b3b630fb776ae94478aa0275b"
+    assert repo["files"]["README.md"]["text"].startswith("---\nlicense: mit\n---\n\n# tiny-gated-model\n")
+    lfs = repo["files"]["checkpoint-0/model.safetensors"]
+    assert lfs["lfs"]["oid"] == "321019a3b5ea40a247b2cd8db89a7f2dd7bbfe6aeab29c92fc5f58e098cef177"  # owner-head-lfs
+    assert lfs["xetHash"] == "c9a7ab6a87eaa2ed02b787b3c4959e217c1d43b46ab601eb3c735a998774b0dc"
+    assert repo["dirs"] == {"checkpoint-0": {"oid": "05c7a8877e37d8cefdc36a9b918bf77f187f3ed6"}}
+
+
 def test_sandbox_repo_matches_recording():
-    repo = sandbox_repo()
+    repo = sandbox_repo("2026-10-05")
     assert repo["id"] == "Orosius/deltanet-mla-latent" and repo["gated"] == "manual"
     assert len(repo["files"]) == 1018
     assert repo["files"][".gitattributes"]["oid"] == "a6344aac8c09253b3b630fb776ae94478aa0275b"
@@ -246,7 +282,7 @@ def test_sandbox_repo_matches_recording():
 
 
 def test_pinned_timestamps_cover_seeded_requests():
-    pinned = pinned_timestamps(scenario_seed("ui-walkthrough"))
+    pinned = pinned_timestamps(scenario_seed("2026-10-05/ui-walkthrough"))
     assert {"2026-10-05T14:17:07.311Z", "2026-10-05T14:19:22.565Z", "2025-12-16T12:21:40.000Z"} <= pinned
 
 
@@ -315,7 +351,7 @@ def test_saved_run_is_rejudged_against_current_divergences():
 
     step = load_recording("2026-10-05-clone-seed-reads.json").steps[0]
     payload = {"scenarios": [{
-        "name": "live:clone-seed-reads", "recording": "2026-10-05-clone-seed-reads.json", "covers": [],
+        "name": "live:2026-10-05/clone-seed-reads", "recording": "2026-10-05-clone-seed-reads.json", "covers": [],
         "stand_ins": True, "mode": "live", "error": None,
         "steps": [{"id": step.id, "outcome": "diverged", "reason": "", "actual_status": 200, "restricted_to": None,
                    "diffs": [{"field": "header:content-type", "expected": "a", "actual": "b", "detail": "",

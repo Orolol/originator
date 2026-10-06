@@ -42,6 +42,10 @@ class Backend:
     def batch(self, repo: str, body: dict, persona: str = "owner") -> httpx.Response:
         return self.req(persona, "POST", f"/api/models/{repo}/user-access-request/batch", body)
 
+    def cancel(self, repo: str, persona: str = "requester") -> httpx.Response:
+        """Requester self-cancel (REQ-7): no body."""
+        return self.req(persona, "POST", f"/api/models/{repo}/user-access-request/cancel")
+
     def ask(self, repo: str, persona: str = "requester", body: Any = None, encoding: str = "json") -> httpx.Response:
         return self.req(persona, "POST", f"/{repo}/ask-access", {} if body is None else body, encoding)
 

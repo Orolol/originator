@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from conformance import expect as E
-from conformance.rule_seeds import CAROL, MANUAL, PUBLIC, REQUESTER, pending, rules_seed
+from conformance.rule_seeds import CAROL, MANUAL, MISSING, OWNER, PUBLIC, REQUESTER, pending, rules_seed
 
 OWNER_CALLS = [
     ("GET", "/api/models/{repo}/user-access-request/pending", None),
@@ -50,7 +50,7 @@ def test_check_order_permission_before_validation(seeded):
     ("requester", 404, E.REPO_NOT_FOUND, "RepoNotFound"),  # check order: unknown repo comes first
 ])
 def test_check_order_unknown_repo_first(seeded, persona, status, message, code):
-    response = seeded.list_requests("Orosius/does-not-exist-xyz", "pending", persona=persona)
+    response = seeded.list_requests(MISSING, "pending", persona=persona)
     E.assert_error(response, status, message, code=code)
 
 
@@ -123,7 +123,7 @@ def test_CFG_3_notification_settings_not_in_model_info(be):
 
 def test_whoami_personas(be):
     be.put_state(rules_seed())
-    for persona, name in (("owner", "Orosius"), ("requester", REQUESTER), ("carol", CAROL)):
+    for persona, name in (("owner", OWNER), ("requester", REQUESTER), ("carol", CAROL)):
         response = be.get(persona, "/api/whoami-v2")
         E.assert_ok(response)
         assert response.json()["name"] == name

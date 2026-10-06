@@ -32,6 +32,13 @@ def _md_cell(value: object, limit: int = 160) -> str:
     return text if len(text) <= limit else text[:limit] + "…"
 
 
+def _sets_line() -> str:
+    from .seeds import SETS, recording_set
+
+    return " and ".join(f"`{s}-*.json` (sandbox `{recording_set(s).sandbox}`, owner `{recording_set(s).owner}`)"
+                        for s in SETS)
+
+
 def run_pytest(backend: str) -> dict:
     junit = REPORTS / "pytest.xml"
     env = {**os.environ, "BACKEND_URL": backend}
@@ -66,7 +73,8 @@ def build_markdown(results: list[ScenarioResult], backend: str, generated: str, 
         "# Conformance report: clone vs real-Hub recordings",
         "",
         f"Generated {generated} against `{backend}` by `conformance-report` (conformance/). "
-        "Ground truth: `docs/hf-gated/observations/2026-10-05-*.json`. Expectations come from the "
+        "Ground truth: the real-Hub recording sets under `docs/hf-gated/observations/`, each replayed from "
+        f"its own initial state: {_sets_line()}; requester `TestingBOrig` in every set. Scenarios are named `<set>/<recording>`. Expectations come from the "
         "recordings and the KB only (the suite never reads the clone's code). Reproduce with "
         "`uv run --project conformance conformance-report --pytest` (clone on :8200).",
         *([note] if note else []),
