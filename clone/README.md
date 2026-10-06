@@ -43,10 +43,11 @@ checks that the committed seeds are up to date.
     with `POST /__clone__/reset {"seed": "sandbox"}`.
 
   Both contain:
-  - the real `Orosius/deltanet-mla-latent` as recorded on 2026-10-05, with JSON ETags and file oids
-    reproduced byte for byte;
-  - users `Orosius` (`persona-owner`) and `TestingBOrig` (`persona-requester`);
-  - clone-only demos: `Orosius/gated-auto-demo`, `Orosius/gated-form-demo`, `Orosius/not-gated-demo`
+  - the real `OwnerOfTheGatedModel/tiny-gated-model` as recorded on 2026-10-06, with JSON ETags and
+    file oids reproduced byte for byte;
+  - users `OwnerOfTheGatedModel` (`persona-owner`) and `TestingBOrig` (`persona-requester`);
+  - clone-only demos: `OwnerOfTheGatedModel/gated-auto-demo`, `OwnerOfTheGatedModel/gated-form-demo`,
+    `OwnerOfTheGatedModel/not-gated-demo`
     and the user `DemoCarol` (`persona-carol`).
 
 ## Layout (`src/clone/`)

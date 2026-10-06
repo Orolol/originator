@@ -105,10 +105,11 @@ def test_REQ_ask_access_transitions(start, gated, expected):
     assert change.emails == ((Email("new_request"),) if gated == "manual" else ())
 
 
-def test_REQ_cancel_deletes_or_404():
-    assert domain.cancel(req("pending")) == domain.Change(None, True)  # Provisional (Q-3)
-    with pytest.raises(RequestNotFound):
-        domain.cancel(None)
+def test_REQ_7_cancel_deletes_a_pending_request_only():
+    assert domain.cancel(req("pending")) == domain.Change(None, True)
+    for current in (None, req("accepted"), req("rejected"), req("reset")):
+        with pytest.raises(RequestNotFound):
+            domain.cancel(current)
 
 
 # api.md §3.1 [OBS 2026-10-05]

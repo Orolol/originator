@@ -16,7 +16,7 @@ from fastapi.testclient import TestClient
 
 OBS = Path(__file__).resolve().parents[2] / "docs" / "hf-gated" / "observations"
 PUBLIC_URL = "http://127.0.0.1:8100"
-REPO = "Orosius/deltanet-mla-latent"
+REPO = "OwnerOfTheGatedModel/tiny-gated-model"
 TOKENS = {"owner": "persona-owner", "requester": "persona-requester", "carol": "persona-carol"}
 
 

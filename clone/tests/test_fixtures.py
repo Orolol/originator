@@ -59,18 +59,26 @@ class Replayer:
 
 # --- 1. probe.py recordings (owner/requester walkthroughs), replayed in order --------------------------
 
+# The 2026-10-06 recordings, made on the sandbox the built-in seeds hold. (The 2026-10-05 ones, on
+# the previous sandbox, are replayed by the conformance suite with their own seeds.)
 PROBE_FILES = {
     # name: (initial requests, times the virtual clock cannot reproduce, public URL of the recording)
-    # s0 starts with no request at all [OBS W s0].
-    "2026-10-05-owner-walkthrough.json": ([], {"timestamp", "reviewedAt", "time"}, PUBLIC_URL),
+    # s0: pending since the requester-ask-access run [OBS W s0, owner-reads]. New requests and reviews
+    # get virtual times, so all three time keys are blanked.
+    "2026-10-06-owner-walkthrough.json": (
+        [request_entry("pending", "2026-10-06T13:49:34.895Z")], {"timestamp", "reviewedAt", "time"}, PUBLIC_URL),
     # m0: pending since the walkthrough's re-request; that timestamp never changes (TS-1), so it is
     # compared exactly.
-    "2026-10-05-owner-walkthrough-completion.json": (
-        [request_entry("pending", "2026-10-05T14:17:07.311Z")], {"reviewedAt"}, PUBLIC_URL),
+    "2026-10-06-owner-walkthrough-completion.json": (
+        [request_entry("pending", "2026-10-06T13:50:22.677Z")], {"reviewedAt"}, PUBLIC_URL),
     # These two were recorded directly against huggingface.co (no bridge rewriting Location).
-    "2026-10-05-requester-ask-access.json": ([], set(), "https://huggingface.co"),
-    "2026-10-05-owner-reads.json": ([request_entry("pending", "2026-10-05T13:31:55.250Z")], set(),
+    "2026-10-06-requester-ask-access.json": ([], set(), "https://huggingface.co"),
+    "2026-10-06-owner-reads.json": ([request_entry("pending", "2026-10-06T13:49:34.895Z")], set(),
                                     "https://huggingface.co"),
+    # c0: reset at the end of the completion run [OBS C m8, X c0-list-reset] (REQ-7).
+    "2026-10-06-requester-cancel.json": (
+        [request_entry("reset", "2026-10-06T13:50:22.677Z", reviewedAt="2026-10-06T13:50:54.253Z")],
+        {"timestamp", "reviewedAt", "time"}, PUBLIC_URL),
 }
 NOT_BACKEND = {"pre-page"}  # the HTML model page belongs to the web app, not to the backend
 
@@ -93,12 +101,12 @@ def test_probe_recording_replay(name):
 
 
 def test_ui_walkthrough_replay():
-    """62 requests the web UI fired through the bridge. Initial state = the end of the completion
-    walkthrough: TestingBOrig `reset` [OBS C m8, UI #193]. The clone's own log entries must have the
-    bridge's schema (same keys, same order) and record the same exchanges."""
-    log = load_observation("2026-10-05-ui-walkthrough.json")
-    store = Store(sandbox_with([request_entry("reset", "2026-10-05T14:17:07.311Z",
-                                              reviewedAt="2026-10-05T14:19:22.565Z")]))
+    """The requests the scripted UI walkthrough fired through the bridge (web/e2e/walkthrough.ts).
+    Initial state: TestingBOrig `reset` (the live spec resets the request first). The clone's own log
+    entries must have the bridge's schema (same keys, same order) and record the same exchanges."""
+    log = load_observation("2026-10-06-ui-walkthrough.json")
+    store = Store(sandbox_with([request_entry("reset", "2026-10-06T13:50:22.677Z",
+                                              reviewedAt="2026-10-06T13:54:00.000Z")]))
     replayer = Replayer(store)
     for e in log:
         resp = replayer.send(method=e["method"], path=e["path"], query=e["query"], persona=e["persona"],
@@ -116,9 +124,10 @@ def test_ui_walkthrough_replay():
 
 # --- 3. direct reads of the sandbox (probe.py against huggingface.co) --------------------------------
 
-SEED_READS = "2026-10-05-clone-seed-reads.json"
-# Both recorded against the sandbox in the default seed's state (TestingBOrig pending).
-DIRECT_READS = (SEED_READS, "2026-10-05-tree-masking.json")
+SEED_READS = "2026-10-06-clone-seed-reads.json"
+# Reads that do not depend on the request state, and tree-masking (recorded with TestingBOrig pending,
+# like the `sandbox` seed).
+DIRECT_READS = (SEED_READS, "2026-10-06-tree-masking.json")
 NOT_SEEDED = {"owner-not-gated-list"}  # openai-community/gpt2 is not in the seed
 REDIRECT_TARGET_DIFFERS = {"owner-head-lfs"}  # checked separately below
 REDACTED_BODY = {"whoami-owner", "whoami-requester"}  # e-mails redacted: ETag/length cannot match

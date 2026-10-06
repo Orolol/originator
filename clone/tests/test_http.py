@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import pytest
 from clone.app import create_app
-from clone.store import Store
+from clone.store import Store, builtin_seed
 from conftest import REPO, auth, request_entry, sandbox_with
 from fastapi.testclient import TestClient
 
@@ -28,8 +28,8 @@ ERRORS = [
     ("bogus", "GET", f"/{REPO}/resolve/main/README.md", None, 401, None, BAD_CREDS, TEXT),
     ("bogus", "GET", f"/{REPO}/user-access-report", None, 401, None, BAD_CREDS, HTML),
     # api.md §3.3 check order: authentication, then repo, then permission, then validation
-    (None, "GET", "/api/models/Orosius/nope/user-access-request/pending", None, 401, None, BAD_CREDS, API),
-    ("owner", "GET", "/api/models/Orosius/nope/user-access-request/pending", None, 404, "RepoNotFound",
+    (None, "GET", "/api/models/OwnerOfTheGatedModel/nope/user-access-request/pending", None, 401, None, BAD_CREDS, API),
+    ("owner", "GET", "/api/models/OwnerOfTheGatedModel/nope/user-access-request/pending", None, 404, "RepoNotFound",
      "Repository not found", API),
     ("requester", "GET", f"{LIST}/pending?limit=5", None, 403, None, NO_PERM, API),
     ("carol", "PUT", f"/api/models/{REPO}/settings", {"gated": "auto"}, 403, None, NO_PERM, API),
@@ -46,14 +46,14 @@ ERRORS = [
     ("owner", "POST", f"{LIST}/batch", {"status": "accepted", "requests": []}, 400, None,
      "* Too small: expected array to have >=1 items * at requests", API),
     # REV-7, §5.1 lookups
-    ("owner", "POST", f"{LIST}/grant", {"user": "Orosius"}, 400, None, "That user already has access to the repo", API),
+    ("owner", "POST", f"{LIST}/grant", {"user": "OwnerOfTheGatedModel"}, 400, None, "That user already has access to the repo", API),
     ("owner", "POST", f"{LIST}/handle", {"userId": "0123456789abcdef01234567", "status": "accepted"}, 404, None,
      "User not found", API),
     ("owner", "POST", f"{LIST}/handle", {"user": "DemoCarol", "status": "accepted"}, 404, None,
      "No access request found matching your criteria", API),
     # ACC-3, ACC-5, ACC-6 on resolve [OBS anonymous-probes, on other repos]
     (None, "GET", f"/{REPO}/resolve/main/readme.md", None, 401, "GatedRepo", GATE_ANON, TEXT),
-    (None, "GET", f"/{REPO}/resolve/main/checkpoint_tokens_20M_loss_4.9842/README.md", None, 401, "GatedRepo",
+    (None, "GET", f"/{REPO}/resolve/main/checkpoint-0/README.md", None, 401, "GatedRepo",
      GATE_ANON, TEXT),
     (None, "GET", f"/{REPO}/resolve/no-such-branch/no-such-file.bin", None, 401, "GatedRepo", GATE_ANON, TEXT),
     ("requester", "GET", f"/{REPO}/resolve/no-such-branch/config.json", None, 403, "GatedRepo", PENDING, TEXT),
@@ -139,7 +139,7 @@ def test_REV_6_grant_without_request_has_no_email(client):
                 if i["user"]["user"] == "DemoCarol"]
     assert "email" not in carol["user"]  # REQ-5
     assert list(carol) == ["user", "timestamp", "reviewedAt", "status", "grantedBy"]  # REQ-6
-    assert carol["grantedBy"]["user"] == "Orosius"
+    assert carol["grantedBy"]["user"] == "OwnerOfTheGatedModel"
     assert client.get(f"/api/models/{REPO}/auth-check", headers=auth("carol")).text == "OK"
 
 
@@ -151,7 +151,7 @@ def test_outbox_effects(client):
     client.post(f"{LIST}/handle", json={"user": "TestingBOrig", "status": "reset", "resetReason": "Re-read"},
                 headers=owner)
     client.post(f"{LIST}/handle", json={"user": "DemoCarol", "status": "accepted"}, headers=owner)  # no e-mail (Q-20)
-    client.post("/Orosius/gated-auto-demo/ask-access", json={}, headers=auth("carol"))  # auto: no e-mail
+    client.post("/OwnerOfTheGatedModel/gated-auto-demo/ask-access", json={}, headers=auth("carol"))  # auto: no e-mail
     out = client.get("/__clone__/outbox").json()
     assert [(o["kind"], o["to"], o["user"], o.get("reason")) for o in out] == [
         ("new_request", "alerts@example.com", "DemoCarol", None),
@@ -166,30 +166,40 @@ def test_REQ_2_ask_access_stores_form_answers(client, encoding):
     (gate-form.md). Provisional (Q-15/Q-16): values kept as sent, no required fields, unknown keys dropped."""
     answers = {"First Name": "Carol", "Country": "FR", "I accept the terms of the license": "on", "extra": "x"}
     kwargs = {"data": answers} if encoding == "form" else {"json": answers}
-    resp = client.post("/Orosius/gated-form-demo/ask-access", headers=auth("carol"), **kwargs)
-    assert (resp.status_code, resp.headers["location"]) == (303, "http://127.0.0.1:8100/Orosius/gated-form-demo")
-    pending = "/api/models/Orosius/gated-form-demo/user-access-request/pending"
+    resp = client.post("/OwnerOfTheGatedModel/gated-form-demo/ask-access", headers=auth("carol"), **kwargs)
+    assert (resp.status_code, resp.headers["location"]) == (303, "http://127.0.0.1:8100/OwnerOfTheGatedModel/gated-form-demo")
+    pending = "/api/models/OwnerOfTheGatedModel/gated-form-demo/user-access-request/pending"
     (item,) = client.get(pending, headers=auth("owner")).json()
     assert item["fields"] == {"First Name": "Carol", "Country": "FR", "I accept the terms of the license": "on"}
 
 
 def test_auto_mode_accepts_immediately(client):
-    client.post("/Orosius/gated-auto-demo/ask-access", json={"I accept the above license agreement": "on"},
+    client.post("/OwnerOfTheGatedModel/gated-auto-demo/ask-access", json={"I accept the above license agreement": "on"},
                 headers=auth("carol"))
-    assert client.get("/api/models/Orosius/gated-auto-demo/auth-check", headers=auth("carol")).status_code == 200
-    accepted = "/api/models/Orosius/gated-auto-demo/user-access-request/accepted"
+    assert client.get("/api/models/OwnerOfTheGatedModel/gated-auto-demo/auth-check", headers=auth("carol")).status_code == 200
+    accepted = "/api/models/OwnerOfTheGatedModel/gated-auto-demo/user-access-request/accepted"
     (item,) = client.get(accepted, headers=auth("owner")).json()
     assert "grantedBy" not in item and item["reviewedAt"] == item["timestamp"]  # Provisional (Q-10)
 
 
-def test_Q_3_requester_self_cancel(client):
+def test_REQ_7_requester_self_cancel(client):
+    """[OBS 2026-10-06 requester-cancel]: c2 (pending → deleted), c2-again/c3/c4 (404, no change), c6."""
     cancel = f"{LIST}/cancel"
-    assert client.post(cancel, headers=auth("requester")).json() == {}
+    no_pending = (404, "No pending access request found for this repo and this user")
+    ok = client.post(cancel, headers=auth("requester"))
+    assert (ok.status_code, ok.json()) == (200, {"ok": True})
     msg = client.get(f"/api/models/{REPO}/auth-check", headers=auth("requester")).headers["x-error-message"]
     assert "not in the authorized list" in msg  # back to "no request"
+    assert client.get(f"{LIST}/pending", headers=auth("owner")).json() == []
     again = client.post(cancel, headers=auth("requester"))
-    assert (again.status_code, again.headers["x-error-message"]) == (
-        404, "No access request found matching your criteria")
+    assert (again.status_code, again.headers["x-error-message"]) == no_pending
+    assert "x-error-code" not in again.headers
+    # accepted (and rejected, reset): not withdrawable, unchanged
+    client.post(f"/{REPO}/ask-access", json={}, headers=auth("requester"), follow_redirects=False)
+    client.post(f"{LIST}/handle", json={"user": "TestingBOrig", "status": "accepted"}, headers=auth("owner"))
+    refused = client.post(cancel, headers=auth("requester"))
+    assert (refused.status_code, refused.headers["x-error-message"]) == no_pending
+    assert [i["status"] for i in client.get(f"{LIST}/accepted", headers=auth("owner")).json()] == ["accepted"]
     assert client.post(cancel).status_code == 401
 
 
@@ -213,13 +223,12 @@ def test_tree_synthesised_entries_are_consistent(client):
     """Files the fixtures do not describe get stub metadata whose oid matches the served bytes."""
     import hashlib
 
-    path = "checkpoint_tokens_970M_loss_3.6390"
-    entries = client.get(f"/api/models/{REPO}/tree/main/{path}").json()
-    assert [e["path"].rsplit("/", 1)[1] for e in entries] == [
-        "README.md", "config.json", "merges.txt", "pytorch_model.bin", "special_tokens_map.json",
-        "tokenizer.json", "tokenizer_config.json", "vocab.json"]
+    # Every sandbox file is described by the fixtures; the clone-only demo repos are not.
+    demo = "OwnerOfTheGatedModel/gated-form-demo"
+    entries = client.get(f"/api/models/{demo}/tree/main").json()
+    assert [e["path"] for e in entries] == ["README.md", "config.json", "model.safetensors"]
     config = next(e for e in entries if e["path"].endswith("config.json"))
-    body = client.get(f"/{REPO}/resolve/main/{config['path']}", headers=auth("owner"))
+    body = client.get(f"/{demo}/resolve/main/{config['path']}", headers=auth("owner"))
     assert hashlib.sha1(b"blob %d\x00" % len(body.content) + body.content).hexdigest() == config["oid"]
     assert body.headers["etag"] == f'"{config["oid"]}"' and int(body.headers["content-length"]) == config["size"]
     lfs = next(e for e in entries if "lfs" in e)
@@ -231,8 +240,9 @@ def test_CFG_6_not_gated_repo_redirects_to_resolve_cache(client):
     resp = client.get(f"/{REPO}/resolve/main/README.md")
     assert resp.status_code == 307 and "etag" not in resp.headers
     cached = client.get(resp.headers["location"])
-    assert cached.status_code == 200 and cached.text == "---\r\nlicense: mit\r\n---\r\n"
-    assert cached.headers["x-repo-commit"] == "6f1dade6f974de81ce21aa14b87add2e0217b05e"
+    sandbox = builtin_seed("sandbox")["repos"][0]  # [OBS 2026-10-06 clone-seed-reads owner-readme]
+    assert cached.status_code == 200 and cached.text == sandbox["files"]["README.md"]["text"]
+    assert cached.headers["x-repo-commit"] == sandbox["sha"]
 
 
 @pytest.mark.parametrize(("setup", "persona", "repo", "masked"), [
@@ -240,7 +250,7 @@ def test_CFG_6_not_gated_repo_redirects_to_resolve_cache(client):
     (None, "requester", REPO, True),  # [OBS tree-subdir-requester]: pending, no access
     (None, "owner", REPO, False),  # [OBS tree-subdir-owner]: ACC-1
     ("accept", "requester", REPO, False),  # accepted request = access
-    (None, None, "Orosius/not-gated-demo", False),  # ACC-7: everyone has access
+    (None, None, "OwnerOfTheGatedModel/not-gated-demo", False),  # ACC-7: everyone has access
 ])
 def test_ACC_9_tree_masks_lfs_hashes_without_access(client, setup, persona, repo, masked):
     if setup == "accept":
@@ -254,13 +264,14 @@ def test_ACC_9_tree_masks_lfs_hashes_without_access(client, setup, persona, repo
 def test_ACC_10_raw_serves_the_git_blob(client):
     """[OBS raw-readme-owner] README as text with resolve's headers. Provisional (no Q yet): an LFS
     file is served as its pointer, whose git oid is the recorded one."""
-    lfs = client.get(f"/{REPO}/raw/main/checkpoint_tokens_20M_loss_4.9842/pytorch_model.bin", headers=auth("owner"))
+    lfs = client.get(f"/{REPO}/raw/main/checkpoint-0/model.safetensors", headers=auth("owner"))
     assert lfs.status_code == 200 and lfs.text.startswith("version https://git-lfs.github.com/spec/v1\n")
-    assert (lfs.headers["etag"], lfs.headers["content-length"]) == ('"05cfb29bfc3d15db751bd707b6cf23a8ea47b933"', "135")
+    # git oid and pointer size from the recorded tree [OBS 2026-10-06 clone-seed-reads tree-subdir]
+    assert (lfs.headers["etag"], lfs.headers["content-length"]) == ('"73500655b76ca057265c754b218fbfab58751f0b"', "131")
 
 
 def test_ACC_10_blob_page_is_gated_like_raw(client):
-    path = f"/{REPO}/blob/main/checkpoint_tokens_20M_loss_4.9842/config.json"
+    path = f"/{REPO}/blob/main/checkpoint-0/config.json"
     anon = client.get(path)
     # [OBS anonymous-probes blob-config]: HTML, GatedRepo, and no WWW-Authenticate on this route
     assert (anon.status_code, anon.headers["x-error-code"], anon.headers["content-type"]) == (401, "GatedRepo", HTML)
@@ -270,4 +281,4 @@ def test_ACC_10_blob_page_is_gated_like_raw(client):
     assert client.get(f"/{REPO}/blob/main/README.md").status_code == 401  # no allowlist
     page = client.get(path, headers=auth("owner"))  # Provisional (no Q yet): minimal page
     assert page.status_code == 200 and page.headers["content-type"] == HTML
-    assert "&quot;model_type&quot;: &quot;swa_mla&quot;" in page.text
+    assert "&quot;model_type&quot;: &quot;gpt2&quot;" in page.text

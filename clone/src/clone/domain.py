@@ -192,11 +192,11 @@ def ask_access(
 
 
 def cancel(current: AccessRequest | None) -> Change:
-    """`POST …/user-access-request/cancel` by the requester.
+    """`POST …/user-access-request/cancel` by the requester (REQ-7 [OBS 2026-10-06]).
 
-    Provisional (Q-3): deletes the caller's request whatever its status (back to "no request");
-    no request → the same 404 as `handle`.
+    Only a pending request can be withdrawn, and it is deleted (back to "no request"). Any other
+    status, or no request, raises: the caller answers 404 and nothing changes.
     """
-    if current is None:
+    if current is None or current.status != "pending":
         raise RequestNotFound
     return Change(None, True)

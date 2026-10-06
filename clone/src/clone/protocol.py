@@ -41,6 +41,7 @@ REPO_NOT_FOUND = "Repository not found"
 NO_PERMISSION = "You have read access but not the required permissions for this operation"
 USER_NOT_FOUND = "User not found"
 REQUEST_NOT_FOUND = "No access request found matching your criteria"
+NO_PENDING_REQUEST = "No pending access request found for this repo and this user"  # REQ-7
 ALREADY_HAS_ACCESS = "That user already has access to the repo"
 PAGE_NOT_FOUND = "Sorry, we can't find the page you are looking for."
 ENTRY_NOT_FOUND = "Entry not found"
@@ -630,8 +631,8 @@ def post_batch(ctx: Ctx, ns: str, name: str) -> Response:
 
 
 def post_cancel(ctx: Ctx, ns: str, name: str) -> Response:
-    """Requester self-cancel. Provisional (Q-3): the caller's request is deleted; body `{}` like
-    handle; no request → the handle 404."""
+    """Requester self-cancel (REQ-7 [OBS 2026-10-06]): a pending request is deleted, `200 {"ok":true}`;
+    otherwise 404 "No pending access request…" and no change."""
     if ctx.caller is None:
         raise HttpError(error(401, INVALID_CREDENTIALS, Fmt.API))
     repo = visible_repo(ctx, f"{ns}/{name}", Fmt.API)
@@ -639,13 +640,14 @@ def post_cancel(ctx: Ctx, ns: str, name: str) -> Response:
     try:
         change = domain.cancel(ctx.store.get_request(repo["id"], ctx.username))
     except RequestNotFound:
-        raise HttpError(error(404, REQUEST_NOT_FOUND, Fmt.API)) from None
+        raise HttpError(error(404, NO_PENDING_REQUEST, Fmt.API)) from None
     commit(ctx, repo, ctx.username, change, stamp)
-    return json_ok({})
+    return json_ok({"ok": True})
 
 
 def report(ctx: Ctx, ns: str, name: str) -> Response:
-    """REP-1: every request in every status. [OBS owner-reads, W s11] for a pending entry."""
+    """REP-1: every request in every status. [OBS owner-reads, W s11] for a pending entry, [OBS
+    2026-10-06 W s1] for an accepted one (reviewedAt before status, then grantedBy)."""
     repo = owner_repo(ctx, f"{ns}/{name}", Fmt.HTML)
     entries = []
     for req in ctx.store.repo_requests(repo["id"]):  # Provisional (Q-14): list order, all statuses
@@ -653,9 +655,13 @@ def report(ctx: Ctx, ns: str, name: str) -> Response:
         entry: dict[str, Any] = {"fullname": u["fullname"], "user": u["user"]}
         if req.emailShared:
             entry["email"] = u["email"]  # Provisional (Q-14): no email for granted users, as in lists
-        entry |= {"time": req.timestamp, "status": req.status}
+        entry["time"] = req.timestamp
         if req.reviewedAt is not None:
-            entry["reviewedAt"] = req.reviewedAt  # REP-1 [DOC]; Provisional (Q-14): key position
+            entry["reviewedAt"] = req.reviewedAt  # REP-1 [OBS 2026-10-06 W s1]
+        entry["status"] = req.status
+        if req.grantedBy is not None:
+            g = ctx.store.users[req.grantedBy]
+            entry["grantedBy"] = {"fullname": g["fullname"], "user": g["user"]}  # REP-1 [OBS 2026-10-06 W s1]
         entries.append(entry)
     disposition = f"attachment; filename=user-access-report-{ns}-{name}.json"
     return respond(200, dumps(entries), "application/json", {"Content-Disposition": disposition})

@@ -5,11 +5,11 @@
 Writes `clone/src/clone/seeds/sandbox.json` and `clean.json` (committed; the clone only reads them).
 
 Sources (ground truth, `docs/hf-gated/observations/`):
-- `2026-10-05-clone-seed-reads.json`: model info (incl. the 1018 siblings), top-level and one
+- `2026-10-06-clone-seed-reads.json`: model info (incl. the siblings), top-level and one
   sub-folder tree, whoami of both personas, the contents of three small files, the HEAD of one
   LFS file (`X-Linked-Etag` / `X-Linked-Size`, xet hash in the redirect path).
-- `2026-10-05-ui-walkthrough.json`: the requester's request at the end of the UI walkthrough
-  (back to `pending`, AGENTS.md "Live sandbox").
+- `2026-10-06-ui-walkthrough.json`: the requester's request at the end of the scripted UI
+  walkthrough (back to `pending`, AGENTS.md "Live sandbox").
 
 What the fixtures do not give is left out of the seed (no fabricated oids or sizes): the clone
 synthesises deterministic stub metadata for those files at load time (`src/clone/files.py`).
@@ -32,7 +32,8 @@ SEEDS = ROOT / "clone" / "src" / "clone" / "seeds"
 OUT = SEEDS / "sandbox.json"
 OUT_CLEAN = SEEDS / "clean.json"
 
-REPO = "Orosius/deltanet-mla-latent"
+OWNER = "OwnerOfTheGatedModel"
+REPO = f"{OWNER}/tiny-gated-model"
 # Keys of the model-info body that the seed format keeps at repo level (docs/system.md seed format).
 REPO_LEVEL = ("_id", "id", "author", "private", "gated", "sha", "createdAt", "lastModified", "cardData")
 
@@ -57,7 +58,7 @@ def sandbox_repo(reads: dict[str, dict]) -> dict:
     repo = {k: info[k] for k in REPO_LEVEL}
     repo |= {
         "orgMembersGated": False,
-        # Last notification PUT of the UI walkthrough (#246) was `bulk`; no email was ever set.
+        # The last notification PUT of the UI walkthrough was `bulk`; no email was ever set.
         "gatedNotificationsMode": "bulk",
         "gatedNotificationsEmail": None,
     }
@@ -116,7 +117,7 @@ def user(whoami: dict, token: str, email: str) -> dict:
 
 
 def last_pending_request() -> dict:
-    log = json.loads((OBS / "2026-10-05-ui-walkthrough.json").read_text())
+    log = json.loads((OBS / "2026-10-06-ui-walkthrough.json").read_text())
     lists = [e for e in log if e["path"].endswith("/user-access-request/pending") and e["status"] == 200]
     (item,) = lists[-1]["response_body"]
     assert item["user"]["user"] == "TestingBOrig" and item["status"] == "pending"
@@ -136,9 +137,9 @@ def readme(card: dict) -> str:
 
 
 def demo_repo(name: str, gated, card: dict) -> dict:
-    repo_id = f"Orosius/{name}"
+    repo_id = f"{OWNER}/{name}"
     return {
-        "id": repo_id, "_id": demo_hex(repo_id, 24), "author": "Orosius", "private": False, "gated": gated,
+        "id": repo_id, "_id": demo_hex(repo_id, 24), "author": OWNER, "private": False, "gated": gated,
         "orgMembersGated": False, "gatedNotificationsMode": "bulk", "gatedNotificationsEmail": None,
         "sha": demo_hex(repo_id + "@sha", 40),
         "createdAt": "2026-10-05T12:00:00.000Z", "lastModified": "2026-10-05T12:00:00.000Z",
@@ -196,13 +197,13 @@ CAROL = {
 
 
 def build_seed() -> dict:
-    reads = records("2026-10-05-clone-seed-reads.json")
+    reads = records("2026-10-06-clone-seed-reads.json")
     return {
         "seed": "sandbox",
-        "now": "2026-10-05T14:30:00.000Z",
+        "now": "2026-10-06T16:00:00.000Z",
         "tick_ms": 1000,
         "users": [
-            user(reads["whoami-owner"]["body_json"], "persona-owner", "orosius@example.com"),
+            user(reads["whoami-owner"]["body_json"], "persona-owner", "ownerofthegatedmodel@example.com"),
             user(reads["whoami-requester"]["body_json"], "persona-requester", "testingborig@example.com"),
             CAROL,
         ],

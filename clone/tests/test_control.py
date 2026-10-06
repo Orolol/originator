@@ -23,7 +23,7 @@ SCRIPT = [
         {"user": "TestingBOrig"}, {"userId": "c6b12968e29b4c68d1684f14"}, {"user": "ghost"}]}),
     ("requester", "POST", f"/{REPO}/ask-access", {}),
     ("owner", "PUT", f"/api/models/{REPO}/settings", {"gated": "auto", "gatedNotificationsMode": "real-time"}),
-    ("carol", "POST", "/Orosius/gated-form-demo/ask-access", {"First Name": "Carol"}),
+    ("carol", "POST", "/OwnerOfTheGatedModel/gated-form-demo/ask-access", {"First Name": "Carol"}),
     (None, "GET", f"/api/models/{REPO}/auth-check", None),
     ("owner", "GET", f"{LIST}/pending", None),
     ("owner", "GET", f"{LIST}/reset", None),
@@ -45,7 +45,7 @@ def test_same_sequence_same_bytes():
     # The script starts from the recorded state (TestingBOrig pending), i.e. the `sandbox` seed.
     a = TestClient(create_app(Store(builtin_seed("sandbox"))), follow_redirects=False)
     first = (run_script(a), a.get("/__clone__/log?limit=1000").json(), a.get("/__clone__/outbox").json())
-    assert a.post("/__clone__/reset", json={"seed": "sandbox"}).json()["now"] == "2026-10-05T14:30:00.000Z"
+    assert a.post("/__clone__/reset", json={"seed": "sandbox"}).json()["now"] == "2026-10-06T16:00:00.000Z"
     second = (run_script(a), a.get("/__clone__/log?limit=1000").json(), a.get("/__clone__/outbox").json())
     b = TestClient(create_app(Store(builtin_seed("sandbox"))), follow_redirects=False)
     third = (run_script(b), b.get("/__clone__/log?limit=1000").json(), b.get("/__clone__/outbox").json())
@@ -105,20 +105,20 @@ def test_virtual_clock(client):
     """Reads never move the clock; each state change advances it by tick_ms before stamping;
     no-op writes do not change state, so they do not tick."""
     clock = lambda: client.get("/__clone__/clock").json()["now"]  # noqa: E731
-    assert clock() == "2026-10-05T14:30:00.000Z"
+    assert clock() == "2026-10-06T16:00:00.000Z"
     client.get(f"{LIST}/pending", headers=auth("owner"))
     client.post(f"/{REPO}/ask-access", json={}, headers=auth("requester"))  # pending re-submit: no-op [OBS]
-    assert clock() == "2026-10-05T14:30:00.000Z"
+    assert clock() == "2026-10-06T16:00:00.000Z"
     client.post(f"{LIST}/handle", json={"user": "TestingBOrig", "status": "accepted"}, headers=auth("owner"))
-    assert clock() == "2026-10-05T14:30:01.000Z"
+    assert clock() == "2026-10-06T16:00:01.000Z"
     (item,) = client.get(f"{LIST}/accepted", headers=auth("owner")).json()
-    assert item["reviewedAt"] == "2026-10-05T14:30:01.000Z"
-    assert client.post("/__clone__/clock", json={"advance_ms": 59_000}).json()["now"] == "2026-10-05T14:31:00.000Z"
+    assert item["reviewedAt"] == "2026-10-06T16:00:01.000Z"
+    assert client.post("/__clone__/clock", json={"advance_ms": 59_000}).json()["now"] == "2026-10-06T16:01:00.000Z"
     assert client.post("/__clone__/clock", json={"now": "2026-10-06T00:00:00Z"}).json()["now"] == \
         "2026-10-06T00:00:00.000Z"
     assert client.post("/__clone__/clock", json={"advance_ms": -1}).status_code == 400
     log = client.get("/__clone__/log").json()
-    assert [e["started_at"] for e in log[-2:]] == ["2026-10-05T14:30:00.000Z", "2026-10-05T14:30:01.000Z"]
+    assert [e["started_at"] for e in log[-2:]] == ["2026-10-06T16:00:00.000Z", "2026-10-06T16:00:01.000Z"]
     assert client.get("/__clone__/health").json() == {"ok": True, "seed": "sandbox", "now": "2026-10-06T00:00:00.000Z"}
 
 
