@@ -65,7 +65,9 @@ checks that the committed seeds are up to date.
 ## Known gaps
 
 Orgs and org-member bypass are not modelled (`orgMembersGated` is stored only). Neither are
-read-only or fine-grained tokens. `/revision/`, `/raw/` and `/blob/` are outside the surface. File
-contents that were not recorded are stubs. Rejection reasons are validated, then discarded (no
+read-only or fine-grained tokens. `/revision/` is outside the surface; `/raw/` is implemented
+(ACC-10) and `/blob/` renders only a minimal page (HF shows a full file viewer). User search
+(`/api/quicksearch`) returns users by prefix, whereas the real Hub was observed returning no users at
+all (Q-25). File contents that were not recorded are stubs. Rejection reasons are validated, then discarded (no
 observed API exposes them). Every choice where the KB is silent is marked `Provisional (Q-n)` in the
 code and listed in [../docs/hf-gated/open-questions.md](../docs/hf-gated/open-questions.md).
