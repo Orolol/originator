@@ -41,6 +41,15 @@ In visible order:
 
 ### A2. Logged in, no request (and after `reset`) [DOC-IMG] [DOC], TO RECORD details
 
+**Recorded [OBS-UI 2026-10-06, `observations/2026-10-06-ui-logged-in.md`]:**
+- a plain HTML form `POST /{repo}/ask-access?next=/{repo}` (URL-encoded, hidden `csrf`);
+- fields in YAML order, **all `required`**, text placeholders "<Label> (required)", selects starting
+  on "Select an option", country values ISO alpha-2, `ip_location` shown as the line "Your country and
+  region (based on approximate Internet address) will be shared with the model owner.";
+- the default button is **"Agree and access repository"** in **auto** mode, and there is **no Cancel
+  button**;
+- long forms start collapsed behind "Expand to review and access".
+
 From the dataset-side screenshot (the model version says "model"):
 1. Heading, as in A1.
 2. Sub-line, as in A1.
@@ -56,6 +65,12 @@ says `303` to the repo page).
 
 ### A3. Pending (manual mode), TO RECORD
 
+**Recorded [OBS-UI 2026-10-06, `observations/2026-10-06-ui-logged-in.md`]:** "Your request to access this repository has been submitted and is awaiting a review
+from the repository authors. You can check the status of all your access requests in your settings."
+"your settings" links to `/settings/gated-repos`. The model page has **no cancel control**: it is an
+icon button titled "Cancel this access request" on that settings page (table: Repo Name / Type / Date
+/ Request Status).
+
 Expected: a message that the request was submitted and awaits review. The API-side equivalent is
 `Your request to access model {id} is awaiting a review from the repo authors.` [OBS-3P]. The page
 wording is not yet recorded. Is there a requester-side "cancel request" control? The spec has a
@@ -64,6 +79,9 @@ The endpoint withdraws a pending request (REQ-7 [OBS 2026-10-06]). Our UI offers
 button on A3 that calls it; HF's own page control, if any, is still unrecorded (web choice #26).
 
 ### A4. Accepted, TO RECORD
+
+**Recorded for the owner [OBS-UI 2026-10-06, `observations/2026-10-06-ui-logged-in.md`]:** a block "Gated model" / "You have been granted access to this model"
+(presumably the same for an accepted requester, not yet seen).
 
 Expected: a "you have been granted access" banner, with files downloadable.
 
@@ -86,6 +104,15 @@ On the next visit the user is prompted to agree and submit again, presumably scr
 ---
 
 ## B. Owner: settings page (`/{ns}/{repo}/settings`), section "Gated user access" [DOC-IMG]
+
+**Recorded [OBS-UI 2026-10-06, `observations/2026-10-06-ui-logged-in.md`]:**
+- texts and controls as in B2/B3 below; real-time label **"Real-time"**;
+- the email is `type="email"`;
+- the page receives `gatedNotifications {mode, email?}` server-side;
+- `New requests:` is a JS-driven select;
+- Disable submits a form to `/api/models/{repo}/settings` (`gated=false`).
+
+What each control sends is still TO RECORD (it needs a change).
 
 ### B1. Disabled (`gated == false`)
 
@@ -122,6 +149,19 @@ show on validation errors? Which controls are disabled for read-role members? [Q
 ---
 
 ## C. Owner: "Manage access requests" modal [DOC-IMG] [DOC]
+
+**Recorded [OBS-UI 2026-10-06, `observations/2026-10-06-ui-logged-in.md`]:**
+- a native `<dialog>`; it fires `GET …/{pending,accepted,rejected}?limit=100` and adds
+  `?gated_access_request=true` to the URL; Escape closes it;
+- tabs are plain buttons, with no reset tab;
+- search box "Search requests" (debounced `&q=` on the current tab, "n matching result");
+- "Select all" plus per-row checkboxes, then "Accept selected" / "Reject selected";
+- `Previous` / `Next` links;
+- row: user link, e-mail, relative time, Accept, Reject.
+
+"Add access" is a separate dialog ("Add a user access manually", search placeholder "Start typing to
+search for a user", **Grant access** button) using `GET /api/quicksearch?q=…&type=user`, which returns
+no users (Q-25).
 
 - Title `Manage access requests` and a close ×.
 - Tabs with counts: `pending (n)`, `accepted (n)`, `rejected (n)`. Whether the UI has a `reset` tab is

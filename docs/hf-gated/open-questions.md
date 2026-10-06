@@ -51,9 +51,12 @@ Answer (2026-10-06) [OBS, `observations/2026-10-06-requester-cancel.md`, `…-ui
 rule **REQ-7**: only a **pending** request can be withdrawn, and it is deleted (lists, report,
 `auth-check` all back to "no request"); success `200 {"ok":true}`; from accepted / rejected / reset or
 with no request, `404` "No pending access request found for this repo and this user", unchanged;
-anonymous `401`. Status: answered for the API. **Open**: whether HF's own model page shows a control
-for it (HTML pages ignore Bearer tokens, so only a logged-in browser can tell; our UI's button is web
-choice #26), and whether a self-cancel e-mails anyone.
+anonymous `401`.
+UI answer (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: the **model page has no cancel control**. The pending page links
+to `/settings/gated-repos` ("Gated Repos Status"), where each row has an icon-only
+`<button title="Cancel this access request">`. Not clicked yet, so its confirmation step and the
+request it fires are unrecorded. Our UI's button on the model page (web choice #26) diverges.
+Status: open only for that click (confirmation, request) and whether a self-cancel e-mails anyone.
 
 ### Q-4 (P0): same-status and success responses
 Exact status code and body for handle → the current status (the docstrings say 404 "already in the …
@@ -144,17 +147,55 @@ Status: open for ordering and the `after`/`before` field.
 ### Q-11 (P1): logged-in gate screens
 Exact texts and controls for A2–A6 in [ui.md](ui.md): the default button label in auto vs manual; field
 order (YAML order?); the post-submit message; the rejected screen with its reason; whether the reset
-screen shows `resetReason`; the logged-in `RepoGatedModal` props (status, reason, email…). Status: open.
+screen shows `resetReason`; the logged-in `RepoGatedModal` props (status, reason, email…).
+Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]:
+- logged-in props: `accessRequestStatus` (`"pending"`; absent when there is no request), `csrf`,
+  `isLoggedIn: true`, `hasPaidPlan`, plus the props recorded anonymously;
+- **default button label**: **"Agree and access repository"** in auto mode (`bigcode/starcoder`).
+  Manual mode, per the doc screenshot, is "Agree and send request to access repo" (not re-captured:
+  every manual repo seen has a custom button). There is **no Cancel button** in the inline form;
+- the form is a plain `POST /{repo}/ask-access?next=/{repo}` (URL-encoded) with a hidden `csrf` input.
+  Fields come in **YAML order**, and a long form starts collapsed behind "Expand to review and access";
+- **A3 (pending) text**: "Your request to access this repository has been submitted and is awaiting a
+  review from the repository authors. You can check the status of all your access requests in your
+  settings." ("your settings" → `/settings/gated-repos`);
+- **owner / with access**: a block "Gated model" / "You have been granted access to this model".
+Status: open for A5 (rejected, with reason), A6 (reset) and the requester's accepted view. These need
+state changes.
 
 ### Q-12 (P1): settings section mechanics
 Does each control save immediately? Are there confirmation dialogs (disable)? The default
 `gatedNotificationsMode` and the label of the real-time option; email validation feedback; the view
-for org members with a read role. Status: open.
+for org members with a read role.
+Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]:
+- the page gets the config server-side: `objectInfo.gatedNotifications: {"mode": "bulk"}` (no `email`
+  key when unset), `objectInfo.orgMembersGated`;
+- labels: `Once a day` (`bulk`) and **`Real-time`** (`real-time`), the latter matching web choice #10;
+- the notifications email is `<input type="email" placeholder="example@example.com">`, so the browser
+  validates it;
+- `New requests:` is a JS-driven `<select>` outside any form; the notifications select and email sit in
+  a form without action or submit button; `Disable Access requests` submits a form to
+  `/api/models/{repo}/settings` with `gated=false`.
+Status: open for what each control sends and when, and for confirmations. These need state changes.
 
 ### Q-13 (P1): review modal details
 What `Review access requests (N)` counts; whether a `reset` tab exists; how `fields` answers are
 displayed; the rejection-reason input; actions on the rejected tab; search, pagination, bulk
-selection; refresh behaviour after an action. Status: open.
+selection; refresh behaviour after an action.
+Mostly answered (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]:
+- the dialog is a native `<dialog>` titled "Manage access requests". Opening it fires
+  `GET …/{pending,accepted,rejected}?limit=100` (the same API as ours, plus `limit=100`) and adds
+  `?gated_access_request=true` to the URL. **Escape** closes it;
+- **tabs**: three plain buttons `pending (n)`, `accepted (n)`, `rejected (n)`; **no reset tab**;
+- **search**: `<input type="search" placeholder="Search requests">`, debounced, current tab only
+  (`…/pending?limit=100&q=testing`), showing "1 matching result";
+- **bulk**: "Select all" plus per-row checkboxes (`Select access request from <user>`, value = user
+  `_id`); a selection shows "n selected", **"Accept selected"** and **"Reject selected"**;
+- **row**: username link, e-mail, relative time ("about 4 hours ago"), `Accept`, `Reject` (pending
+  tab); **pagination**: `Previous` / `Next` links.
+Status: open for N (with only one pending request and nothing else, pending count and total are
+equal), the rejection-reason input, the rejected and accepted tab actions (both lists were empty),
+how `fields` are displayed, and what the bulk buttons send.
 
 ### Q-14 (P1): access report format
 JSON (as the docs say) or CSV? Filename (`Content-Disposition`)? Does it include `fields` and `reset`
@@ -167,11 +208,22 @@ email, time, reviewedAt, status`. Status: open for `fields` and the ordering of 
 
 ### Q-15 (P1): stored answer encoding
 How answers are stored in `fields`: checkbox (`"on"`? `"true"`?), select (value or label?), date
-format, country (code or name), and the value of `ip_location`. Status: open.
+format, country (code or name), and the value of `ip_location`.
+Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: what the **form posts**: checkbox `"on"`; select = the option
+`value` (= the label for string options; `{label, value}` options not seen); country = ISO alpha-2 code
+(`AF`), shown with its English name; date from `<input type="date">` (`YYYY-MM-DD` by HTML);
+`ip_location` has **no input**, only the line "Your country and region (based on approximate
+Internet address) will be shared with the model owner.", so its value is server-side. This matches
+web choices #6/#7, except that #7 renders no line. Status: open for what is **stored** in `fields`;
+it needs a request on a repo with fields.
 
 ### Q-16 (P1): form validation
 Are all extra fields required? Must checkboxes be checked? Is it enforced client-side, server-side,
-or both? Error messages? Status: open.
+or both? Error messages?
+Partial (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: **every** extra field is `required` client-side (HTML attribute),
+checkboxes included. Text inputs show the placeholder "<Label> (required)"; selects start on an empty
+"Select an option". Web choice #5 (no validation) is wrong. Status: open for server-side enforcement
+and error messages.
 
 ### Q-17 (P2): bypass rules in detail
 On user-owned repos, does anyone besides the owner bypass (for example, HF staff)? With org repos and
@@ -224,6 +276,9 @@ ACC-10 records the gate on `/raw/` (anonymous 401, pending 403, owner 200 text),
 - `/raw/` on a non-gated repo (200 or a 307 like resolve?);
 - the `/blob/` page content with access, and its 404s;
 - HEAD on `raw`/`blob`.
+UI (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]: with access, `/blob/` is a full file viewer (last commit; Download box
+with "Download file <size>" → `resolve/…?download=true`, the link, the `hf download` and `curl`
+commands; Raw / History / Blame / Edit / Delete links; then the content).
 Answer (2026-10-06) [OBS E e10, e12, `observations/2026-10-06-blob.md`], now in ACC-5 / ACC-10: `/raw/`
 serves an LFS file's pointer, a non-gated repo's file directly (200), `404 Entry not found` for a
 missing file, and answers HEAD like GET. `/blob/` ignores the Bearer token (HTML page): README.md is
@@ -235,7 +290,14 @@ public, everything else (missing files included) is the anonymous 401. Status: o
 queries `Orosius`, `TestingBOrig`, `julien-c`); models are returned, and `type=users` is a validation
 error. [OBS 2026-10-05, UI builder via bridge] Which endpoint does HF's "Add access" search use,
 and does it need a browser session? Until then, "Add access" cannot find anyone in bridge mode, though
-`grant` itself works by username through the API. Status: open.
+`grant` itself works by username through the API.
+**Answer (2026-10-06) [OBS-UI, `observations/2026-10-06-ui-logged-in.md`]**: HF's own dialog ("Add a user access manually", placeholder
+"Start typing to search for a user", separate **Grant access** button, disabled until a user is chosen;
+URL `?gated_add_user=true`) calls **the same** `GET /api/quicksearch?q=<text>&type=user`, with an
+empty `q` on open. **With a browser session it also returns `users: []`**, even for `TestingBOrig` and
+`julien-c`, and shows **"No results found :("**. So it is not a token limitation: on 2026-10-06 the
+real dialog finds nobody either. Our empty result is faithful. The dialog layout differs (web choice
+#13). Status: **resolved**.
 
 ---
 
@@ -247,31 +309,31 @@ and strike the line.
 
 | # | Q | Choice |
 |---|---|---|
-| 1 | Q-11 | Pending (A3): show the backend's auth-check message verbatim (`role=status`) instead of the form. |
-| 2 | Q-11 | Accepted (A4) and owner both get 200 from auth-check: no gate box, no banner. |
-| 3 | Q-11 | Default submit label is the same in auto and manual mode. |
-| 4 | Q-11 | The gate form's `Cancel` does nothing. |
-| 5 | Q-16 | No client-side validation (no `required`); selects and the country dropdown start with an empty option. |
-| 6 | Q-15 | Native browser values: checkbox `"on"` only when checked; date `YYYY-MM-DD`; country = alpha-2 code; select = option `value`. |
-| 7 | Q-15 | `ip_location` renders no input; an unknown field type renders as a text input. |
+| 1 | Q-11 | Pending (A3): show the backend's auth-check message verbatim (`role=status`) instead of the form. **Contradicted [OBS-UI 2026-10-06]**: HF's A3 text is "Your request to access this repository has been submitted and is awaiting a review from the repository authors. You can check the status of all your access requests in your settings." (link to `/settings/gated-repos`), not the API message. |
+| 2 | Q-11 | Accepted (A4) and owner both get 200 from auth-check: no gate box, no banner. **Contradicted [OBS-UI 2026-10-06]**: with access (seen as owner), HF shows a block "Gated model" / "You have been granted access to this model". |
+| 3 | Q-11 | Default submit label is the same in auto and manual mode. **Contradicted [OBS-UI 2026-10-06]**: auto mode says "Agree and access repository". |
+| 4 | Q-11 | The gate form's `Cancel` does nothing. **Contradicted [OBS-UI 2026-10-06]**: the inline form has no Cancel button. |
+| 5 | Q-16 | No client-side validation (no `required`); selects and the country dropdown start with an empty option. **Contradicted [OBS-UI 2026-10-06]**: every field is `required` (placeholder "<Label> (required)"; selects start on "Select an option"). |
+| 6 | Q-15 | Native browser values: checkbox `"on"` only when checked; date `YYYY-MM-DD`; country = alpha-2 code; select = option `value`. Confirmed for what the form posts [OBS-UI 2026-10-06]; storage still open (Q-15). |
+| 7 | Q-15 | `ip_location` renders no input; an unknown field type renders as a text input. Half right [OBS-UI 2026-10-06]: no input, but HF shows the line "Your country and region (based on approximate Internet address) will be shared with the model owner." |
 | 8 | (none) | `Log in` / `Sign Up` link to the persona switch (`/-/persona?as=requester`), since there is no login page. |
 | 9 | Q-12 | Each settings control saves immediately (one PUT); no confirmation on Disable; a failed PUT keeps the old value and shows the error. |
-| 10 | Q-12 | Notification fields start at `Once a day` (`bulk`) and an empty email (they are unreadable, CFG-3), then show the last PUT echo. Real-time label "Real-time". Email saved on Enter or blur, `type=text`, no validation. |
+| 10 | Q-12 | Notification fields start at `Once a day` (`bulk`) and an empty email (they are unreadable, CFG-3), then show the last PUT echo. Real-time label "Real-time". Email saved on Enter or blur, `type=text`, no validation. Label "Real-time" confirmed [OBS-UI 2026-10-06]; the page itself knows the stored mode (`gatedNotifications`), so HF shows the real value. |
 | 11 | Q-12 | Non-owner on settings: a 401/403 from the pending list is shown verbatim instead of the section. |
 | 12 | Q-12 | The "Settings" link on the model page is shown when the whoami name or one of its orgs equals the namespace. |
-| 13 | Q-12 | "Add access" dialog: a search box labelled "Username"; clicking a result grants immediately, closes the dialog and refreshes the lists. |
-| 14 | Q-13 | `Review access requests (N)`: N = pending count; no number while unknown. |
-| 15 | Q-13 | Tabs pending / accepted / rejected only (no reset tab); all three lists are fetched when the modal opens. |
+| 13 | Q-12 | "Add access" dialog: a search box labelled "Username"; clicking a result grants immediately, closes the dialog and refreshes the lists. **Contradicted [OBS-UI 2026-10-06]**: HF's dialog is "Add a user access manually", placeholder "Start typing to search for a user", with a separate "Grant access" button; the same quicksearch call, which finds nobody (Q-25). |
+| 14 | Q-13 | `Review access requests (N)`: N = pending count; no number while unknown. Not distinguishable yet [OBS-UI 2026-10-06]: with one pending request and nothing else, both readings give 1. |
+| 15 | Q-13 | Tabs pending / accepted / rejected only (no reset tab); all three lists are fetched when the modal opens. No reset tab confirmed [OBS-UI 2026-10-06]; HF fetches the three lists with `?limit=100`, which we do not send. |
 | 16 | Q-13 | Rejected-tab actions: `Accept`, `Cancel`. |
 | 17 | Q-13 | `Reject` sends `{user, status:"rejected"}` without a reason input. |
 | 18 | Q-13 | Form answers shown as a label → value list under the row. |
-| 19 | Q-13 | The × close button is labelled "Close"; no Escape or backdrop close; no avatars; the username links to `/{user}` (404 in our app). |
+| 19 | Q-13 | The × close button is labelled "Close"; no Escape or backdrop close; no avatars; the username links to `/{user}` (404 in our app). **Partly contradicted [OBS-UI 2026-10-06]**: HF's modal is a native `<dialog>`, Escape closes it, and it has search, bulk selection ("Accept selected" / "Reject selected") and Previous/Next pagination, which ours lacks. |
 | 20 | Q-23 / Q-13 | After a handle or grant, all lists are refetched after 1000 ms; no optimistic update; buttons are not disabled in flight. |
 | 21 | Q-9 / Q-12 | Errors render as `<p role="alert">{status} {code}: {message}</p>`. |
 | 22 | (none) | Unmapped gate states: the message is shown verbatim, plus `[unmapped gate state: auth-check HTTP {status} {code}]`. |
 | 24 | Q-11 / Q-19 | Rejected (A5): show the docs' page text `Your request to access this repo has been rejected by the repo's authors.`; no reason (not exposed by the API). |
 | 25 | Q-11 | Reset (A6): show the consent form again, with no reset notice. |
-| 26 | Q-3 | Pending (A3): a `Cancel my request` button (label invented) posts the web-only route `/-/cancel-request`, which calls `POST …/user-access-request/cancel` with no body and redirects to the repo page; a backend error is shown verbatim. Offered on A3 only, which matches the API (REQ-7: only a pending request can be withdrawn). Whether HF's page has such a control is unrecorded. Added 2026-10-06; the scripted walkthrough drove it live (`observations/2026-10-06-ui-walkthrough.md`). |
+| 26 | Q-3 | Pending (A3): a `Cancel my request` button (label invented) posts the web-only route `/-/cancel-request`, which calls `POST …/user-access-request/cancel` with no body and redirects to the repo page; a backend error is shown verbatim. Offered on A3 only, which matches the API (REQ-7: only a pending request can be withdrawn). Whether HF's page has such a control is unrecorded. Added 2026-10-06; the scripted walkthrough drove it live (`observations/2026-10-06-ui-walkthrough.md`). **Contradicted [OBS-UI 2026-10-06]**: HF has no cancel control on the model page; it is an icon button titled "Cancel this access request" on `/settings/gated-repos`. |
 | 23 | (none) | Settings control order follows the doc screenshots: `New requests` select, `Review access requests (N)`, `Download user access report`, `Add access` on one row; notifications on the next row. The Disable/Enable button sits under the text, not at the top right. |
 
 ## Provisional choices in the clone (2026-10-05)
